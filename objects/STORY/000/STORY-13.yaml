@@ -1,0 +1,12 @@
+id: 019e0ed2-3627-7430-9479-b880ef3d55b0
+spec_id: STORY-13
+agreed_id: STORY-13
+title: 'Exercise 13: aida search ''keyword'' — cross-cutting find'
+description: Learner runs aida search. Verifier asks user to paste output and checks it includes >=1 match (light verification).
+status: Approved
+priority: Low
+owner: ''
+feature: Uncategorized
+created_at: 2026-05-09T22:18:37.991441491Z
+modified_at: 2026-05-09T22:18:37.991441491Z
+req_type: Story
