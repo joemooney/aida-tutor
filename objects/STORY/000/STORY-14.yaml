@@ -3,10 +3,10 @@ spec_id: STORY-14
 agreed_id: STORY-14
 title: 'Exercise 14: edit FR-1 to completed + add a comment'
 description: Learner closes the feature loop. Verifier checks FR-* status=completed AND has >=1 comment.
-status: Approved
+status: Completed
 priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-09T22:18:38.833043430Z
-modified_at: 2026-05-09T22:18:38.833043430Z
+modified_at: 2026-05-09T22:29:58.026332822Z
 req_type: Story
