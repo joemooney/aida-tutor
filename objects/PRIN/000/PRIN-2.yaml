@@ -1,0 +1,12 @@
+id: 019e0ed1-7431-7de0-bec3-4875d034a983
+spec_id: PRIN-2
+agreed_id: PRIN-2
+title: One workspace per learner, reset-friendly
+description: All exercises operate on a single ./workspace/ directory at the tutor repo root. `aida-tutor reset` wipes it and restores the starting state for the current exercise. No exercise leaves persistent global state (no ~/.aida/ pollution beyond what AIDA itself does).
+status: Approved
+priority: Medium
+owner: ''
+feature: Uncategorized
+created_at: 2026-05-09T22:17:48.337308992Z
+modified_at: 2026-05-09T22:17:48.337308992Z
+req_type: Principle
