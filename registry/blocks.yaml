@@ -47,3 +47,11 @@ blocks:
   range_end: 100
   next: 1
   allocated_at: 2026-05-09T22:17:20.647620598Z
+- node_id: JM
+  owner: joe.mooney@gmail.com
+  hostname: imac
+  type_prefix: PRIN
+  range_start: 1
+  range_end: 100
+  next: 1
+  allocated_at: 2026-05-09T22:17:20.660103733Z
