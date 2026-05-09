@@ -1,0 +1,12 @@
+id: 019e0ed2-33dd-75c2-8a85-adbecdd7ef7a
+spec_id: STORY-12
+agreed_id: STORY-12
+title: 'Exercise 12: aida docs build — project canonical layer'
+description: Learner runs aida docs build. Verifier checks docs/aida/README.md exists and contains entries for VIS/PRIN/ADR.
+status: Approved
+priority: Medium
+owner: ''
+feature: Uncategorized
+created_at: 2026-05-09T22:18:37.405108758Z
+modified_at: 2026-05-09T22:18:37.405108758Z
+req_type: Story
