@@ -3,10 +3,10 @@ spec_id: EPIC-1
 agreed_id: EPIC-1
 title: 'Tutor CLI v0: list, show, verify, reset, watch, progress'
 description: 'The minimum-viable tutor binary. Subcommands: list (all exercises + status), show (current or by id), verify (check current), next (advance), reset (wipe workspace + replay setup), hint (one-line nudge), progress (overall %).'
-status: Approved
+status: Completed
 priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-09T22:17:58.443493106Z
-modified_at: 2026-05-09T22:17:58.443493106Z
+modified_at: 2026-05-09T22:30:02.770179151Z
 req_type: Epic
