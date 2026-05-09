@@ -37,7 +37,7 @@ blocks:
   type_prefix: STORY
   range_start: 1
   range_end: 100
-  next: 18
+  next: 19
   allocated_at: 2026-05-09T22:17:20.635081263Z
 - node_id: JM
   owner: joe.mooney@gmail.com
