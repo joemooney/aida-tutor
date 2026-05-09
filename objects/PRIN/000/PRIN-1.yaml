@@ -1,0 +1,12 @@
+id: 019e0ed1-7184-7960-96ae-766c12874b91
+spec_id: PRIN-1
+agreed_id: PRIN-1
+title: Verifiers inspect on-disk state, never patch it
+description: 'Every exercise verifier reads the workspace + .aida-store/ + git state and reports Pass/Fail/Pending. It NEVER edits the user''s files, ids, or store contents. The user is the only mutator. This keeps the tutor honest: if the verifier passes, the user actually did the thing.'
+status: Approved
+priority: High
+owner: ''
+feature: Uncategorized
+created_at: 2026-05-09T22:17:47.652349910Z
+modified_at: 2026-05-09T22:17:47.652349910Z
+req_type: Principle
