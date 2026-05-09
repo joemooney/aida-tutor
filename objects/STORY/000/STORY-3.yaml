@@ -3,10 +3,10 @@ spec_id: STORY-3
 agreed_id: STORY-3
 title: 'Exercise 03: capture a principle (PRIN-1)'
 description: Learner adds a Principle. Verifier checks for PRIN-* in the store.
-status: Approved
+status: Completed
 priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-09T22:18:29.163074014Z
-modified_at: 2026-05-09T22:18:29.163074014Z
+modified_at: 2026-05-09T22:29:46.495644102Z
 req_type: Story
