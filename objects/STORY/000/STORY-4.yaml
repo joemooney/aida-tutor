@@ -3,10 +3,10 @@ spec_id: STORY-4
 agreed_id: STORY-4
 title: 'Exercise 04: capture a decision (ADR-1)'
 description: Learner adds a Decision. Verifier checks for ADR-* in the store.
-status: Approved
+status: Completed
 priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-09T22:18:30.500191157Z
-modified_at: 2026-05-09T22:18:30.500191157Z
+modified_at: 2026-05-09T22:29:47.494603133Z
 req_type: Story
