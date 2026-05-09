@@ -3,10 +3,10 @@ spec_id: STORY-10
 agreed_id: STORY-10
 title: 'Exercise 10: write code with a trace comment'
 description: Learner creates src/convert.rs (any content) with a // trace:FR-... | ai:claude comment. Verifier greps for that pattern in the workspace.
-status: Approved
+status: Completed
 priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-09T22:18:36.112878133Z
-modified_at: 2026-05-09T22:18:36.112878133Z
+modified_at: 2026-05-09T22:29:53.483493603Z
 req_type: Story
