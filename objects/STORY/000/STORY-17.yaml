@@ -3,10 +3,10 @@ spec_id: STORY-17
 agreed_id: STORY-17
 title: 'Exercise 17: aida push — unified push (will skip both legs without origin)'
 description: Final exercise. Learner runs aida push. Verifier checks it ran successfully (the no-origin skip path is the realistic flow for this tutorial).
-status: Approved
+status: Completed
 priority: Medium
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-09T22:18:40.944525110Z
-modified_at: 2026-05-09T22:18:40.944525110Z
+modified_at: 2026-05-09T22:30:01.603651776Z
 req_type: Story
