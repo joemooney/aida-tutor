@@ -1,0 +1,12 @@
+id: 019e0ed1-769b-7151-87e4-10cd8ecf33a4
+spec_id: PRIN-3
+agreed_id: PRIN-3
+title: Hints are explicit; solutions are not
+description: Every exercise has a one-paragraph hint surfaced via `aida-tutor hint`. We do NOT show the literal command. Learning happens at the level of 'I know what to type'; rote-copy doesn't build the model.
+status: Approved
+priority: Medium
+owner: ''
+feature: Uncategorized
+created_at: 2026-05-09T22:17:48.955894252Z
+modified_at: 2026-05-09T22:17:48.955894252Z
+req_type: Principle
