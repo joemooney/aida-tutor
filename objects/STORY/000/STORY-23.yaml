@@ -3,10 +3,10 @@ spec_id: STORY-23
 agreed_id: STORY-23
 title: 'First-run experience: aida-tutor by itself prints a welcome'
 description: 'When run with no args AND no progress yet, print a 5-line welcome instead of jumping straight to show. Mention: what the tutor is, what aida is, the four daily commands (show/hint/verify/list), and ''run reset --yes to begin''.'
-status: Approved
+status: InProgress
 priority: Low
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-09T22:30:35.691331850Z
-modified_at: 2026-05-09T22:30:35.691331850Z
+modified_at: 2026-05-09T22:31:54.794728566Z
 req_type: Story
