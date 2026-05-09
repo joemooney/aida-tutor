@@ -3,10 +3,10 @@ spec_id: STORY-13
 agreed_id: STORY-13
 title: 'Exercise 13: aida search ''keyword'' — cross-cutting find'
 description: Learner runs aida search. Verifier asks user to paste output and checks it includes >=1 match (light verification).
-status: Approved
+status: Completed
 priority: Low
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-09T22:18:37.991441491Z
-modified_at: 2026-05-09T22:18:37.991441491Z
+modified_at: 2026-05-09T22:29:57.048115856Z
 req_type: Story
