@@ -1,0 +1,25 @@
+//! Exercise 16 — `aida status`. trace:STORY-16 | ai:claude
+
+use crate::exercise::{Exercise, VerifyResult};
+use crate::verify::is_aida_initialized;
+use std::path::Path;
+
+pub struct E;
+
+impl Exercise for E {
+    fn id(&self) -> u32 { 16 }
+    fn slug(&self) -> &'static str { "status" }
+    fn title(&self) -> &'static str { "aida status — read the project pulse" }
+    fn hint(&self) -> &'static str {
+        "Run `aida status`. The output has sections: Project (name + mode + path), Requirements (counts \
+         by status), Cache (freshness), Sync (orphan branch ahead/behind), Recent activity, Scaffolding. \
+         This is the first command to run when you sit down to a project — it tells you exactly what \
+         needs your attention."
+    }
+    fn verify(&self, workspace: &Path) -> VerifyResult {
+        if !is_aida_initialized(workspace) {
+            return VerifyResult::Pending("complete exercise 01 first".into());
+        }
+        VerifyResult::Pass
+    }
+}

@@ -1,1 +1,15 @@
 target/
+
+# AIDA distributed store (orphan branch worktree)
+.aida-store/
+
+# Learner's working dir — every reset wipes it
+workspace/
+
+# Per-learner progress (gitignored: each learner's own state)
+.aida-tutor-progress.toml
+
+# Cache (rebuildable from .aida-store)
+.aida/cache.db
+.aida/cache.db-shm
+.aida/cache.db-wal

@@ -1,0 +1,24 @@
+[package]
+name = "aida-tutor"
+version = "0.1.0"
+edition = "2021"
+description = "Hands-on tutorial for AIDA — exercise-by-exercise walkthrough with on-disk verification"
+license = "MIT OR Apache-2.0"
+
+[[bin]]
+name = "aida-tutor"
+path = "src/main.rs"
+
+[dependencies]
+anyhow = "1"
+chrono = { version = "0.4", default-features = false, features = ["clock", "std"] }
+clap = { version = "4", features = ["derive"] }
+colored = "2"
+serde = { version = "1", features = ["derive"] }
+toml = "0.8"
+walkdir = "2"
+regex = "1"
+
+[profile.release]
+opt-level = 3
+lto = "thin"
