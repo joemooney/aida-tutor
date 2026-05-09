@@ -3,10 +3,10 @@ spec_id: STORY-8
 agreed_id: STORY-8
 title: 'Exercise 08: aida show <id> — read full record'
 description: Learner picks any one of their reqs and runs aida show. Verifier asks the user to paste the spec_id they showed; checks it exists.
-status: Approved
+status: Completed
 priority: Medium
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-09T22:18:34.183984064Z
-modified_at: 2026-05-09T22:18:34.183984064Z
+modified_at: 2026-05-09T22:29:51.465951420Z
 req_type: Story
