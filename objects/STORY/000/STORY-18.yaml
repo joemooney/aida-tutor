@@ -3,10 +3,10 @@ spec_id: STORY-18
 agreed_id: STORY-18
 title: aida-tutor watch — auto-re-verify on workspace changes
 description: 'rustlings has a  mode that re-runs  whenever any source file changes. Implement the equivalent: poll workspace/ for mtime changes (or use notify crate for inotify on Linux) and re-run the current exercise''s verify on each change. Print a colored pass/pending/fail line. Ctrl-C to exit.'
-status: Approved
+status: InProgress
 priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-09T22:30:32.555836984Z
-modified_at: 2026-05-09T22:30:32.555836984Z
+modified_at: 2026-05-09T22:30:58.549349030Z
 req_type: Story
