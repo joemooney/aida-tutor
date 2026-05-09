@@ -3,10 +3,10 @@ spec_id: STORY-2
 agreed_id: STORY-2
 title: 'Exercise 02: capture project vision (VIS-1)'
 description: 'Learner runs `aida add --type vision` to capture the project''s intent. Verifier checks: aida list contains exactly one VIS-* entry, status approved.'
-status: Approved
+status: Completed
 priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-09T22:18:28.162626501Z
-modified_at: 2026-05-09T22:18:28.162626501Z
+modified_at: 2026-05-09T22:29:45.423747889Z
 req_type: Story
