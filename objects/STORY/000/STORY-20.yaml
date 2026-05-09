@@ -1,0 +1,12 @@
+id: 019e0edd-2245-7a91-bd43-5cca5b7d11b7
+spec_id: STORY-20
+agreed_id: STORY-20
+title: 'Multi-level hints: --more, --solution escape valves'
+description: 'Current hint is one paragraph. Add: `aida-tutor hint --more` for a multi-step nudge (concrete steps, less direct than the command) and `aida-tutor hint --solution` for the literal command (last resort). Persist whether a learner used --solution so it shows up in their progress as ''completed-with-solution'' vs ''completed''.'
+status: Approved
+priority: Medium
+owner: ''
+feature: Uncategorized
+created_at: 2026-05-09T22:30:33.797545295Z
+modified_at: 2026-05-09T22:30:33.797545295Z
+req_type: Story
