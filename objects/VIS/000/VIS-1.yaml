@@ -1,0 +1,12 @@
+id: 019e0ed1-6f2b-73c1-96ab-014a33a23a60
+spec_id: VIS-1
+agreed_id: VIS-1
+title: 'aida-tutor: hands-on AIDA tutor through the same flow Joe walked'
+description: 'A rustlings-style tutor that walks a learner through AIDA''s daily workflow exercise-by-exercise, verifying each step against on-disk state. The exercises mirror the walkthrough Joe did 2026-05-09: init → add canonical reqs (vision/principle/decision) → add functional/bug → list/show/edit → trace+commit → docs build → search → status → push. Each step has clear instructions, a hint, and a verifier so the learner immediately knows whether they did it right.'
+status: Approved
+priority: High
+owner: ''
+feature: Uncategorized
+created_at: 2026-05-09T22:17:47.051627364Z
+modified_at: 2026-05-09T22:17:47.051627364Z
+req_type: Vision
