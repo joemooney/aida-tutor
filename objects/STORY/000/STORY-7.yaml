@@ -3,10 +3,10 @@ spec_id: STORY-7
 agreed_id: STORY-7
 title: 'Exercise 07: aida list — see all five reqs'
 description: 'Learner runs aida list. Verifier checks the user has run a list command via shell history? Or simpler: just stamp progress on the user''s aida-tutor verify call (which can detect that all five types exist by now).'
-status: Approved
+status: Completed
 priority: Medium
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-09T22:18:33.222401027Z
-modified_at: 2026-05-09T22:18:33.222401027Z
+modified_at: 2026-05-09T22:29:50.555014411Z
 req_type: Story
