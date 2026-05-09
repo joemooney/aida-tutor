@@ -3,10 +3,10 @@ spec_id: STORY-9
 agreed_id: STORY-9
 title: 'Exercise 09: edit FR-1 to in-progress'
 description: Learner runs aida edit. Verifier checks FR-* status is in-progress.
-status: Approved
+status: Completed
 priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-09T22:18:35.521044381Z
-modified_at: 2026-05-09T22:18:35.521044381Z
+modified_at: 2026-05-09T22:29:52.603394649Z
 req_type: Story
