@@ -3,10 +3,10 @@ spec_id: EPIC-2
 agreed_id: EPIC-2
 title: 'Tutorial Exercises: 17 exercises mirroring the 2026-05-09 walkthrough'
 description: Sequential exercises, each ~5 minutes for the learner. Mirrors the flow Joe walked end-to-end on 2026-05-09. Each is a separate STORY filed under this EPIC.
-status: Approved
+status: Completed
 priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-09T22:17:59.028815216Z
-modified_at: 2026-05-09T22:17:59.028815216Z
+modified_at: 2026-05-09T22:30:03.796248139Z
 req_type: Epic
