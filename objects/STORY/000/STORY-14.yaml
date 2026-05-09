@@ -1,0 +1,12 @@
+id: 019e0ed2-3971-73d2-b98e-175581eddb27
+spec_id: STORY-14
+agreed_id: STORY-14
+title: 'Exercise 14: edit FR-1 to completed + add a comment'
+description: Learner closes the feature loop. Verifier checks FR-* status=completed AND has >=1 comment.
+status: Approved
+priority: High
+owner: ''
+feature: Uncategorized
+created_at: 2026-05-09T22:18:38.833043430Z
+modified_at: 2026-05-09T22:18:38.833043430Z
+req_type: Story
