@@ -1,0 +1,12 @@
+id: 019e0ed2-0d86-7fd0-89fe-081b2503998f
+spec_id: STORY-1
+agreed_id: STORY-1
+title: 'Exercise 01: aida init in an empty repo'
+description: 'Learner stands up an AIDA store in workspace/. Verifier checks: .aida-store/ exists, .aida/config.toml exists, aida-store branch exists in workspace/.git, .claude/ scaffolding present.'
+status: Approved
+priority: High
+owner: ''
+feature: Uncategorized
+created_at: 2026-05-09T22:18:27.590977187Z
+modified_at: 2026-05-09T22:18:27.590977187Z
+req_type: Story
