@@ -1,0 +1,12 @@
+id: 019e0ed2-31a5-7363-bdeb-b637494738f9
+spec_id: STORY-11
+agreed_id: STORY-11
+title: 'Exercise 11: commit with the AIDA format and pass the validator'
+description: 'Learner stages + commits with [AI:tool] type(scope): description (REQ-ID) format. Verifier reads git log -1 and checks the message format + REQ-ID presence.'
+status: Approved
+priority: High
+owner: ''
+feature: Uncategorized
+created_at: 2026-05-09T22:18:36.837292356Z
+modified_at: 2026-05-09T22:18:36.837292356Z
+req_type: Story
