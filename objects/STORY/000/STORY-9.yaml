@@ -1,0 +1,12 @@
+id: 019e0ed2-2c81-7832-a4a7-02cfbf9ca0f2
+spec_id: STORY-9
+agreed_id: STORY-9
+title: 'Exercise 09: edit FR-1 to in-progress'
+description: Learner runs aida edit. Verifier checks FR-* status is in-progress.
+status: Approved
+priority: High
+owner: ''
+feature: Uncategorized
+created_at: 2026-05-09T22:18:35.521044381Z
+modified_at: 2026-05-09T22:18:35.521044381Z
+req_type: Story
