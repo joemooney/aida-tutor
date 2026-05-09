@@ -1,0 +1,12 @@
+id: 019e0ed2-3c32-7980-8ed0-82854e0a52d0
+spec_id: STORY-15
+agreed_id: STORY-15
+title: 'Exercise 15: aida show --comments — read the audit trail'
+description: Learner runs aida show <FR-id> --comments. Verifier checks user has invoked it (light check).
+status: Approved
+priority: Low
+owner: ''
+feature: Uncategorized
+created_at: 2026-05-09T22:18:39.538941664Z
+modified_at: 2026-05-09T22:18:39.538941664Z
+req_type: Story
