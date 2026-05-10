@@ -61,7 +61,11 @@ enum Cmd {
 
 fn main() -> Result<()> {
     let cli = Cli::parse();
-    let repo_root = std::env::current_dir()?;
+    // Walk up from CWD to locate the aida-tutor repo root. This lets the
+    // user run `aida-tutor` from inside `workspace/` (the natural place
+    // when working on an exercise) without having to `cd ..` first.
+    let cwd = std::env::current_dir()?;
+    let repo_root = find_tutor_root(&cwd).unwrap_or(cwd);
     let workspace = repo_root.join("workspace");
     let exercises = exercises::all();
     let mut prog = Progress::load(&repo_root)?;
@@ -284,7 +288,7 @@ fn cmd_show(
     );
     println!("{}", "─".repeat(60).dimmed());
     println!();
-    println!("{}", ex.description(repo_root));
+    println!("{}", render_md_for_terminal(&ex.description(repo_root)));
     println!();
     println!("{}", "─".repeat(60).dimmed());
     let state = ex.verify(workspace);
@@ -321,7 +325,7 @@ fn cmd_show(
 fn cmd_verify(
     exercises: &[Box<dyn Exercise>],
     workspace: &Path,
-    _repo_root: &Path,
+    repo_root: &Path,
     prog: &mut Progress,
     target: Option<&str>,
 ) -> Result<()> {
@@ -338,8 +342,11 @@ fn cmd_verify(
                 );
             } else {
                 prog.record_completion(ex.id());
-                let cwd = std::env::current_dir()?;
-                prog.save(&cwd)?;
+                // Save progress at the *repo root* (resolved by
+                // find_tutor_root), not CWD — otherwise running verify
+                // from inside workspace/ writes the progress file to
+                // workspace/, where the next `reset` wipes it.
+                prog.save(repo_root)?;
                 println!(
                     "{} exercise {:02} — {}",
                     "✓".green().bold(),
@@ -455,6 +462,63 @@ fn cmd_reset(workspace: &Path, yes: bool) -> Result<()> {
         workspace.display()
     );
     Ok(())
+}
+
+/// Walk upward from `start` looking for the aida-tutor repo root. The
+/// marker is the presence of both `content/01-init.md` (tutor-specific)
+/// AND `Cargo.toml` (so we don't accidentally match a sibling project
+/// that happens to have a `content/` dir). Returns None if no ancestor
+/// matches — caller should fall back to CWD.
+fn find_tutor_root(start: &Path) -> Option<PathBuf> {
+    let mut cur = Some(start.to_path_buf());
+    while let Some(dir) = cur {
+        if dir.join("content/01-init.md").exists() && dir.join("Cargo.toml").exists() {
+            return Some(dir);
+        }
+        cur = dir.parent().map(|p| p.to_path_buf());
+    }
+    None
+}
+
+/// Lightweight markdown-to-terminal renderer for exercise content.
+/// Handles three things:
+/// - `## Heading` lines → bold
+/// - Triple-backtick fenced blocks → indented + cyan-bold (each line is a
+///   command the user is meant to copy/run)
+/// - Inline `` `backticks` `` → cyan
+/// Everything else passes through unchanged. Not a full markdown
+/// renderer — pulls just enough to make commands visually prominent.
+fn render_md_for_terminal(md: &str) -> String {
+    let inline_re = regex::Regex::new(r"`([^`]+)`").unwrap();
+    let mut out = String::new();
+    let mut in_fence = false;
+    for line in md.lines() {
+        let t = line.trim_start();
+        if t.starts_with("```") {
+            // Don't print the fence markers — they're noise in a terminal
+            // view. The indent + color on the fenced lines below is the
+            // visual signal that "this is a command block".
+            in_fence = !in_fence;
+            continue;
+        }
+        if in_fence {
+            // Whole line is a command. Indent + cyan-bold.
+            out.push_str(&format!("    {}\n", line.cyan().bold()));
+            continue;
+        }
+        // Bold any heading line.
+        if t.starts_with('#') {
+            out.push_str(&format!("{}\n", line.bold()));
+            continue;
+        }
+        // Inline `backticks` → cyan.
+        let processed = inline_re.replace_all(line, |caps: &regex::Captures| {
+            caps[1].cyan().to_string()
+        });
+        out.push_str(&processed);
+        out.push('\n');
+    }
+    out
 }
 
 fn cmd_welcome() {
