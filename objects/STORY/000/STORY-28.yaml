@@ -1,0 +1,20 @@
+id: 019e10a8-c7fc-72d3-8171-192adceea067
+spec_id: STORY-28
+agreed_id: STORY-28
+title: 'Tutor cluster 4 (sessions + worktrees): exercises for session start/end, working in a worktree'
+description: |
+  Cover the session model (AIDA EPIC-20). 3-4 exercises:
+
+  - **eXX session-start**: `aida session start --owns FR-1 --branch fr-1-work` → verify worktree exists, lease at .aida/sessions/<id>.toml, symlinks back to parent
+  - **eXX session-work-in-worktree**: cd into worktree, edit FR-1, commit → verify parent + worktree both see the changes
+  - **eXX session-end**: `aida session end <id>` → verify worktree removed, lease deleted
+  - **eXX session-list-and-show** (optional): demonstrate `aida session leases` and `aida session show <id>` (the latter ships in STORY-68)
+
+  Verifiers inspect: `git worktree list` output, `.aida/sessions/` contents, lease toml.
+status: Approved
+priority: Medium
+owner: ''
+feature: Uncategorized
+created_at: 2026-05-10T06:52:37.244051073Z
+modified_at: 2026-05-10T06:52:37.244051073Z
+req_type: Story
