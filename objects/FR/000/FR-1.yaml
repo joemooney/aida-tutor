@@ -3,10 +3,10 @@ spec_id: FR-1
 agreed_id: FR-1
 title: add a hello.py hello world script
 description: the project should have a hello world script
-status: Draft
+status: InProgress
 priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-10T04:53:41.684364635Z
-modified_at: 2026-05-10T04:53:41.684364635Z
+modified_at: 2026-05-10T04:53:54.190345571Z
 req_type: Functional
