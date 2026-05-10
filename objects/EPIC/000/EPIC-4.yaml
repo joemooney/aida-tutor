@@ -34,7 +34,7 @@ priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-10T06:52:28.774698339Z
-modified_at: 2026-05-10T06:53:34.467708427Z
+modified_at: 2026-05-10T06:53:39.007663356Z
 req_type: Epic
 relationships:
 - rel_type: Parent
@@ -60,4 +60,8 @@ relationships:
 - rel_type: Parent
   target_id: 019e10a8-e18e-79e0-8aa7-8652636258f6
   created_at: 2026-05-10T06:53:34.467705753Z
+  created_by: joe
+- rel_type: Parent
+  target_id: 019e10a8-eb8d-7232-a330-4bb3318cdcbc
+  created_at: 2026-05-10T06:53:39.007660949Z
   created_by: joe
