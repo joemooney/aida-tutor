@@ -3,10 +3,10 @@ spec_id: STORY-21
 agreed_id: STORY-21
 title: 'Exercises 18+: relationships, queue, roles, history, pickup'
 description: 'v0 covers init/capture/edit/trace/commit/docs/search/status/push. Next logical ground: `aida rel add <a> <b> --kind blocks` (graph editing), `aida queue add <id> --for implementer` (multi-agent flow), `aida role enter <name>` (persistent context), `aida history` (audit trail browsing), `/aida-pickup` (Claude Code slash command). Each is one new exercise file.'
-status: Approved
+status: Rejected
 priority: Medium
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-09T22:30:34.375809752Z
-modified_at: 2026-05-09T22:30:34.375809752Z
+modified_at: 2026-05-10T07:00:38.870900297Z
 req_type: Story
