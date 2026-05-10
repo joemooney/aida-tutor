@@ -1,0 +1,21 @@
+id: 019e10a8-be76-75f0-a13e-28d9c1a9cb5a
+spec_id: STORY-27
+agreed_id: STORY-27
+title: 'Tutor cluster 3 (roles + queue): exercises for role enter, queue add/pickup/done'
+description: |
+  Cover the producer/consumer queue workflow (EPIC-12, EPIC-13). 4-5 exercises:
+
+  - **eXX role-enter**: `aida role enter implementer` → verify `AIDA_SESSION_ROLE=implementer` and PS1 prefixed
+  - **eXX queue-add-for**: `aida queue add FR-1 --for implementer` → verify entry in queue with for_role=implementer
+  - **eXX queue-pickup**: `/aida-pickup` slash command (or `aida queue next` + `aida edit FR-1 --status in-progress`) → verify status flipped
+  - **eXX queue-done**: `aida queue done FR-1` → verify status=completed AND queue entry removed atomically
+  - **eXX role-end** (optional): `aida role end` → verify env unset and PS1 stripped
+
+  Composes with: BUG-60 (PS1 accumulation) — once that ships, the role-enter exercise can include "enter twice without end, expect single PS1 prefix."
+status: Approved
+priority: High
+owner: ''
+feature: Uncategorized
+created_at: 2026-05-10T06:52:34.806446589Z
+modified_at: 2026-05-10T06:52:34.806446589Z
+req_type: Story
