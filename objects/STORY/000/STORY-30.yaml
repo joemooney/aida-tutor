@@ -1,0 +1,20 @@
+id: 019e10a8-e18e-79e0-8aa7-8652636258f6
+spec_id: STORY-30
+agreed_id: STORY-30
+title: 'Tutor cluster 6 (plans + doctor + MCP): exercises for plan add, doctor fsck, MCP serve'
+description: |
+  Cover the maintenance/integration surface (AIDA EPIC-19). 3-4 exercises:
+
+  - **eXX plan-add**: `aida plan add ...` (if/when AIDA gets a top-level plans subcommand; currently plans live as files in docs/plans/) — may pivot to "create a docs/plans/ entry that links to a req"
+  - **eXX doctor-fsck**: deliberately break the store (delete a referenced UUID), run `aida doctor fsck` → verify warnings emitted
+  - **eXX doctor-migrate-counter-scope**: switch a project from PerType to Global counters → verify reseed works
+  - **eXX mcp-serve**: `aida mcp-serve` in background, exercise asks learner to query via MCP client (or via `claude` with `.mcp.json`) — harder to verify automatically; may be a "manual" exercise with an instructed `aida-tutor verify --self-check` flag
+
+  This cluster is lowest-priority because it's the most "advanced/admin" — most learners reach it after they've internalized the daily-use loop.
+status: Approved
+priority: Low
+owner: ''
+feature: Uncategorized
+created_at: 2026-05-10T06:52:43.790093199Z
+modified_at: 2026-05-10T06:52:43.790093199Z
+req_type: Story
