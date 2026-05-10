@@ -1,0 +1,18 @@
+id: 019e10a8-b3c7-7543-a896-42909d61ab7f
+spec_id: STORY-26
+agreed_id: STORY-26
+title: 'Tutor cluster 2 (relationships): exercises for --parent and rel add'
+description: |
+  Cover relationships (FR-215, TASK-41). 2 exercises:
+
+  - **eXX add-with-parent**: `aida add --parent EPIC-1 --type story --title "..."` → verify the child req has parent=EPIC-1 and the inverse Child edge is on EPIC-1
+  - **eXX rel-add-positional**: `aida rel add STORY-A STORY-B --type duplicate` (positional form, post-TASK-41) → verify edge in target_id and the bidirectional flag adds inverse
+
+  Verifiers parse YAML in workspace's .aida-store/objects/.
+status: Approved
+priority: Medium
+owner: ''
+feature: Uncategorized
+created_at: 2026-05-10T06:52:32.071940657Z
+modified_at: 2026-05-10T06:52:32.071940657Z
+req_type: Story
