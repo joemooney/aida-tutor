@@ -23,9 +23,5 @@ priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-10T06:52:46.349304304Z
-modified_at: 2026-05-10T06:52:46.349304304Z
+modified_at: 2026-05-10T06:53:35.419726494Z
 req_type: Task
-relationships:
-- rel_type: Child
-  target_id: 019e0ed1-9df4-7273-ac2e-95ff10d13845
-  created_at: 2026-05-10T06:52:47.048394Z
