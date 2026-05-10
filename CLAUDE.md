@@ -96,3 +96,37 @@ This tutor's existence surfaces shortcomings in AIDA. When you find
 one (e.g. "wow it would be nice if `aida` had a JSON output mode for
 verifiers to consume"), file it in `~/ai/aida/` (the AIDA repo), not
 here. The tutor's own AIDA store is for tutor-internal work only.
+
+## Sync ritual with AIDA (added 2026-05-10)
+
+aida-tutor runs **behind** AIDA — every major capability shipped in
+`~/ai/aida/` should land here as one or more exercises. Until
+cross-project queue routing lands (AIDA's STORY for that is captured
+under EPIC-22 — Cross-project AIDA primitives), the sync is manual:
+
+**When a new AIDA EPIC ships:**
+
+1. Read its acceptance criteria via `aida show EPIC-N` (in `~/ai/aida/`)
+2. Decide what the learner needs to *do* to demonstrate the capability
+3. File a STORY in this tutor's own AIDA store (`cd ~/ai/aida-tutor`,
+   `aida add --type story --parent EPIC-2 --title "exercise eXX:
+   <topic>"`) — EPIC-2 here is the tutor's "v0.2 post-EPIC-9 coverage"
+   parent, see `aida list --type epic` in the tutor store
+4. Implement the verifier under `src/exercises/eXX_<slug>.rs` and the
+   content under `content/XX-<slug>.md`
+5. Wire it in `src/exercises/mod.rs`
+6. CI gates the green build on every exercise verifying against the
+   latest AIDA release (see `Cargo.toml` `aida-min-version` constant
+   and `.github/workflows/exercises.yml` once those land — both are
+   tracked in the v0.2 EPIC).
+
+**Coverage gap signal:** if `aida list --type epic --status completed`
+in `~/ai/aida/` shows EPICs that don't appear under EPIC-2's children
+in this repo, you're behind. The release script in `~/ai/aida/scripts/
+release.sh` may eventually warn about this; until then, eyeball it.
+
+**Cross-project pointer (for future tooling):** the project registry
+at `~/.aida/projects.toml` lists both repos. When AIDA's cross-project
+queue lands, an aida-side release will be able to `aida queue add
+TUTOR-COVERAGE-EPIC-N --to-project aida-tutor --for implementer`
+automatically. Today this is manual.
