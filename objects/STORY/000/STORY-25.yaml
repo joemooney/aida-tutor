@@ -1,0 +1,22 @@
+id: 019e10a8-aa36-7541-ba40-fe6577b44da8
+spec_id: STORY-25
+agreed_id: STORY-25
+title: 'Tutor cluster 1 (distributed storage): exercises for orphan-branch, push/pull, cache rebuild'
+description: |
+  Cover AIDA's distributed mode (EPIC-16). 3-4 exercises:
+
+  - **eXX init-distributed**: `aida init` (default — git-canonical) → verify orphan branch + .aida-store/ + .aida/cache.db
+  - **eXX add-then-push-store**: capture a req, then `aida push` with both `git push` and `aida store push`. Learner observes the orphan branch on origin.
+  - **eXX cache-rebuild**: corrupt cache.db deliberately; run `aida cache rebuild`; verify list works again
+  - **eXX pull-and-merge** (optional): simulate two clones, push from one, pull from other, observe convergence
+
+  Verifiers inspect: presence of `aida-store` branch in workspace's git, presence of `.aida-store/` worktree, presence of `.aida/cache.db`, content of orphan branch HEAD.
+
+  Composes with: AIDA's `aida cache status` command (already exists).
+status: Approved
+priority: High
+owner: ''
+feature: Uncategorized
+created_at: 2026-05-10T06:52:29.622336011Z
+modified_at: 2026-05-10T06:52:29.622336011Z
+req_type: Story
