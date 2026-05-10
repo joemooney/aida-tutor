@@ -18,5 +18,10 @@ priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-10T06:52:29.622336011Z
-modified_at: 2026-05-10T06:53:10.734369024Z
+modified_at: 2026-05-10T06:53:13.487363343Z
 req_type: Story
+relationships:
+- rel_type: Child
+  target_id: 019e10a8-a6e6-7060-a1fd-612e294cbb55
+  created_at: 2026-05-10T06:53:13.487337477Z
+  created_by: joe
