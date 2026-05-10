@@ -1,0 +1,38 @@
+id: 019e10a8-a6e6-7060-a1fd-612e294cbb55
+spec_id: EPIC-4
+agreed_id: EPIC-4
+title: 'v0.2: post-EPIC-9 coverage — sessions, queue/roles, distributed mode, review workflow'
+description: |
+  aida-tutor today (e01–e17) covers the **basic loop**: init → capture (vision/principle/decision/feature/bug) → list/show → trace → commit → search → complete → status → push. None of the post-EPIC-9 surface is taught.
+
+  This EPIC fills the gap with ~6 topic clusters, ~15-20 new exercises (e18 onward).
+
+  ## Topic clusters (each becomes 1+ child STORY)
+
+  1. **Distributed storage** (AIDA EPIC-16) — orphan-branch store, push/pull, cache rebuild
+  2. **Relationships** (FR-215) — `aida add --parent`, `aida rel add` (now positional!)
+  3. **Roles + Queue** (AIDA EPIC-12, EPIC-13) — `role enter`, `queue add --for`, `queue pickup`, `queue done`
+  4. **Sessions + Worktrees** (AIDA EPIC-20) — `session start`, `session end`, working in a worktree
+  5. **Code Review + Commit Pair** (AIDA EPIC-21, STORY-67) — `Aida-Store:` trailer, `aida review prompt --pr`
+  6. **Plans, Doctor, MCP** (AIDA EPIC-19) — `plan add`, `doctor fsck`, MCP server + Claude Code integration
+
+  ## Workflow this EPIC also establishes
+
+  - **Tutor-side rolling backlog (option b)** — child STORYs filed here as AIDA ships features. This EPIC's children pull from `~/ai/aida/`'s shipped EPICs.
+  - **CI gating (option c)** — GitHub Actions matrix runs every exercise against latest aida release. New aida release breaks something? CI fails before learners hit it.
+  - **Cross-project pointer** — `~/.aida/projects.toml` registers aida + aida-tutor. When AIDA's STORY-75 (cross-project queue) ships, this EPIC's children can be auto-filed by AIDA's release script.
+
+  ## Acceptance
+
+  - [ ] All 6 topic clusters have child STORYs (one per exercise or per related-pair)
+  - [ ] At least the first cluster (distributed storage) has implemented exercises landed on main
+  - [ ] `Cargo.toml` records `aida-min-version = "0.4.5"` (current AIDA version with the surface this EPIC tests)
+  - [ ] CI workflow at `.github/workflows/exercises.yml` runs all exercises with `cargo run -- demo` against the pinned aida-min-version
+  - [ ] CI updates: when aida-min-version bumps, CI matrix tests both old and new versions for one release cycle
+status: Approved
+priority: High
+owner: ''
+feature: Uncategorized
+created_at: 2026-05-10T06:52:28.774698339Z
+modified_at: 2026-05-10T06:52:28.774698339Z
+req_type: Epic
