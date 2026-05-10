@@ -1,0 +1,1528 @@
+name: aida-tutor
+title: aida-tutor
+description: ''
+requirements:
+- id: 019e0ed1-6f2b-73c1-96ab-014a33a23a60
+  spec_id: VIS-1
+  agreed_id: VIS-1
+  title: 'aida-tutor: hands-on AIDA tutor through the same flow Joe walked'
+  description: 'A rustlings-style tutor that walks a learner through AIDA''s daily workflow exercise-by-exercise, verifying each step against on-disk state. The exercises mirror the walkthrough Joe did 2026-05-09: init → add canonical reqs (vision/principle/decision) → add functional/bug → list/show/edit → trace+commit → docs build → search → status → push. Each step has clear instructions, a hint, and a verifier so the learner immediately knows whether they did it right.'
+  status: Approved
+  priority: High
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-09T22:17:47.051627364Z
+  modified_at: 2026-05-09T22:17:47.051627364Z
+  req_type: Vision
+- id: 019e10a8-eb8d-7232-a330-4bb3318cdcbc
+  spec_id: TASK-1
+  agreed_id: TASK-1
+  title: Pin aida-min-version in Cargo.toml + add CI workflow gating exercise compatibility
+  description: |
+    Cargo.toml gets a `[package.metadata.aida]` section:
+
+    ```toml
+    [package.metadata.aida]
+    min-version = "0.4.5"   # bump when an exercise relies on newer surface
+    ```
+
+    CI workflow `.github/workflows/exercises.yml`:
+    - Matrix: latest aida release + the pinned aida-min-version
+    - Each matrix leg: install aida via release tarball, run `cargo run -- reset --yes && cargo run -- demo`
+    - Fail if any exercise pending or any verifier rejects
+
+    Bumping aida-min-version is a deliberate act — it signals "we now require AIDA >= X." aida-tutor's release notes should highlight the bump.
+
+    Composes with EPIC-2's CI gating acceptance.
+  status: Approved
+  priority: High
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-10T06:52:46.349304304Z
+  modified_at: 2026-05-10T06:53:37.649769539Z
+  req_type: Task
+  relationships:
+  - rel_type: Child
+    target_id: 019e10a8-a6e6-7060-a1fd-612e294cbb55
+    created_at: 2026-05-10T06:53:37.649757036Z
+    created_by: joe
+- id: 019e0ed1-9bab-7632-ab40-c1f66f4539da
+  spec_id: EPIC-1
+  agreed_id: EPIC-1
+  title: 'Tutor CLI v0: list, show, verify, reset, watch, progress'
+  description: 'The minimum-viable tutor binary. Subcommands: list (all exercises + status), show (current or by id), verify (check current), next (advance), reset (wipe workspace + replay setup), hint (one-line nudge), progress (overall %).'
+  status: Completed
+  priority: High
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-09T22:17:58.443493106Z
+  modified_at: 2026-05-09T22:30:02.770179151Z
+  req_type: Epic
+- id: 019e0ed1-9df4-7273-ac2e-95ff10d13845
+  spec_id: EPIC-2
+  agreed_id: EPIC-2
+  title: 'Tutorial Exercises: 17 exercises mirroring the 2026-05-09 walkthrough'
+  description: Sequential exercises, each ~5 minutes for the learner. Mirrors the flow Joe walked end-to-end on 2026-05-09. Each is a separate STORY filed under this EPIC.
+  status: Completed
+  priority: High
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-09T22:17:59.028815216Z
+  modified_at: 2026-05-10T06:53:36.624442365Z
+  req_type: Epic
+- id: 019e0edd-0e98-7ab1-8192-c13a1baa3acc
+  spec_id: EPIC-3
+  agreed_id: EPIC-3
+  title: 'Tutor v1 followups: watch, demo, deeper hints, more exercises'
+  description: Backlog discovered while building v0. Each child is independently pickable by another agent.
+  status: Approved
+  priority: Medium
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-09T22:30:28.760158655Z
+  modified_at: 2026-05-09T22:30:28.760158655Z
+  req_type: Epic
+- id: 019e10a8-a6e6-7060-a1fd-612e294cbb55
+  spec_id: EPIC-4
+  agreed_id: EPIC-4
+  title: 'v0.2: post-EPIC-9 coverage — sessions, queue/roles, distributed mode, review workflow'
+  description: |
+    aida-tutor today (e01–e17) covers the **basic loop**: init → capture (vision/principle/decision/feature/bug) → list/show → trace → commit → search → complete → status → push. None of the post-EPIC-9 surface is taught.
+
+    This EPIC fills the gap with ~6 topic clusters, ~15-20 new exercises (e18 onward).
+
+    ## Topic clusters (each becomes 1+ child STORY)
+
+    1. **Distributed storage** (AIDA EPIC-16) — orphan-branch store, push/pull, cache rebuild
+    2. **Relationships** (FR-215) — `aida add --parent`, `aida rel add` (now positional!)
+    3. **Roles + Queue** (AIDA EPIC-12, EPIC-13) — `role enter`, `queue add --for`, `queue pickup`, `queue done`
+    4. **Sessions + Worktrees** (AIDA EPIC-20) — `session start`, `session end`, working in a worktree
+    5. **Code Review + Commit Pair** (AIDA EPIC-21, STORY-67) — `Aida-Store:` trailer, `aida review prompt --pr`
+    6. **Plans, Doctor, MCP** (AIDA EPIC-19) — `plan add`, `doctor fsck`, MCP server + Claude Code integration
+
+    ## Workflow this EPIC also establishes
+
+    - **Tutor-side rolling backlog (option b)** — child STORYs filed here as AIDA ships features. This EPIC's children pull from `~/ai/aida/`'s shipped EPICs.
+    - **CI gating (option c)** — GitHub Actions matrix runs every exercise against latest aida release. New aida release breaks something? CI fails before learners hit it.
+    - **Cross-project pointer** — `~/.aida/projects.toml` registers aida + aida-tutor. When AIDA's STORY-75 (cross-project queue) ships, this EPIC's children can be auto-filed by AIDA's release script.
+
+    ## Acceptance
+
+    - [ ] All 6 topic clusters have child STORYs (one per exercise or per related-pair)
+    - [ ] At least the first cluster (distributed storage) has implemented exercises landed on main
+    - [ ] `Cargo.toml` records `aida-min-version = "0.4.5"` (current AIDA version with the surface this EPIC tests)
+    - [ ] CI workflow at `.github/workflows/exercises.yml` runs all exercises with `cargo run -- demo` against the pinned aida-min-version
+    - [ ] CI updates: when aida-min-version bumps, CI matrix tests both old and new versions for one release cycle
+  status: Approved
+  priority: High
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-10T06:52:28.774698339Z
+  modified_at: 2026-05-10T06:53:39.007663356Z
+  req_type: Epic
+  relationships:
+  - rel_type: Parent
+    target_id: 019e10a8-aa36-7541-ba40-fe6577b44da8
+    created_at: 2026-05-10T06:53:14.387844803Z
+    created_by: joe
+  - rel_type: Parent
+    target_id: 019e10a8-b3c7-7543-a896-42909d61ab7f
+    created_at: 2026-05-10T06:53:18.073187434Z
+    created_by: joe
+  - rel_type: Parent
+    target_id: 019e10a8-be76-75f0-a13e-28d9c1a9cb5a
+    created_at: 2026-05-10T06:53:21.926474503Z
+    created_by: joe
+  - rel_type: Parent
+    target_id: 019e10a8-c7fc-72d3-8171-192adceea067
+    created_at: 2026-05-10T06:53:26.199589545Z
+    created_by: joe
+  - rel_type: Parent
+    target_id: 019e10a8-d777-79f3-af29-fc569524bc1e
+    created_at: 2026-05-10T06:53:30.186898523Z
+    created_by: joe
+  - rel_type: Parent
+    target_id: 019e10a8-e18e-79e0-8aa7-8652636258f6
+    created_at: 2026-05-10T06:53:34.467705753Z
+    created_by: joe
+  - rel_type: Parent
+    target_id: 019e10a8-eb8d-7232-a330-4bb3318cdcbc
+    created_at: 2026-05-10T06:53:39.007660949Z
+    created_by: joe
+- id: 019e0ed2-3c32-7980-8ed0-82854e0a52d0
+  spec_id: STORY-15
+  agreed_id: STORY-15
+  title: 'Exercise 15: aida show --comments — read the audit trail'
+  description: Learner runs aida show <FR-id> --comments. Verifier checks user has invoked it (light check).
+  status: Completed
+  priority: Low
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-09T22:18:39.538941664Z
+  modified_at: 2026-05-09T22:29:59.649567240Z
+  req_type: Story
+- id: 019e0ed2-1c94-7b11-82fa-9faf4dd7147a
+  spec_id: STORY-5
+  agreed_id: STORY-5
+  title: 'Exercise 05: capture a feature (FR-1)'
+  description: Learner adds a functional requirement. Verifier checks for FR-* in the store with status approved.
+  status: InProgress
+  priority: High
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-09T22:18:31.444688803Z
+  modified_at: 2026-05-10T04:52:27.744037465Z
+  req_type: Story
+- id: 019e0ed2-3971-73d2-b98e-175581eddb27
+  spec_id: STORY-14
+  agreed_id: STORY-14
+  title: 'Exercise 14: edit FR-1 to completed + add a comment'
+  description: Learner closes the feature loop. Verifier checks FR-* status=completed AND has >=1 comment.
+  status: Completed
+  priority: High
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-09T22:18:38.833043430Z
+  modified_at: 2026-05-09T22:29:58.026332822Z
+  req_type: Story
+- id: 019e0edd-2c5c-7dd3-acfd-14cd5a3acd65
+  spec_id: STORY-24
+  agreed_id: STORY-24
+  title: Exercise content review pass — voice, length, accuracy
+  description: 'All 17 content/*.md files were drafted in one sitting. Sweep for: voice consistency (some are more terse than others), length normalization (currently 30-100 lines), accuracy against current AIDA behavior (test each tip works), and remove anything that''s actually for AIDA contributors not learners.'
+  status: Approved
+  priority: Medium
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-09T22:30:36.380590195Z
+  modified_at: 2026-05-09T22:30:36.380590195Z
+  req_type: Story
+- id: 019e0ed2-13ab-7ee3-a430-37b4a9e849a5
+  spec_id: STORY-3
+  agreed_id: STORY-3
+  title: 'Exercise 03: capture a principle (PRIN-1)'
+  description: Learner adds a Principle. Verifier checks for PRIN-* in the store.
+  status: Completed
+  priority: High
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-09T22:18:29.163074014Z
+  modified_at: 2026-05-09T22:29:46.495644102Z
+  req_type: Story
+- id: 019e0ed2-41b0-7a52-a1e4-4d853bf3e809
+  spec_id: STORY-17
+  agreed_id: STORY-17
+  title: 'Exercise 17: aida push — unified push (will skip both legs without origin)'
+  description: Final exercise. Learner runs aida push. Verifier checks it ran successfully (the no-origin skip path is the realistic flow for this tutorial).
+  status: Completed
+  priority: Medium
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-09T22:18:40.944525110Z
+  modified_at: 2026-05-09T22:30:01.603651776Z
+  req_type: Story
+- id: 019e0ed2-2c81-7832-a4a7-02cfbf9ca0f2
+  spec_id: STORY-9
+  agreed_id: STORY-9
+  title: 'Exercise 09: edit FR-1 to in-progress'
+  description: Learner runs aida edit. Verifier checks FR-* status is in-progress.
+  status: Completed
+  priority: High
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-09T22:18:35.521044381Z
+  modified_at: 2026-05-09T22:29:52.603394649Z
+  req_type: Story
+- id: 019e0ed2-0d86-7fd0-89fe-081b2503998f
+  spec_id: STORY-1
+  agreed_id: STORY-1
+  title: 'Exercise 01: aida init in an empty repo'
+  description: 'Learner stands up an AIDA store in workspace/. Verifier checks: .aida-store/ exists, .aida/config.toml exists, aida-store branch exists in workspace/.git, .claude/ scaffolding present.'
+  status: Completed
+  priority: High
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-09T22:18:27.590977187Z
+  modified_at: 2026-05-09T22:29:44.506969603Z
+  req_type: Story
+- id: 019e0ed2-0fc2-7fb0-8484-7f1886303d2e
+  spec_id: STORY-2
+  agreed_id: STORY-2
+  title: 'Exercise 02: capture project vision (VIS-1)'
+  description: 'Learner runs `aida add --type vision` to capture the project''s intent. Verifier checks: aida list contains exactly one VIS-* entry, status approved.'
+  status: Completed
+  priority: High
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-09T22:18:28.162626501Z
+  modified_at: 2026-05-09T22:29:45.423747889Z
+  req_type: Story
+- id: 019e0ed2-2ed0-7271-8909-85c20cef4f55
+  spec_id: STORY-10
+  agreed_id: STORY-10
+  title: 'Exercise 10: write code with a trace comment'
+  description: Learner creates src/convert.rs (any content) with a // trace:FR-... | ai:claude comment. Verifier greps for that pattern in the workspace.
+  status: Completed
+  priority: High
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-09T22:18:36.112878133Z
+  modified_at: 2026-05-09T22:29:53.483493603Z
+  req_type: Story
+- id: 019e10a8-b3c7-7543-a896-42909d61ab7f
+  spec_id: STORY-26
+  agreed_id: STORY-26
+  title: 'Tutor cluster 2 (relationships): exercises for --parent and rel add'
+  description: |
+    Cover relationships (FR-215, TASK-41). 2 exercises:
+
+    - **eXX add-with-parent**: `aida add --parent EPIC-1 --type story --title "..."` → verify the child req has parent=EPIC-1 and the inverse Child edge is on EPIC-1
+    - **eXX rel-add-positional**: `aida rel add STORY-A STORY-B --type duplicate` (positional form, post-TASK-41) → verify edge in target_id and the bidirectional flag adds inverse
+
+    Verifiers parse YAML in workspace's .aida-store/objects/.
+  status: Approved
+  priority: Medium
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-10T06:52:32.071940657Z
+  modified_at: 2026-05-10T06:53:17.051786044Z
+  req_type: Story
+  relationships:
+  - rel_type: Child
+    target_id: 019e10a8-a6e6-7060-a1fd-612e294cbb55
+    created_at: 2026-05-10T06:53:17.051769904Z
+    created_by: joe
+- id: 019e0edd-2245-7a91-bd43-5cca5b7d11b7
+  spec_id: STORY-20
+  agreed_id: STORY-20
+  title: 'Multi-level hints: --more, --solution escape valves'
+  description: 'Current hint is one paragraph. Add: `aida-tutor hint --more` for a multi-step nudge (concrete steps, less direct than the command) and `aida-tutor hint --solution` for the literal command (last resort). Persist whether a learner used --solution so it shows up in their progress as ''completed-with-solution'' vs ''completed''.'
+  status: Approved
+  priority: Medium
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-09T22:30:33.797545295Z
+  modified_at: 2026-05-09T22:30:33.797545295Z
+  req_type: Story
+- id: 019e0ed2-33dd-75c2-8a85-adbecdd7ef7a
+  spec_id: STORY-12
+  agreed_id: STORY-12
+  title: 'Exercise 12: aida docs build — project canonical layer'
+  description: Learner runs aida docs build. Verifier checks docs/aida/README.md exists and contains entries for VIS/PRIN/ADR.
+  status: Completed
+  priority: Medium
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-09T22:18:37.405108758Z
+  modified_at: 2026-05-09T22:29:56.008757297Z
+  req_type: Story
+- id: 019e0ed2-3f20-7530-9fea-e55f72be970b
+  spec_id: STORY-16
+  agreed_id: STORY-16
+  title: 'Exercise 16: aida status — read the project pulse'
+  description: Learner runs aida status. Verifier checks user has invoked it (light).
+  status: Completed
+  priority: Low
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-09T22:18:40.288666619Z
+  modified_at: 2026-05-09T22:30:00.511993778Z
+  req_type: Story
+- id: 019e10a8-be76-75f0-a13e-28d9c1a9cb5a
+  spec_id: STORY-27
+  agreed_id: STORY-27
+  title: 'Tutor cluster 3 (roles + queue): exercises for role enter, queue add/pickup/done'
+  description: |
+    Cover the producer/consumer queue workflow (EPIC-12, EPIC-13). 4-5 exercises:
+
+    - **eXX role-enter**: `aida role enter implementer` → verify `AIDA_SESSION_ROLE=implementer` and PS1 prefixed
+    - **eXX queue-add-for**: `aida queue add FR-1 --for implementer` → verify entry in queue with for_role=implementer
+    - **eXX queue-pickup**: `/aida-pickup` slash command (or `aida queue next` + `aida edit FR-1 --status in-progress`) → verify status flipped
+    - **eXX queue-done**: `aida queue done FR-1` → verify status=completed AND queue entry removed atomically
+    - **eXX role-end** (optional): `aida role end` → verify env unset and PS1 stripped
+
+    Composes with: BUG-60 (PS1 accumulation) — once that ships, the role-enter exercise can include "enter twice without end, expect single PS1 prefix."
+  status: Approved
+  priority: High
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-10T06:52:34.806446589Z
+  modified_at: 2026-05-10T06:53:21.021169252Z
+  req_type: Story
+  relationships:
+  - rel_type: Child
+    target_id: 019e10a8-a6e6-7060-a1fd-612e294cbb55
+    created_at: 2026-05-10T06:53:21.021158901Z
+    created_by: joe
+- id: 019e0ed2-2386-76b3-8927-53781f7b5a63
+  spec_id: STORY-7
+  agreed_id: STORY-7
+  title: 'Exercise 07: aida list — see all five reqs'
+  description: 'Learner runs aida list. Verifier checks the user has run a list command via shell history? Or simpler: just stamp progress on the user''s aida-tutor verify call (which can detect that all five types exist by now).'
+  status: Completed
+  priority: Medium
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-09T22:18:33.222401027Z
+  modified_at: 2026-05-09T22:29:50.555014411Z
+  req_type: Story
+- id: 019e0ed2-18e4-7803-b7a0-a66172fc3e07
+  spec_id: STORY-4
+  agreed_id: STORY-4
+  title: 'Exercise 04: capture a decision (ADR-1)'
+  description: Learner adds a Decision. Verifier checks for ADR-* in the store.
+  status: Completed
+  priority: High
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-09T22:18:30.500191157Z
+  modified_at: 2026-05-09T22:29:47.494603133Z
+  req_type: Story
+- id: 019e10a8-aa36-7541-ba40-fe6577b44da8
+  spec_id: STORY-25
+  agreed_id: STORY-25
+  title: 'Tutor cluster 1 (distributed storage): exercises for orphan-branch, push/pull, cache rebuild'
+  description: |
+    Cover AIDA's distributed mode (EPIC-16). 3-4 exercises:
+
+    - **eXX init-distributed**: `aida init` (default — git-canonical) → verify orphan branch + .aida-store/ + .aida/cache.db
+    - **eXX add-then-push-store**: capture a req, then `aida push` with both `git push` and `aida store push`. Learner observes the orphan branch on origin.
+    - **eXX cache-rebuild**: corrupt cache.db deliberately; run `aida cache rebuild`; verify list works again
+    - **eXX pull-and-merge** (optional): simulate two clones, push from one, pull from other, observe convergence
+
+    Verifiers inspect: presence of `aida-store` branch in workspace's git, presence of `.aida-store/` worktree, presence of `.aida/cache.db`, content of orphan branch HEAD.
+
+    Composes with: AIDA's `aida cache status` command (already exists).
+  status: Approved
+  priority: High
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-10T06:52:29.622336011Z
+  modified_at: 2026-05-10T06:53:13.487363343Z
+  req_type: Story
+  relationships:
+  - rel_type: Child
+    target_id: 019e10a8-a6e6-7060-a1fd-612e294cbb55
+    created_at: 2026-05-10T06:53:13.487337477Z
+    created_by: joe
+- id: 019e10a8-c7fc-72d3-8171-192adceea067
+  spec_id: STORY-28
+  agreed_id: STORY-28
+  title: 'Tutor cluster 4 (sessions + worktrees): exercises for session start/end, working in a worktree'
+  description: |
+    Cover the session model (AIDA EPIC-20). 3-4 exercises:
+
+    - **eXX session-start**: `aida session start --owns FR-1 --branch fr-1-work` → verify worktree exists, lease at .aida/sessions/<id>.toml, symlinks back to parent
+    - **eXX session-work-in-worktree**: cd into worktree, edit FR-1, commit → verify parent + worktree both see the changes
+    - **eXX session-end**: `aida session end <id>` → verify worktree removed, lease deleted
+    - **eXX session-list-and-show** (optional): demonstrate `aida session leases` and `aida session show <id>` (the latter ships in STORY-68)
+
+    Verifiers inspect: `git worktree list` output, `.aida/sessions/` contents, lease toml.
+  status: Approved
+  priority: Medium
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-10T06:52:37.244051073Z
+  modified_at: 2026-05-10T06:53:24.885637276Z
+  req_type: Story
+  relationships:
+  - rel_type: Child
+    target_id: 019e10a8-a6e6-7060-a1fd-612e294cbb55
+    created_at: 2026-05-10T06:53:24.885623455Z
+    created_by: joe
+- id: 019e0edd-1fac-72d2-b3c3-0b05f7744ecb
+  spec_id: STORY-19
+  agreed_id: STORY-19
+  title: aida-tutor demo — non-interactive walkthrough for CI
+  description: 'Run all exercises in order, executing the necessary aida commands as subprocess between verify calls. Exits non-zero on any pending/fail. Use case: CI gate to ensure the tutor stays in lockstep with the AIDA CLI surface; also a smoke test before releases.'
+  status: Approved
+  priority: Medium
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-09T22:30:33.132601965Z
+  modified_at: 2026-05-09T22:30:33.132601965Z
+  req_type: Story
+- id: 019e0ed2-31a5-7363-bdeb-b637494738f9
+  spec_id: STORY-11
+  agreed_id: STORY-11
+  title: 'Exercise 11: commit with the AIDA format and pass the validator'
+  description: 'Learner stages + commits with [AI:tool] type(scope): description (REQ-ID) format. Verifier reads git log -1 and checks the message format + REQ-ID presence.'
+  status: Completed
+  priority: High
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-09T22:18:36.837292356Z
+  modified_at: 2026-05-09T22:29:54.867434190Z
+  req_type: Story
+- id: 019e10a8-e18e-79e0-8aa7-8652636258f6
+  spec_id: STORY-30
+  agreed_id: STORY-30
+  title: 'Tutor cluster 6 (plans + doctor + MCP): exercises for plan add, doctor fsck, MCP serve'
+  description: |
+    Cover the maintenance/integration surface (AIDA EPIC-19). 3-4 exercises:
+
+    - **eXX plan-add**: `aida plan add ...` (if/when AIDA gets a top-level plans subcommand; currently plans live as files in docs/plans/) — may pivot to "create a docs/plans/ entry that links to a req"
+    - **eXX doctor-fsck**: deliberately break the store (delete a referenced UUID), run `aida doctor fsck` → verify warnings emitted
+    - **eXX doctor-migrate-counter-scope**: switch a project from PerType to Global counters → verify reseed works
+    - **eXX mcp-serve**: `aida mcp-serve` in background, exercise asks learner to query via MCP client (or via `claude` with `.mcp.json`) — harder to verify automatically; may be a "manual" exercise with an instructed `aida-tutor verify --self-check` flag
+
+    This cluster is lowest-priority because it's the most "advanced/admin" — most learners reach it after they've internalized the daily-use loop.
+  status: Approved
+  priority: Low
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-10T06:52:43.790093199Z
+  modified_at: 2026-05-10T06:53:33.476239556Z
+  req_type: Story
+  relationships:
+  - rel_type: Child
+    target_id: 019e10a8-a6e6-7060-a1fd-612e294cbb55
+    created_at: 2026-05-10T06:53:33.476220096Z
+    created_by: joe
+- id: 019e0edd-26ef-7370-9195-a1720f7abb5b
+  spec_id: STORY-22
+  agreed_id: STORY-22
+  title: 'Verifier rigor: detect aida-CLI invocations from a wrapper'
+  description: Exercises 7, 8, 13, 15, 16, 17 currently pass on prerequisite state alone — we can't tell whether the user actually ran a read-only command like `aida search`. A workspace-local `aida` wrapper script that logs invocations to .aida-tutor-invocations.log would let verifiers check 'has the user invoked X this session?'. Optional opt-in (off by default).
+  status: Approved
+  priority: Low
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-09T22:30:34.991632321Z
+  modified_at: 2026-05-09T22:30:34.991632321Z
+  req_type: Story
+- id: 019e0ed2-2003-70f3-90a7-6388a239ad0b
+  spec_id: STORY-6
+  agreed_id: STORY-6
+  title: 'Exercise 06: capture a bug (BUG-1)'
+  description: Learner adds a bug. Verifier checks for BUG-* in the store.
+  status: Completed
+  priority: High
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-09T22:18:32.323976647Z
+  modified_at: 2026-05-09T22:29:49.460905972Z
+  req_type: Story
+- id: 019e0edd-29ab-78f3-989b-2ddcb591ae53
+  spec_id: STORY-23
+  agreed_id: STORY-23
+  title: 'First-run experience: aida-tutor by itself prints a welcome'
+  description: 'When run with no args AND no progress yet, print a 5-line welcome instead of jumping straight to show. Mention: what the tutor is, what aida is, the four daily commands (show/hint/verify/list), and ''run reset --yes to begin''.'
+  status: Completed
+  priority: Low
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-09T22:30:35.691331850Z
+  modified_at: 2026-05-09T22:33:14.983478892Z
+  req_type: Story
+- id: 019e0edd-1d6b-7151-9a9e-3447eb73876c
+  spec_id: STORY-18
+  agreed_id: STORY-18
+  title: aida-tutor watch — auto-re-verify on workspace changes
+  description: 'rustlings has a  mode that re-runs  whenever any source file changes. Implement the equivalent: poll workspace/ for mtime changes (or use notify crate for inotify on Linux) and re-run the current exercise''s verify on each change. Print a colored pass/pending/fail line. Ctrl-C to exit.'
+  status: Completed
+  priority: High
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-09T22:30:32.555836984Z
+  modified_at: 2026-05-09T22:33:13.205634029Z
+  req_type: Story
+- id: 019e0ed2-2748-73f1-96af-dddc29bf1928
+  spec_id: STORY-8
+  agreed_id: STORY-8
+  title: 'Exercise 08: aida show <id> — read full record'
+  description: Learner picks any one of their reqs and runs aida show. Verifier asks the user to paste the spec_id they showed; checks it exists.
+  status: Completed
+  priority: Medium
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-09T22:18:34.183984064Z
+  modified_at: 2026-05-09T22:29:51.465951420Z
+  req_type: Story
+- id: 019e10a8-d777-79f3-af29-fc569524bc1e
+  spec_id: STORY-29
+  agreed_id: STORY-29
+  title: 'Tutor cluster 5 (code review + commit pair): exercises for Aida-Store trailer, review prompt --pr'
+  description: |
+    Cover the code↔store pairing (EPIC-21) and review workflow (STORY-67). 2-3 exercises:
+
+    - **eXX commit-pair-trailer**: write a commit with the prepare-commit-msg hook installed → verify `Aida-Store: <sha>` trailer was added automatically
+    - **eXX review-prompt-specs**: `aida review prompt --specs FR-1` → verify it prints the acceptance section + diff hints
+    - **eXX review-prompt-pr**: `gh pr create` (mock or real), `aida review prompt --pr 1` → verify it pulls all linked specs and emits a review brief
+
+    Note: the `--pr` exercise needs `gh` available. Mark as optional or scaffold a fake-gh wrapper for the workspace.
+  status: Approved
+  priority: Medium
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-10T06:52:41.207540256Z
+  modified_at: 2026-05-10T06:53:29.129004947Z
+  req_type: Story
+  relationships:
+  - rel_type: Child
+    target_id: 019e10a8-a6e6-7060-a1fd-612e294cbb55
+    created_at: 2026-05-10T06:53:29.128989124Z
+    created_by: joe
+- id: 019e0edd-2487-7f11-af5a-0343c93bfa1a
+  spec_id: STORY-21
+  agreed_id: STORY-21
+  title: 'Exercises 18+: relationships, queue, roles, history, pickup'
+  description: 'v0 covers init/capture/edit/trace/commit/docs/search/status/push. Next logical ground: `aida rel add <a> <b> --kind blocks` (graph editing), `aida queue add <id> --for implementer` (multi-agent flow), `aida role enter <name>` (persistent context), `aida history` (audit trail browsing), `/aida-pickup` (Claude Code slash command). Each is one new exercise file.'
+  status: Approved
+  priority: Medium
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-09T22:30:34.375809752Z
+  modified_at: 2026-05-09T22:30:34.375809752Z
+  req_type: Story
+- id: 019e0ed2-3627-7430-9479-b880ef3d55b0
+  spec_id: STORY-13
+  agreed_id: STORY-13
+  title: 'Exercise 13: aida search ''keyword'' — cross-cutting find'
+  description: Learner runs aida search. Verifier asks user to paste output and checks it includes >=1 match (light verification).
+  status: Completed
+  priority: Low
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-09T22:18:37.991441491Z
+  modified_at: 2026-05-09T22:29:57.048115856Z
+  req_type: Story
+- id: 019e0ed1-78d6-7860-b4b0-1472f325548d
+  spec_id: ADR-1
+  agreed_id: ADR-1
+  title: Use the installed aida CLI as a subprocess, not the aida-core crate as a library
+  description: 'The tutor verifies that the user''s `aida` invocations produced the right state. Spawning aida as a subprocess is the only way to test the actual CLI surface (parsing, output formatting, exit codes) — the same surface the user is learning. Linking aida-core as a library would test something subtly different. Cost: the tutor needs aida on PATH; the README documents this.'
+  status: Approved
+  priority: High
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-09T22:17:49.526924035Z
+  modified_at: 2026-05-09T22:17:49.526924035Z
+  req_type: Decision
+- id: 019e0ed1-7b0c-7053-889f-54b2f682d96b
+  spec_id: ADR-2
+  agreed_id: ADR-2
+  title: Exercise content lives in markdown files, not Rust string literals
+  description: 'Each exercise''s task description, hint, and ''what you''ll learn'' lives in content/NN-slug.md. Rust code only knows the slug + verifier. Pros: writing/editing exercises is a pure markdown task (no recompile); content can be PR''d by non-Rust contributors; the model can grade content quality without reading Rust.'
+  status: Approved
+  priority: Medium
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-09T22:17:50.092182421Z
+  modified_at: 2026-05-09T22:17:50.092182421Z
+  req_type: Decision
+- id: 019e0ed1-769b-7151-87e4-10cd8ecf33a4
+  spec_id: PRIN-3
+  agreed_id: PRIN-3
+  title: Hints are explicit; solutions are not
+  description: Every exercise has a one-paragraph hint surfaced via `aida-tutor hint`. We do NOT show the literal command. Learning happens at the level of 'I know what to type'; rote-copy doesn't build the model.
+  status: Approved
+  priority: Medium
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-09T22:17:48.955894252Z
+  modified_at: 2026-05-09T22:17:48.955894252Z
+  req_type: Principle
+- id: 019e0ed1-7431-7de0-bec3-4875d034a983
+  spec_id: PRIN-2
+  agreed_id: PRIN-2
+  title: One workspace per learner, reset-friendly
+  description: All exercises operate on a single ./workspace/ directory at the tutor repo root. `aida-tutor reset` wipes it and restores the starting state for the current exercise. No exercise leaves persistent global state (no ~/.aida/ pollution beyond what AIDA itself does).
+  status: Approved
+  priority: Medium
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-09T22:17:48.337308992Z
+  modified_at: 2026-05-09T22:17:48.337308992Z
+  req_type: Principle
+- id: 019e0ed1-7184-7960-96ae-766c12874b91
+  spec_id: PRIN-1
+  agreed_id: PRIN-1
+  title: Verifiers inspect on-disk state, never patch it
+  description: 'Every exercise verifier reads the workspace + .aida-store/ + git state and reports Pass/Fail/Pending. It NEVER edits the user''s files, ids, or store contents. The user is the only mutator. This keeps the tutor honest: if the verifier passes, the user actually did the thing.'
+  status: Approved
+  priority: High
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-09T22:17:47.652349910Z
+  modified_at: 2026-05-09T22:17:47.652349910Z
+  req_type: Principle
+- id: 019e0ed1-077a-76e2-8841-b3b0bb481c81
+  spec_id: META-002
+  title: Evaluate Requirement
+  description: |-
+    Template for evaluating requirement quality. Placeholders: {global_context}, {project_context}, {req_context}, {related_context}, {additional_instructions}, {type_extra}
+
+    ---
+
+    You are an expert requirements analyst evaluating a software requirement for quality and completeness.
+
+    {global_context}
+    {project_context}
+
+    {req_context}
+
+    {related_context}
+    {additional_instructions}{type_extra}
+    ## Task
+    Evaluate this requirement and provide a structured assessment. Consider:
+    1. Clarity: Is the requirement clearly stated and unambiguous?
+    2. Completeness: Does it have sufficient detail for implementation?
+    3. Testability: Can this requirement be verified/tested?
+    4. Consistency: Does it align with related requirements?
+    5. Feasibility: Is it realistic and achievable?
+
+    ## Response Format
+    Respond ONLY with valid JSON in this exact format:
+    ```json
+    {
+      "quality_score": <1-10>,
+      "issues": [
+        {
+          "type": "<vague_language|missing_criteria|ambiguous|incomplete|inconsistent|untestable>",
+          "severity": "<low|medium|high>",
+          "text": "<description of the issue>",
+          "suggestion": "<how to fix it>"
+        }
+      ],
+      "strengths": ["<strength1>", "<strength2>"],
+      "suggested_improvements": {
+        "description": "<improved description text if needed, or null>",
+        "rationale": "<why this improvement helps>"
+      }
+    }
+    ```
+
+    Provide your evaluation now:
+  status: Draft
+  priority: Medium
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-09T22:17:20.506897936Z
+  modified_at: 2026-05-09T22:17:20.506897936Z
+  req_type: Meta
+  meta_subtype: Prompt
+  relationships:
+  - rel_type: Parent
+    target_id: 019e0ed1-077a-76e2-8841-b3a582c181c5
+    created_at: 2026-05-09T22:17:20.506900051Z
+- id: 019e0ed1-077a-76e2-8841-b3c77f3af6f4
+  spec_id: META-003
+  title: Find Duplicates
+  description: |-
+    Template for finding duplicate or overlapping requirements. Placeholders: {global_context}, {project_context}, {req_context}, {all_reqs}, {additional_instructions}
+
+    ---
+
+    You are an expert requirements analyst identifying potential duplicate or overlapping requirements.
+
+    {global_context}
+    {project_context}
+
+    {req_context}
+
+    {all_reqs}
+    {additional_instructions}
+    ## Task
+    Analyze the current requirement and compare it against all other requirements to find:
+    1. Exact duplicates (same functionality described differently)
+    2. Partial overlaps (requirements that cover similar ground)
+    3. Potential conflicts (requirements that contradict each other)
+
+    Only report requirements with similarity > 0.5 (50%).
+
+    ## Response Format
+    Respond ONLY with valid JSON in this exact format:
+    ```json
+    {
+      "potential_duplicates": [
+        {
+          "spec_id": "<SPEC-ID of similar requirement>",
+          "similarity": <0.0-1.0>,
+          "reason": "<why these are similar>",
+          "recommendation": "<merge|link|keep_separate|review>"
+        }
+      ]
+    }
+    ```
+
+    If no duplicates found, return: {"potential_duplicates": []}
+
+    Provide your analysis now:
+  status: Draft
+  priority: Medium
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-09T22:17:20.506901041Z
+  modified_at: 2026-05-09T22:17:20.506901041Z
+  req_type: Meta
+  meta_subtype: Prompt
+  relationships:
+  - rel_type: Parent
+    target_id: 019e0ed1-077a-76e2-8841-b3a582c181c5
+    created_at: 2026-05-09T22:17:20.506902293Z
+- id: 019e0ed1-077a-76e2-8841-b3fe69c433c2
+  spec_id: META-006
+  title: Generate Children
+  description: |-
+    Template for generating child requirements. Placeholders: {global_context}, {project_context}, {req_context}, {existing_children}, {additional_instructions}, {type_extra}
+
+    ---
+
+    You are an expert requirements analyst decomposing a high-level requirement into specific, actionable child requirements.
+
+    {global_context}
+    {project_context}
+
+    {req_context}
+
+    {existing_children}
+    {additional_instructions}{type_extra}
+    ## Task
+    Break down this requirement into specific, actionable child requirements that together fulfill the parent requirement:
+
+    1. Each child should be independently implementable
+    2. Children should be specific and testable
+    3. Consider different aspects: functionality, UI, data, integration, error handling
+    4. Suggest appropriate requirement types for each child
+    5. Avoid duplicating existing children
+
+    ## Response Format
+    Respond ONLY with valid JSON in this exact format:
+    ```json
+    {
+      "suggested_children": [
+        {
+          "title": "<concise title>",
+          "description": "<detailed description with acceptance criteria>",
+          "type": "<Functional|NonFunctional|Task|Story>",
+          "priority": "<High|Medium|Low>",
+          "rationale": "<why this child requirement is needed>"
+        }
+      ]
+    }
+    ```
+
+    Provide your analysis now:
+  status: Draft
+  priority: Medium
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-09T22:17:20.506906780Z
+  modified_at: 2026-05-09T22:17:20.506906780Z
+  req_type: Meta
+  meta_subtype: Prompt
+  relationships:
+  - rel_type: Parent
+    target_id: 019e0ed1-077a-76e2-8841-b3a582c181c5
+    created_at: 2026-05-09T22:17:20.506907964Z
+- id: 019e0ed1-077a-76e2-8841-b3a582c181c5
+  spec_id: META-001
+  title: AI Prompts
+  description: Default AI prompt templates. Edit these to customize how AI analyzes and improves requirements.
+  status: Draft
+  priority: Medium
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-09T22:17:20.506858689Z
+  modified_at: 2026-05-09T22:17:20.506858689Z
+  req_type: Meta
+  meta_subtype: Prompt
+  relationships:
+  - rel_type: Child
+    target_id: 019e0ed1-077a-76e2-8841-b3b0bb481c81
+    created_at: 2026-05-09T22:17:20.506900051Z
+  - rel_type: Child
+    target_id: 019e0ed1-077a-76e2-8841-b3c77f3af6f4
+    created_at: 2026-05-09T22:17:20.506902293Z
+  - rel_type: Child
+    target_id: 019e0ed1-077a-76e2-8841-b3d83abcca30
+    created_at: 2026-05-09T22:17:20.506904028Z
+  - rel_type: Child
+    target_id: 019e0ed1-077a-76e2-8841-b3e481c63bc0
+    created_at: 2026-05-09T22:17:20.506906302Z
+  - rel_type: Child
+    target_id: 019e0ed1-077a-76e2-8841-b3fe69c433c2
+    created_at: 2026-05-09T22:17:20.506907964Z
+- id: 019e0ed1-077a-76e2-8841-b3e481c63bc0
+  spec_id: META-005
+  title: Improve Description
+  description: |-
+    Template for improving requirement descriptions. Placeholders: {global_context}, {project_context}, {req_context}, {related_context}, {examples}, {additional_instructions}, {type_extra}, {req_type}
+
+    ---
+
+    You are an expert requirements analyst improving a requirement's description for clarity and completeness.
+
+    {global_context}
+    {project_context}
+
+    {req_context}
+
+    {related_context}
+
+    {examples}
+    {additional_instructions}{type_extra}
+    ## Task
+    Improve the requirement's description to be:
+    1. Clear and unambiguous
+    2. Complete with acceptance criteria where appropriate
+    3. Testable/verifiable
+    4. Consistent with the requirement type ({req_type})
+    5. Professional and well-structured
+
+    Do NOT change the meaning or scope of the requirement.
+
+    ## Response Format
+    Respond ONLY with valid JSON in this exact format:
+    ```json
+    {
+      "improved_description": "<the improved description text>",
+      "changes_made": ["<change1>", "<change2>"],
+      "rationale": "<why these improvements help>"
+    }
+    ```
+
+    Provide your improved version now:
+  status: Draft
+  priority: Medium
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-09T22:17:20.506904740Z
+  modified_at: 2026-05-09T22:17:20.506904740Z
+  req_type: Meta
+  meta_subtype: Prompt
+  relationships:
+  - rel_type: Parent
+    target_id: 019e0ed1-077a-76e2-8841-b3a582c181c5
+    created_at: 2026-05-09T22:17:20.506906302Z
+- id: 019e0ed1-077a-76e2-8841-b3d83abcca30
+  spec_id: META-004
+  title: Suggest Relationships
+  description: |-
+    Template for suggesting missing relationships. Placeholders: {global_context}, {project_context}, {req_context}, {all_reqs}, {rel_types}, {additional_instructions}
+
+    ---
+
+    You are an expert requirements analyst identifying missing relationships between requirements.
+
+    {global_context}
+    {project_context}
+
+    {req_context}
+
+    {all_reqs}
+
+    ## Available Relationship Types
+    - {rel_types}
+    {additional_instructions}
+    ## Task
+    Analyze the current requirement and suggest relationships that should exist but don't:
+    1. Dependencies (what must be done first)
+    2. Parent/child relationships (decomposition)
+    3. Verification relationships (what tests/validates this)
+    4. References (related but not dependent)
+
+    Only suggest relationships with confidence > 0.7 (70%).
+
+    ## Response Format
+    Respond ONLY with valid JSON in this exact format:
+    ```json
+    {
+      "suggested_relationships": [
+        {
+          "rel_type": "<relationship type>",
+          "target_spec_id": "<SPEC-ID of target requirement>",
+          "confidence": <0.0-1.0>,
+          "rationale": "<why this relationship should exist>"
+        }
+      ]
+    }
+    ```
+
+    If no relationships to suggest, return: {"suggested_relationships": []}
+
+    Provide your analysis now:
+  status: Draft
+  priority: Medium
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-09T22:17:20.506902733Z
+  modified_at: 2026-05-09T22:17:20.506902733Z
+  req_type: Meta
+  meta_subtype: Prompt
+  relationships:
+  - rel_type: Parent
+    target_id: 019e0ed1-077a-76e2-8841-b3a582c181c5
+    created_at: 2026-05-09T22:17:20.506904028Z
+- id: 019e103b-e6b4-7403-849d-08544b41c550
+  spec_id: FR-1
+  agreed_id: FR-1
+  title: add a hello.py hello world script
+  description: the project should have a hello world script
+  status: InProgress
+  priority: High
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-10T04:53:41.684364635Z
+  modified_at: 2026-05-10T04:53:54.190345571Z
+  req_type: Functional
+id_config:
+  format: SingleLevel
+  numbering: Global
+  digits: 3
+  requirement_types:
+  - name: Functional
+    prefix: FR
+    description: Functional requirements
+  - name: Non-Functional
+    prefix: NFR
+    description: Non-functional requirements (performance, security, etc.)
+  - name: System
+    prefix: SR
+    description: System-level requirements
+  - name: User
+    prefix: UR
+    description: User story requirements
+  - name: Change Request
+    prefix: CR
+    description: Change requests for modifications to existing functionality
+  - name: Bug
+    prefix: BUG
+    description: Bug reports and defects
+  - name: Epic
+    prefix: EPIC
+    description: Large features spanning multiple stories
+  - name: Story
+    prefix: STORY
+    description: User stories for agile development
+  - name: Task
+    prefix: TASK
+    description: Individual work items
+  - name: Spike
+    prefix: SPIKE
+    description: Research and investigation tasks
+  - name: Sprint
+    prefix: SPRINT
+    description: Sprint planning containers
+  - name: Folder
+    prefix: FOLDER
+    description: Organizational folders
+  - name: Meta
+    prefix: META
+    description: Database configuration and templates
+features: []
+next_feature_number: 1
+next_spec_number: 7
+prefix_counters: {}
+relationship_definitions:
+- name: parent
+  display_name: Parent
+  description: Hierarchical parent requirement
+  inverse: child
+  symmetric: false
+  cardinality: OneToMany
+  source_types: []
+  target_types: []
+  built_in: true
+  color: null
+  icon: null
+- name: child
+  display_name: Child
+  description: Hierarchical child requirement
+  inverse: parent
+  symmetric: false
+  cardinality: ManyToOne
+  source_types: []
+  target_types: []
+  built_in: true
+  color: null
+  icon: null
+- name: verifies
+  display_name: Verifies
+  description: Test or verification relationship
+  inverse: verified_by
+  symmetric: false
+  cardinality: ManyToMany
+  source_types: []
+  target_types: []
+  built_in: true
+  color: null
+  icon: null
+- name: verified_by
+  display_name: Verified By
+  description: Verified by a test requirement
+  inverse: verifies
+  symmetric: false
+  cardinality: ManyToMany
+  source_types: []
+  target_types: []
+  built_in: true
+  color: null
+  icon: null
+- name: duplicate
+  display_name: Duplicate
+  description: Marks requirements as duplicates
+  inverse: null
+  symmetric: true
+  cardinality: ManyToMany
+  source_types: []
+  target_types: []
+  built_in: true
+  color: null
+  icon: null
+- name: references
+  display_name: References
+  description: General reference link
+  inverse: null
+  symmetric: false
+  cardinality: ManyToMany
+  source_types: []
+  target_types: []
+  built_in: true
+  color: null
+  icon: null
+- name: depends_on
+  display_name: Depends On
+  description: Dependency relationship
+  inverse: dependency_of
+  symmetric: false
+  cardinality: ManyToMany
+  source_types: []
+  target_types: []
+  built_in: true
+  color: null
+  icon: null
+- name: dependency_of
+  display_name: Dependency Of
+  description: Inverse dependency relationship
+  inverse: depends_on
+  symmetric: false
+  cardinality: ManyToMany
+  source_types: []
+  target_types: []
+  built_in: true
+  color: null
+  icon: null
+- name: implements
+  display_name: Implements
+  description: Implementation relationship
+  inverse: implemented_by
+  symmetric: false
+  cardinality: ManyToMany
+  source_types: []
+  target_types: []
+  built_in: true
+  color: null
+  icon: null
+- name: implemented_by
+  display_name: Implemented By
+  description: Inverse implementation relationship
+  inverse: implements
+  symmetric: false
+  cardinality: ManyToMany
+  source_types: []
+  target_types: []
+  built_in: true
+  color: null
+  icon: null
+- name: created_by
+  display_name: Created By
+  description: User who created the requirement
+  inverse: null
+  symmetric: false
+  cardinality: ManyToOne
+  source_types: []
+  target_types: []
+  built_in: true
+  color: '#4a9eff'
+  icon: null
+- name: assigned_to
+  display_name: Assigned To
+  description: User assigned to work on this requirement
+  inverse: null
+  symmetric: false
+  cardinality: ManyToOne
+  source_types: []
+  target_types: []
+  built_in: true
+  color: '#22c55e'
+  icon: null
+- name: tested_by
+  display_name: Tested By
+  description: User who tested/verified the requirement
+  inverse: null
+  symmetric: false
+  cardinality: ManyToMany
+  source_types: []
+  target_types: []
+  built_in: true
+  color: '#f59e0b'
+  icon: null
+- name: closed_by
+  display_name: Closed By
+  description: User who closed/completed the requirement
+  inverse: null
+  symmetric: false
+  cardinality: ManyToOne
+  source_types: []
+  target_types: []
+  built_in: true
+  color: '#ef4444'
+  icon: null
+- name: sprint_assignment
+  display_name: Assigned to Sprint
+  description: Assigns a requirement to a Sprint for work planning
+  inverse: sprint_contains
+  symmetric: false
+  cardinality: ManyToOne
+  source_types: []
+  target_types:
+  - Sprint
+  built_in: true
+  color: '#7c3aed'
+  icon: null
+- name: sprint_contains
+  display_name: Sprint Contains
+  description: Items assigned to this Sprint
+  inverse: sprint_assignment
+  symmetric: false
+  cardinality: OneToMany
+  source_types:
+  - Sprint
+  target_types: []
+  built_in: true
+  color: '#7c3aed'
+  icon: null
+reaction_definitions:
+- name: resolved
+  emoji: ✅
+  label: Resolved
+  description: Mark comment as resolved/addressed
+  built_in: true
+- name: rejected
+  emoji: ❌
+  label: Rejected
+  description: Mark comment as rejected/declined
+  built_in: true
+- name: thumbs_up
+  emoji: 👍
+  label: Thumbs Up
+  description: Agree or approve
+  built_in: true
+- name: thumbs_down
+  emoji: 👎
+  label: Thumbs Down
+  description: Disagree or disapprove
+  built_in: true
+- name: question
+  emoji: ❓
+  label: Question
+  description: Needs clarification
+  built_in: true
+- name: important
+  emoji: ⚠️
+  label: Important
+  description: Mark as important/attention needed
+  built_in: true
+meta_counters: {}
+type_definitions:
+- name: Functional
+  display_name: Functional
+  description: Functional requirements describing system behavior
+  prefix: FR
+  built_in: true
+  stateless: false
+- name: NonFunctional
+  display_name: Non-Functional
+  description: Non-functional requirements (performance, security, etc.)
+  prefix: NFR
+  built_in: true
+  stateless: false
+- name: System
+  display_name: System
+  description: System-level requirements
+  prefix: SYS
+  built_in: true
+  stateless: false
+- name: User
+  display_name: User Story
+  description: User stories and user requirements
+  prefix: US
+  built_in: true
+  stateless: false
+- name: ChangeRequest
+  display_name: Change Request
+  description: Change requests for existing functionality
+  prefix: CR
+  statuses:
+  - Draft
+  - Submitted
+  - Under Review
+  - Approved
+  - Rejected
+  - In Progress
+  - Implemented
+  - Verified
+  - Closed
+  custom_fields:
+  - name: impact
+    label: Impact Level
+    field_type: select
+    required: false
+    options:
+    - Low
+    - Medium
+    - High
+    - Critical
+    description: Impact of this change on the system
+    order: 1
+  - name: requested_by
+    label: Requested By
+    field_type: user
+    required: false
+    description: User who requested this change
+    order: 2
+  - name: target_release
+    label: Target Release
+    field_type: text
+    required: false
+    description: Target release version for this change
+    order: 3
+  - name: justification
+    label: Justification
+    field_type: text
+    required: true
+    description: Business justification for the change
+    order: 4
+  built_in: true
+  color: '#9333ea'
+  stateless: false
+- name: Bug
+  display_name: Bug
+  description: Bug reports and defects
+  prefix: BUG
+  statuses:
+  - New
+  - Confirmed
+  - In Progress
+  - Fixed
+  - Verified
+  - Closed
+  - Won't Fix
+  custom_fields:
+  - name: severity
+    label: Severity
+    field_type: select
+    required: false
+    options:
+    - Critical
+    - Major
+    - Minor
+    - Trivial
+    description: Severity of the bug
+    order: 1
+  - name: steps_to_reproduce
+    label: Steps to Reproduce
+    field_type: text
+    required: false
+    description: Steps to reproduce the bug
+    order: 2
+  - name: expected_behavior
+    label: Expected Behavior
+    field_type: text
+    required: false
+    description: What should happen
+    order: 3
+  - name: actual_behavior
+    label: Actual Behavior
+    field_type: text
+    required: false
+    description: What actually happens
+    order: 4
+  built_in: true
+  color: '#dc2626'
+  stateless: false
+- name: Epic
+  display_name: Epic
+  description: Large feature or initiative spanning multiple stories
+  prefix: EPIC
+  statuses:
+  - Draft
+  - Ready
+  - In Progress
+  - Done
+  custom_fields:
+  - name: business_value
+    label: Business Value
+    field_type: text
+    required: false
+    description: Business value or benefit of this epic
+    order: 1
+  - name: target_release
+    label: Target Release
+    field_type: text
+    required: false
+    description: Target release or milestone
+    order: 2
+  - name: story_points
+    label: Story Points
+    field_type: number
+    required: false
+    description: Estimated story points
+    order: 3
+  built_in: true
+  color: '#7c3aed'
+  stateless: false
+- name: Story
+  display_name: Story
+  description: User story for agile development
+  prefix: STORY
+  statuses:
+  - Draft
+  - Ready
+  - In Progress
+  - In Review
+  - Done
+  custom_fields:
+  - name: acceptance_criteria
+    label: Acceptance Criteria
+    field_type: textarea
+    required: false
+    description: Criteria that must be met for the story to be complete
+    order: 1
+  - name: story_points
+    label: Story Points
+    field_type: number
+    required: false
+    description: Estimated story points
+    order: 2
+  - name: assignee
+    label: Assignee
+    field_type: user
+    required: false
+    description: Person assigned to this story
+    order: 3
+  built_in: true
+  color: '#10b981'
+  stateless: false
+- name: Task
+  display_name: Task
+  description: Implementation task or work item
+  prefix: TASK
+  statuses:
+  - To Do
+  - In Progress
+  - In Review
+  - Done
+  custom_fields:
+  - name: estimate_hours
+    label: Estimate (hours)
+    field_type: number
+    required: false
+    description: Estimated hours to complete
+    order: 1
+  - name: assignee
+    label: Assignee
+    field_type: user
+    required: false
+    description: Person assigned to this task
+    order: 2
+  built_in: true
+  color: '#0891b2'
+  stateless: false
+- name: Spike
+  display_name: Spike
+  description: Research or investigation task with time-boxed exploration
+  prefix: SPIKE
+  statuses:
+  - Planned
+  - In Progress
+  - Completed
+  custom_fields:
+  - name: research_question
+    label: Research Question
+    field_type: text
+    required: true
+    description: The question or problem to investigate
+    order: 1
+  - name: time_box
+    label: Time Box
+    field_type: text
+    required: false
+    description: Time allocated for investigation (e.g., '2 days')
+    order: 2
+  - name: findings
+    label: Findings
+    field_type: textarea
+    required: false
+    description: Results and conclusions from the investigation
+    order: 3
+  - name: recommendation
+    label: Recommendation
+    field_type: text
+    required: false
+    description: Recommended next steps based on findings
+    order: 4
+  built_in: true
+  color: '#ca8a04'
+  stateless: false
+- name: Sprint
+  display_name: Sprint
+  description: Time-boxed iteration for work planning
+  prefix: SPRINT
+  statuses:
+  - Draft
+  - In Progress
+  - Completed
+  - Archived
+  custom_fields:
+  - name: sprint_number
+    label: Sprint Number
+    field_type: number
+    required: false
+    description: Sequential sprint number
+    order: 1
+  - name: start_date
+    label: Start Date
+    field_type: text
+    required: false
+    description: Sprint start date (YYYY-MM-DD)
+    order: 2
+  - name: end_date
+    label: End Date
+    field_type: text
+    required: false
+    description: Sprint end date (YYYY-MM-DD)
+    order: 3
+  - name: sprint_goal
+    label: Sprint Goal
+    field_type: text
+    required: false
+    description: Goal or theme for this sprint
+    order: 4
+  - name: velocity
+    label: Planned Velocity
+    field_type: number
+    required: false
+    description: Planned story points for this sprint
+    order: 5
+  built_in: true
+  color: '#7c3aed'
+  stateless: false
+- name: Folder
+  display_name: Folder
+  description: Organizational container for grouping related requirements
+  prefix: FLD
+  built_in: true
+  color: '#6b7280'
+  stateless: true
+- name: Meta
+  display_name: Meta
+  description: Database configuration, prompts, skills, and templates
+  prefix: META
+  built_in: true
+  color: '#8b5cf6'
+  stateless: true
+allowed_prefixes: []
+restrict_prefixes: false
