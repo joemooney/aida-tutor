@@ -1,0 +1,27 @@
+id: 019e10a8-eb8d-7232-a330-4bb3318cdcbc
+spec_id: TASK-1
+agreed_id: TASK-1
+title: Pin aida-min-version in Cargo.toml + add CI workflow gating exercise compatibility
+description: |
+  Cargo.toml gets a `[package.metadata.aida]` section:
+
+  ```toml
+  [package.metadata.aida]
+  min-version = "0.4.5"   # bump when an exercise relies on newer surface
+  ```
+
+  CI workflow `.github/workflows/exercises.yml`:
+  - Matrix: latest aida release + the pinned aida-min-version
+  - Each matrix leg: install aida via release tarball, run `cargo run -- reset --yes && cargo run -- demo`
+  - Fail if any exercise pending or any verifier rejects
+
+  Bumping aida-min-version is a deliberate act — it signals "we now require AIDA >= X." aida-tutor's release notes should highlight the bump.
+
+  Composes with EPIC-2's CI gating acceptance.
+status: Approved
+priority: High
+owner: ''
+feature: Uncategorized
+created_at: 2026-05-10T06:52:46.349304304Z
+modified_at: 2026-05-10T06:52:46.349304304Z
+req_type: Task
