@@ -1,4 +1,4 @@
-//! Exercise 04 — capture a decision (ADR-1). trace:STORY-4 | ai:claude
+//! Exercise 04 — capture a decision (ADR). trace:STORY-4 | ai:claude
 
 use crate::exercise::{Exercise, VerifyResult};
 use crate::verify::{is_aida_initialized, requirements_with_prefix};
@@ -9,7 +9,7 @@ pub struct E;
 impl Exercise for E {
     fn id(&self) -> u32 { 4 }
     fn slug(&self) -> &'static str { "decision" }
-    fn title(&self) -> &'static str { "capture a decision (ADR-1)" }
+    fn title(&self) -> &'static str { "capture a decision (ADR)" }
     fn hint(&self) -> &'static str {
         "Add a requirement of type `decision` (NOT `adr` — the type is `decision`, the prefix `ADR` \
          is conventional). The description should record the choice + the trade-offs that drove it. \

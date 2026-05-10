@@ -1,4 +1,4 @@
-//! Exercise 05 — capture a feature (FR-1). trace:STORY-5 | ai:claude
+//! Exercise 05 — capture a feature (FR). trace:STORY-5 | ai:claude
 
 use crate::exercise::{Exercise, VerifyResult};
 use crate::verify::{is_aida_initialized, requirements_with_prefix};
@@ -9,7 +9,7 @@ pub struct E;
 impl Exercise for E {
     fn id(&self) -> u32 { 5 }
     fn slug(&self) -> &'static str { "feature" }
-    fn title(&self) -> &'static str { "capture a feature (FR-1)" }
+    fn title(&self) -> &'static str { "capture a feature (FR)" }
     fn hint(&self) -> &'static str {
         "Add a requirement of type `functional` — a behavior the project must do. \
          (Type is `functional`; the prefix `FR` is short for Functional Requirement.) \

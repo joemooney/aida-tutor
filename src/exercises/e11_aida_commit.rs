@@ -12,7 +12,7 @@ impl Exercise for E {
     fn title(&self) -> &'static str { "commit with `[AI:tool] type(scope): description (REQ-ID)`" }
     fn hint(&self) -> &'static str {
         "Stage the file you wrote in exercise 10 and commit it. The commit message must follow \
-         `[AI:tool] type(scope): description (REQ-ID)` — e.g. `[AI:claude] feat(stub): scaffold (FR-1)`. \
+         `[AI:tool] type(scope): description (REQ-ID)` — e.g. `[AI:claude] feat(stub): scaffold (FR-4)`. \
          AIDA's commit-msg hook will validate the format and ✓ when it matches."
     }
     fn verify(&self, workspace: &Path) -> VerifyResult {

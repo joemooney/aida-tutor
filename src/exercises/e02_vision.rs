@@ -1,4 +1,4 @@
-//! Exercise 02 — capture project vision (VIS-1). trace:STORY-2 | ai:claude
+//! Exercise 02 — capture project vision (VIS). trace:STORY-2 | ai:claude
 
 use crate::exercise::{Exercise, VerifyResult};
 use crate::verify::{is_aida_initialized, requirements_with_prefix};
@@ -9,7 +9,7 @@ pub struct E;
 impl Exercise for E {
     fn id(&self) -> u32 { 2 }
     fn slug(&self) -> &'static str { "vision" }
-    fn title(&self) -> &'static str { "capture project vision (VIS-1)" }
+    fn title(&self) -> &'static str { "capture project vision (VIS)" }
     fn hint(&self) -> &'static str {
         "Add a requirement of type `vision` whose --title is the project's intent in one sentence. \
          Set --status approved (visions don't sit in draft — they're declarations). \

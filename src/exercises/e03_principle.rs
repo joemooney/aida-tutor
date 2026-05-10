@@ -1,4 +1,4 @@
-//! Exercise 03 — capture a principle (PRIN-1). trace:STORY-3 | ai:claude
+//! Exercise 03 — capture a principle (PRIN). trace:STORY-3 | ai:claude
 
 use crate::exercise::{Exercise, VerifyResult};
 use crate::verify::{is_aida_initialized, requirements_with_prefix};
@@ -9,7 +9,7 @@ pub struct E;
 impl Exercise for E {
     fn id(&self) -> u32 { 3 }
     fn slug(&self) -> &'static str { "principle" }
-    fn title(&self) -> &'static str { "capture a principle (PRIN-1)" }
+    fn title(&self) -> &'static str { "capture a principle (PRIN)" }
     fn hint(&self) -> &'static str {
         "Add a requirement of type `principle` — a non-negotiable rule the project commits to. \
          Examples: \"Default to UTC in storage\" or \"Errors are values, not exceptions\". \
