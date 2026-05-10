@@ -8,12 +8,9 @@ priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-09T22:17:59.028815216Z
-modified_at: 2026-05-10T06:53:20.032917890Z
+modified_at: 2026-05-10T06:53:23.733405045Z
 req_type: Epic
 relationships:
-- rel_type: Parent
-  target_id: 019e10a8-c7fc-72d3-8171-192adceea067
-  created_at: 2026-05-10T06:52:38.031695246Z
 - rel_type: Parent
   target_id: 019e10a8-d777-79f3-af29-fc569524bc1e
   created_at: 2026-05-10T06:52:41.799362700Z
