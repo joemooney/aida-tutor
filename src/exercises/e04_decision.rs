@@ -1,6 +1,6 @@
 //! Exercise 04 — capture a decision (ADR). trace:STORY-4 | ai:claude
 
-use crate::exercise::{Exercise, VerifyResult};
+use crate::exercise::{run, Exercise, VerifyResult};
 use crate::verify::{is_aida_initialized, requirements_with_prefix};
 use std::path::Path;
 
@@ -26,5 +26,11 @@ impl Exercise for E {
             );
         }
         VerifyResult::Pass
+    }
+    fn demo(&self, workspace: &Path) -> anyhow::Result<()> {
+        run(workspace, "aida", &[
+            "add", "--type", "decision", "--status", "approved",
+            "--title", "Persist tasks in SQLite, not flat files",
+        ])
     }
 }

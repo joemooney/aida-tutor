@@ -1,6 +1,6 @@
 //! Exercise 15 — `aida show <id> --comments`. trace:STORY-15 | ai:claude
 
-use crate::exercise::{Exercise, VerifyResult};
+use crate::exercise::{demo_spec_id, run, Exercise, VerifyResult};
 use crate::verify::is_aida_initialized;
 use std::path::Path;
 
@@ -20,5 +20,9 @@ impl Exercise for E {
             return VerifyResult::Pending("complete exercise 01 first".into());
         }
         VerifyResult::Pass
+    }
+    fn demo(&self, workspace: &Path) -> anyhow::Result<()> {
+        let fr = demo_spec_id(workspace, "FR")?;
+        run(workspace, "aida", &["show", &fr, "--comments"])
     }
 }

@@ -4,6 +4,7 @@
 //! store inside it, the project's git state — and report Pass / Fail /
 //! Pending. They MUST NOT mutate the user's files. trace:PRIN-1 | ai:claude
 
+use anyhow::Context;
 use std::path::Path;
 
 #[derive(Debug, Clone)]
@@ -41,4 +42,48 @@ pub trait Exercise: Sync + Send {
     /// One-paragraph nudge surfaced via `aida-tutor hint`. Avoid showing
     /// the literal command — that defeats the point. trace:PRIN-3
     fn hint(&self) -> &'static str;
+    /// Drive this exercise to a passing state non-interactively — run the
+    /// `aida` commands (and any file writes) a learner would. Used by
+    /// `aida-tutor demo` to walk every exercise without a human, so CI can
+    /// gate the tutor against the live AIDA CLI surface. The default no-op
+    /// is correct for read-only exercises whose `verify` already passes on
+    /// prerequisite state. trace:STORY-19 | ai:claude
+    fn demo(&self, _workspace: &Path) -> anyhow::Result<()> {
+        Ok(())
+    }
+}
+
+/// Resolve the first spec_id matching `prefix` (e.g. "FR") from the
+/// workspace store. Demo impls use this instead of hardcoding an id:
+/// AIDA's global ID counter numbers reqs by creation order across all
+/// types, so the feature captured 4th is `FR-4`, not `FR-1`.
+/// trace:STORY-19 | ai:claude
+pub fn demo_spec_id(workspace: &Path, prefix: &str) -> anyhow::Result<String> {
+    crate::verify::requirements_with_prefix(workspace, prefix)
+        .into_iter()
+        .find_map(|r| r.spec_id)
+        .with_context(|| format!("demo: no {prefix}-* requirement in the store yet"))
+}
+
+/// Run `program args...` with `workspace` as the working directory,
+/// capturing output so demo logs stay quiet on success. Errors (with the
+/// captured stdout/stderr) if the process can't spawn or exits non-zero.
+/// Helper for [`Exercise::demo`] impls. trace:STORY-19 | ai:claude
+pub fn run(workspace: &Path, program: &str, args: &[&str]) -> anyhow::Result<()> {
+    let out = std::process::Command::new(program)
+        .current_dir(workspace)
+        .args(args)
+        .output()
+        .with_context(|| format!("spawning `{program}`"))?;
+    if !out.status.success() {
+        anyhow::bail!(
+            "`{} {}` exited with {}\n--- stdout ---\n{}\n--- stderr ---\n{}",
+            program,
+            args.join(" "),
+            out.status,
+            String::from_utf8_lossy(&out.stdout).trim(),
+            String::from_utf8_lossy(&out.stderr).trim(),
+        );
+    }
+    Ok(())
 }

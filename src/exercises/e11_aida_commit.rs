@@ -1,6 +1,6 @@
 //! Exercise 11 — commit with the AIDA format. trace:STORY-11 | ai:claude
 
-use crate::exercise::{Exercise, VerifyResult};
+use crate::exercise::{demo_spec_id, run, Exercise, VerifyResult};
 use crate::verify::{is_aida_initialized, last_commit_message};
 use std::path::Path;
 
@@ -49,5 +49,11 @@ impl Exercise for E {
             );
         }
         VerifyResult::Pass
+    }
+    fn demo(&self, workspace: &Path) -> anyhow::Result<()> {
+        let fr = demo_spec_id(workspace, "FR")?;
+        let msg = format!("[AI:claude] feat(parser): scaffold JSON parser ({fr})");
+        run(workspace, "git", &["add", "src"])?;
+        run(workspace, "git", &["commit", "-m", &msg])
     }
 }
