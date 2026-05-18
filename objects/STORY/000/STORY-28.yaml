@@ -16,10 +16,16 @@ priority: Medium
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-10T06:52:37.244051073Z
-modified_at: 2026-05-18T15:36:35.787751376Z
+modified_at: 2026-05-18T15:54:34.736185697Z
 req_type: Story
 relationships:
 - rel_type: Child
   target_id: 019e10a8-a6e6-7060-a1fd-612e294cbb55
   created_at: 2026-05-10T06:53:24.885623455Z
   created_by: joe
+comments:
+- id: 019e3bcb-d570-7410-a64a-9481b74377ee
+  author: joe
+  content: Commit 9b32886 references this requirement
+  created_at: 2026-05-18T15:54:34.736185697Z
+  modified_at: 2026-05-18T15:54:34.736185697Z
