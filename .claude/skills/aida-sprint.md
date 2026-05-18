@@ -4,9 +4,6 @@ description: Sprint planning — select approved requirements, group by feature,
 allowed-tools:
   - Bash
 ---
-<!-- AIDA Generated: v2.0.0 | checksum:8181fb44 | DO NOT EDIT DIRECTLY -->
-<!-- To customize: copy this file and modify the copy -->
-
 
 # AIDA Sprint Planning Skill
 

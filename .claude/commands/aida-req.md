@@ -1,6 +1,3 @@
-<!-- AIDA Generated: v2.0.0 | checksum:a9666711 | DO NOT EDIT DIRECTLY -->
-<!-- To customize: copy this file and modify the copy -->
-
 # Add AIDA Requirement
 
 Add a new requirement to the database with AI evaluation.

@@ -9,9 +9,6 @@ allowed-tools:
   - Glob
   - Grep
 ---
-<!-- AIDA Generated: v2.0.0 | checksum:fdcf273a | DO NOT EDIT DIRECTLY -->
-<!-- To customize: copy this file and modify the copy -->
-
 
 # AIDA Implementation Skill
 
@@ -54,6 +51,46 @@ Format: `ai:<tool>:<username>` (e.g., `ai:claude:joe`)
 
 !`aida list --status approved --format brief 2>/dev/null | head -15 || echo "none"`
 
+## Autonomy mode — `$AIDA_ZEN` (STORY-287)
+
+This skill's user-facing prompts carry a `kind:` annotation in an HTML
+comment directly above each one:
+
+- `<!-- kind:confirmation -->` — a mechanical yes/no whose default
+  (option 1) is obvious.
+- `<!-- kind:design-fork -->` — a genuine choice between meaningful
+  alternatives, where guessing wrong has real cost.
+
+Before surfacing any prompt, check the autonomy mode (`echo "${AIDA_ZEN:-}"`):
+
+- **Non-empty** — *advisor-on-standby* mode (`aida queue work --zen`, or
+  `AIDA_ZEN=1` exported). Auto-resolve every `kind:confirmation` prompt to
+  option 1 and proceed, printing `↳ zen: auto-resolved "<prompt>" →
+  option 1`. Still surface every `kind:design-fork` prompt unchanged —
+  implementation approach decisions are exactly what the advisor stays at
+  the keyboard for.
+- **Empty** — default mode: surface every prompt, no change.
+
+A headless `--no-human` drain (`AIDA_HEADLESS=1`) is the stronger mode and
+overrides `--zen`. An un-annotated prompt defaults to `design-fork`
+(pause-safe). Author guidance: `docs/aida-discipline/skill-prompt-kinds.md`.
+trace:STORY-287
+
+**Graceful exit under the orchestrator (TASK-329).** If this skill runs
+inside an `aida queue work --auto-complete` session and `$AIDA_EXIT_SENTINEL`
+is set, then under `$AIDA_ZEN` (or a headless drain) — once every commit, PR,
+and comment is done and there is no hand-off to another skill — the
+**absolute last action of the session** is:
+
+```bash
+[ -n "${AIDA_EXIT_SENTINEL:-}" ] && touch "$AIDA_EXIT_SENTINEL"
+```
+
+The orchestrator polls for that file and reaps the otherwise-idle REPL (a
+skill cannot synthesize the Ctrl+D it would press interactively — BUG-230).
+Touch it **once, last**; skip it entirely in default interactive mode. Full
+protocol: `docs/aida-discipline/skill-prompt-kinds.md`. trace:TASK-329
+
 ## Workflow
 
 ### Step 1: Load Requirement Context
@@ -76,7 +113,10 @@ Display to user:
 Before writing code:
 1. Identify files that will be created or modified
 2. Identify any sub-tasks or child requirements
-3. Confirm approach with user if there are significant decisions
+3. <!-- kind:design-fork --> Confirm approach with the user when there
+   are significant decisions — a real choice between approaches with
+   meaningful trade-offs. This is a `design-fork` prompt: surface it even
+   under `$AIDA_ZEN` (advisor-on-standby still wants the real questions).
 
 If the requirement is too broad, suggest splitting:
 ```bash
@@ -165,8 +205,16 @@ aida rel add --from <TEST-SPEC-ID> --to <SPEC-ID> --type Verifies
 During implementation, requirements should transition through:
 
 1. **Approved** -> **In Progress** (when starting implementation)
-2. **In Progress** -> **Completed** (when implementation is verified)
-3. **In Progress** -> **Draft** (if significant changes needed)
+2. **In Progress** -> **Done** (work finished on a branch — set by
+   `aida queue done` automatically)
+3. **Done** -> **Completed** (auto-bumped by `aida pull` /
+   `aida db sync --pull` when the referencing commit lands on the
+   default branch — no manual step required)
+4. **In Progress** -> **Draft** (if significant changes needed)
+
+STORY-86: Don't set `--status completed` manually from a feature
+branch — that bypasses the "merged to main" gate. Use `--status done`
+or `aida queue done` and let auto-bump promote it once the PR merges.
 
 Update via:
 ```bash

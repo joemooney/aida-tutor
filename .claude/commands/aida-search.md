@@ -1,6 +1,3 @@
-<!-- AIDA Generated: v2.0.0 | checksum:e32c9263 | DO NOT EDIT DIRECTLY -->
-<!-- To customize: copy this file and modify the copy -->
-
 # Unified Search
 
 Search across requirements and code simultaneously.

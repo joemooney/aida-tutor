@@ -1,6 +1,3 @@
-<!-- AIDA Generated: v2.0.0 | checksum:2d4ec1d5 | DO NOT EDIT DIRECTLY -->
-<!-- To customize: copy this file and modify the copy -->
-
 # Implement AIDA Requirement
 
 Implement a requirement with full traceability.

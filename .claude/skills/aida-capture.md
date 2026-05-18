@@ -6,9 +6,6 @@ allowed-tools:
   - Read
   - Grep
 ---
-<!-- AIDA Generated: v2.0.0 | checksum:6ba3732d | DO NOT EDIT DIRECTLY -->
-<!-- To customize: copy this file and modify the copy -->
-
 
 # AIDA Session Capture Skill
 

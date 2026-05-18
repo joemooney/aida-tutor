@@ -1,6 +1,3 @@
-<!-- AIDA Generated: v2.0.0 | checksum:55605937 | DO NOT EDIT DIRECTLY -->
-<!-- To customize: copy this file and modify the copy -->
-
 # AIDA Documentation Review
 
 Exhaustive documentation quality review — finds stale, inconsistent, unprofessional, and hyped content.

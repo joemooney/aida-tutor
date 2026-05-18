@@ -1,6 +1,3 @@
-<!-- AIDA Generated: v2.0.0 | checksum:8a737c69 | DO NOT EDIT DIRECTLY -->
-<!-- To customize: copy this file and modify the copy -->
-
 # Daily Standup
 
 Generate daily standup summary from recent activity.

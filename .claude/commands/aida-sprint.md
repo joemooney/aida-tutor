@@ -1,6 +1,3 @@
-<!-- AIDA Generated: v2.0.0 | checksum:7505a7b6 | DO NOT EDIT DIRECTLY -->
-<!-- To customize: copy this file and modify the copy -->
-
 # Sprint Planning
 
 Plan a development sprint from approved requirements.

@@ -1,6 +1,3 @@
-<!-- AIDA Generated: v2.0.0 | checksum:6d6a80c3 | DO NOT EDIT DIRECTLY -->
-<!-- To customize: copy this file and modify the copy -->
-
 # Project Status
 
 One-shot snapshot of the project: requirement breakdown, cache

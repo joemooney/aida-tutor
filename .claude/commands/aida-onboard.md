@@ -1,6 +1,3 @@
-<!-- AIDA Generated: v2.0.0 | checksum:eed54ee7 | DO NOT EDIT DIRECTLY -->
-<!-- To customize: copy this file and modify the copy -->
-
 # Project Onboarding
 
 Interactive onboarding for new team members.

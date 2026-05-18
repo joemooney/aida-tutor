@@ -4,9 +4,6 @@ description: Generate daily standup summary from recent commits and requirement 
 allowed-tools:
   - Bash
 ---
-<!-- AIDA Generated: v2.0.0 | checksum:4960b650 | DO NOT EDIT DIRECTLY -->
-<!-- To customize: copy this file and modify the copy -->
-
 
 # AIDA Standup Skill
 

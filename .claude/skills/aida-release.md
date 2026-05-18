@@ -8,9 +8,6 @@ allowed-tools:
   - Edit
   - Write
 ---
-<!-- AIDA Generated: v2.0.0 | checksum:9b46cada | DO NOT EDIT DIRECTLY -->
-<!-- To customize: copy this file and modify the copy -->
-
 
 # AIDA Release Management Skill
 

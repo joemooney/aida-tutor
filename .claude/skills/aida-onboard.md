@@ -7,9 +7,6 @@ allowed-tools:
   - Glob
   - Grep
 ---
-<!-- AIDA Generated: v2.0.0 | checksum:58c33f13 | DO NOT EDIT DIRECTLY -->
-<!-- To customize: copy this file and modify the copy -->
-
 
 # AIDA Project Onboarding Skill
 

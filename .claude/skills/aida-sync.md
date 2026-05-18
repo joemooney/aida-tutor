@@ -6,9 +6,6 @@ allowed-tools:
   - Bash
   - Glob
 ---
-<!-- AIDA Generated: v2.0.0 | checksum:f78b198b | DO NOT EDIT DIRECTLY -->
-<!-- To customize: copy this file and modify the copy -->
-
 
 # AIDA Sync Skill
 

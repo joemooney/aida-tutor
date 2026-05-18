@@ -6,9 +6,6 @@ allowed-tools:
   - Grep
   - Glob
 ---
-<!-- AIDA Generated: v2.0.0 | checksum:12e4ffa8 | DO NOT EDIT DIRECTLY -->
-<!-- To customize: copy this file and modify the copy -->
-
 
 # AIDA Unified Search Skill
 

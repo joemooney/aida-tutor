@@ -9,9 +9,6 @@ allowed-tools:
   - Write
   - Agent
 ---
-<!-- AIDA Generated: v2.0.0 | checksum:beaee887 | DO NOT EDIT DIRECTLY -->
-<!-- To customize: copy this file and modify the copy -->
-
 
 # AIDA Documentation Review Skill
 

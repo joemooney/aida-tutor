@@ -1,6 +1,3 @@
-<!-- AIDA Generated: v2.0.0 | checksum:09d8e410 | DO NOT EDIT DIRECTLY -->
-<!-- To customize: copy this file and modify the copy -->
-
 # AIDA Commit
 
 Commit staged changes with automatic requirement linking.
