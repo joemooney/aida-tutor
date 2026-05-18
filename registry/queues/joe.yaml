@@ -1,4 +1,12 @@
 - user_id: joe
+  requirement_id: 019e3911-9432-72b2-bed4-19521eac3397
+  position: 9223372036854767807
+  added_by: joe
+  note: 'Blocks PR #1 merge. Bump Cargo.toml min-version 0.4.5 -> 0.7.0, push to epic-4-batch1, confirm both CI legs green. Also add .aida/sessions/ to .gitignore. PO-approved 2026-05-17.'
+  added_at: 2026-05-18T03:12:03.945475251Z
+  for_role: implementer
+  for_scope: EPIC-4
+- user_id: joe
   requirement_id: 019e10a8-eb8d-7232-a330-4bb3318cdcbc
   position: 9223372036854768807
   added_by: joe
