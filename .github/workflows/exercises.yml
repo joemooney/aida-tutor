@@ -1,0 +1,71 @@
+# Gate: every exercise must verify against the live AIDA CLI.
+# Runs the non-interactive `aida-tutor demo` walkthrough on two aida
+# versions — `latest` and the pinned `aida-min-version` from Cargo.toml.
+# A new aida release that breaks an exercise fails CI before a learner
+# hits it. trace:TASK-1 EPIC-4 | ai:claude
+name: exercises
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  demo:
+    name: walk exercises (aida ${{ matrix.aida }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      # Two legs: `latest` tracks the newest aida; `min` is the version
+      # pinned in Cargo.toml. When the pin bumps, this same matrix keeps
+      # exercising the old version for one release cycle — the new pin is
+      # `min`, `latest` is the new release. trace:TASK-1 | ai:claude
+      matrix:
+        aida: [latest, min]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache cargo build
+        uses: Swatinem/rust-cache@v2
+
+      - name: Resolve aida version
+        id: aida
+        run: |
+          if [ "${{ matrix.aida }}" = "min" ]; then
+            ver=$(grep -A2 '^\[package.metadata.aida\]' Cargo.toml \
+                  | grep 'min-version' \
+                  | sed -E 's/.*"([^"]+)".*/\1/')
+            echo "kind=tag" >> "$GITHUB_OUTPUT"
+            echo "ref=v${ver}" >> "$GITHUB_OUTPUT"
+            echo "Pinned aida-min-version: v${ver}"
+          else
+            echo "kind=branch" >> "$GITHUB_OUTPUT"
+            echo "ref=main" >> "$GITHUB_OUTPUT"
+            echo "Tracking aida main"
+          fi
+
+      # Install the `aida` CLI from source at the resolved ref. Source
+      # install avoids depending on release-asset naming; if aida starts
+      # publishing prebuilt tarballs, swap this for a tarball download to
+      # cut CI time. AIDA_REPO can override the repo for forks.
+      - name: Install aida CLI
+        env:
+          AIDA_REPO: ${{ vars.AIDA_REPO || 'https://github.com/joemooney/aida' }}
+        run: |
+          cargo install --locked --git "$AIDA_REPO" \
+            --${{ steps.aida.outputs.kind }} "${{ steps.aida.outputs.ref }}" \
+            aida-cli
+          aida --version
+
+      - name: Build aida-tutor
+        run: cargo build --release
+
+      - name: Walk every exercise
+        run: |
+          ./target/release/aida-tutor reset --yes
+          ./target/release/aida-tutor demo

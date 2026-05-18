@@ -30,4 +30,13 @@ impl Exercise for E {
         }
         VerifyResult::Pass
     }
+    fn demo(&self, workspace: &Path) -> anyhow::Result<()> {
+        let src = workspace.join("src");
+        std::fs::create_dir_all(&src)?;
+        std::fs::write(
+            src.join("parser.rs"),
+            "// trace:FR-1 | ai:claude\npub fn parse_json() {}\n",
+        )?;
+        Ok(())
+    }
 }

@@ -9,6 +9,15 @@ license = "MIT OR Apache-2.0"
 name = "aida-tutor"
 path = "src/main.rs"
 
+# Minimum AIDA CLI version the exercises are known to verify against.
+# Bumping this is a deliberate act: it signals an exercise now relies on
+# newer `aida` surface. CI tests both `latest` and this pinned version.
+# Bumped 0.4.5 -> 0.7.0: 0.4.5 predated `aida docs` (v0.5.0) and `aida
+# push`, failing 6/17 exercises on the min CI leg. trace:BUG-1 | ai:claude
+# trace:TASK-1 | ai:claude
+[package.metadata.aida]
+min-version = "0.7.0"
+
 [dependencies]
 anyhow = "1"
 chrono = { version = "0.4", default-features = false, features = ["clock", "std"] }

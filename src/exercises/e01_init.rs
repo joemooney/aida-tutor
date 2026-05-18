@@ -1,6 +1,6 @@
 //! Exercise 01 — `aida init`. trace:STORY-1 | ai:claude
 
-use crate::exercise::{Exercise, VerifyResult};
+use crate::exercise::{run, Exercise, VerifyResult};
 use crate::verify::{is_aida_initialized, path_exists};
 use std::path::Path;
 
@@ -32,5 +32,8 @@ impl Exercise for E {
                 "no AIDA store detected yet — try `aida init` from inside workspace/".into()
             )
         }
+    }
+    fn demo(&self, workspace: &Path) -> anyhow::Result<()> {
+        run(workspace, "aida", &["init"])
     }
 }

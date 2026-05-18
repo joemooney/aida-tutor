@@ -1,6 +1,6 @@
 //! Exercise 13 — `aida search`. trace:STORY-13 | ai:claude
 
-use crate::exercise::{Exercise, VerifyResult};
+use crate::exercise::{run, Exercise, VerifyResult};
 use crate::verify::is_aida_initialized;
 use std::path::Path;
 
@@ -21,5 +21,8 @@ impl Exercise for E {
         }
         // Read-only command — pass on prerequisite state.
         VerifyResult::Pass
+    }
+    fn demo(&self, workspace: &Path) -> anyhow::Result<()> {
+        run(workspace, "aida", &["search", "JSON"])
     }
 }

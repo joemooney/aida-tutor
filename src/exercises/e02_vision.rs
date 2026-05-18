@@ -1,6 +1,6 @@
 //! Exercise 02 — capture project vision (VIS). trace:STORY-2 | ai:claude
 
-use crate::exercise::{Exercise, VerifyResult};
+use crate::exercise::{run, Exercise, VerifyResult};
 use crate::verify::{is_aida_initialized, requirements_with_prefix};
 use std::path::Path;
 
@@ -38,5 +38,11 @@ impl Exercise for E {
             );
         }
         VerifyResult::Pass
+    }
+    fn demo(&self, workspace: &Path) -> anyhow::Result<()> {
+        run(workspace, "aida", &[
+            "add", "--type", "vision", "--status", "approved",
+            "--title", "Ship a delightful command-line task tracker",
+        ])
     }
 }

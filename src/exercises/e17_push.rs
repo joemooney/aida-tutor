@@ -1,6 +1,6 @@
 //! Exercise 17 — `aida push`. trace:STORY-17 | ai:claude
 
-use crate::exercise::{Exercise, VerifyResult};
+use crate::exercise::{run, Exercise, VerifyResult};
 use crate::verify::is_aida_initialized;
 use std::path::Path;
 
@@ -20,5 +20,10 @@ impl Exercise for E {
             return VerifyResult::Pending("complete exercise 01 first".into());
         }
         VerifyResult::Pass
+    }
+    fn demo(&self, workspace: &Path) -> anyhow::Result<()> {
+        // No `origin` in the demo workspace — push skips both legs
+        // cleanly and exits 0 without prompting.
+        run(workspace, "aida", &["push"])
     }
 }

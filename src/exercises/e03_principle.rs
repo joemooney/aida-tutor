@@ -1,6 +1,6 @@
 //! Exercise 03 — capture a principle (PRIN). trace:STORY-3 | ai:claude
 
-use crate::exercise::{Exercise, VerifyResult};
+use crate::exercise::{run, Exercise, VerifyResult};
 use crate::verify::{is_aida_initialized, requirements_with_prefix};
 use std::path::Path;
 
@@ -26,5 +26,12 @@ impl Exercise for E {
             );
         }
         VerifyResult::Pass
+    }
+    fn demo(&self, workspace: &Path) -> anyhow::Result<()> {
+        run(workspace, "aida", &[
+            "add", "--type", "principle", "--status", "approved",
+            "--priority", "high",
+            "--title", "Errors are values, not exceptions",
+        ])
     }
 }

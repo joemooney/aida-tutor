@@ -1,6 +1,6 @@
 //! Exercise 09 — flip FR to in-progress. trace:STORY-9 | ai:claude
 
-use crate::exercise::{Exercise, VerifyResult};
+use crate::exercise::{demo_spec_id, run, Exercise, VerifyResult};
 use crate::verify::{is_aida_initialized, requirements_with_prefix};
 use std::path::Path;
 
@@ -38,5 +38,9 @@ impl Exercise for E {
             );
         }
         VerifyResult::Pass
+    }
+    fn demo(&self, workspace: &Path) -> anyhow::Result<()> {
+        let fr = demo_spec_id(workspace, "FR")?;
+        run(workspace, "aida", &["edit", &fr, "--status", "in-progress"])
     }
 }

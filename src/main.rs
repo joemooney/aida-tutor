@@ -57,6 +57,10 @@ enum Cmd {
         #[arg(long, default_value = "1500")]
         interval_ms: u64,
     },
+    /// Non-interactive walkthrough: drive every exercise to a passing
+    /// state, verifying each. Exits non-zero if any exercise fails. Run
+    /// `reset --yes` first. Built for CI. trace:STORY-19 | ai:claude
+    Demo,
 }
 
 fn main() -> Result<()> {
@@ -86,7 +90,61 @@ fn main() -> Result<()> {
         Cmd::Reset { yes } => cmd_reset(&workspace, yes),
         Cmd::Progress => cmd_progress(&exercises, &prog),
         Cmd::Watch { interval_ms } => cmd_watch(&exercises, &workspace, &repo_root, &mut prog, interval_ms),
+        Cmd::Demo => cmd_demo(&exercises, &workspace),
     }
+}
+
+/// Walk every exercise non-interactively: run its `demo` solution, then
+/// `verify`. Exits non-zero on the first batch of non-passing exercises.
+/// Does NOT touch `.aida-tutor-progress.toml` — demo is a CI gate, not a
+/// way to earn completion credit. trace:STORY-19 | ai:claude
+fn cmd_demo(exercises: &[Box<dyn Exercise>], workspace: &Path) -> Result<()> {
+    if !workspace.exists() {
+        anyhow::bail!(
+            "workspace/ doesn't exist — run `aida-tutor reset --yes` before `demo`"
+        );
+    }
+    println!("{}", "aida-tutor demo — non-interactive walkthrough".bold());
+    println!();
+    let mut failures = 0u32;
+    for ex in exercises {
+        match ex.demo(workspace).map(|()| ex.verify(workspace)) {
+            Ok(VerifyResult::Pass) => {
+                println!("  {:>2} {:<22} {}", ex.id(), ex.slug(), "pass".green());
+            }
+            Ok(VerifyResult::Pending(msg)) => {
+                println!(
+                    "  {:>2} {:<22} {} pending: {}",
+                    ex.id(), ex.slug(), "✗".red().bold(), msg
+                );
+                failures += 1;
+            }
+            Ok(VerifyResult::Fail(msg)) => {
+                println!(
+                    "  {:>2} {:<22} {} fail: {}",
+                    ex.id(), ex.slug(), "✗".red().bold(), msg
+                );
+                failures += 1;
+            }
+            Err(e) => {
+                println!(
+                    "  {:>2} {:<22} {} demo step errored:\n{}",
+                    ex.id(), ex.slug(), "✗".red().bold(), e
+                );
+                failures += 1;
+            }
+        }
+    }
+    println!();
+    if failures > 0 {
+        anyhow::bail!("{} of {} exercises did not pass", failures, exercises.len());
+    }
+    println!(
+        "{} all {} exercises passed",
+        "✓".green().bold(),
+        exercises.len()
+    );
+    Ok(())
 }
 
 fn cmd_watch(

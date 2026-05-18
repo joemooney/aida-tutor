@@ -1,6 +1,6 @@
 //! Exercise 12 — `aida docs build`. trace:STORY-12 | ai:claude
 
-use crate::exercise::{Exercise, VerifyResult};
+use crate::exercise::{run, Exercise, VerifyResult};
 use crate::verify::{is_aida_initialized, path_exists};
 use std::path::Path;
 
@@ -33,5 +33,8 @@ impl Exercise for E {
             );
         }
         VerifyResult::Pass
+    }
+    fn demo(&self, workspace: &Path) -> anyhow::Result<()> {
+        run(workspace, "aida", &["docs", "build"])
     }
 }
