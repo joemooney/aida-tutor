@@ -13,12 +13,12 @@ description: |
   Verifiers inspect: presence of `aida-store` branch in workspace's git, presence of `.aida-store/` worktree, presence of `.aida/cache.db`, content of orphan branch HEAD.
 
   Composes with: AIDA's `aida cache status` command (already exists).
-status: Done
+status: Completed
 priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-10T06:52:29.622336011Z
-modified_at: 2026-05-18T06:06:17.474541274Z
+modified_at: 2026-05-18T06:16:30.153600523Z
 req_type: Story
 relationships:
 - rel_type: Child
@@ -47,3 +47,5 @@ implementation_info:
   implemented: true
   implemented_at: 2026-05-18T06:00:32.011887845Z
   implemented_by: joe
+  completed_at: 2026-05-18T06:16:30.153600523Z
+  completion_sha: 1bc397d4f051f69bc574e9b471e3df5c9695c38c
