@@ -16,7 +16,7 @@ priority: Medium
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-10T06:52:37.244051073Z
-modified_at: 2026-05-18T15:54:42.606474364Z
+modified_at: 2026-05-18T15:55:37.146745432Z
 req_type: Story
 relationships:
 - rel_type: Child
@@ -29,6 +29,24 @@ comments:
   content: Commit 9b32886 references this requirement
   created_at: 2026-05-18T15:54:34.736185697Z
   modified_at: 2026-05-18T15:54:34.736185697Z
+- id: 019e3bcc-c93a-7be3-b6cd-746e7832ed19
+  author: joe
+  content: |-
+    Implemented on branch epic-4-3 (commit 9b32886):
+
+    - Cluster 4 — exercises 27-30 cover the AIDA session model: session
+      start (scoped worktree + lease), work-in-worktree (commit on the
+      session branch), session leases/show, session end.
+    - verify.rs gains git-worktree + session-lease inspection helpers
+      (git_worktrees, main_worktree_branch, git_commits_ahead,
+      session_leases / session_lease_for_branch).
+    - `aida-tutor reset` clears orphaned workspace-* session worktrees;
+      .gitignore excludes them.
+
+    Test status: all 30 exercises pass via `aida-tutor demo`; manual
+    Pending->Pass walk verified for 27-30.
+  created_at: 2026-05-18T15:55:37.146745432Z
+  modified_at: 2026-05-18T15:55:37.146745432Z
 implementation_info:
   implemented: true
   implemented_at: 2026-05-18T15:54:42.606474364Z
