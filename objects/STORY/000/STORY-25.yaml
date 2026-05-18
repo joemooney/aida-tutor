@@ -18,13 +18,27 @@ priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-10T06:52:29.622336011Z
-modified_at: 2026-05-18T06:00:32.011887845Z
+modified_at: 2026-05-18T06:05:39.811886374Z
 req_type: Story
 relationships:
 - rel_type: Child
   target_id: 019e10a8-a6e6-7060-a1fd-612e294cbb55
   created_at: 2026-05-10T06:53:13.487337477Z
   created_by: joe
+comments:
+- id: 019e39b0-aa63-7ff0-953f-810a554d147c
+  author: joe
+  content: |-
+    Implemented via commit 8e2cb56 (PR pending):
+
+    - e18 distributed-store, e19 store-sync, e20 cache-rebuild — EPIC-4 cluster 1, covering AIDA's distributed git-canonical store.
+    - New read-only verify helpers: git_branch_exists, git_commit_count, is_linked_worktree, cache_db_is_valid_sqlite (SQLite-magic header check).
+    - Registered in src/exercises/mod.rs; cmd_welcome + CLAUDE.md bumped 17 -> 20.
+
+    Test status: `aida-tutor demo` walks all 20 exercises green against live aida 0.7.0; `cargo test` 0/0 (repo has no unit tests).
+    Follow-up: STORY-25's optional 4th exercise (two-clone pull/merge convergence) dropped — incompatible with the workspace-only verify model; worth a separate story if wanted.
+  created_at: 2026-05-18T06:05:39.811886374Z
+  modified_at: 2026-05-18T06:05:39.811886374Z
 implementation_info:
   implemented: true
   implemented_at: 2026-05-18T06:00:32.011887845Z
