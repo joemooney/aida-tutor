@@ -561,6 +561,37 @@ requirements:
   created_at: 2026-05-09T22:18:38.833043430Z
   modified_at: 2026-05-09T22:29:58.026332822Z
   req_type: Story
+- id: 019e39cc-e05b-7bd0-a27f-f7ca7cb0bcb7
+  spec_id: STORY-37
+  agreed_id: STORY-37
+  title: 'Review PR-3: EPIC-4 STORY-27: roles + queue exercises (cluster 3)'
+  description: |
+    Auto-filed by `aida pr auto-queue-review` (typically from /aida-pr) (session `019e39bb`) for branch `epic-4`.
+
+    - PR: <https://github.com/joemooney/aida-tutor/pull/3>
+    - Branch: `epic-4` → `master`
+
+    ## Covers
+
+    - STORY-27
+
+    ## Acceptance
+
+    - Generate a structured review prompt with `aida review prompt --pr 3` and verify each spec's acceptance criteria.
+    - Approve and merge, or request changes by spec id.
+    - Mark this story `completed` once the PR is merged.
+  status: Approved
+  priority: Medium
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-18T06:36:28.635620960Z
+  modified_at: 2026-05-18T06:36:29.274896508Z
+  req_type: Story
+  relationships:
+  - rel_type: !Custom implements
+    target_id: 019e10a8-be76-75f0-a13e-28d9c1a9cb5a
+    created_at: 2026-05-18T06:36:29.274889544Z
+    created_by: joe
 - id: 019e0edd-2c5c-7dd3-acfd-14cd5a3acd65
   spec_id: STORY-24
   agreed_id: STORY-24
@@ -791,18 +822,39 @@ requirements:
     - **eXX role-end** (optional): `aida role end` → verify env unset and PS1 stripped
 
     Composes with: BUG-60 (PS1 accumulation) — once that ships, the role-enter exercise can include "enter twice without end, expect single PS1 prefix."
-  status: Approved
+  status: Done
   priority: High
   owner: ''
   feature: Uncategorized
   created_at: 2026-05-10T06:52:34.806446589Z
-  modified_at: 2026-05-10T06:53:21.021169252Z
+  modified_at: 2026-05-18T06:36:30.236621596Z
   req_type: Story
   relationships:
   - rel_type: Child
     target_id: 019e10a8-a6e6-7060-a1fd-612e294cbb55
     created_at: 2026-05-10T06:53:21.021158901Z
     created_by: joe
+  - rel_type: !Custom implemented-by
+    target_id: 019e39cc-e05b-7bd0-a27f-f7ca7cb0bcb7
+    created_at: 2026-05-18T06:36:30.236612537Z
+    created_by: joe
+  comments:
+  - id: 019e39cb-6369-7ed0-8dad-04a05f9662eb
+    author: joe
+    content: |-
+      Implemented via PR (commit b0f6658):
+
+      - Cluster 3 — exercises 21-24 cover the producer/consumer queue end to end: e21 role-enter (wear a hat), e22 queue-add (route work with --for), e23 queue-pickup (peek with `queue next`, claim with `edit --status in-progress`), e24 queue-done (atomic complete + dequeue).
+      - Exercises 22-24 follow one "Queue demo" task by title across capture -> pickup -> done.
+      - New verify helpers: all_requirements, requirement_by_title, queue_entries; RequirementYaml gains a `uuid` field so queue entries (which reference requirements by UUID) can be matched back to specs.
+
+      Test status: `aida-tutor demo` walks all 24 exercises green against live aida; `cargo build --release` + `cargo clippy` clean (no warnings in new files).
+    created_at: 2026-05-18T06:34:51.113441083Z
+    modified_at: 2026-05-18T06:34:51.113441083Z
+  implementation_info:
+    implemented: true
+    implemented_at: 2026-05-18T06:33:10.044695202Z
+    implemented_by: joe
 - id: 019e0ed2-2386-76b3-8927-53781f7b5a63
   spec_id: STORY-7
   agreed_id: STORY-7
