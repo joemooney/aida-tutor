@@ -193,6 +193,50 @@ requirements:
   - auto-drafted
   - failure-1
   - implementer
+- id: 019e39a1-2a95-7c62-97fe-0226f16b097c
+  spec_id: BUG-6
+  agreed_id: BUG-6
+  title: 'auto-complete failure: phase 1 (implementer) on STORY-25'
+  description: |
+    Auto-drafted by `aida queue work STORY-25 --auto-complete` after phase 1 (implementer) failed. Review this BUG and promote it to Approved if it is a real AIDA orchestrator bug — or reject it if it was a user error or a local environment issue. It is intentionally left in Draft and NOT queued. (TASK-266)
+
+    ## Failure
+
+    the implementer session exited 1 — it was aborted or errored
+
+    Failure kind: `failed`
+
+    ## Recovery hint shown to the user
+
+    Continue the implementer session: `aida queue work STORY-25 --resume`
+
+    ## Phase durations
+
+      - phase 1 (implementer): 100 ms
+
+    ## Telemetry entry
+
+    The line appended to `~/.aida/auto-complete.jsonl` for this run:
+
+    ```json
+    {"spec_id":"STORY-25","started_at":"2026-05-18T05:48:43.872885688+00:00","completed_at":"2026-05-18T05:48:43.973714305+00:00","outcome":"failed","variant":"full","failed_phase":1,"failure_kind":"failed","failure_message":"the implementer session exited 1 — it was aborted or errored","phase_durations":[{"phase":1,"slug":"implementer","elapsed_ms":100}],"total_ms":100,"binary_sha":"b62b8539"}
+    ```
+
+    ## Recurse-fix
+
+    Once triaged and promoted, this BUG can itself be driven by the orchestrator: `aida queue work <THIS-BUG> --auto-complete` — the dogfood loop TASK-266 makes operational.
+  status: Draft
+  priority: Medium
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-18T05:48:44.053041408Z
+  modified_at: 2026-05-18T05:48:44.053041408Z
+  req_type: Bug
+  tags:
+  - auto-complete
+  - auto-drafted
+  - failure-1
+  - implementer
 - id: 019e398f-69ad-7700-8c72-a16e7b886aab
   spec_id: BUG-5
   agreed_id: BUG-5
