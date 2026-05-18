@@ -34,12 +34,12 @@ requirements:
     Bumping aida-min-version is a deliberate act — it signals "we now require AIDA >= X." aida-tutor's release notes should highlight the bump.
 
     Composes with EPIC-2's CI gating acceptance.
-  status: Approved
+  status: Completed
   priority: High
   owner: ''
   feature: Uncategorized
   created_at: 2026-05-10T06:52:46.349304304Z
-  modified_at: 2026-05-10T06:53:37.649769539Z
+  modified_at: 2026-05-18T02:18:40.902356014Z
   req_type: Task
   relationships:
   - rel_type: Child
@@ -435,13 +435,19 @@ requirements:
   agreed_id: STORY-19
   title: aida-tutor demo — non-interactive walkthrough for CI
   description: 'Run all exercises in order, executing the necessary aida commands as subprocess between verify calls. Exits non-zero on any pending/fail. Use case: CI gate to ensure the tutor stays in lockstep with the AIDA CLI surface; also a smoke test before releases.'
-  status: Approved
+  status: Completed
   priority: Medium
   owner: ''
   feature: Uncategorized
   created_at: 2026-05-09T22:30:33.132601965Z
-  modified_at: 2026-05-09T22:30:33.132601965Z
+  modified_at: 2026-05-18T02:18:43.185946801Z
   req_type: Story
+  comments:
+  - id: 019e38e0-e471-7d41-b11e-b8266f35edec
+    author: joe
+    content: 'Closed alongside TASK-1: aida-tutor demo subcommand implemented (non-interactive walkthrough; reset --yes && demo walks all 17 exercises, exits non-zero on any failure).'
+    created_at: 2026-05-18T02:18:43.185946801Z
+    modified_at: 2026-05-18T02:18:43.185946801Z
 - id: 019e0ed2-31a5-7363-bdeb-b637494738f9
   spec_id: STORY-11
   agreed_id: STORY-11
@@ -568,13 +574,19 @@ requirements:
   agreed_id: STORY-21
   title: 'Exercises 18+: relationships, queue, roles, history, pickup'
   description: 'v0 covers init/capture/edit/trace/commit/docs/search/status/push. Next logical ground: `aida rel add <a> <b> --kind blocks` (graph editing), `aida queue add <id> --for implementer` (multi-agent flow), `aida role enter <name>` (persistent context), `aida history` (audit trail browsing), `/aida-pickup` (Claude Code slash command). Each is one new exercise file.'
-  status: Approved
+  status: Rejected
   priority: Medium
   owner: ''
   feature: Uncategorized
   created_at: 2026-05-09T22:30:34.375809752Z
-  modified_at: 2026-05-09T22:30:34.375809752Z
+  modified_at: 2026-05-10T07:00:41.408362094Z
   req_type: Story
+  comments:
+  - id: 019e10b0-2b40-7441-9f7a-7319a7d4d69c
+    author: joe
+    content: Superseded by EPIC-4 (v0.2 post-EPIC-9 coverage). EPIC-4 decomposes the same surface into 6 topic-cluster STORYs (STORY-25 distributed, STORY-26 relationships, STORY-27 roles+queue, STORY-28 sessions, STORY-29 review, STORY-30 plans/doctor/MCP) plus TASK-1 for CI gating. Marked rejected to keep the implementer queue clean — see EPIC-4 children for the work shape.
+    created_at: 2026-05-10T07:00:41.408362094Z
+    modified_at: 2026-05-10T07:00:41.408362094Z
 - id: 019e0ed2-3627-7430-9479-b880ef3d55b0
   spec_id: STORY-13
   agreed_id: STORY-13
