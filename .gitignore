@@ -9,10 +9,9 @@ workspace/
 # Per-learner progress (gitignored: each learner's own state)
 .aida-tutor-progress.toml
 
-# Cache (rebuildable from .aida-store)
-.aida/cache.db
-.aida/cache.db-shm
-.aida/cache.db-wal
-
-# Per-clone session leases / runtime state
-.aida/sessions/
+# AIDA runtime state — deny-by-default, only config.toml is tracked.
+# Catches cache.db*, sessions/, session-env.sh, and any future runtime
+# file AIDA writes here, so `aida session end` never trips on an
+# untracked .aida/ path.
+.aida/*
+!.aida/config.toml
