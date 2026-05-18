@@ -551,6 +551,37 @@ requirements:
   - rel_type: Parent
     target_id: 019e3b8e-4130-7c01-b40e-6a5bb0f9c435
     created_at: 2026-05-18T14:47:19.712190723Z
+- id: 019e3ba4-0bd5-7d30-bbc1-9c515a4706f3
+  spec_id: STORY-38
+  agreed_id: STORY-38
+  title: 'Review PR-4: [AI:claude] feat(tutor): relationships exercises 25-26 (STORY-26)'
+  description: |
+    Auto-filed by `aida pr auto-queue-review` (typically from /aida-pr) (session `019e3b94`) for branch `story-26-relationships`.
+
+    - PR: <https://github.com/joemooney/aida-tutor/pull/4>
+    - Branch: `story-26-relationships` → `master`
+
+    ## Covers
+
+    - STORY-26
+
+    ## Acceptance
+
+    - Generate a structured review prompt with `aida review prompt --pr 4` and verify each spec's acceptance criteria.
+    - Approve and merge, or request changes by spec id.
+    - Mark this story `completed` once the PR is merged.
+  status: Approved
+  priority: Medium
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-18T15:11:07.221196504Z
+  modified_at: 2026-05-18T15:11:07.929498963Z
+  req_type: Story
+  relationships:
+  - rel_type: !Custom implements
+    target_id: 019e10a8-b3c7-7543-a896-42909d61ab7f
+    created_at: 2026-05-18T15:11:07.929491553Z
+    created_by: joe
 - id: 019e0ed2-3c32-7980-8ed0-82854e0a52d0
   spec_id: STORY-15
   agreed_id: STORY-15
@@ -723,17 +754,21 @@ requirements:
     - **eXX rel-add-positional**: `aida rel add STORY-A STORY-B --type duplicate` (positional form, post-TASK-41) → verify edge in target_id and the bidirectional flag adds inverse
 
     Verifiers parse YAML in workspace's .aida-store/objects/.
-  status: Approved
+  status: Done
   priority: Medium
   owner: ''
   feature: Uncategorized
   created_at: 2026-05-10T06:52:32.071940657Z
-  modified_at: 2026-05-18T14:53:04.638939835Z
+  modified_at: 2026-05-18T15:11:08.867212412Z
   req_type: Story
   relationships:
   - rel_type: Child
     target_id: 019e10a8-a6e6-7060-a1fd-612e294cbb55
     created_at: 2026-05-10T06:53:17.051769904Z
+    created_by: joe
+  - rel_type: !Custom implemented-by
+    target_id: 019e3ba4-0bd5-7d30-bbc1-9c515a4706f3
+    created_at: 2026-05-18T15:11:08.867205306Z
     created_by: joe
   comments:
   - id: 019e3b93-86fe-74f0-abd5-23579f3e0b80
@@ -741,6 +776,27 @@ requirements:
     content: 'Advisor decision 2026-05-18 (during PR #2 review): cluster 2''s relationships exercises are numbered 25-26 (APPEND) — NOT the natural 21-22. Cluster 3 (STORY-27) already shipped roles+queue as exercises 21-24, so 21-22 are taken. Implementer: create content/25-*.md + content/26-*.md and src/exercises/e25_*.rs + e26_*.rs, registered after e24 in mod.rs; bump cmd_welcome + CLAUDE.md to 26. Scope: 2 exercises — ''aida add --parent'' (parent/child) and ''aida rel add'' (typed relationships: Verifies/References). Do this cluster on its OWN branch and its OWN PR — clusters 1 and 3 got tangled by sharing the ''epic-4'' branch; one cluster = one branch = one PR.'
     created_at: 2026-05-18T14:53:04.638939835Z
     modified_at: 2026-05-18T14:53:04.638939835Z
+  - id: 019e3ba2-0085-7de1-b0ff-9eef3c45fbc0
+    author: joe
+    content: Commit 1938ad3 references this requirement
+    created_at: 2026-05-18T15:08:53.253650622Z
+    modified_at: 2026-05-18T15:08:53.253650622Z
+  - id: 019e3ba4-0251-78e0-b4af-d2e7c5d59e43
+    author: joe
+    content: |-
+      Implemented via PR #4 (commit 1938ad3):
+
+      - e25 add-parent + e26 rel-add — content/25-26 + src/exercises/e25_add_parent.rs, e26_rel_add.rs, registered after e24 in mod.rs (numbered 25-26 per advisor decision).
+      - verify.rs: Relationship struct, relationships field, has_edge helper, parse_requirement_yaml rewritten with explicit relationships/comments block tracking.
+      - Welcome banner + CLAUDE.md bumped 24 -> 26.
+
+      Test status: aida-tutor demo walks all 26 exercises green; both new verifiers confirmed to reject half-done state (missing --parent link / missing --bidirectional inverse).
+    created_at: 2026-05-18T15:11:04.785646774Z
+    modified_at: 2026-05-18T15:11:04.785646774Z
+  implementation_info:
+    implemented: true
+    implemented_at: 2026-05-18T15:09:04.657786698Z
+    implemented_by: joe
 - id: 019e3917-b4cc-7572-b985-c2afbff655fa
   spec_id: STORY-31
   agreed_id: STORY-31
