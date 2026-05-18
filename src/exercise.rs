@@ -65,6 +65,16 @@ pub fn demo_spec_id(workspace: &Path, prefix: &str) -> anyhow::Result<String> {
         .with_context(|| format!("demo: no {prefix}-* requirement in the store yet"))
 }
 
+/// Resolve the spec_id of the requirement whose title contains `needle`
+/// (case-insensitive). The queue-cluster demos (exercises 22-24) follow
+/// one task by title across capture → pickup → done, since its spec_id
+/// depends on creation order. trace:STORY-27 | ai:claude
+pub fn demo_req_by_title(workspace: &Path, needle: &str) -> anyhow::Result<String> {
+    crate::verify::requirement_by_title(workspace, needle)
+        .and_then(|r| r.spec_id)
+        .with_context(|| format!("demo: no requirement whose title contains {needle:?}"))
+}
+
 /// Run `program args...` with `workspace` as the working directory,
 /// capturing output so demo logs stay quiet on success. Errors (with the
 /// captured stdout/stderr) if the process can't spawn or exits non-zero.
