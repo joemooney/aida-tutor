@@ -51,7 +51,7 @@ impl Exercise for E {
             return VerifyResult::Pending(format!(
                 "\"{}\" exists but isn't linked under the epic — capture it with \
                  `aida add --parent {} ...`, or link it after the fact with \
-                 `aida rel add {} {} --type child`.",
+                 `aida rel add {} {} --type child --bidirectional`.",
                 child.title.as_deref().unwrap_or("the story"),
                 epic.spec_id.as_deref().unwrap_or("<EPIC-ID>"),
                 child.spec_id.as_deref().unwrap_or("<STORY-ID>"),
