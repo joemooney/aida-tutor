@@ -17,13 +17,26 @@ priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-10T06:52:34.806446589Z
-modified_at: 2026-05-18T06:33:10.044695202Z
+modified_at: 2026-05-18T06:34:51.113441083Z
 req_type: Story
 relationships:
 - rel_type: Child
   target_id: 019e10a8-a6e6-7060-a1fd-612e294cbb55
   created_at: 2026-05-10T06:53:21.021158901Z
   created_by: joe
+comments:
+- id: 019e39cb-6369-7ed0-8dad-04a05f9662eb
+  author: joe
+  content: |-
+    Implemented via PR (commit b0f6658):
+
+    - Cluster 3 — exercises 21-24 cover the producer/consumer queue end to end: e21 role-enter (wear a hat), e22 queue-add (route work with --for), e23 queue-pickup (peek with `queue next`, claim with `edit --status in-progress`), e24 queue-done (atomic complete + dequeue).
+    - Exercises 22-24 follow one "Queue demo" task by title across capture -> pickup -> done.
+    - New verify helpers: all_requirements, requirement_by_title, queue_entries; RequirementYaml gains a `uuid` field so queue entries (which reference requirements by UUID) can be matched back to specs.
+
+    Test status: `aida-tutor demo` walks all 24 exercises green against live aida; `cargo build --release` + `cargo clippy` clean (no warnings in new files).
+  created_at: 2026-05-18T06:34:51.113441083Z
+  modified_at: 2026-05-18T06:34:51.113441083Z
 implementation_info:
   implemented: true
   implemented_at: 2026-05-18T06:33:10.044695202Z
