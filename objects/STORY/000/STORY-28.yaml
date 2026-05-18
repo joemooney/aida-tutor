@@ -11,12 +11,12 @@ description: |
   - **eXX session-list-and-show** (optional): demonstrate `aida session leases` and `aida session show <id>` (the latter ships in STORY-68)
 
   Verifiers inspect: `git worktree list` output, `.aida/sessions/` contents, lease toml.
-status: Approved
+status: InProgress
 priority: Medium
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-10T06:52:37.244051073Z
-modified_at: 2026-05-10T06:53:24.885637276Z
+modified_at: 2026-05-18T15:36:35.787751376Z
 req_type: Story
 relationships:
 - rel_type: Child
