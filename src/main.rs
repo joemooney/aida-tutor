@@ -583,9 +583,10 @@ fn cmd_welcome() {
     // trace:STORY-23 | ai:claude
     println!("{}", "Welcome to aida-tutor".cyan().bold());
     println!();
-    println!("17 hands-on exercises that walk you through AIDA's daily workflow:");
+    println!("20 hands-on exercises that walk you through AIDA's daily workflow:");
     println!("  init → capture (vision/principle/decision/feature/bug) → list/show →");
-    println!("  edit → trace + commit → docs build → search → status → push.");
+    println!("  edit → trace + commit → docs build → search → status → push →");
+    println!("  distributed store (orphan branch, sync, cache rebuild).");
     println!();
     println!(
         "First, make sure {} is on your PATH (run `aida --version` in another shell).",

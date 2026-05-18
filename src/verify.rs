@@ -73,6 +73,61 @@ pub fn last_commit_message(workspace: &Path) -> Option<String> {
     }
 }
 
+/// True if `branch` exists as a local git branch in `workspace`. Used by
+/// the distributed-store exercises to confirm the orphan `aida-store`
+/// branch is present. trace:STORY-25 | ai:claude
+pub fn git_branch_exists(workspace: &Path, branch: &str) -> bool {
+    std::process::Command::new("git")
+        .arg("-C")
+        .arg(workspace)
+        .args(["rev-parse", "--verify", "--quiet"])
+        .arg(format!("refs/heads/{branch}"))
+        .output()
+        .map(|o| o.status.success())
+        .unwrap_or(false)
+}
+
+/// Count of commits on `branch` in `workspace`, or None if the branch is
+/// missing / git errors. The orphan `aida-store` branch carries one
+/// commit per store mutation. trace:STORY-25 | ai:claude
+pub fn git_commit_count(workspace: &Path, branch: &str) -> Option<usize> {
+    let out = std::process::Command::new("git")
+        .arg("-C")
+        .arg(workspace)
+        .args(["rev-list", "--count", branch])
+        .output()
+        .ok()?;
+    if !out.status.success() {
+        return None;
+    }
+    String::from_utf8_lossy(&out.stdout).trim().parse().ok()
+}
+
+/// True if `workspace/<rel>` is a *linked git worktree* — its `.git` entry
+/// is a file (a `gitdir:` pointer), not a directory. AIDA's distributed
+/// store lives in the `.aida-store/` linked worktree. trace:STORY-25
+pub fn is_linked_worktree(workspace: &Path, rel: &str) -> bool {
+    workspace.join(rel).join(".git").is_file()
+}
+
+/// True if `workspace/.aida/cache.db` exists and begins with the SQLite
+/// file magic (`SQLite format 3\0`). A bare presence check would pass on a
+/// garbage-filled file; reading the header confirms the cache is a real,
+/// openable database — the state `aida cache rebuild` restores.
+/// trace:STORY-25 | ai:claude
+pub fn cache_db_is_valid_sqlite(workspace: &Path) -> bool {
+    use std::io::Read;
+    let path = workspace.join(".aida").join("cache.db");
+    let Ok(mut f) = std::fs::File::open(&path) else {
+        return false;
+    };
+    let mut head = [0u8; 16];
+    if f.read_exact(&mut head).is_err() {
+        return false;
+    }
+    &head == b"SQLite format 3\0"
+}
+
 /// Best-effort YAML extraction. We only need a handful of fields and
 /// don't want to pull in a real YAML parser for this minimal verifier.
 /// Each field is matched at the start of a line with `key: value` or

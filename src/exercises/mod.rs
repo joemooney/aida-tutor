@@ -24,6 +24,10 @@ mod e14_complete;
 mod e15_show_comments;
 mod e16_status;
 mod e17_push;
+// Cluster 1 — distributed storage. trace:STORY-25 | ai:claude
+mod e18_distributed_store;
+mod e19_store_sync;
+mod e20_cache_rebuild;
 
 pub fn all() -> Vec<Box<dyn Exercise>> {
     vec![
@@ -44,5 +48,8 @@ pub fn all() -> Vec<Box<dyn Exercise>> {
         Box::new(e15_show_comments::E),
         Box::new(e16_status::E),
         Box::new(e17_push::E),
+        Box::new(e18_distributed_store::E),
+        Box::new(e19_store_sync::E),
+        Box::new(e20_cache_rebuild::E),
     ]
 }
