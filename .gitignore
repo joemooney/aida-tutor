@@ -13,3 +13,6 @@ workspace/
 .aida/cache.db
 .aida/cache.db-shm
 .aida/cache.db-wal
+
+# Per-clone session leases / runtime state
+.aida/sessions/
