@@ -1,0 +1,27 @@
+id: 019e3917-551e-71b3-9214-4bdd105a6121
+spec_id: EPIC-5
+agreed_id: EPIC-5
+title: First-contact onboarding — the 15-minute shared-memory wow
+description: |-
+  Repurpose aida-tutor's first-contact path from a 17-exercise grind into a THIN onboarding slice that delivers ONE genuine 'oh, I get it' moment in 10-15 minutes. Scope is deliberately thin (advisor handoff 2026-05-18). Built ONLY on AIDA's STABLE surface: spec graph, capture, trace comments, aida show/list/search, the code-to-spec round-trip, commits. The VOLATILE agent-collaboration layer (queue, roles, sessions, --auto-complete orchestrator, autonomy modes) is explicitly OUT — deferred to a future 'Act II' restructure that ripens only when (a) AIDA's orchestrator surface has been quiet 2+ weeks AND (b) this slice's human test confirms the wow lands. The 17 existing exercises stay as-is as 'Act I'; this EPIC adds a NEW path in front of them, it does not rewrite them.
+
+  THE ONE WOW (round-trip / shared queryable memory): the newcomer captures one real intent as a spec, has a coding agent implement it (the agent writes the code AND the // trace comment), and commits. Then 'aida show <SPEC>' shows the linkage assembling itself — spec to commit to file — that the user never hand-maintained. The wow is NOT 'I tracked a requirement' (that is the floor; the floor reaction 'I could do this in 20 lines of bash' is FAILURE). The wow is the cold-start contrast: a fresh agent session, zero conversational context, answers a question about the work correctly because it read the project's memory over MCP. Default framing line (calibrate in human test): 'I closed the session — the next agent picked up exactly where I left off, because the project remembered, not the chat.'
+
+  ACCEPTANCE CRITERIA:
+  AC-1 (THE WOW, testable): A first-time AIDA user, inside Claude Code on a small real coding task, reaches this observable moment within 15 min: after capturing one intent as a spec and having the agent implement it with a trace comment + linking commit, 'aida show <SPEC>' displays the spec text, status, the implementing commit, and the traced file — linkage they never hand-maintained. In a moderated human test, a MAJORITY of testers, UNPROMPTED, articulate that the project itself now holds this memory and a fresh agent can read it. A tester who only says 'nice, it tracked my requirement' = wow did NOT land (explicit failure signal).
+  AC-2: 6-8 steps, completable end-to-end in 10-15 min by someone who has never used AIDA, assuming only 'you use a coding agent.'
+  AC-3: Runs entirely on AIDA's stable surface — no step teaches or depends on queue/roles/sessions/orchestrator/autonomy.
+  AC-4: Ends with exactly one forward-signpost paragraph naming the agent-collaboration layer as 'Act II, coming when it settles' — points forward without teaching the volatile layer.
+  AC-5: Verifiable checkpoints use on-disk state only (spec created, trace comment present, commit links spec, status flip). No invocation-recording verifier shim is built (deferred restructure scope).
+  AC-6 (GATE): before any investment beyond this slice, it is validated by a moderated test with 1-2 real first-time users per AC-1.
+
+  NON-GOALS (decided, do not pull in): the full Act II restructure; the aida invocation-recording shim that would close the e08-e17 read-only verifier gap; rewriting/renumbering the 17 existing exercises; full framing re-anchor of README/cmd_welcome/CLAUDE.md (only minimal discoverability changes are in scope).
+
+  Source: docs/2026-05-18-advisor-handoff.md, docs/plans/2026-05-18-aida-tutor-audit.md, plan docs/plans/2026-05-18-first-contact-onboarding-slice.md.
+status: Approved
+priority: High
+owner: ''
+feature: Uncategorized
+created_at: 2026-05-18T03:18:10.974909989Z
+modified_at: 2026-05-18T03:18:10.974909989Z
+req_type: Epic
