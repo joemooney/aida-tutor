@@ -16,9 +16,15 @@ priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-18T03:11:53.906982533Z
-modified_at: 2026-05-18T03:36:06.575712776Z
+modified_at: 2026-05-18T03:36:07.584487597Z
 req_type: Bug
 relationships:
 - rel_type: Child
   target_id: 019e10a8-a6e6-7060-a1fd-612e294cbb55
   created_at: 2026-05-18T03:11:54.498100874Z
+comments:
+- id: 019e3927-c2a0-7561-a1b4-a021b98bccff
+  author: joe
+  content: 'Fixed on epic-4-batch1 @ 3cb6997 — Cargo.toml min-version 0.4.5 -> 0.7.0. Pushed; PR #1 CI re-running. Also added .aida/sessions/ to .gitignore is still pending (folded into this BUG''s scope) — see follow-up note. Status: done (work on branch); auto-bumps to completed when PR #1 merges.'
+  created_at: 2026-05-18T03:36:07.584487597Z
+  modified_at: 2026-05-18T03:36:07.584487597Z
