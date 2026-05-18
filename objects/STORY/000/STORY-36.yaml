@@ -1,0 +1,26 @@
+id: 019e39b1-375c-7861-b079-c344cd82d725
+spec_id: STORY-36
+agreed_id: STORY-36
+title: 'Review PR-2: EPIC-4 STORY-25: distributed-storage exercises (cluster 1)'
+description: |
+  Auto-filed by `aida pr auto-queue-review` (typically from /aida-pr) (session `019e39a2`) for branch `epic-4`.
+
+  - PR: <https://github.com/joemooney/aida-tutor/pull/2>
+  - Branch: `epic-4` → `master`
+
+  ## Covers
+
+  - STORY-25
+
+  ## Acceptance
+
+  - Generate a structured review prompt with `aida review prompt --pr 2` and verify each spec's acceptance criteria.
+  - Approve and merge, or request changes by spec id.
+  - Mark this story `completed` once the PR is merged.
+status: Approved
+priority: Medium
+owner: ''
+feature: Uncategorized
+created_at: 2026-05-18T06:06:15.900603370Z
+modified_at: 2026-05-18T06:06:15.900603370Z
+req_type: Story
