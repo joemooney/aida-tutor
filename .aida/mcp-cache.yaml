@@ -14,6 +14,22 @@ requirements:
   created_at: 2026-05-09T22:17:47.051627364Z
   modified_at: 2026-05-09T22:17:47.051627364Z
   req_type: Vision
+- id: 019e3917-ddf3-7d81-8dbf-7b1e505002d5
+  spec_id: TASK-2
+  agreed_id: TASK-2
+  title: Moderated human-test protocol for the wow (AC-1 gate)
+  description: 'Write the moderated-test script that gates further investment (AC-6): the exact small real task to hand 1-2 first-time AIDA users, the observation rubric, and the pass/fail call. PASS = a majority of testers, UNPROMPTED, articulate that the project itself now holds the memory and a fresh agent can read it. FAIL signal = a tester who only says ''nice, it tracked my requirement'' (the floor reaction). Calibrate the wow''s one-line framing from what testers actually say. This task''s output is run AFTER the slice is built and BEFORE any Act II / restructure investment.'
+  status: Approved
+  priority: High
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-18T03:18:46.003426633Z
+  modified_at: 2026-05-18T03:18:46.003426633Z
+  req_type: Task
+  relationships:
+  - rel_type: Child
+    target_id: 019e3917-551e-71b3-9214-4bdd105a6121
+    created_at: 2026-05-18T03:18:46.666744145Z
 - id: 019e10a8-eb8d-7232-a330-4bb3318cdcbc
   spec_id: TASK-1
   agreed_id: TASK-1
@@ -39,13 +55,100 @@ requirements:
   owner: ''
   feature: Uncategorized
   created_at: 2026-05-10T06:52:46.349304304Z
-  modified_at: 2026-05-18T02:18:40.902356014Z
+  modified_at: 2026-05-18T03:37:03.165725532Z
   req_type: Task
   relationships:
   - rel_type: Child
     target_id: 019e10a8-a6e6-7060-a1fd-612e294cbb55
     created_at: 2026-05-10T06:53:37.649757036Z
     created_by: joe
+  - rel_type: !Custom implemented-by
+    target_id: 019e3928-8e27-7300-9544-0a33ae277e90
+    created_at: 2026-05-18T03:37:03.165719127Z
+    created_by: joe
+- id: 019e3911-9432-72b2-bed4-19521eac3397
+  spec_id: BUG-1
+  agreed_id: BUG-1
+  title: 'CI min-leg red: aida-min-version pin 0.4.5 predates docs/push subcommands'
+  description: |-
+    PR #1 (epic-4-batch1) CI: the 'aida min' matrix leg fails 6/17 exercises because Cargo.toml [package.metadata.aida] min-version is pinned to 0.4.5, which predates 'aida docs' (landed v0.5.0) and 'aida push'. Decision (PO, 2026-05-17): bump min-version to 0.7.0 — the latest released aida tag and an honest floor for a tutorial authored against current aida.
+
+    Fix scope:
+    1. Cargo.toml: min-version 0.4.5 -> 0.7.0 (the CI workflow resolves this to git tag v0.7.0).
+    2. Push to epic-4-batch1; confirm BOTH CI legs (latest + min) go green.
+    3. Housekeeping: add .aida/sessions/ to .gitignore (untracked, ephemeral session state).
+
+    Blocks merge of PR #1. The 'aida latest' leg already passes, so the cargo-install / aida-cli crate-name path is confirmed good.
+  status: Completed
+  priority: High
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-18T03:11:53.906982533Z
+  modified_at: 2026-05-18T03:54:13.561051743Z
+  req_type: Bug
+  relationships:
+  - rel_type: Child
+    target_id: 019e10a8-a6e6-7060-a1fd-612e294cbb55
+    created_at: 2026-05-18T03:11:54.498100874Z
+  - rel_type: !Custom implemented-by
+    target_id: 019e3928-8e27-7300-9544-0a33ae277e90
+    created_at: 2026-05-18T03:37:01.169537929Z
+    created_by: joe
+  comments:
+  - id: 019e3927-c2a0-7561-a1b4-a021b98bccff
+    author: joe
+    content: 'Fixed on epic-4-batch1 @ 3cb6997 — Cargo.toml min-version 0.4.5 -> 0.7.0. Pushed; PR #1 CI re-running. Also added .aida/sessions/ to .gitignore is still pending (folded into this BUG''s scope) — see follow-up note. Status: done (work on branch); auto-bumps to completed when PR #1 merges.'
+    created_at: 2026-05-18T03:36:07.584487597Z
+    modified_at: 2026-05-18T03:36:07.584487597Z
+  - id: 019e3938-54b9-7dc1-851b-97804170580b
+    author: joe
+    content: 'Merged to master via PR #1 squash commit ea5d61f. The squash collapsed the (BUG-1) trailers into body bullets — commit SUBJECT is just the PR title — so the done->completed auto-bump and ''aida db reconcile-status'' (both subject-scoped) missed it. Set completed manually: STORY-86 exception path, work verifiably on master.'
+    created_at: 2026-05-18T03:54:13.561051743Z
+    modified_at: 2026-05-18T03:54:13.561051743Z
+- id: 019e3922-d5bb-7fd3-b460-5fcdf9a01a35
+  spec_id: BUG-2
+  agreed_id: BUG-2
+  title: 'auto-complete failure: phase 1 (implementer) on BUG-1'
+  description: |
+    Auto-drafted by `aida queue work BUG-1 --auto-complete` after phase 1 (implementer) failed. Review this BUG and promote it to Approved if it is a real AIDA orchestrator bug — or reject it if it was a user error or a local environment issue. It is intentionally left in Draft and NOT queued. (TASK-266)
+
+    ## Failure
+
+    the implementer session exited 1 — it was aborted or errored
+
+    Failure kind: `failed`
+
+    ## Recovery hint shown to the user
+
+    Continue the implementer session: `aida queue work BUG-1 --resume`
+
+    ## Phase durations
+
+      - phase 1 (implementer): 100 ms
+
+    ## Telemetry entry
+
+    The line appended to `~/.aida/auto-complete.jsonl` for this run:
+
+    ```json
+    {"spec_id":"BUG-1","started_at":"2026-05-18T03:30:44.586195289+00:00","completed_at":"2026-05-18T03:30:44.686998871+00:00","outcome":"failed","variant":"full","failed_phase":1,"failure_kind":"failed","failure_message":"the implementer session exited 1 — it was aborted or errored","phase_durations":[{"phase":1,"slug":"implementer","elapsed_ms":100}],"total_ms":100,"binary_sha":"959ec6a5"}
+    ```
+
+    ## Recurse-fix
+
+    Once triaged and promoted, this BUG can itself be driven by the orchestrator: `aida queue work <THIS-BUG> --auto-complete` — the dogfood loop TASK-266 makes operational.
+  status: Draft
+  priority: Medium
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-18T03:30:44.795141917Z
+  modified_at: 2026-05-18T03:30:44.795141917Z
+  req_type: Bug
+  tags:
+  - auto-complete
+  - auto-drafted
+  - failure-1
+  - implementer
 - id: 019e0ed1-9bab-7632-ab40-c1f66f4539da
   spec_id: EPIC-1
   agreed_id: EPIC-1
@@ -70,6 +173,55 @@ requirements:
   created_at: 2026-05-09T22:17:59.028815216Z
   modified_at: 2026-05-10T06:53:36.624442365Z
   req_type: Epic
+- id: 019e3917-551e-71b3-9214-4bdd105a6121
+  spec_id: EPIC-5
+  agreed_id: EPIC-5
+  title: First-contact onboarding — the 15-minute shared-memory wow
+  description: |-
+    Repurpose aida-tutor's first-contact path from a 17-exercise grind into a THIN onboarding slice that delivers ONE genuine 'oh, I get it' moment in 10-15 minutes. Scope is deliberately thin (advisor handoff 2026-05-18). Built ONLY on AIDA's STABLE surface: spec graph, capture, trace comments, aida show/list/search, the code-to-spec round-trip, commits. The VOLATILE agent-collaboration layer (queue, roles, sessions, --auto-complete orchestrator, autonomy modes) is explicitly OUT — deferred to a future 'Act II' restructure that ripens only when (a) AIDA's orchestrator surface has been quiet 2+ weeks AND (b) this slice's human test confirms the wow lands. The 17 existing exercises stay as-is as 'Act I'; this EPIC adds a NEW path in front of them, it does not rewrite them.
+
+    THE ONE WOW (round-trip / shared queryable memory): the newcomer captures one real intent as a spec, has a coding agent implement it (the agent writes the code AND the // trace comment), and commits. Then 'aida show <SPEC>' shows the linkage assembling itself — spec to commit to file — that the user never hand-maintained. The wow is NOT 'I tracked a requirement' (that is the floor; the floor reaction 'I could do this in 20 lines of bash' is FAILURE). The wow is the cold-start contrast: a fresh agent session, zero conversational context, answers a question about the work correctly because it read the project's memory over MCP. Default framing line (calibrate in human test): 'I closed the session — the next agent picked up exactly where I left off, because the project remembered, not the chat.'
+
+    ACCEPTANCE CRITERIA:
+    AC-1 (THE WOW, testable): A first-time AIDA user, inside Claude Code on a small real coding task, reaches this observable moment within 15 min: after capturing one intent as a spec and having the agent implement it with a trace comment + linking commit, 'aida show <SPEC>' displays the spec text, status, the implementing commit, and the traced file — linkage they never hand-maintained. In a moderated human test, a MAJORITY of testers, UNPROMPTED, articulate that the project itself now holds this memory and a fresh agent can read it. A tester who only says 'nice, it tracked my requirement' = wow did NOT land (explicit failure signal).
+    AC-2: 6-8 steps, completable end-to-end in 10-15 min by someone who has never used AIDA, assuming only 'you use a coding agent.'
+    AC-3: Runs entirely on AIDA's stable surface — no step teaches or depends on queue/roles/sessions/orchestrator/autonomy.
+    AC-4: Ends with exactly one forward-signpost paragraph naming the agent-collaboration layer as 'Act II, coming when it settles' — points forward without teaching the volatile layer.
+    AC-5: Verifiable checkpoints use on-disk state only (spec created, trace comment present, commit links spec, status flip). No invocation-recording verifier shim is built (deferred restructure scope).
+    AC-6 (GATE): before any investment beyond this slice, it is validated by a moderated test with 1-2 real first-time users per AC-1.
+
+    NON-GOALS (decided, do not pull in): the full Act II restructure; the aida invocation-recording shim that would close the e08-e17 read-only verifier gap; rewriting/renumbering the 17 existing exercises; full framing re-anchor of README/cmd_welcome/CLAUDE.md (only minimal discoverability changes are in scope).
+
+    Source: docs/2026-05-18-advisor-handoff.md, docs/plans/2026-05-18-aida-tutor-audit.md, plan docs/plans/2026-05-18-first-contact-onboarding-slice.md.
+  status: Approved
+  priority: High
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-18T03:18:10.974909989Z
+  modified_at: 2026-05-18T03:20:40.885609941Z
+  req_type: Epic
+  relationships:
+  - rel_type: Parent
+    target_id: 019e3917-b4cc-7572-b985-c2afbff655fa
+    created_at: 2026-05-18T03:18:36.071800549Z
+  - rel_type: Parent
+    target_id: 019e3917-be5f-7c42-bda9-f6793ac4ce7e
+    created_at: 2026-05-18T03:18:38.800541147Z
+  - rel_type: Parent
+    target_id: 019e3917-c939-7c20-8064-a05f95daf64c
+    created_at: 2026-05-18T03:18:41.330124463Z
+  - rel_type: Parent
+    target_id: 019e3917-d373-7f01-9c0e-db745f77d518
+    created_at: 2026-05-18T03:18:43.953474219Z
+  - rel_type: Parent
+    target_id: 019e3917-ddf3-7d81-8dbf-7b1e505002d5
+    created_at: 2026-05-18T03:18:46.666744145Z
+  comments:
+  - id: 019e3919-9eb5-7f03-9568-2aae9fb25658
+    author: joe
+    content: 'Rewrite plan filed: docs/plans/2026-05-18-first-contact-onboarding-slice.md (11-section AIDA template). Decomposition: STORY-31 (scratch project + entry point), STORY-32 (6-8 step content), STORY-33 (on-disk verifiers), STORY-34 (wow payoff + Act-II signpost), TASK-2 (moderated human-test gate). ''One wow'' CONFIRMED as the round-trip / shared-queryable-memory moment, sharpened to the cold-start contrast. Build NOT yet routed to implementer — held pending owner confirm of the wow framing (advisor surfacing 2026-05-18).'
+    created_at: 2026-05-18T03:20:40.885609941Z
+    modified_at: 2026-05-18T03:20:40.885609941Z
 - id: 019e0edd-0e98-7ab1-8192-c13a1baa3acc
   spec_id: EPIC-3
   agreed_id: EPIC-3
@@ -149,6 +301,9 @@ requirements:
     target_id: 019e10a8-eb8d-7232-a330-4bb3318cdcbc
     created_at: 2026-05-10T06:53:39.007660949Z
     created_by: joe
+  - rel_type: Parent
+    target_id: 019e3911-9432-72b2-bed4-19521eac3397
+    created_at: 2026-05-18T03:11:54.498100874Z
 - id: 019e0ed2-3c32-7980-8ed0-82854e0a52d0
   spec_id: STORY-15
   agreed_id: STORY-15
@@ -292,6 +447,22 @@ requirements:
     target_id: 019e10a8-a6e6-7060-a1fd-612e294cbb55
     created_at: 2026-05-10T06:53:17.051769904Z
     created_by: joe
+- id: 019e3917-b4cc-7572-b985-c2afbff655fa
+  spec_id: STORY-31
+  agreed_id: STORY-31
+  title: 'Onboarding slice: scratch project + entry point'
+  description: 'Ship the tiny REAL stub project the learner works on during the slice (a ~20-line CLI in a language most devs read on sight — Python is the default for lowest setup friction) and the way the slice is launched. Add an ''onboard'' entry point to aida-tutor (new Cmd variant in src/main.rs alongside List/Show/Verify) so the slice is a distinct first-contact path, separate from the 17-exercise track. Minimal discoverability only: cmd_welcome() at src/main.rs:524 gains one line pointing at ''aida-tutor onboard''. NOT a full framing re-anchor (out of scope per EPIC-5 non-goals). The stub project lives under workspace/ semantics (gitignored, reset-safe). trace target: EPIC-5.'
+  status: Approved
+  priority: High
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-18T03:18:35.468112100Z
+  modified_at: 2026-05-18T03:18:35.468112100Z
+  req_type: Story
+  relationships:
+  - rel_type: Child
+    target_id: 019e3917-551e-71b3-9214-4bdd105a6121
+    created_at: 2026-05-18T03:18:36.071800549Z
 - id: 019e0edd-2245-7a91-bd43-5cca5b7d11b7
   spec_id: STORY-20
   agreed_id: STORY-20
@@ -316,6 +487,22 @@ requirements:
   created_at: 2026-05-09T22:18:37.405108758Z
   modified_at: 2026-05-09T22:29:56.008757297Z
   req_type: Story
+- id: 019e3917-c939-7c20-8064-a05f95daf64c
+  spec_id: STORY-33
+  agreed_id: STORY-33
+  title: 'Onboarding slice: on-disk round-trip verifiers'
+  description: 'Verifiers for the slice''s state-changing checkpoints, reusing the existing src/verify.rs read-only inspection model and the Exercise trait (slug/title/verify/hint): spec file created in .aida-store, // trace:<SPEC> comment present in the scratch code, commit subject references the SPEC, status flip observed. Explicitly does NOT build the aida invocation-recording shim — the read-only steps (aida show, the cold-agent query) are the experiential payoff, observed in the human test, not Rust-verified. Owns AC-5.'
+  status: Approved
+  priority: Medium
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-18T03:18:40.697284487Z
+  modified_at: 2026-05-18T03:18:40.697284487Z
+  req_type: Story
+  relationships:
+  - rel_type: Child
+    target_id: 019e3917-551e-71b3-9214-4bdd105a6121
+    created_at: 2026-05-18T03:18:41.330124463Z
 - id: 019e0ed2-3f20-7530-9fea-e55f72be970b
   spec_id: STORY-16
   agreed_id: STORY-16
@@ -440,8 +627,13 @@ requirements:
   owner: ''
   feature: Uncategorized
   created_at: 2026-05-09T22:30:33.132601965Z
-  modified_at: 2026-05-18T02:18:43.185946801Z
+  modified_at: 2026-05-18T03:37:05.092698040Z
   req_type: Story
+  relationships:
+  - rel_type: !Custom implemented-by
+    target_id: 019e3928-8e27-7300-9544-0a33ae277e90
+    created_at: 2026-05-18T03:37:05.092689321Z
+    created_by: joe
   comments:
   - id: 019e38e0-e471-7d41-b11e-b8266f35edec
     author: joe
@@ -533,6 +725,22 @@ requirements:
   created_at: 2026-05-09T22:30:32.555836984Z
   modified_at: 2026-05-09T22:33:13.205634029Z
   req_type: Story
+- id: 019e3917-d373-7f01-9c0e-db745f77d518
+  spec_id: STORY-34
+  agreed_id: STORY-34
+  title: 'Onboarding slice: the wow payoff + Act-II signpost'
+  description: 'The content + display for steps 5-7: the ''aida show <SPEC>'' reveal framed as linkage that assembled itself (not hand-maintained); the cold-agent step that dramatizes the cold-start contrast (a fresh session answering from the AIDA graph over MCP); and exactly ONE forward-signpost paragraph naming the agent-collaboration layer (queue/roles/orchestrator) as ''Act II, coming when it settles'' — pointing forward WITHOUT teaching the volatile layer. The wow is the cold-start contrast, not ''I tracked a requirement.'' Owns AC-4; load-bearing for AC-1.'
+  status: Approved
+  priority: High
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-18T03:18:43.315343242Z
+  modified_at: 2026-05-18T03:18:43.315343242Z
+  req_type: Story
+  relationships:
+  - rel_type: Child
+    target_id: 019e3917-551e-71b3-9214-4bdd105a6121
+    created_at: 2026-05-18T03:18:43.953474219Z
 - id: 019e0ed2-2748-73f1-96af-dddc29bf1928
   spec_id: STORY-8
   agreed_id: STORY-8
@@ -587,6 +795,73 @@ requirements:
     content: Superseded by EPIC-4 (v0.2 post-EPIC-9 coverage). EPIC-4 decomposes the same surface into 6 topic-cluster STORYs (STORY-25 distributed, STORY-26 relationships, STORY-27 roles+queue, STORY-28 sessions, STORY-29 review, STORY-30 plans/doctor/MCP) plus TASK-1 for CI gating. Marked rejected to keep the implementer queue clean — see EPIC-4 children for the work shape.
     created_at: 2026-05-10T07:00:41.408362094Z
     modified_at: 2026-05-10T07:00:41.408362094Z
+- id: 019e3917-be5f-7c42-bda9-f6793ac4ce7e
+  spec_id: STORY-32
+  agreed_id: STORY-32
+  title: 'Onboarding slice: the 6-8 step content'
+  description: 'Write the onboarding content (markdown, content/onboarding/ NN-slug.md mirroring the existing content/ convention). Step arc: (0) why-you''re-here screen — ''AIDA gives your project a memory your coding agent can read; you''ll feel it in 15 min''; (1) aida init the scratch project; (2) capture one real intent as a spec — aida add / or /aida-req — yields FR-1; (3) hand FR-1 to the agent, it implements + writes the // trace:FR-1 comment; (4) commit with the linking message; (5) THE REVEAL — aida show FR-1; (6) THE WOW — fresh/cold agent answers about the feature from the graph; (7) the forward signpost paragraph. ~15 min total, no AIDA knowledge assumed beyond ''you use a coding agent.'' Owns AC-2.'
+  status: Approved
+  priority: High
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-18T03:18:37.919154302Z
+  modified_at: 2026-05-18T03:18:37.919154302Z
+  req_type: Story
+  relationships:
+  - rel_type: Child
+    target_id: 019e3917-551e-71b3-9214-4bdd105a6121
+    created_at: 2026-05-18T03:18:38.800541147Z
+- id: 019e3928-8e27-7300-9544-0a33ae277e90
+  spec_id: STORY-35
+  agreed_id: STORY-35
+  title: 'Review PR-1: EPIC-4 TASK-1: aida-min-version pin + demo walkthrough + CI matrix'
+  description: |
+    Auto-filed by `aida session end` (backup trigger) (session `019e10ae`) for branch `epic-4-batch1`.
+
+    - PR: <https://github.com/joemooney/aida-tutor/pull/1>
+    - Branch: `epic-4-batch1` → `master`
+
+    ## Covers
+
+    - BUG-1
+    - TASK-1
+    - STORY-19
+
+    ## Acceptance
+
+    - Generate a structured review prompt with `aida review prompt --pr 1` and verify each spec's acceptance criteria.
+    - Approve and merge, or request changes by spec id.
+    - Mark this story `completed` once the PR is merged.
+  status: Completed
+  priority: Medium
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-18T03:36:59.687772508Z
+  modified_at: 2026-05-18T04:08:38.434378723Z
+  req_type: Story
+  relationships:
+  - rel_type: !Custom implements
+    target_id: 019e3911-9432-72b2-bed4-19521eac3397
+    created_at: 2026-05-18T03:37:00.327286676Z
+    created_by: joe
+  - rel_type: !Custom implements
+    target_id: 019e10a8-eb8d-7232-a330-4bb3318cdcbc
+    created_at: 2026-05-18T03:37:02.295858467Z
+    created_by: joe
+  - rel_type: !Custom implements
+    target_id: 019e0edd-1fac-72d2-b3c3-0b05f7744ecb
+    created_at: 2026-05-18T03:37:04.094492610Z
+    created_by: joe
+  comments:
+  - id: 019e3945-8722-74b3-90e8-2b9c0e99b300
+    author: aida-auto-bump
+    content: 'Auto-completed: PR #1 merged without a reviewer session (self-merge or orchestrator skipped phase 3).'
+    created_at: 2026-05-18T04:08:38.434349979Z
+    modified_at: 2026-05-18T04:08:38.434349979Z
+  implementation_info:
+    implemented: false
+    completed_at: 2026-05-18T04:08:38.421147396Z
+    completion_sha: ea5d61fe07a9e69fbc951b2e1d0904f5fe41ebe1
 - id: 019e0ed2-3627-7430-9479-b880ef3d55b0
   spec_id: STORY-13
   agreed_id: STORY-13
