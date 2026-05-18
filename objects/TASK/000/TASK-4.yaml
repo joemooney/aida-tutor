@@ -1,0 +1,21 @@
+id: 019e3bbb-c1ad-7b90-b728-4389b1f1e6ff
+spec_id: TASK-4
+agreed_id: TASK-4
+title: 'verify.rs: parse_requirement_yaml exits comments/relationships block on a blank line'
+description: |-
+  Non-blocking finding from the PR #4 (STORY-26) headless review.
+
+  The parse_requirement_yaml rewrite that shipped with STORY-26's relationships work closes the current block (comments / relationships) on ANY unindented line — including a blank line — because the rewrite dropped the '!trimmed.is_empty()' guard the previous parser had on its block-exit condition.
+
+  Harmless TODAY: AIDA's YAML serializer emits compact output with no blank lines between list entries, so comment_count and the relationships parse are unaffected. But it is a latent fragility — if AIDA's serializer ever emits a blank line inside a 'comments:' or 'relationships:' block, the parser silently truncates the block and undercounts.
+
+  Fix: re-add the '!trimmed.is_empty()' guard to the block-exit condition in parse_requirement_yaml (src/verify.rs) so a blank line no longer ends the block.
+
+  Priority low — no learner-facing impact today. Source: PR #4 review, 2026-05-18.
+status: Approved
+priority: Low
+owner: ''
+feature: Uncategorized
+created_at: 2026-05-18T15:37:01.101283723Z
+modified_at: 2026-05-18T15:37:01.101283723Z
+req_type: Task
