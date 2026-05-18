@@ -12,12 +12,12 @@ description: |
   - **eXX role-end** (optional): `aida role end` → verify env unset and PS1 stripped
 
   Composes with: BUG-60 (PS1 accumulation) — once that ships, the role-enter exercise can include "enter twice without end, expect single PS1 prefix."
-status: Done
+status: Completed
 priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-10T06:52:34.806446589Z
-modified_at: 2026-05-18T06:36:30.236621596Z
+modified_at: 2026-05-18T06:48:47.349404678Z
 req_type: Story
 relationships:
 - rel_type: Child
@@ -45,3 +45,5 @@ implementation_info:
   implemented: true
   implemented_at: 2026-05-18T06:33:10.044695202Z
   implemented_by: joe
+  completed_at: 2026-05-18T06:48:47.349404678Z
+  completion_sha: b4addb264847f10d2322e025917b84fac6dd7944
