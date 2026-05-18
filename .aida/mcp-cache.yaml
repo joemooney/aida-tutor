@@ -149,6 +149,51 @@ requirements:
   - auto-drafted
   - failure-1
   - implementer
+- id: 019e39b4-aa65-7661-84e7-eb31d92633cf
+  spec_id: BUG-7
+  agreed_id: BUG-7
+  title: 'auto-complete failure: phase 2 (ci) on STORY-25'
+  description: |
+    Auto-drafted by `aida queue work STORY-25 --auto-complete` after phase 2 (ci) failed. Review this BUG and promote it to Approved if it is a real AIDA orchestrator bug — or reject it if it was a user error or a local environment issue. It is intentionally left in Draft and NOT queued. (TASK-266)
+
+    ## Failure
+
+    could not end the implementer session — it may have uncommitted changes; commit or discard them, then re-run
+
+    Failure kind: `failed`
+
+    ## Recovery hint shown to the user
+
+    The implementer session would not end cleanly — it may have uncommitted changes. Commit or discard them in the worktree, then end it: `aida session end 019e39a2d931 --skip-ci`
+
+    ## Phase durations
+
+      - phase 1 (implementer): 973897 ms
+      - phase 2 (ci): 195946 ms
+
+    ## Telemetry entry
+
+    The line appended to `~/.aida/auto-complete.jsonl` for this run:
+
+    ```json
+    {"spec_id":"STORY-25","started_at":"2026-05-18T05:50:31.562726070+00:00","completed_at":"2026-05-18T06:10:01.406549395+00:00","outcome":"failed","variant":"full","failed_phase":2,"failure_kind":"failed","failure_message":"could not end the implementer session — it may have uncommitted changes; commit or discard them, then re-run","phase_durations":[{"phase":1,"slug":"implementer","elapsed_ms":973897},{"phase":2,"slug":"ci","elapsed_ms":195946}],"total_ms":1169843,"binary_sha":"b62b8539"}
+    ```
+
+    ## Recurse-fix
+
+    Once triaged and promoted, this BUG can itself be driven by the orchestrator: `aida queue work <THIS-BUG> --auto-complete` — the dogfood loop TASK-266 makes operational.
+  status: Draft
+  priority: Medium
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-18T06:10:01.957245132Z
+  modified_at: 2026-05-18T06:10:01.957245132Z
+  req_type: Bug
+  tags:
+  - auto-complete
+  - auto-drafted
+  - ci
+  - failure-2
 - id: 019e3922-d5bb-7fd3-b460-5fcdf9a01a35
   spec_id: BUG-2
   agreed_id: BUG-2
@@ -691,6 +736,47 @@ requirements:
   created_at: 2026-05-09T22:18:40.288666619Z
   modified_at: 2026-05-09T22:30:00.511993778Z
   req_type: Story
+- id: 019e39b1-375c-7861-b079-c344cd82d725
+  spec_id: STORY-36
+  agreed_id: STORY-36
+  title: 'Review PR-2: EPIC-4 STORY-25: distributed-storage exercises (cluster 1)'
+  description: |
+    Auto-filed by `aida pr auto-queue-review` (typically from /aida-pr) (session `019e39a2`) for branch `epic-4`.
+
+    - PR: <https://github.com/joemooney/aida-tutor/pull/2>
+    - Branch: `epic-4` → `master`
+
+    ## Covers
+
+    - STORY-25
+
+    ## Acceptance
+
+    - Generate a structured review prompt with `aida review prompt --pr 2` and verify each spec's acceptance criteria.
+    - Approve and merge, or request changes by spec id.
+    - Mark this story `completed` once the PR is merged.
+  status: Completed
+  priority: Medium
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-18T06:06:15.900603370Z
+  modified_at: 2026-05-18T06:16:30.167544177Z
+  req_type: Story
+  relationships:
+  - rel_type: !Custom implements
+    target_id: 019e10a8-aa36-7541-ba40-fe6577b44da8
+    created_at: 2026-05-18T06:06:16.563771212Z
+    created_by: joe
+  comments:
+  - id: 019e39ba-96d7-77b3-af83-0670378d97d1
+    author: aida-auto-bump
+    content: 'Auto-completed: PR #2 merged without a reviewer session (self-merge or orchestrator skipped phase 3).'
+    created_at: 2026-05-18T06:16:30.167512929Z
+    modified_at: 2026-05-18T06:16:30.167512929Z
+  implementation_info:
+    implemented: false
+    completed_at: 2026-05-18T06:16:30.153600523Z
+    completion_sha: 1bc397d4f051f69bc574e9b471e3df5c9695c38c
 - id: 019e10a8-be76-75f0-a13e-28d9c1a9cb5a
   spec_id: STORY-27
   agreed_id: STORY-27
@@ -756,18 +842,42 @@ requirements:
     Verifiers inspect: presence of `aida-store` branch in workspace's git, presence of `.aida-store/` worktree, presence of `.aida/cache.db`, content of orphan branch HEAD.
 
     Composes with: AIDA's `aida cache status` command (already exists).
-  status: Approved
+  status: Completed
   priority: High
   owner: ''
   feature: Uncategorized
   created_at: 2026-05-10T06:52:29.622336011Z
-  modified_at: 2026-05-10T06:53:13.487363343Z
+  modified_at: 2026-05-18T06:16:58.859424529Z
   req_type: Story
   relationships:
   - rel_type: Child
     target_id: 019e10a8-a6e6-7060-a1fd-612e294cbb55
     created_at: 2026-05-10T06:53:13.487337477Z
     created_by: joe
+  - rel_type: !Custom implemented-by
+    target_id: 019e39b1-375c-7861-b079-c344cd82d725
+    created_at: 2026-05-18T06:06:17.474532975Z
+    created_by: joe
+  comments:
+  - id: 019e39b0-aa63-7ff0-953f-810a554d147c
+    author: joe
+    content: |-
+      Implemented via commit 8e2cb56 (PR pending):
+
+      - e18 distributed-store, e19 store-sync, e20 cache-rebuild — EPIC-4 cluster 1, covering AIDA's distributed git-canonical store.
+      - New read-only verify helpers: git_branch_exists, git_commit_count, is_linked_worktree, cache_db_is_valid_sqlite (SQLite-magic header check).
+      - Registered in src/exercises/mod.rs; cmd_welcome + CLAUDE.md bumped 17 -> 20.
+
+      Test status: `aida-tutor demo` walks all 20 exercises green against live aida 0.7.0; `cargo test` 0/0 (repo has no unit tests).
+      Follow-up: STORY-25's optional 4th exercise (two-clone pull/merge convergence) dropped — incompatible with the workspace-only verify model; worth a separate story if wanted.
+    created_at: 2026-05-18T06:05:39.811886374Z
+    modified_at: 2026-05-18T06:05:39.811886374Z
+  implementation_info:
+    implemented: true
+    implemented_at: 2026-05-18T06:00:32.011887845Z
+    implemented_by: joe
+    completed_at: 2026-05-18T06:16:30.153600523Z
+    completion_sha: 1bc397d4f051f69bc574e9b471e3df5c9695c38c
 - id: 019e10a8-c7fc-72d3-8171-192adceea067
   spec_id: STORY-28
   agreed_id: STORY-28
