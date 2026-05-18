@@ -7,17 +7,20 @@ Guidance for Claude Code working in this repository.
 ## Project overview
 
 **aida-tutor** is a hands-on tutorial for [AIDA](../aida/), in the spirit of
-[rustlings](https://github.com/rust-lang/rustlings). 26 exercises that walk a
+[rustlings](https://github.com/rust-lang/rustlings). 30 exercises that walk a
 learner from `aida init` through the full capture → trace → commit → close
-loop, into distributed storage, the roles + queue workflow, and the
-requirement graph, with an on-disk verifier per exercise.
+loop, into distributed storage, the roles + queue workflow, the requirement
+graph, and scoped sessions with git worktrees, with an on-disk verifier per
+exercise.
 
 Status: **v0 complete and end-to-end verified** as of 2026-05-09 (exercises
 01–17). EPIC-4 cluster 1 adds the distributed-storage trio (18–20: orphan
 branch, store sync, cache rebuild); cluster 3 adds the roles + producer/
 consumer queue arc (21–24: role enter, queue add `--for`, pickup, done);
-cluster 2 adds the relationships pair (25–26: `add --parent`, `rel add`).
-All 26 exercises pass when worked in order (`aida-tutor demo`).
+cluster 2 adds the relationships pair (25–26: `add --parent`, `rel add`);
+cluster 4 adds the sessions + worktrees quartet (27–30: session start,
+work-in-worktree, leases/show, session end).
+All 30 exercises pass when worked in order (`aida-tutor demo`).
 
 ## Architecture
 
@@ -76,10 +79,11 @@ EPIC-1 (CLI v0) and EPIC-2 (Tutorial Exercises) are the umbrellas.
 - **Hint depth levels** — current hint is one paragraph. A `--more`
   flag could surface a multi-step nudge before showing the final
   "here's the literal command" escape valve.
-- **More exercises** — relationships (`aida rel add` — STORY-26),
-  `aida history`, sessions + worktrees (STORY-28). Roles + the
-  producer/consumer queue shipped as exercises 21–24 (STORY-27).
-- **Verifier rigor** — exercises 7, 8, 13, 15, 16, 17 currently pass
+- **More exercises** — `aida history`, sessions + cross-project queue
+  routing. Relationships shipped as 25–26 (STORY-26); roles + the
+  producer/consumer queue as 21–24 (STORY-27); sessions + worktrees as
+  27–30 (STORY-28).
+- **Verifier rigor** — exercises 7, 8, 13, 15, 16, 17, 29 currently pass
   on prerequisite state alone (we can't tell whether the user actually
   ran a read-only command). A workspace-level `aida` wrapper that
   records invocations could close that gap.

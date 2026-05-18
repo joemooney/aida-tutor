@@ -478,6 +478,21 @@ fn cmd_reset(workspace: &Path, yes: bool) -> Result<()> {
         std::fs::remove_dir_all(workspace)
             .with_context(|| format!("removing {}", workspace.display()))?;
     }
+    // The session-worktree exercises (27-30) leave `aida session start`
+    // worktrees as `workspace-<slug>/` siblings. Wiping workspace/ alone
+    // orphans them (their `.git` pointer dangles), so reset clears them
+    // too — a clean slate means no stale worktrees. trace:STORY-28
+    if let Some(parent) = workspace.parent() {
+        if let Ok(read_dir) = std::fs::read_dir(parent) {
+            for entry in read_dir.filter_map(Result::ok) {
+                let name = entry.file_name();
+                let name = name.to_string_lossy();
+                if name.starts_with("workspace-") && entry.path().is_dir() {
+                    let _ = std::fs::remove_dir_all(entry.path());
+                }
+            }
+        }
+    }
     std::fs::create_dir_all(workspace)?;
     // Initialize a bare git repo inside workspace/ so the user can run
     // `aida init` (which requires a git repo). This is the ONLY pre-state
@@ -583,10 +598,11 @@ fn cmd_welcome() {
     // trace:STORY-23 | ai:claude
     println!("{}", "Welcome to aida-tutor".cyan().bold());
     println!();
-    println!("26 hands-on exercises that walk you through AIDA's daily workflow:");
+    println!("30 hands-on exercises that walk you through AIDA's daily workflow:");
     println!("  init → capture (vision/principle/decision/feature/bug) → list/show →");
     println!("  edit → trace + commit → docs build → search → status → push →");
-    println!("  distributed store → roles + queue → relationships.");
+    println!("  distributed store → roles + queue → relationships →");
+    println!("  sessions + worktrees.");
     println!();
     println!(
         "First, make sure {} is on your PATH (run `aida --version` in another shell).",

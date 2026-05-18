@@ -75,6 +75,18 @@ pub fn demo_req_by_title(workspace: &Path, needle: &str) -> anyhow::Result<Strin
         .with_context(|| format!("demo: no requirement whose title contains {needle:?}"))
 }
 
+/// Resolve the `aida session start` lease whose worktree is checked out
+/// on `branch`. The session-cluster demos (exercises 28-30) follow one
+/// session — created on a pinned branch in exercise 27 — through work →
+/// inspect → end. trace:STORY-28 | ai:claude
+pub fn demo_session_lease(
+    workspace: &Path,
+    branch: &str,
+) -> anyhow::Result<crate::verify::SessionLease> {
+    crate::verify::session_lease_for_branch(workspace, branch)
+        .with_context(|| format!("demo: no `aida session` lease on branch {branch:?}"))
+}
+
 /// Run `program args...` with `workspace` as the working directory,
 /// capturing output so demo logs stay quiet on success. Errors (with the
 /// captured stdout/stderr) if the process can't spawn or exits non-zero.

@@ -36,6 +36,11 @@ mod e24_queue_done;
 // Cluster 2 — relationships: the requirement graph. trace:STORY-26 | ai:claude
 mod e25_add_parent;
 mod e26_rel_add;
+// Cluster 4 — sessions + worktrees. trace:STORY-28 | ai:claude
+mod e27_session_start;
+mod e28_session_work;
+mod e29_session_leases;
+mod e30_session_end;
 
 pub fn all() -> Vec<Box<dyn Exercise>> {
     vec![
@@ -65,5 +70,9 @@ pub fn all() -> Vec<Box<dyn Exercise>> {
         Box::new(e24_queue_done::E),
         Box::new(e25_add_parent::E),
         Box::new(e26_rel_add::E),
+        Box::new(e27_session_start::E),
+        Box::new(e28_session_work::E),
+        Box::new(e29_session_leases::E),
+        Box::new(e30_session_end::E),
     ]
 }

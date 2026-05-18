@@ -6,6 +6,11 @@ target/
 # Learner's working dir — every reset wipes it
 workspace/
 
+# Session worktrees `aida session start` creates as siblings of
+# workspace/ in exercises 27-30. `aida-tutor reset` cleans these up.
+# trace:STORY-28
+workspace-*/
+
 # Per-learner progress (gitignored: each learner's own state)
 .aida-tutor-progress.toml
 
