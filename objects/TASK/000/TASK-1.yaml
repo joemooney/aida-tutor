@@ -18,12 +18,12 @@ description: |
   Bumping aida-min-version is a deliberate act — it signals "we now require AIDA >= X." aida-tutor's release notes should highlight the bump.
 
   Composes with EPIC-2's CI gating acceptance.
-status: Approved
+status: Completed
 priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-10T06:52:46.349304304Z
-modified_at: 2026-05-10T06:53:37.649769539Z
+modified_at: 2026-05-18T02:18:40.902356014Z
 req_type: Task
 relationships:
 - rel_type: Child
