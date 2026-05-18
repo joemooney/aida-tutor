@@ -1,0 +1,26 @@
+id: 019e3ba4-0bd5-7d30-bbc1-9c515a4706f3
+spec_id: STORY-38
+agreed_id: STORY-38
+title: 'Review PR-4: [AI:claude] feat(tutor): relationships exercises 25-26 (STORY-26)'
+description: |
+  Auto-filed by `aida pr auto-queue-review` (typically from /aida-pr) (session `019e3b94`) for branch `story-26-relationships`.
+
+  - PR: <https://github.com/joemooney/aida-tutor/pull/4>
+  - Branch: `story-26-relationships` → `master`
+
+  ## Covers
+
+  - STORY-26
+
+  ## Acceptance
+
+  - Generate a structured review prompt with `aida review prompt --pr 4` and verify each spec's acceptance criteria.
+  - Approve and merge, or request changes by spec id.
+  - Mark this story `completed` once the PR is merged.
+status: Approved
+priority: Medium
+owner: ''
+feature: Uncategorized
+created_at: 2026-05-18T15:11:07.221196504Z
+modified_at: 2026-05-18T15:11:07.221196504Z
+req_type: Story
