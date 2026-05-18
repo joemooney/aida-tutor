@@ -14,6 +14,31 @@ requirements:
   created_at: 2026-05-09T22:17:47.051627364Z
   modified_at: 2026-05-09T22:17:47.051627364Z
   req_type: Vision
+- id: 019e3bbb-c1ad-7b90-b728-4389b1f1e6ff
+  spec_id: TASK-4
+  agreed_id: TASK-4
+  title: 'verify.rs: parse_requirement_yaml exits comments/relationships block on a blank line'
+  description: |-
+    Non-blocking finding from the PR #4 (STORY-26) headless review.
+
+    The parse_requirement_yaml rewrite that shipped with STORY-26's relationships work closes the current block (comments / relationships) on ANY unindented line — including a blank line — because the rewrite dropped the '!trimmed.is_empty()' guard the previous parser had on its block-exit condition.
+
+    Harmless TODAY: AIDA's YAML serializer emits compact output with no blank lines between list entries, so comment_count and the relationships parse are unaffected. But it is a latent fragility — if AIDA's serializer ever emits a blank line inside a 'comments:' or 'relationships:' block, the parser silently truncates the block and undercounts.
+
+    Fix: re-add the '!trimmed.is_empty()' guard to the block-exit condition in parse_requirement_yaml (src/verify.rs) so a blank line no longer ends the block.
+
+    Priority low — no learner-facing impact today. Source: PR #4 review, 2026-05-18.
+  status: Approved
+  priority: Low
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-18T15:37:01.101283723Z
+  modified_at: 2026-05-18T15:37:01.101283723Z
+  req_type: Task
+  relationships:
+  - rel_type: Child
+    target_id: 019e10a8-a6e6-7060-a1fd-612e294cbb55
+    created_at: 2026-05-18T15:37:01.741857138Z
 - id: 019e3917-ddf3-7d81-8dbf-7b1e505002d5
   spec_id: TASK-2
   agreed_id: TASK-2
@@ -597,6 +622,9 @@ requirements:
   - rel_type: Parent
     target_id: 019e3b8e-4130-7c01-b40e-6a5bb0f9c435
     created_at: 2026-05-18T14:47:19.712190723Z
+  - rel_type: Parent
+    target_id: 019e3bbb-c1ad-7b90-b728-4389b1f1e6ff
+    created_at: 2026-05-18T15:37:01.741857138Z
 - id: 019e3ba4-0bd5-7d30-bbc1-9c515a4706f3
   spec_id: STORY-38
   agreed_id: STORY-38
@@ -923,6 +951,37 @@ requirements:
   created_at: 2026-05-09T22:18:40.288666619Z
   modified_at: 2026-05-09T22:30:00.511993778Z
   req_type: Story
+- id: 019e3bcd-269b-7233-8c73-7022eaa4a611
+  spec_id: STORY-39
+  agreed_id: STORY-39
+  title: 'Review PR-5: feat(tutor): sessions + worktrees exercises 27-30 (STORY-28)'
+  description: |
+    Auto-filed by `aida pr auto-queue-review` (typically from /aida-pr) (session `019e3bbb`) for branch `epic-4-3`.
+
+    - PR: <https://github.com/joemooney/aida-tutor/pull/5>
+    - Branch: `epic-4-3` → `master`
+
+    ## Covers
+
+    - STORY-28
+
+    ## Acceptance
+
+    - Generate a structured review prompt with `aida review prompt --pr 5` and verify each spec's acceptance criteria.
+    - Approve and merge, or request changes by spec id.
+    - Mark this story `completed` once the PR is merged.
+  status: Approved
+  priority: Medium
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-18T15:56:01.051052330Z
+  modified_at: 2026-05-18T15:56:01.807533471Z
+  req_type: Story
+  relationships:
+  - rel_type: !Custom implements
+    target_id: 019e10a8-c7fc-72d3-8171-192adceea067
+    created_at: 2026-05-18T15:56:01.807527069Z
+    created_by: joe
 - id: 019e39b1-375c-7861-b079-c344cd82d725
   spec_id: STORY-36
   agreed_id: STORY-36
@@ -1101,18 +1160,50 @@ requirements:
     - **eXX session-list-and-show** (optional): demonstrate `aida session leases` and `aida session show <id>` (the latter ships in STORY-68)
 
     Verifiers inspect: `git worktree list` output, `.aida/sessions/` contents, lease toml.
-  status: Approved
+  status: Done
   priority: Medium
   owner: ''
   feature: Uncategorized
   created_at: 2026-05-10T06:52:37.244051073Z
-  modified_at: 2026-05-10T06:53:24.885637276Z
+  modified_at: 2026-05-18T15:56:02.795575827Z
   req_type: Story
   relationships:
   - rel_type: Child
     target_id: 019e10a8-a6e6-7060-a1fd-612e294cbb55
     created_at: 2026-05-10T06:53:24.885623455Z
     created_by: joe
+  - rel_type: !Custom implemented-by
+    target_id: 019e3bcd-269b-7233-8c73-7022eaa4a611
+    created_at: 2026-05-18T15:56:02.795569820Z
+    created_by: joe
+  comments:
+  - id: 019e3bcb-d570-7410-a64a-9481b74377ee
+    author: joe
+    content: Commit 9b32886 references this requirement
+    created_at: 2026-05-18T15:54:34.736185697Z
+    modified_at: 2026-05-18T15:54:34.736185697Z
+  - id: 019e3bcc-c93a-7be3-b6cd-746e7832ed19
+    author: joe
+    content: |-
+      Implemented on branch epic-4-3 (commit 9b32886):
+
+      - Cluster 4 — exercises 27-30 cover the AIDA session model: session
+        start (scoped worktree + lease), work-in-worktree (commit on the
+        session branch), session leases/show, session end.
+      - verify.rs gains git-worktree + session-lease inspection helpers
+        (git_worktrees, main_worktree_branch, git_commits_ahead,
+        session_leases / session_lease_for_branch).
+      - `aida-tutor reset` clears orphaned workspace-* session worktrees;
+        .gitignore excludes them.
+
+      Test status: all 30 exercises pass via `aida-tutor demo`; manual
+      Pending->Pass walk verified for 27-30.
+    created_at: 2026-05-18T15:55:37.146745432Z
+    modified_at: 2026-05-18T15:55:37.146745432Z
+  implementation_info:
+    implemented: true
+    implemented_at: 2026-05-18T15:54:42.606474364Z
+    implemented_by: joe
 - id: 019e0edd-1fac-72d2-b3c3-0b05f7744ecb
   spec_id: STORY-19
   agreed_id: STORY-19
@@ -1748,8 +1839,14 @@ requirements:
   owner: ''
   feature: Uncategorized
   created_at: 2026-05-10T04:53:41.684364635Z
-  modified_at: 2026-05-10T04:53:54.190345571Z
+  modified_at: 2026-05-18T15:40:39.436097693Z
   req_type: Functional
+  comments:
+  - id: 019e3bbf-168c-7410-97a6-eef451cfc961
+    author: joe
+    content: Commit 99f8364 references this requirement
+    created_at: 2026-05-18T15:40:39.436097693Z
+    modified_at: 2026-05-18T15:40:39.436097693Z
 id_config:
   format: SingleLevel
   numbering: Global
