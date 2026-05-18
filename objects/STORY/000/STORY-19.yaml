@@ -3,10 +3,10 @@ spec_id: STORY-19
 agreed_id: STORY-19
 title: aida-tutor demo — non-interactive walkthrough for CI
 description: 'Run all exercises in order, executing the necessary aida commands as subprocess between verify calls. Exits non-zero on any pending/fail. Use case: CI gate to ensure the tutor stays in lockstep with the AIDA CLI surface; also a smoke test before releases.'
-status: Approved
+status: Completed
 priority: Medium
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-09T22:30:33.132601965Z
-modified_at: 2026-05-09T22:30:33.132601965Z
+modified_at: 2026-05-18T02:18:42.281311935Z
 req_type: Story
