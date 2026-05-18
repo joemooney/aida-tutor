@@ -28,6 +28,11 @@ mod e17_push;
 mod e18_distributed_store;
 mod e19_store_sync;
 mod e20_cache_rebuild;
+// Cluster 3 — roles + the producer/consumer queue. trace:STORY-27 | ai:claude
+mod e21_role_enter;
+mod e22_queue_add;
+mod e23_queue_pickup;
+mod e24_queue_done;
 
 pub fn all() -> Vec<Box<dyn Exercise>> {
     vec![
@@ -51,5 +56,9 @@ pub fn all() -> Vec<Box<dyn Exercise>> {
         Box::new(e18_distributed_store::E),
         Box::new(e19_store_sync::E),
         Box::new(e20_cache_rebuild::E),
+        Box::new(e21_role_enter::E),
+        Box::new(e22_queue_add::E),
+        Box::new(e23_queue_pickup::E),
+        Box::new(e24_queue_done::E),
     ]
 }

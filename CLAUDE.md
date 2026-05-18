@@ -7,14 +7,16 @@ Guidance for Claude Code working in this repository.
 ## Project overview
 
 **aida-tutor** is a hands-on tutorial for [AIDA](../aida/), in the spirit of
-[rustlings](https://github.com/rust-lang/rustlings). 20 exercises that walk a
+[rustlings](https://github.com/rust-lang/rustlings). 24 exercises that walk a
 learner from `aida init` through the full capture → trace → commit → close
-loop and into distributed storage, with an on-disk verifier per exercise.
+loop, into distributed storage, and through the roles + queue workflow, with
+an on-disk verifier per exercise.
 
 Status: **v0 complete and end-to-end verified** as of 2026-05-09 (exercises
 01–17). EPIC-4 cluster 1 adds the distributed-storage trio (18–20: orphan
-branch, store sync, cache rebuild). All 20 exercises pass when worked in
-order (`aida-tutor demo`).
+branch, store sync, cache rebuild); cluster 3 adds the roles + producer/
+consumer queue arc (21–24: role enter, queue add `--for`, pickup, done).
+All 24 exercises pass when worked in order (`aida-tutor demo`).
 
 ## Architecture
 
@@ -73,9 +75,9 @@ EPIC-1 (CLI v0) and EPIC-2 (Tutorial Exercises) are the umbrellas.
 - **Hint depth levels** — current hint is one paragraph. A `--more`
   flag could surface a multi-step nudge before showing the final
   "here's the literal command" escape valve.
-- **More exercises** — relationships (`aida rel add`), the queue
-  (`aida queue add`), roles (`aida role enter`), `aida history`,
-  `/aida-pickup` from inside Claude Code.
+- **More exercises** — relationships (`aida rel add` — STORY-26),
+  `aida history`, sessions + worktrees (STORY-28). Roles + the
+  producer/consumer queue shipped as exercises 21–24 (STORY-27).
 - **Verifier rigor** — exercises 7, 8, 13, 15, 16, 17 currently pass
   on prerequisite state alone (we can't tell whether the user actually
   ran a read-only command). A workspace-level `aida` wrapper that

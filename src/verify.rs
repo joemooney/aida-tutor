@@ -16,10 +16,9 @@ pub fn is_aida_initialized(workspace: &Path) -> bool {
         && path_exists(workspace, ".aida-store/metadata.yaml")
 }
 
-/// Walk `.aida-store/objects/` and return every spec_id whose YAML's
-/// `spec_id` field starts with the given prefix (e.g. "VIS", "FR").
-/// Returns empty vec if the store is missing or nothing matches.
-pub fn requirements_with_prefix(workspace: &Path, prefix: &str) -> Vec<RequirementYaml> {
+/// Walk `.aida-store/objects/` and return every requirement whose YAML
+/// parses. Returns empty vec if the store is missing. trace:STORY-27
+pub fn all_requirements(workspace: &Path) -> Vec<RequirementYaml> {
     let objects = workspace.join(".aida-store").join("objects");
     if !objects.exists() {
         return Vec::new();
@@ -37,19 +36,43 @@ pub fn requirements_with_prefix(workspace: &Path, prefix: &str) -> Vec<Requireme
         let Ok(content) = std::fs::read_to_string(path) else {
             continue;
         };
-        let Some(req) = parse_requirement_yaml(&content) else {
-            continue;
-        };
-        if req
-            .spec_id
-            .as_deref()
-            .map(|s| s.starts_with(prefix) && (s.len() == prefix.len() || s.as_bytes().get(prefix.len()) == Some(&b'-')))
-            .unwrap_or(false)
-        {
+        if let Some(req) = parse_requirement_yaml(&content) {
             out.push(req);
         }
     }
     out
+}
+
+/// Requirements whose `spec_id` starts with the given prefix (e.g. "VIS",
+/// "FR"), matched on a type-prefix boundary so "FR" doesn't also catch a
+/// hypothetical "FROZEN-1". Returns empty vec if nothing matches.
+pub fn requirements_with_prefix(workspace: &Path, prefix: &str) -> Vec<RequirementYaml> {
+    all_requirements(workspace)
+        .into_iter()
+        .filter(|req| {
+            req.spec_id
+                .as_deref()
+                .map(|s| {
+                    s.starts_with(prefix)
+                        && (s.len() == prefix.len()
+                            || s.as_bytes().get(prefix.len()) == Some(&b'-'))
+                })
+                .unwrap_or(false)
+        })
+        .collect()
+}
+
+/// First requirement whose `title` contains `needle` (case-insensitive).
+/// The queue-cluster exercises (22-24) follow one task by title across
+/// capture → pickup → done. trace:STORY-27 | ai:claude
+pub fn requirement_by_title(workspace: &Path, needle: &str) -> Option<RequirementYaml> {
+    let needle = needle.to_lowercase();
+    all_requirements(workspace).into_iter().find(|r| {
+        r.title
+            .as_deref()
+            .map(|t| t.to_lowercase().contains(&needle))
+            .unwrap_or(false)
+    })
 }
 
 /// Run `git log -1 --format=%s%n%n%b` in workspace and return the message,
@@ -134,6 +157,8 @@ pub fn cache_db_is_valid_sqlite(workspace: &Path) -> bool {
 /// `key: "value"`. Fails closed (fields default to None) on anything weird.
 #[derive(Debug, Clone, Default)]
 pub struct RequirementYaml {
+    /// Top-level `id:` — the UUID queue entries reference. trace:STORY-27
+    pub uuid: Option<String>,
     pub spec_id: Option<String>,
     pub title: Option<String>,
     pub status: Option<String>,
@@ -148,6 +173,12 @@ pub fn parse_requirement_yaml(content: &str) -> Option<RequirementYaml> {
         let trimmed = line.trim_start();
         if let Some(v) = trimmed.strip_prefix("spec_id:") {
             out.spec_id = Some(strip_yaml_value(v));
+        } else if let Some(v) = trimmed.strip_prefix("id:") {
+            // The requirement's UUID. First match wins — the real `id:` is
+            // line 1, well before any description text. trace:STORY-27
+            if out.uuid.is_none() {
+                out.uuid = Some(strip_yaml_value(v));
+            }
         } else if let Some(v) = trimmed.strip_prefix("title:") {
             out.title = Some(strip_yaml_value(v));
         } else if let Some(v) = trimmed.strip_prefix("status:") {
@@ -211,5 +242,65 @@ pub fn trace_comments_in_workspace(workspace: &Path) -> Vec<String> {
     }
     out.sort();
     out.dedup();
+    out
+}
+
+/// One entry in a per-project work queue. The queue lives at
+/// `.aida-store/registry/queues/<user>.yaml` as a YAML list; each entry
+/// is a `- user_id:` block. We only need the requirement it points at
+/// and the role it's routed to. trace:STORY-27 | ai:claude
+#[derive(Debug, Clone, Default)]
+pub struct QueueEntry {
+    /// `requirement_id` — the UUID of the queued requirement.
+    pub requirement_id: Option<String>,
+    /// `for_role` — the role this item was routed to via `--for`, if any.
+    pub for_role: Option<String>,
+}
+
+/// Parse every queue file under `.aida-store/registry/queues/`. Returns
+/// empty vec when the store has no queues dir or every queue is empty
+/// (an empty queue file is the literal `[]`). trace:STORY-27 | ai:claude
+pub fn queue_entries(workspace: &Path) -> Vec<QueueEntry> {
+    let dir = workspace
+        .join(".aida-store")
+        .join("registry")
+        .join("queues");
+    let mut out = Vec::new();
+    let Ok(read_dir) = std::fs::read_dir(&dir) else {
+        return out;
+    };
+    for entry in read_dir.filter_map(Result::ok) {
+        let path = entry.path();
+        if path.extension().and_then(|s| s.to_str()) != Some("yaml") {
+            continue;
+        }
+        let Ok(content) = std::fs::read_to_string(&path) else {
+            continue;
+        };
+        let mut cur: Option<QueueEntry> = None;
+        for line in content.lines() {
+            let trimmed = line.trim_start();
+            // A `- ` at the start of a (trimmed) line opens a new entry.
+            if trimmed.starts_with("- ") {
+                if let Some(done) = cur.take() {
+                    out.push(done);
+                }
+                cur = Some(QueueEntry::default());
+            }
+            // Drop a leading `- ` so the first field on the opening line
+            // parses like any other.
+            let field = trimmed.strip_prefix("- ").unwrap_or(trimmed);
+            if let Some(e) = cur.as_mut() {
+                if let Some(v) = field.strip_prefix("requirement_id:") {
+                    e.requirement_id = Some(strip_yaml_value(v));
+                } else if let Some(v) = field.strip_prefix("for_role:") {
+                    e.for_role = Some(strip_yaml_value(v));
+                }
+            }
+        }
+        if let Some(done) = cur.take() {
+            out.push(done);
+        }
+    }
     out
 }
