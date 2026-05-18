@@ -18,3 +18,7 @@ feature: Uncategorized
 created_at: 2026-05-18T03:11:53.906982533Z
 modified_at: 2026-05-18T03:11:53.906982533Z
 req_type: Bug
+relationships:
+- rel_type: Child
+  target_id: 019e10a8-a6e6-7060-a1fd-612e294cbb55
+  created_at: 2026-05-18T03:11:54.498100874Z
