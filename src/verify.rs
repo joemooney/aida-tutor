@@ -151,6 +151,20 @@ pub fn cache_db_is_valid_sqlite(workspace: &Path) -> bool {
     &head == b"SQLite format 3\0"
 }
 
+/// One relationship edge on a requirement. AIDA writes the edge on *both*
+/// endpoints: `aida add --parent E` puts a `Child → E` edge on the new
+/// requirement and the inverse `Parent → child` edge on `E`; `aida rel add
+/// A B --type verifies --bidirectional` puts `Verifies → B` on A and the
+/// inverse `VerifiedBy → A` on B. trace:STORY-26 | ai:claude
+#[derive(Debug, Clone, Default)]
+pub struct Relationship {
+    /// `rel_type:` — the role this requirement plays in the edge
+    /// (`Parent`, `Child`, `Verifies`, `VerifiedBy`, `References`, …).
+    pub rel_type: Option<String>,
+    /// `target_id:` — the UUID of the requirement at the other end.
+    pub target_id: Option<String>,
+}
+
 /// Best-effort YAML extraction. We only need a handful of fields and
 /// don't want to pull in a real YAML parser for this minimal verifier.
 /// Each field is matched at the start of a line with `key: value` or
@@ -164,13 +178,80 @@ pub struct RequirementYaml {
     pub status: Option<String>,
     pub req_type: Option<String>,
     pub comment_count: usize,
+    /// Edges in the `relationships:` block. trace:STORY-26
+    pub relationships: Vec<Relationship>,
+}
+
+impl RequirementYaml {
+    /// True if this requirement carries an edge of `rel_type` (matched
+    /// case-insensitively, so `"child"` matches the stored `Child`)
+    /// pointing at `target_uuid`. trace:STORY-26 | ai:claude
+    pub fn has_edge(&self, rel_type: &str, target_uuid: &str) -> bool {
+        !target_uuid.is_empty()
+            && self.relationships.iter().any(|r| {
+                r.rel_type
+                    .as_deref()
+                    .map(|t| t.eq_ignore_ascii_case(rel_type))
+                    .unwrap_or(false)
+                    && r.target_id.as_deref() == Some(target_uuid)
+            })
+    }
 }
 
 pub fn parse_requirement_yaml(content: &str) -> Option<RequirementYaml> {
     let mut out = RequirementYaml::default();
-    let mut in_comments_block = false;
+    // Which YAML list block the current line sits inside. AIDA writes the
+    // top-level scalar fields first, then an optional `relationships:`
+    // block, then an optional `comments:` block. trace:STORY-26
+    enum Block {
+        None,
+        Relationships,
+        Comments,
+    }
+    let mut block = Block::None;
     for line in content.lines() {
         let trimmed = line.trim_start();
+        // An unindented line either opens a block or closes the current
+        // one; a `- ` list entry stays part of the block it's under.
+        if !line.starts_with(' ') {
+            if trimmed.starts_with("relationships:") {
+                block = Block::Relationships;
+                continue;
+            } else if trimmed.starts_with("comments:") {
+                block = Block::Comments;
+                continue;
+            } else if !trimmed.starts_with("- ") {
+                block = Block::None;
+            }
+        }
+        match block {
+            Block::Relationships => {
+                if line.starts_with("- ") {
+                    out.relationships.push(Relationship::default());
+                }
+                // Drop a leading `- ` so the entry's opening line parses
+                // like any indented continuation line.
+                let field = trimmed.strip_prefix("- ").unwrap_or(trimmed);
+                if let Some(rel) = out.relationships.last_mut() {
+                    if let Some(v) = field.strip_prefix("rel_type:") {
+                        rel.rel_type = Some(strip_yaml_value(v));
+                    } else if let Some(v) = field.strip_prefix("target_id:") {
+                        rel.target_id = Some(strip_yaml_value(v));
+                    }
+                }
+                continue;
+            }
+            Block::Comments => {
+                // Each top-level "- id: ..." inside `comments:` is one
+                // comment. We only count list-of-mapping shapes.
+                if line.starts_with("- ") || line.starts_with("  - ") {
+                    out.comment_count += 1;
+                }
+                continue;
+            }
+            Block::None => {}
+        }
+        // Top-level scalar fields — reached only outside any list block.
         if let Some(v) = trimmed.strip_prefix("spec_id:") {
             out.spec_id = Some(strip_yaml_value(v));
         } else if let Some(v) = trimmed.strip_prefix("id:") {
@@ -185,19 +266,6 @@ pub fn parse_requirement_yaml(content: &str) -> Option<RequirementYaml> {
             out.status = Some(strip_yaml_value(v));
         } else if let Some(v) = trimmed.strip_prefix("req_type:") {
             out.req_type = Some(strip_yaml_value(v));
-        } else if trimmed.starts_with("comments:") {
-            in_comments_block = true;
-            continue;
-        } else if in_comments_block && trimmed.starts_with("- ") {
-            // Each top-level "- id: ..." inside `comments:` is one comment.
-            // We only count list-of-mapping shapes; nested structures are
-            // accounted for by the enclosing pattern.
-            if line.starts_with("  - ") || line.starts_with("- ") {
-                out.comment_count += 1;
-            }
-        } else if in_comments_block && !trimmed.is_empty() && !line.starts_with(' ') {
-            // Left the comments block.
-            in_comments_block = false;
         }
     }
     if out.spec_id.is_none() && out.title.is_none() {

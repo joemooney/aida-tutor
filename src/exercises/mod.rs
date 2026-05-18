@@ -33,6 +33,9 @@ mod e21_role_enter;
 mod e22_queue_add;
 mod e23_queue_pickup;
 mod e24_queue_done;
+// Cluster 2 — relationships: the requirement graph. trace:STORY-26 | ai:claude
+mod e25_add_parent;
+mod e26_rel_add;
 
 pub fn all() -> Vec<Box<dyn Exercise>> {
     vec![
@@ -60,5 +63,7 @@ pub fn all() -> Vec<Box<dyn Exercise>> {
         Box::new(e22_queue_add::E),
         Box::new(e23_queue_pickup::E),
         Box::new(e24_queue_done::E),
+        Box::new(e25_add_parent::E),
+        Box::new(e26_rel_add::E),
     ]
 }

@@ -7,16 +7,17 @@ Guidance for Claude Code working in this repository.
 ## Project overview
 
 **aida-tutor** is a hands-on tutorial for [AIDA](../aida/), in the spirit of
-[rustlings](https://github.com/rust-lang/rustlings). 24 exercises that walk a
+[rustlings](https://github.com/rust-lang/rustlings). 26 exercises that walk a
 learner from `aida init` through the full capture → trace → commit → close
-loop, into distributed storage, and through the roles + queue workflow, with
-an on-disk verifier per exercise.
+loop, into distributed storage, the roles + queue workflow, and the
+requirement graph, with an on-disk verifier per exercise.
 
 Status: **v0 complete and end-to-end verified** as of 2026-05-09 (exercises
 01–17). EPIC-4 cluster 1 adds the distributed-storage trio (18–20: orphan
 branch, store sync, cache rebuild); cluster 3 adds the roles + producer/
-consumer queue arc (21–24: role enter, queue add `--for`, pickup, done).
-All 24 exercises pass when worked in order (`aida-tutor demo`).
+consumer queue arc (21–24: role enter, queue add `--for`, pickup, done);
+cluster 2 adds the relationships pair (25–26: `add --parent`, `rel add`).
+All 26 exercises pass when worked in order (`aida-tutor demo`).
 
 ## Architecture
 
