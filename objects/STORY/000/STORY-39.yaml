@@ -1,0 +1,26 @@
+id: 019e3bcd-269b-7233-8c73-7022eaa4a611
+spec_id: STORY-39
+agreed_id: STORY-39
+title: 'Review PR-5: feat(tutor): sessions + worktrees exercises 27-30 (STORY-28)'
+description: |
+  Auto-filed by `aida pr auto-queue-review` (typically from /aida-pr) (session `019e3bbb`) for branch `epic-4-3`.
+
+  - PR: <https://github.com/joemooney/aida-tutor/pull/5>
+  - Branch: `epic-4-3` → `master`
+
+  ## Covers
+
+  - STORY-28
+
+  ## Acceptance
+
+  - Generate a structured review prompt with `aida review prompt --pr 5` and verify each spec's acceptance criteria.
+  - Approve and merge, or request changes by spec id.
+  - Mark this story `completed` once the PR is merged.
+status: Approved
+priority: Medium
+owner: ''
+feature: Uncategorized
+created_at: 2026-05-18T15:56:01.051052330Z
+modified_at: 2026-05-18T15:56:01.051052330Z
+req_type: Story
