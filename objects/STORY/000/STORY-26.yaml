@@ -14,10 +14,16 @@ priority: Medium
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-10T06:52:32.071940657Z
-modified_at: 2026-05-10T06:53:17.051786044Z
+modified_at: 2026-05-18T14:53:04.638939835Z
 req_type: Story
 relationships:
 - rel_type: Child
   target_id: 019e10a8-a6e6-7060-a1fd-612e294cbb55
   created_at: 2026-05-10T06:53:17.051769904Z
   created_by: joe
+comments:
+- id: 019e3b93-86fe-74f0-abd5-23579f3e0b80
+  author: joe
+  content: 'Advisor decision 2026-05-18 (during PR #2 review): cluster 2''s relationships exercises are numbered 25-26 (APPEND) — NOT the natural 21-22. Cluster 3 (STORY-27) already shipped roles+queue as exercises 21-24, so 21-22 are taken. Implementer: create content/25-*.md + content/26-*.md and src/exercises/e25_*.rs + e26_*.rs, registered after e24 in mod.rs; bump cmd_welcome + CLAUDE.md to 26. Scope: 2 exercises — ''aida add --parent'' (parent/child) and ''aida rel add'' (typed relationships: Verifies/References). Do this cluster on its OWN branch and its OWN PR — clusters 1 and 3 got tangled by sharing the ''epic-4'' branch; one cluster = one branch = one PR.'
+  created_at: 2026-05-18T14:53:04.638939835Z
+  modified_at: 2026-05-18T14:53:04.638939835Z
