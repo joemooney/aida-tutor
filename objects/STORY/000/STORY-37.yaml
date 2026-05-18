@@ -1,0 +1,26 @@
+id: 019e39cc-e05b-7bd0-a27f-f7ca7cb0bcb7
+spec_id: STORY-37
+agreed_id: STORY-37
+title: 'Review PR-3: EPIC-4 STORY-27: roles + queue exercises (cluster 3)'
+description: |
+  Auto-filed by `aida pr auto-queue-review` (typically from /aida-pr) (session `019e39bb`) for branch `epic-4`.
+
+  - PR: <https://github.com/joemooney/aida-tutor/pull/3>
+  - Branch: `epic-4` → `master`
+
+  ## Covers
+
+  - STORY-27
+
+  ## Acceptance
+
+  - Generate a structured review prompt with `aida review prompt --pr 3` and verify each spec's acceptance criteria.
+  - Approve and merge, or request changes by spec id.
+  - Mark this story `completed` once the PR is merged.
+status: Approved
+priority: Medium
+owner: ''
+feature: Uncategorized
+created_at: 2026-05-18T06:36:28.635620960Z
+modified_at: 2026-05-18T06:36:28.635620960Z
+req_type: Story
