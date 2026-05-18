@@ -8,5 +8,11 @@ priority: Medium
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-09T22:30:33.132601965Z
-modified_at: 2026-05-18T02:18:42.281311935Z
+modified_at: 2026-05-18T02:18:43.185946801Z
 req_type: Story
+comments:
+- id: 019e38e0-e471-7d41-b11e-b8266f35edec
+  author: joe
+  content: 'Closed alongside TASK-1: aida-tutor demo subcommand implemented (non-interactive walkthrough; reset --yes && demo walks all 17 exercises, exits non-zero on any failure).'
+  created_at: 2026-05-18T02:18:43.185946801Z
+  modified_at: 2026-05-18T02:18:43.185946801Z
