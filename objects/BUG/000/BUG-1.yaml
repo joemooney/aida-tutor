@@ -16,7 +16,7 @@ priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-18T03:11:53.906982533Z
-modified_at: 2026-05-18T03:54:12.390153902Z
+modified_at: 2026-05-18T03:54:13.561051743Z
 req_type: Bug
 relationships:
 - rel_type: Child
@@ -32,3 +32,8 @@ comments:
   content: 'Fixed on epic-4-batch1 @ 3cb6997 — Cargo.toml min-version 0.4.5 -> 0.7.0. Pushed; PR #1 CI re-running. Also added .aida/sessions/ to .gitignore is still pending (folded into this BUG''s scope) — see follow-up note. Status: done (work on branch); auto-bumps to completed when PR #1 merges.'
   created_at: 2026-05-18T03:36:07.584487597Z
   modified_at: 2026-05-18T03:36:07.584487597Z
+- id: 019e3938-54b9-7dc1-851b-97804170580b
+  author: joe
+  content: 'Merged to master via PR #1 squash commit ea5d61f. The squash collapsed the (BUG-1) trailers into body bullets — commit SUBJECT is just the PR title — so the done->completed auto-bump and ''aida db reconcile-status'' (both subject-scoped) missed it. Set completed manually: STORY-86 exception path, work verifiably on master.'
+  created_at: 2026-05-18T03:54:13.561051743Z
+  modified_at: 2026-05-18T03:54:13.561051743Z
