@@ -1,0 +1,20 @@
+id: 019e3911-9432-72b2-bed4-19521eac3397
+spec_id: BUG-1
+agreed_id: BUG-1
+title: 'CI min-leg red: aida-min-version pin 0.4.5 predates docs/push subcommands'
+description: |-
+  PR #1 (epic-4-batch1) CI: the 'aida min' matrix leg fails 6/17 exercises because Cargo.toml [package.metadata.aida] min-version is pinned to 0.4.5, which predates 'aida docs' (landed v0.5.0) and 'aida push'. Decision (PO, 2026-05-17): bump min-version to 0.7.0 — the latest released aida tag and an honest floor for a tutorial authored against current aida.
+
+  Fix scope:
+  1. Cargo.toml: min-version 0.4.5 -> 0.7.0 (the CI workflow resolves this to git tag v0.7.0).
+  2. Push to epic-4-batch1; confirm BOTH CI legs (latest + min) go green.
+  3. Housekeeping: add .aida/sessions/ to .gitignore (untracked, ephemeral session state).
+
+  Blocks merge of PR #1. The 'aida latest' leg already passes, so the cargo-install / aida-cli crate-name path is confirmed good.
+status: Approved
+priority: High
+owner: ''
+feature: Uncategorized
+created_at: 2026-05-18T03:11:53.906982533Z
+modified_at: 2026-05-18T03:11:53.906982533Z
+req_type: Bug
