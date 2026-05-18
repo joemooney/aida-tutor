@@ -14,12 +14,16 @@ priority: Medium
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-10T06:52:32.071940657Z
-modified_at: 2026-05-18T15:11:04.785646774Z
+modified_at: 2026-05-18T15:11:08.867212412Z
 req_type: Story
 relationships:
 - rel_type: Child
   target_id: 019e10a8-a6e6-7060-a1fd-612e294cbb55
   created_at: 2026-05-10T06:53:17.051769904Z
+  created_by: joe
+- rel_type: !Custom implemented-by
+  target_id: 019e3ba4-0bd5-7d30-bbc1-9c515a4706f3
+  created_at: 2026-05-18T15:11:08.867205306Z
   created_by: joe
 comments:
 - id: 019e3b93-86fe-74f0-abd5-23579f3e0b80
