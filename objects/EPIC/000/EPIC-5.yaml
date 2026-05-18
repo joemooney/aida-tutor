@@ -23,7 +23,7 @@ priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-18T03:18:10.974909989Z
-modified_at: 2026-05-18T03:18:10.974909989Z
+modified_at: 2026-05-18T03:20:40.885609941Z
 req_type: Epic
 relationships:
 - rel_type: Parent
@@ -41,3 +41,9 @@ relationships:
 - rel_type: Parent
   target_id: 019e3917-ddf3-7d81-8dbf-7b1e505002d5
   created_at: 2026-05-18T03:18:46.666744145Z
+comments:
+- id: 019e3919-9eb5-7f03-9568-2aae9fb25658
+  author: joe
+  content: 'Rewrite plan filed: docs/plans/2026-05-18-first-contact-onboarding-slice.md (11-section AIDA template). Decomposition: STORY-31 (scratch project + entry point), STORY-32 (6-8 step content), STORY-33 (on-disk verifiers), STORY-34 (wow payoff + Act-II signpost), TASK-2 (moderated human-test gate). ''One wow'' CONFIRMED as the round-trip / shared-queryable-memory moment, sharpened to the cold-start contrast. Build NOT yet routed to implementer — held pending owner confirm of the wow framing (advisor surfacing 2026-05-18).'
+  created_at: 2026-05-18T03:20:40.885609941Z
+  modified_at: 2026-05-18T03:20:40.885609941Z
