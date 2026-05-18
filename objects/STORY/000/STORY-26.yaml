@@ -9,12 +9,12 @@ description: |
   - **eXX rel-add-positional**: `aida rel add STORY-A STORY-B --type duplicate` (positional form, post-TASK-41) → verify edge in target_id and the bidirectional flag adds inverse
 
   Verifiers parse YAML in workspace's .aida-store/objects/.
-status: Approved
+status: InProgress
 priority: Medium
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-10T06:52:32.071940657Z
-modified_at: 2026-05-18T14:53:04.638939835Z
+modified_at: 2026-05-18T14:54:17.788688070Z
 req_type: Story
 relationships:
 - rel_type: Child
