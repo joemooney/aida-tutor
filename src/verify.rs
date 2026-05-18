@@ -372,3 +372,140 @@ pub fn queue_entries(workspace: &Path) -> Vec<QueueEntry> {
     }
     out
 }
+
+/// One linked git worktree, as reported by `git worktree list --porcelain`.
+/// `aida session start` adds one such worktree per scoped session.
+/// trace:STORY-28 | ai:claude
+#[derive(Debug, Clone, Default)]
+pub struct GitWorktree {
+    /// Absolute path of the worktree directory.
+    pub path: String,
+    /// Checked-out branch (without the `refs/heads/` prefix), or None for
+    /// a detached / bare worktree.
+    pub branch: Option<String>,
+}
+
+/// Every git worktree of the `workspace` repo. The main worktree is always
+/// the first entry (git lists it first), followed by linked worktrees —
+/// the `.aida-store` store worktree and any `aida session start` session
+/// worktrees. Empty vec if `workspace` isn't a git repo. trace:STORY-28
+pub fn git_worktrees(workspace: &Path) -> Vec<GitWorktree> {
+    let Ok(out) = std::process::Command::new("git")
+        .arg("-C")
+        .arg(workspace)
+        .args(["worktree", "list", "--porcelain"])
+        .output()
+    else {
+        return Vec::new();
+    };
+    if !out.status.success() {
+        return Vec::new();
+    }
+    let text = String::from_utf8_lossy(&out.stdout);
+    let mut list = Vec::new();
+    let mut cur: Option<GitWorktree> = None;
+    for line in text.lines() {
+        if let Some(p) = line.strip_prefix("worktree ") {
+            if let Some(done) = cur.take() {
+                list.push(done);
+            }
+            cur = Some(GitWorktree {
+                path: p.trim().to_string(),
+                branch: None,
+            });
+        } else if let Some(b) = line.strip_prefix("branch ") {
+            if let Some(c) = cur.as_mut() {
+                c.branch = Some(b.trim().trim_start_matches("refs/heads/").to_string());
+            }
+        }
+    }
+    if let Some(done) = cur.take() {
+        list.push(done);
+    }
+    list
+}
+
+/// The branch checked out in the *main* worktree — the base a session
+/// branch forks from. The main worktree is always first in `git worktree
+/// list`. None if `workspace` isn't a git repo or HEAD is detached.
+/// trace:STORY-28 | ai:claude
+pub fn main_worktree_branch(workspace: &Path) -> Option<String> {
+    git_worktrees(workspace).into_iter().next().and_then(|w| w.branch)
+}
+
+/// Commits on `branch` not reachable from `base` — `git rev-list --count
+/// base..branch`. The session-worktree exercise uses this to confirm the
+/// learner committed work on the session branch. None on any git error.
+/// trace:STORY-28 | ai:claude
+pub fn git_commits_ahead(workspace: &Path, base: &str, branch: &str) -> Option<usize> {
+    let out = std::process::Command::new("git")
+        .arg("-C")
+        .arg(workspace)
+        .args(["rev-list", "--count", &format!("{base}..{branch}")])
+        .output()
+        .ok()?;
+    if !out.status.success() {
+        return None;
+    }
+    String::from_utf8_lossy(&out.stdout).trim().parse().ok()
+}
+
+/// One `aida session start` lease, parsed from `.aida/sessions/<id>.toml`.
+/// A scoped session owns a sibling git worktree on its own branch; the
+/// lease is the on-disk record of it. `aida session end` deletes the
+/// file. Only the fields the session-cluster exercises need are pulled;
+/// serde ignores the rest. Fields default to None on a partial/odd file.
+/// trace:STORY-28 | ai:claude
+#[derive(Debug, Clone, Default, serde::Deserialize)]
+pub struct SessionLease {
+    /// `id` — the session id `aida session show` / `end` accept.
+    pub id: Option<String>,
+    /// `branch` — the worktree's branch, forked at `session start`.
+    pub branch: Option<String>,
+    /// `worktree_path` — absolute path of the session worktree.
+    pub worktree_path: Option<String>,
+}
+
+/// Parse every session lease under `.aida/sessions/`. A lease is a plain
+/// `<id>.toml`; the sidecar `<id>.activity.toml` / `<id>.manifest.toml`
+/// files (whose stems carry a second dot) are skipped. Returns empty vec
+/// when no session is active. trace:STORY-28 | ai:claude
+pub fn session_leases(workspace: &Path) -> Vec<SessionLease> {
+    let dir = workspace.join(".aida").join("sessions");
+    let mut out = Vec::new();
+    let Ok(read_dir) = std::fs::read_dir(&dir) else {
+        return out;
+    };
+    for entry in read_dir.filter_map(Result::ok) {
+        let path = entry.path();
+        if path.extension().and_then(|s| s.to_str()) != Some("toml") {
+            continue;
+        }
+        // `019e3bbb04a3.toml` → stem `019e3bbb04a3` (a lease).
+        // `019e3bbb04a3.activity.toml` → stem `019e3bbb04a3.activity`.
+        match path.file_stem().and_then(|s| s.to_str()) {
+            Some(stem) if !stem.contains('.') => {}
+            _ => continue,
+        }
+        let Ok(content) = std::fs::read_to_string(&path) else {
+            continue;
+        };
+        if let Ok(lease) = toml::from_str::<SessionLease>(&content) {
+            // A real lease names a worktree and a branch; an empty or
+            // unrelated toml that happens to parse does not.
+            if lease.worktree_path.is_some() && lease.branch.is_some() {
+                out.push(lease);
+            }
+        }
+    }
+    out
+}
+
+/// The session lease whose worktree is checked out on `branch`, if any.
+/// The session-cluster exercises pin one branch name and follow that
+/// lease across start → work → inspect → end. trace:STORY-28 | ai:claude
+pub fn session_lease_for_branch(workspace: &Path, branch: &str) -> Option<SessionLease> {
+    session_leases(workspace)
+        .into_iter()
+        .find(|l| l.branch.as_deref() == Some(branch))
+}
