@@ -1,0 +1,12 @@
+id: 019e3917-c939-7c20-8064-a05f95daf64c
+spec_id: STORY-33
+agreed_id: STORY-33
+title: 'Onboarding slice: on-disk round-trip verifiers'
+description: 'Verifiers for the slice''s state-changing checkpoints, reusing the existing src/verify.rs read-only inspection model and the Exercise trait (slug/title/verify/hint): spec file created in .aida-store, // trace:<SPEC> comment present in the scratch code, commit subject references the SPEC, status flip observed. Explicitly does NOT build the aida invocation-recording shim — the read-only steps (aida show, the cold-agent query) are the experiential payoff, observed in the human test, not Rust-verified. Owns AC-5.'
+status: Approved
+priority: Medium
+owner: ''
+feature: Uncategorized
+created_at: 2026-05-18T03:18:40.697284487Z
+modified_at: 2026-05-18T03:18:40.697284487Z
+req_type: Story
