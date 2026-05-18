@@ -1,0 +1,19 @@
+id: 019e3b8e-4130-7c01-b40e-6a5bb0f9c435
+spec_id: TASK-3
+agreed_id: TASK-3
+title: 'Verifier rigor: e19 bootstrap-commit threshold + e20 prerequisite-state no-op'
+description: |-
+  Two verifier-rigor gaps found reviewing STORY-25 (cluster 1, exercises 18-20):
+
+  1. e19 (store-sync) gates Pass on git_commit_count(aida-store) > 4, with a comment that 'aida init lays down ~4 bootstrap commits'. The magic 4 is coupled to aida init's current behavior — if a future aida release seeds more bootstrap commits onto the orphan branch, e19 false-passes with no learner action. Fix: make it relative — snapshot the orphan-branch commit count after init/e18 and require strictly more, instead of hardcoding 4.
+
+  2. e20 (cache-rebuild) verify is is_aida_initialized + cache_db_is_valid_sqlite. e18 already requires a valid cache.db to Pass, so after e18 the cache is valid and e20 passes whether or not the learner did the delete-then-'aida cache rebuild' step. The SQLite-magic header check catches a CORRUPT cache but not a SKIPPED exercise. e20 joins the known prerequisite-state no-op set — update the CLAUDE.md 'verifier rigor' bullet (currently lists exercises 7, 8, 13, 15, 16, 17) to include 20.
+
+  Both are polish, not blockers — the exercises function and teach correctly. The durable fix for the whole class is the invocation-recording aida wrapper, already deferred to the EPIC-5 restructure followups. This TASK records the two concrete instances so they are tracked. Source: PR #2 review, 2026-05-18.
+status: Approved
+priority: Medium
+owner: ''
+feature: Uncategorized
+created_at: 2026-05-18T14:47:19.088418258Z
+modified_at: 2026-05-18T14:47:19.088418258Z
+req_type: Task
