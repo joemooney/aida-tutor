@@ -11,12 +11,12 @@ description: |-
   3. Housekeeping: add .aida/sessions/ to .gitignore (untracked, ephemeral session state).
 
   Blocks merge of PR #1. The 'aida latest' leg already passes, so the cargo-install / aida-cli crate-name path is confirmed good.
-status: Done
+status: Completed
 priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-18T03:11:53.906982533Z
-modified_at: 2026-05-18T03:37:01.169547938Z
+modified_at: 2026-05-18T03:54:12.390153902Z
 req_type: Bug
 relationships:
 - rel_type: Child
