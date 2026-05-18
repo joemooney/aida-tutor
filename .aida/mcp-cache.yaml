@@ -261,6 +261,52 @@ requirements:
   - auto-drafted
   - failure-1
   - implementer
+- id: 019e3bae-1f2c-7e33-955c-d75beb5d0f37
+  spec_id: BUG-8
+  agreed_id: BUG-8
+  title: 'auto-complete failure: phase 3 (reviewer) on STORY-26'
+  description: |
+    Auto-drafted by `aida queue work STORY-26 --auto-complete` after phase 3 (reviewer) failed. Review this BUG and promote it to Approved if it is a real AIDA orchestrator bug — or reject it if it was a user error or a local environment issue. It is intentionally left in Draft and NOT queued. (TASK-266)
+
+    ## Failure
+
+    reviewer verdict is RequestChanges — not Approved
+
+    Failure kind: `failed`
+
+    ## Recovery hint shown to the user
+
+    Address the review feedback, then push fixups: `aida queue work STORY-26 --branch story-26-relationships --steal`
+
+    ## Phase durations
+
+      - phase 1 (implementer): 1062515 ms
+      - phase 2 (ci): 202423 ms
+      - phase 3 (reviewer): 430759 ms
+
+    ## Telemetry entry
+
+    The line appended to `~/.aida/auto-complete.jsonl` for this run:
+
+    ```json
+    {"spec_id":"STORY-26","started_at":"2026-05-18T14:53:51.794310279+00:00","completed_at":"2026-05-18T15:22:07.494930286+00:00","outcome":"failed","variant":"full","failed_phase":3,"failure_kind":"failed","failure_message":"reviewer verdict is RequestChanges — not Approved","phase_durations":[{"phase":1,"slug":"implementer","elapsed_ms":1062515},{"phase":2,"slug":"ci","elapsed_ms":202423},{"phase":3,"slug":"reviewer","elapsed_ms":430759}],"total_ms":1695700,"binary_sha":"260903e0"}
+    ```
+
+    ## Recurse-fix
+
+    Once triaged and promoted, this BUG can itself be driven by the orchestrator: `aida queue work <THIS-BUG> --auto-complete` — the dogfood loop TASK-266 makes operational.
+  status: Draft
+  priority: Medium
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-18T15:22:07.532269125Z
+  modified_at: 2026-05-18T15:22:07.532269125Z
+  req_type: Bug
+  tags:
+  - auto-complete
+  - auto-drafted
+  - failure-3
+  - reviewer
 - id: 019e39a1-2a95-7c62-97fe-0226f16b097c
   spec_id: BUG-6
   agreed_id: BUG-6
@@ -570,18 +616,28 @@ requirements:
     - Generate a structured review prompt with `aida review prompt --pr 4` and verify each spec's acceptance criteria.
     - Approve and merge, or request changes by spec id.
     - Mark this story `completed` once the PR is merged.
-  status: Approved
+  status: Completed
   priority: Medium
   owner: ''
   feature: Uncategorized
   created_at: 2026-05-18T15:11:07.221196504Z
-  modified_at: 2026-05-18T15:11:07.929498963Z
+  modified_at: 2026-05-18T15:35:49.196745506Z
   req_type: Story
   relationships:
   - rel_type: !Custom implements
     target_id: 019e10a8-b3c7-7543-a896-42909d61ab7f
     created_at: 2026-05-18T15:11:07.929491553Z
     created_by: joe
+  comments:
+  - id: 019e3bba-a8cc-7ad3-b1a0-5bddd806c82d
+    author: aida-auto-bump
+    content: 'Auto-completed: PR #4 merged without a re-review iteration — the review story was left at In Progress.'
+    created_at: 2026-05-18T15:35:49.196715881Z
+    modified_at: 2026-05-18T15:35:49.196715881Z
+  implementation_info:
+    implemented: false
+    completed_at: 2026-05-18T15:35:49.179188840Z
+    completion_sha: 99f83646a673c7f3e1df6f2dcc2acab8e7785f2b
 - id: 019e0ed2-3c32-7980-8ed0-82854e0a52d0
   spec_id: STORY-15
   agreed_id: STORY-15
@@ -754,12 +810,12 @@ requirements:
     - **eXX rel-add-positional**: `aida rel add STORY-A STORY-B --type duplicate` (positional form, post-TASK-41) → verify edge in target_id and the bidirectional flag adds inverse
 
     Verifiers parse YAML in workspace's .aida-store/objects/.
-  status: Done
+  status: Completed
   priority: Medium
   owner: ''
   feature: Uncategorized
   created_at: 2026-05-10T06:52:32.071940657Z
-  modified_at: 2026-05-18T15:11:08.867212412Z
+  modified_at: 2026-05-18T15:35:49.179188840Z
   req_type: Story
   relationships:
   - rel_type: Child
@@ -797,6 +853,8 @@ requirements:
     implemented: true
     implemented_at: 2026-05-18T15:09:04.657786698Z
     implemented_by: joe
+    completed_at: 2026-05-18T15:35:49.179188840Z
+    completion_sha: 99f83646a673c7f3e1df6f2dcc2acab8e7785f2b
 - id: 019e3917-b4cc-7572-b985-c2afbff655fa
   spec_id: STORY-31
   agreed_id: STORY-31
