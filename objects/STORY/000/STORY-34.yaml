@@ -8,9 +8,15 @@ priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-18T03:18:43.315343242Z
-modified_at: 2026-05-18T03:18:43.315343242Z
+modified_at: 2026-05-19T15:04:19.876626641Z
 req_type: Story
 relationships:
 - rel_type: Child
   target_id: 019e3917-551e-71b3-9214-4bdd105a6121
   created_at: 2026-05-18T03:18:43.953474219Z
+comments:
+- id: 019e40c4-30a4-7741-abd1-4db676ec1416
+  author: joe
+  content: 'Shipped: content/onboarding/05-reveal,06-cold-agent,07-signpost — the aida show reveal, the cold-agent wow, one Act-II signpost paragraph. Commit 6ba3c09.'
+  created_at: 2026-05-19T15:04:19.876626641Z
+  modified_at: 2026-05-19T15:04:19.876626641Z
