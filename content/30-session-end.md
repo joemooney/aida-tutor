@@ -52,7 +52,6 @@ overrides it; you committed in exercise 28, so you don't need it here.
 
 ## What's next
 
-That's the sessions + worktrees cluster — and the last exercise. You've
-walked AIDA end to end: init, capture, trace, commit, the distributed
-store, roles and the queue, the requirement graph, and scoped sessions.
-Run `aida-tutor progress` to see 30/30.
+That closes the sessions + worktrees cluster. Exercise 31 opens the
+last one — code review and commit pairing: how AIDA pins every commit
+to a store version, and turns requirements into review briefs.

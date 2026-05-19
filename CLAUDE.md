@@ -7,11 +7,11 @@ Guidance for Claude Code working in this repository.
 ## Project overview
 
 **aida-tutor** is a hands-on tutorial for [AIDA](../aida/), in the spirit of
-[rustlings](https://github.com/rust-lang/rustlings). 30 exercises that walk a
+[rustlings](https://github.com/rust-lang/rustlings). 32 exercises that walk a
 learner from `aida init` through the full capture → trace → commit → close
 loop, into distributed storage, the roles + queue workflow, the requirement
-graph, and scoped sessions with git worktrees, with an on-disk verifier per
-exercise.
+graph, scoped sessions with git worktrees, and the code-review + commit-
+pairing workflow, with an on-disk verifier per exercise.
 
 Status: **v0 complete and end-to-end verified** as of 2026-05-09 (exercises
 01–17). EPIC-4 cluster 1 adds the distributed-storage trio (18–20: orphan
@@ -19,8 +19,9 @@ branch, store sync, cache rebuild); cluster 3 adds the roles + producer/
 consumer queue arc (21–24: role enter, queue add `--for`, pickup, done);
 cluster 2 adds the relationships pair (25–26: `add --parent`, `rel add`);
 cluster 4 adds the sessions + worktrees quartet (27–30: session start,
-work-in-worktree, leases/show, session end).
-All 30 exercises pass when worked in order (`aida-tutor demo`).
+work-in-worktree, leases/show, session end); cluster 5 adds the code-review
++ commit-pairing pair (31–32: `Aida-Store:` trailer, `review prompt`).
+All 32 exercises pass when worked in order (`aida-tutor demo`).
 
 ## Architecture
 
@@ -82,7 +83,10 @@ EPIC-1 (CLI v0) and EPIC-2 (Tutorial Exercises) are the umbrellas.
 - **More exercises** — `aida history`, sessions + cross-project queue
   routing. Relationships shipped as 25–26 (STORY-26); roles + the
   producer/consumer queue as 21–24 (STORY-27); sessions + worktrees as
-  27–30 (STORY-28).
+  27–30 (STORY-28); code review + commit pairing as 31–32 (STORY-29).
+  The `aida review prompt --pr` form is taught in 32's content but not
+  verified — the PR-driven path needs `gh`/`glab` + a real forge remote,
+  out of reach for the offline workspace.
 - **Verifier rigor** — exercises 7, 8, 13, 15, 16, 17, 29 currently pass
   on prerequisite state alone (we can't tell whether the user actually
   ran a read-only command). A workspace-level `aida` wrapper that

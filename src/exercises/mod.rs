@@ -41,6 +41,9 @@ mod e27_session_start;
 mod e28_session_work;
 mod e29_session_leases;
 mod e30_session_end;
+// Cluster 5 — code review + commit pairing. trace:STORY-29 | ai:claude
+mod e31_commit_pair_trailer;
+mod e32_review_prompt;
 
 pub fn all() -> Vec<Box<dyn Exercise>> {
     vec![
@@ -74,5 +77,7 @@ pub fn all() -> Vec<Box<dyn Exercise>> {
         Box::new(e28_session_work::E),
         Box::new(e29_session_leases::E),
         Box::new(e30_session_end::E),
+        Box::new(e31_commit_pair_trailer::E),
+        Box::new(e32_review_prompt::E),
     ]
 }

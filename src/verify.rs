@@ -96,6 +96,30 @@ pub fn last_commit_message(workspace: &Path) -> Option<String> {
     }
 }
 
+/// The full message of the most recent commit that touched `rel` in
+/// `workspace` — `git log -1 --format=%B -- <rel>`. None if the path was
+/// never committed or git errors. The commit-pairing exercise uses this
+/// to inspect the *learner's* commit (the one that added the artifact),
+/// not whatever happens to be at HEAD. trace:STORY-29 | ai:claude
+pub fn last_commit_message_for_path(workspace: &Path, rel: &str) -> Option<String> {
+    let output = std::process::Command::new("git")
+        .arg("-C")
+        .arg(workspace)
+        .args(["log", "-1", "--format=%B", "--", rel])
+        .output()
+        .ok()?;
+    if !output.status.success() {
+        return None;
+    }
+    let s = String::from_utf8_lossy(&output.stdout).to_string();
+    let trimmed = s.trim();
+    if trimmed.is_empty() {
+        None
+    } else {
+        Some(trimmed.to_string())
+    }
+}
+
 /// True if `branch` exists as a local git branch in `workspace`. Used by
 /// the distributed-store exercises to confirm the orphan `aida-store`
 /// branch is present. trace:STORY-25 | ai:claude
