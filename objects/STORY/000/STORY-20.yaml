@@ -8,8 +8,21 @@ priority: Medium
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-09T22:30:33.797545295Z
-modified_at: 2026-05-19T03:04:50.894602346Z
+modified_at: 2026-05-19T03:07:03.465943925Z
 req_type: Story
+comments:
+- id: 019e3e33-81a9-7bb0-8323-142b5ddb78b6
+  author: joe
+  content: |-
+    Implemented via PR-8 (commit 80019d6): https://github.com/joemooney/aida-tutor/pull/8
+
+    - hint becomes a 3-rung ladder: hint -> hint --more (multi-step) -> hint --solution (literal command); --more/--solution mutually exclusive
+    - new Exercise::hint_more / hint_solution trait methods, content filled for all 32 exercises (--solution mirrors each demo())
+    - Progress gains a solution_used set; completions render as completed-with-solution vs completed in list + progress
+
+    Test status: aida-tutor demo 32/32 green; cargo build --release clean
+  created_at: 2026-05-19T03:07:03.465943925Z
+  modified_at: 2026-05-19T03:07:03.465943925Z
 implementation_info:
   implemented: true
   implemented_at: 2026-05-19T03:04:50.894602346Z
