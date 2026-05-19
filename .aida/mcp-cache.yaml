@@ -702,6 +702,37 @@ requirements:
   created_at: 2026-05-09T22:18:38.833043430Z
   modified_at: 2026-05-09T22:29:58.026332822Z
   req_type: Story
+- id: 019e3e1b-2cbd-77b0-9552-e71389799623
+  spec_id: STORY-41
+  agreed_id: STORY-41
+  title: 'Review PR-7: feat(tutor): plans + maintenance + MCP exercises 33-35 (STORY-30)'
+  description: |
+    Auto-filed by `aida pr auto-queue-review` (typically from /aida-pr) (session `019e3e0c`) for branch `epic-4-3`.
+
+    - PR: <https://github.com/joemooney/aida-tutor/pull/7>
+    - Branch: `epic-4-3` → `master`
+
+    ## Covers
+
+    - STORY-30
+
+    ## Acceptance
+
+    - Generate a structured review prompt with `aida review prompt --pr 7` and verify each spec's acceptance criteria.
+    - Approve and merge, or request changes by spec id.
+    - Mark this story `completed` once the PR is merged.
+  status: Approved
+  priority: Medium
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-19T02:40:28.861735368Z
+  modified_at: 2026-05-19T02:40:29.555919200Z
+  req_type: Story
+  relationships:
+  - rel_type: !Custom implements
+    target_id: 019e10a8-e18e-79e0-8aa7-8652636258f6
+    created_at: 2026-05-19T02:40:29.555910859Z
+    created_by: joe
 - id: 019e39cc-e05b-7bd0-a27f-f7ca7cb0bcb7
   spec_id: STORY-37
   agreed_id: STORY-37
@@ -1305,18 +1336,50 @@ requirements:
     - **eXX mcp-serve**: `aida mcp-serve` in background, exercise asks learner to query via MCP client (or via `claude` with `.mcp.json`) — harder to verify automatically; may be a "manual" exercise with an instructed `aida-tutor verify --self-check` flag
 
     This cluster is lowest-priority because it's the most "advanced/admin" — most learners reach it after they've internalized the daily-use loop.
-  status: Approved
+  status: Done
   priority: Low
   owner: ''
   feature: Uncategorized
   created_at: 2026-05-10T06:52:43.790093199Z
-  modified_at: 2026-05-10T06:53:33.476239556Z
+  modified_at: 2026-05-19T02:40:30.513387256Z
   req_type: Story
   relationships:
   - rel_type: Child
     target_id: 019e10a8-a6e6-7060-a1fd-612e294cbb55
     created_at: 2026-05-10T06:53:33.476220096Z
     created_by: joe
+  - rel_type: !Custom implemented-by
+    target_id: 019e3e1b-2cbd-77b0-9552-e71389799623
+    created_at: 2026-05-19T02:40:30.513382150Z
+    created_by: joe
+  comments:
+  - id: 019e3e18-a837-7dc0-ad57-093b6ff55697
+    author: joe
+    content: 'Shipped cluster 6 as exercises 33-35 (content/33-35 + src/exercises/e33-e35). Reconciled the story''s sketch against AIDA 0.7.0''s real CLI surface: (1) plan-add → plan-verify — there is no ''aida plan add''; plans are docs/plans/ files, so e33 has the learner write one and lint it with ''aida plan verify''. (2) doctor-fsck → store-audit — there is no ''aida doctor''; e34 teaches ''aida db info'' + ''aida db check --collisions'', the real store-health pair. (3) doctor-migrate-counter-scope — DROPPED: ''aida config'' reports ''not supported for git backend'' (the default mode), so counter-scope migration is unreachable from a git-canonical store. (4) mcp-serve — e35 has the learner pipe a JSON-RPC tools/call into ''aida mcp-serve'' and capture the reply to mcp-probe.json (verifiable on disk, no --self-check flag needed). All 35 exercises pass ''aida-tutor demo''.'
+    created_at: 2026-05-19T02:37:43.863080208Z
+    modified_at: 2026-05-19T02:37:43.863080208Z
+  - id: 019e3e18-ff17-7e53-8c40-1876344bbe28
+    author: joe
+    content: Commit 796954a references this requirement
+    created_at: 2026-05-19T02:38:06.103079235Z
+    modified_at: 2026-05-19T02:38:06.103079235Z
+  - id: 019e3e1a-9fea-7e10-8faa-624896cffe04
+    author: joe
+    content: |-
+      Implemented via commit 796954a (branch epic-4-3 → PR pending):
+
+      - e33 plan-verify — write a docs/plans/ plan, lint it with `aida plan verify`
+      - e34 store-audit — `aida db info` + `aida db check --collisions` health pair
+      - e35 mcp-serve — pipe a JSON-RPC tools/call into `aida mcp-serve`, capture mcp-probe.json
+      - verify.rs gains plan_files() + duplicate_spec_ids(); cmd_welcome() count is now dynamic
+
+      Test status: all 35 exercises pass `aida-tutor demo`
+    created_at: 2026-05-19T02:39:52.810632966Z
+    modified_at: 2026-05-19T02:39:52.810632966Z
+  implementation_info:
+    implemented: true
+    implemented_at: 2026-05-19T02:38:15.676601907Z
+    implemented_by: joe
 - id: 019e0edd-26ef-7370-9195-a1720f7abb5b
   spec_id: STORY-22
   agreed_id: STORY-22
