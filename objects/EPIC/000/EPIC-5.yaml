@@ -23,7 +23,7 @@ priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-18T03:18:10.974909989Z
-modified_at: 2026-05-19T15:03:54.459566126Z
+modified_at: 2026-05-19T15:04:31.280783894Z
 req_type: Epic
 relationships:
 - rel_type: Parent
@@ -57,3 +57,8 @@ comments:
   content: Commit 6ba3c09 references this requirement
   created_at: 2026-05-19T15:03:54.459566126Z
   modified_at: 2026-05-19T15:03:54.459566126Z
+- id: 019e40c4-5d30-7193-9a1f-6745a92adf4c
+  author: joe
+  content: 'Slice built end-to-end on branch epic-5 (commit 6ba3c09). `aida-tutor onboard` drives the round trip — verified by hand: aida init → FR-1 captured → trace comment → linking commit → status flip → `aida show FR-1` renders the spec/commit/file linkage cleanly. All 35 existing exercises still pass (demo). AC-1 (the wow landing) remains gated on TASK-2''s moderated human test — not run as part of this build.'
+  created_at: 2026-05-19T15:04:31.280783894Z
+  modified_at: 2026-05-19T15:04:31.280783894Z
