@@ -120,6 +120,29 @@ pub fn last_commit_message_for_path(workspace: &Path, rel: &str) -> Option<Strin
     }
 }
 
+/// True if any commit in `workspace`'s history has `(<spec>)` in its
+/// subject line — the `(FR-1)` linking-commit form AIDA's commit-msg hook
+/// validates. Scans `git log --format=%s`; the onboarding slice uses it to
+/// confirm the learner's commit names the captured spec. False on any git
+/// error or empty repo. trace:STORY-33 | ai:claude
+pub fn commit_subject_references(workspace: &Path, spec: &str) -> bool {
+    let Ok(out) = std::process::Command::new("git")
+        .arg("-C")
+        .arg(workspace)
+        .args(["log", "--format=%s"])
+        .output()
+    else {
+        return false;
+    };
+    if !out.status.success() {
+        return false;
+    }
+    let needle = format!("({spec})");
+    String::from_utf8_lossy(&out.stdout)
+        .lines()
+        .any(|line| line.contains(&needle))
+}
+
 /// True if `branch` exists as a local git branch in `workspace`. Used by
 /// the distributed-store exercises to confirm the orphan `aida-store`
 /// branch is present. trace:STORY-25 | ai:claude
