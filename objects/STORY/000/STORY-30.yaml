@@ -16,7 +16,7 @@ priority: Low
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-10T06:52:43.790093199Z
-modified_at: 2026-05-19T02:38:15.676601907Z
+modified_at: 2026-05-19T02:39:52.810632966Z
 req_type: Story
 relationships:
 - rel_type: Child
@@ -34,6 +34,19 @@ comments:
   content: Commit 796954a references this requirement
   created_at: 2026-05-19T02:38:06.103079235Z
   modified_at: 2026-05-19T02:38:06.103079235Z
+- id: 019e3e1a-9fea-7e10-8faa-624896cffe04
+  author: joe
+  content: |-
+    Implemented via commit 796954a (branch epic-4-3 → PR pending):
+
+    - e33 plan-verify — write a docs/plans/ plan, lint it with `aida plan verify`
+    - e34 store-audit — `aida db info` + `aida db check --collisions` health pair
+    - e35 mcp-serve — pipe a JSON-RPC tools/call into `aida mcp-serve`, capture mcp-probe.json
+    - verify.rs gains plan_files() + duplicate_spec_ids(); cmd_welcome() count is now dynamic
+
+    Test status: all 35 exercises pass `aida-tutor demo`
+  created_at: 2026-05-19T02:39:52.810632966Z
+  modified_at: 2026-05-19T02:39:52.810632966Z
 implementation_info:
   implemented: true
   implemented_at: 2026-05-19T02:38:15.676601907Z
