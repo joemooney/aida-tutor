@@ -15,7 +15,7 @@ priority: Medium
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-10T06:52:41.207540256Z
-modified_at: 2026-05-19T01:49:01.592591478Z
+modified_at: 2026-05-19T01:50:08.303184481Z
 req_type: Story
 relationships:
 - rel_type: Child
@@ -28,6 +28,19 @@ comments:
   content: 'Shipped as 2 verified exercises (31 commit-pair-trailer, 32 review-prompt) rather than 3. The ''review-prompt-pr'' candidate was dropped as a separate verified exercise: aida review prompt --pr needs gh/glab + a real forge remote, and the no-forge fallback (base=main + local pr-N branch) is fragile for an offline CI demo. The --pr form is instead taught in content/32''s Tip section as a variant. e31 reframed: aida init already installs the prepare-commit-msg hook, so the learner observes the auto-added Aida-Store: trailer rather than installing anything. All 32 exercises pass aida-tutor demo.'
   created_at: 2026-05-19T01:49:01.592591478Z
   modified_at: 2026-05-19T01:49:01.592591478Z
+- id: 019e3ded-15af-7972-843b-bd0dea6c93cb
+  author: joe
+  content: |-
+    Implemented via commit a8e34ee (PR pending):
+
+    - e31 commit-pair-trailer + e32 review-prompt added; registered in src/exercises/mod.rs
+    - new verify helper last_commit_message_for_path() inspects the learner's commit, not HEAD
+    - content/30 + CLAUDE.md updated for the 32-exercise count and cluster 5
+
+    Test status: `aida-tutor demo` — 32/32 exercises pass end-to-end
+    Follow-up: `aida review prompt --pr` taught in content/32 as a variant, not verified (needs gh/glab + forge remote)
+  created_at: 2026-05-19T01:50:08.303184481Z
+  modified_at: 2026-05-19T01:50:08.303184481Z
 implementation_info:
   implemented: true
   implemented_at: 2026-05-19T01:48:54.121356577Z
