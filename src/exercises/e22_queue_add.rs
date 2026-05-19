@@ -24,6 +24,22 @@ impl Exercise for E {
          follows — `aida add --type task --status approved --title \"Queue demo: ship the \
          sample widget\"` — note the ID it prints, then queue that ID with `--for implementer`."
     }
+    // trace:STORY-20 | ai:claude
+    fn hint_more(&self) -> Option<&'static str> {
+        Some(
+            "1. Capture the cluster's task: `aida add --type task --status approved \
+                --title \"Queue demo: ship the sample widget\"`.\n\
+             2. Note the id it prints.\n\
+             3. Route it to a doer role: `aida queue add <that-id> --for implementer`."
+        )
+    }
+    // trace:STORY-20 | ai:claude
+    fn hint_solution(&self) -> Option<&'static str> {
+        Some(
+            "aida add --type task --status approved --title \"Queue demo: ship the sample widget\"\n\
+             aida queue add <ID> --for implementer       # <ID> = the id the add above printed"
+        )
+    }
     fn verify(&self, workspace: &Path) -> VerifyResult {
         if !is_aida_initialized(workspace) {
             return VerifyResult::Pending("complete exercise 01 first".into());

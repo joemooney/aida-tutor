@@ -25,6 +25,23 @@ impl Exercise for E {
          `git add` it, and `git commit` with a normal AIDA-format message — then `git log -1` \
          shows the trailer and `aida store status` shows code and store aligned."
     }
+    // trace:STORY-20 | ai:claude
+    fn hint_more(&self) -> Option<&'static str> {
+        Some(
+            "1. Create `workspace/PAIRING.md` with any content.\n\
+             2. `git add PAIRING.md`, then `git commit` it with a normal AIDA-format message.\n\
+             3. `git log -1` shows the `Aida-Store:` trailer the hook appended on its own."
+        )
+    }
+    // trace:STORY-20 | ai:claude
+    fn hint_solution(&self) -> Option<&'static str> {
+        Some(
+            "# from inside workspace/:\n\
+             echo \"# Code <-> store pairing\" > PAIRING.md\n\
+             git add PAIRING.md\n\
+             git commit -m \"[AI:claude] docs(pairing): note the store trailer (FR-1)\""
+        )
+    }
     fn verify(&self, workspace: &Path) -> VerifyResult {
         if !is_aida_initialized(workspace) {
             return VerifyResult::Pending("complete exercise 01 first".into());

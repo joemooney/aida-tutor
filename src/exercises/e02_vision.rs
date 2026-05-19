@@ -15,6 +15,19 @@ impl Exercise for E {
          Set --status approved (visions don't sit in draft — they're declarations). \
          The id will land as VIS-1 because no other vision exists yet."
     }
+    // trace:STORY-20 | ai:claude
+    fn hint_more(&self) -> Option<&'static str> {
+        Some(
+            "1. From inside `workspace/`, run `aida add` with `--type vision`.\n\
+             2. Give it `--title \"<one-sentence project intent>\"` and `--status approved` — \
+                visions don't sit in draft.\n\
+             3. It lands as VIS-1; `aida list --type vision` confirms it."
+        )
+    }
+    // trace:STORY-20 | ai:claude
+    fn hint_solution(&self) -> Option<&'static str> {
+        Some("aida add --type vision --status approved --title \"Ship a delightful command-line task tracker\"")
+    }
     fn verify(&self, workspace: &Path) -> VerifyResult {
         if !is_aida_initialized(workspace) {
             return VerifyResult::Pending(

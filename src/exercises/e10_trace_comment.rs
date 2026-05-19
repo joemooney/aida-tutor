@@ -16,6 +16,25 @@ impl Exercise for E {
          confidence defaults to high when omitted. This is the link from code to spec that the rest of \
          the AIDA tooling reads."
     }
+    // trace:STORY-20 | ai:claude
+    fn hint_more(&self) -> Option<&'static str> {
+        Some(
+            "1. Create any source file under `workspace/` — `src/parser.rs`, say.\n\
+             2. Add a comment line of the form `// trace:FR-1 | ai:claude` (use your FR id).\n\
+             3. Save it — the verifier scans every file under `workspace/`."
+        )
+    }
+    // trace:STORY-20 | ai:claude
+    fn hint_solution(&self) -> Option<&'static str> {
+        Some(
+            "# from inside workspace/:\n\
+             mkdir -p src\n\
+             cat > src/parser.rs <<'EOF'\n\
+             // trace:FR-1 | ai:claude\n\
+             pub fn parse_json() {}\n\
+             EOF"
+        )
+    }
     fn verify(&self, workspace: &Path) -> VerifyResult {
         if !is_aida_initialized(workspace) {
             return VerifyResult::Pending("complete exercise 01 first".into());

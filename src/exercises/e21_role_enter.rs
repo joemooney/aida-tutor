@@ -19,6 +19,22 @@ impl Exercise for E {
          `eval \"$(aida role enter implementer)\"`, then run `aida-tutor verify` in that same \
          terminal — the verifier reads the role from the shell it was launched in."
     }
+    // trace:STORY-20 | ai:claude
+    fn hint_more(&self) -> Option<&'static str> {
+        Some(
+            "1. Run `aida role scaffold` so the starter roles exist.\n\
+             2. Run `eval \"$(aida role enter implementer)\"` — `enter` prints shell code you must `eval`.\n\
+             3. Run `aida-tutor verify` in that *same* terminal."
+        )
+    }
+    // trace:STORY-20 | ai:claude
+    fn hint_solution(&self) -> Option<&'static str> {
+        Some(
+            "aida role scaffold\n\
+             eval \"$(aida role enter implementer)\"\n\
+             aida-tutor verify"
+        )
+    }
     fn verify(&self, workspace: &Path) -> VerifyResult {
         if !is_aida_initialized(workspace) {
             return VerifyResult::Pending("complete exercise 01 first".into());

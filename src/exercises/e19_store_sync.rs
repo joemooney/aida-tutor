@@ -18,6 +18,22 @@ impl Exercise for E {
          code commit is paired with a store SHA; `aida push --dry-run` shows the two legs \
          (code branch + orphan store) that a real `aida push` ships together."
     }
+    // trace:STORY-20 | ai:claude
+    fn hint_more(&self) -> Option<&'static str> {
+        Some(
+            "1. Run any `aida add` — every capture auto-commits to the orphan branch.\n\
+             2. `git log aida-store --oneline` — watch your capture land as a commit.\n\
+             3. `aida store status` shows your code paired with a store SHA."
+        )
+    }
+    // trace:STORY-20 | ai:claude
+    fn hint_solution(&self) -> Option<&'static str> {
+        Some(
+            "aida add --type functional --status approved --priority medium --title \"Sync the orphan store on every push\"\n\
+             git log aida-store --oneline\n\
+             aida store status"
+        )
+    }
     fn verify(&self, workspace: &Path) -> VerifyResult {
         if !is_aida_initialized(workspace) {
             return VerifyResult::Pending("complete exercise 01 first".into());

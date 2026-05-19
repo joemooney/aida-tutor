@@ -17,6 +17,12 @@ pub struct Progress {
     /// can diverge if exercises are added later — the user keeps credit).
     #[serde(default)]
     pub completed: Vec<u32>,
+    /// Exercise ids whose learner reached for `aida-tutor hint --solution`
+    /// before completing them. A completed exercise in this set renders as
+    /// "completed-with-solution" instead of a clean "completed".
+    /// trace:STORY-20 | ai:claude
+    #[serde(default)]
+    pub solution_used: Vec<u32>,
 }
 
 impl Progress {
@@ -52,6 +58,21 @@ impl Progress {
         }
         if id > self.completed_through {
             self.completed_through = id;
+        }
+    }
+
+    /// True if the learner viewed `hint --solution` for this exercise
+    /// while it was still open. trace:STORY-20 | ai:claude
+    pub fn used_solution(&self, id: u32) -> bool {
+        self.solution_used.contains(&id)
+    }
+
+    /// Record that the learner viewed the literal solution for `id`.
+    /// Idempotent — recording twice is a no-op. trace:STORY-20 | ai:claude
+    pub fn record_solution_used(&mut self, id: u32) {
+        if !self.solution_used.contains(&id) {
+            self.solution_used.push(id);
+            self.solution_used.sort_unstable();
         }
     }
 

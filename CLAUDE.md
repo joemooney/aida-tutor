@@ -71,15 +71,14 @@ The tutor's AIDA store has STORY-1..17 (one per exercise) — all are
 `approved` or `completed` depending on whether the verifier exists.
 EPIC-1 (CLI v0) and EPIC-2 (Tutorial Exercises) are the umbrellas.
 
+**Shipped CLI polish** — `aida-tutor watch` (STORY-18, auto-re-run verify
+on `workspace/` changes), `aida-tutor demo` (STORY-19, non-interactive CI
+walkthrough), and three-depth hints (STORY-20): `hint` → `hint --more`
+(multi-step nudge) → `hint --solution` (the literal command), with
+`--solution` use recorded as `completed-with-solution` in progress.
+
 **Next-up backlog ideas** — file as new stories when picking them up:
 
-- **`aida-tutor watch`** — auto-re-run verify on `workspace/` changes
-  (similar to rustlings' watch). Inotify on Linux, polling fallback.
-- **`aida-tutor demo`** — non-interactive: run all exercises in order
-  via subprocess, verify each, exit non-zero on any pending. Useful in CI.
-- **Hint depth levels** — current hint is one paragraph. A `--more`
-  flag could surface a multi-step nudge before showing the final
-  "here's the literal command" escape valve.
 - **More exercises** — `aida history`, sessions + cross-project queue
   routing. Relationships shipped as 25–26 (STORY-26); roles + the
   producer/consumer queue as 21–24 (STORY-27); sessions + worktrees as

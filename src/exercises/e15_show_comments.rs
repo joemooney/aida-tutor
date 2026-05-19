@@ -15,6 +15,18 @@ impl Exercise for E {
          timestamp + content. This is what survives in the audit log when teammates ask 'when did we \
          decide that?' six months later."
     }
+    // trace:STORY-20 | ai:claude
+    fn hint_more(&self) -> Option<&'static str> {
+        Some(
+            "1. FR-1 picked up a comment in exercise 14.\n\
+             2. Run `aida show FR-1` with the `--comments` flag.\n\
+             3. Each comment shows author, timestamp and body."
+        )
+    }
+    // trace:STORY-20 | ai:claude
+    fn hint_solution(&self) -> Option<&'static str> {
+        Some("aida show FR-1 --comments")
+    }
     fn verify(&self, workspace: &Path) -> VerifyResult {
         if !is_aida_initialized(workspace) {
             return VerifyResult::Pending("complete exercise 01 first".into());

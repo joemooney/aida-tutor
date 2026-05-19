@@ -26,6 +26,22 @@ impl Exercise for E {
          (`VerifiedBy`) on the target. Capture a feature and a task, note both IDs, then run \
          `aida rel add <TASK-ID> <FR-ID> --type verifies --bidirectional`."
     }
+    // trace:STORY-20 | ai:claude
+    fn hint_more(&self) -> Option<&'static str> {
+        Some(
+            "1. Capture a feature titled \"...feature under test\" and a task titled \"...verifying task\".\n\
+             2. Note both ids.\n\
+             3. Link them: `aida rel add <task-id> <feature-id> --type verifies --bidirectional`."
+        )
+    }
+    // trace:STORY-20 | ai:claude
+    fn hint_solution(&self) -> Option<&'static str> {
+        Some(
+            "aida add --type functional --status approved --title \"Relationships demo: feature under test\"\n\
+             aida add --type task --status approved --title \"Relationships demo: verifying task\"\n\
+             aida rel add <TASK-ID> <FR-ID> --type verifies --bidirectional"
+        )
+    }
     fn verify(&self, workspace: &Path) -> VerifyResult {
         if !is_aida_initialized(workspace) {
             return VerifyResult::Pending("complete exercise 01 first".into());

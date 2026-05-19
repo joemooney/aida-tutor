@@ -22,6 +22,21 @@ impl Exercise for E {
          `aida session show <id>` on it. Both are read-only — they inspect, they don't change \
          anything."
     }
+    // trace:STORY-20 | ai:claude
+    fn hint_more(&self) -> Option<&'static str> {
+        Some(
+            "1. Run `aida session leases` — it lists every active session; find yours.\n\
+             2. Run `aida session show <id>` to drill into that one.\n\
+             3. Both commands are read-only — they inspect, they don't change anything."
+        )
+    }
+    // trace:STORY-20 | ai:claude
+    fn hint_solution(&self) -> Option<&'static str> {
+        Some(
+            "aida session leases\n\
+             aida session show <SESSION-ID>              # <SESSION-ID> from the leases list"
+        )
+    }
     fn verify(&self, workspace: &Path) -> VerifyResult {
         if !is_aida_initialized(workspace) {
             return VerifyResult::Pending("complete exercise 01 first".into());

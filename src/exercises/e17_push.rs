@@ -15,6 +15,18 @@ impl Exercise for E {
          skip notes — one for the code leg, one for the store leg. With an `origin` configured, both \
          legs run. The single command saves you from forgetting `aida db sync --push` after `git push`."
     }
+    // trace:STORY-20 | ai:claude
+    fn hint_more(&self) -> Option<&'static str> {
+        Some(
+            "1. From `workspace/`, run `aida push`.\n\
+             2. With no `origin` remote you'll see two skip notes — expected for this tutorial.\n\
+             3. The single command ships code + store together when a remote does exist."
+        )
+    }
+    // trace:STORY-20 | ai:claude
+    fn hint_solution(&self) -> Option<&'static str> {
+        Some("aida push")
+    }
     fn verify(&self, workspace: &Path) -> VerifyResult {
         if !is_aida_initialized(workspace) {
             return VerifyResult::Pending("complete exercise 01 first".into());

@@ -14,6 +14,18 @@ impl Exercise for E {
         "Inside the workspace/ directory, run a command that bootstraps an AIDA store. \
          You'll know it worked when `.aida-store/` and `.aida/config.toml` appear."
     }
+    // trace:STORY-20 | ai:claude
+    fn hint_more(&self) -> Option<&'static str> {
+        Some(
+            "1. Open a shell and `cd` into the `workspace/` directory.\n\
+             2. Run AIDA's one-word bootstrap subcommand — the one that scaffolds a new store.\n\
+             3. Confirm `.aida-store/` and `.aida/config.toml` now exist, then `aida-tutor verify`."
+        )
+    }
+    // trace:STORY-20 | ai:claude
+    fn hint_solution(&self) -> Option<&'static str> {
+        Some("aida init")
+    }
     fn verify(&self, workspace: &Path) -> VerifyResult {
         if !workspace.exists() {
             return VerifyResult::Pending(

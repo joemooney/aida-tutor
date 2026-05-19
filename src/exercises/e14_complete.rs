@@ -16,6 +16,21 @@ impl Exercise for E {
          2. `aida comment add <FR-id> \"<short note about how it landed>\"`\n\n\
          The comment is what survives in the audit trail — leave context (sha, deferred work, etc.)."
     }
+    // trace:STORY-20 | ai:claude
+    fn hint_more(&self) -> Option<&'static str> {
+        Some(
+            "1. Run `aida edit FR-1 --status completed`.\n\
+             2. Run `aida comment add FR-1 \"<note on how it landed>\"`.\n\
+             3. `aida show FR-1 --comments` confirms both."
+        )
+    }
+    // trace:STORY-20 | ai:claude
+    fn hint_solution(&self) -> Option<&'static str> {
+        Some(
+            "aida edit FR-1 --status completed\n\
+             aida comment add FR-1 \"Landed via the tutor walkthrough.\""
+        )
+    }
     fn verify(&self, workspace: &Path) -> VerifyResult {
         if !is_aida_initialized(workspace) {
             return VerifyResult::Pending("complete exercise 01 first".into());
