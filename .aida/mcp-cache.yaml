@@ -825,13 +825,35 @@ requirements:
   agreed_id: STORY-24
   title: Exercise content review pass — voice, length, accuracy
   description: 'All 17 content/*.md files were drafted in one sitting. Sweep for: voice consistency (some are more terse than others), length normalization (currently 30-100 lines), accuracy against current AIDA behavior (test each tip works), and remove anything that''s actually for AIDA contributors not learners.'
-  status: Approved
+  status: Done
   priority: Medium
   owner: ''
   feature: Uncategorized
   created_at: 2026-05-09T22:30:36.380590195Z
-  modified_at: 2026-05-09T22:30:36.380590195Z
+  modified_at: 2026-05-19T03:47:40.573540842Z
   req_type: Story
+  relationships:
+  - rel_type: !Custom implemented-by
+    target_id: 019e3e58-ab47-73e2-8f9b-6008c02ac15e
+    created_at: 2026-05-19T03:47:40.573532377Z
+    created_by: joe
+  comments:
+  - id: 019e3e58-a45b-7983-bced-8e035a51f2fa
+    author: joe
+    content: |-
+      Implemented via PR-10 (commit 9c073e5):
+
+      - Content accuracy sweep of exercises 01-17. Fixed per-type numbering in 07-list (VIS-1/PRIN-1/ADR-1/FR-1/BUG-1, not one shared counter), the /aida-pickup queue description in 05-feature + 09-in-progress, the aida-status section list in 16-status (now lists all nine sections), and a Joe-specific node id in 01-init.
+      - Replaced 16-status's contributor-only --no-dev-context tip with a learner-useful --short/--queue/--ci tip.
+
+      Voice + length checked and found already consistent (files 33-57 lines) — no churn-only edits.
+      Test status: cargo build --release clean; all 5 accuracy claims verified against the live aida CLI.
+    created_at: 2026-05-19T03:47:37.179765796Z
+    modified_at: 2026-05-19T03:47:37.179765796Z
+  implementation_info:
+    implemented: true
+    implemented_at: 2026-05-19T03:45:47.029956506Z
+    implemented_by: joe
 - id: 019e0ed2-13ab-7ee3-a430-37b4a9e849a5
   spec_id: STORY-3
   agreed_id: STORY-3
@@ -1340,6 +1362,37 @@ requirements:
     implemented: false
     completed_at: 2026-05-19T03:15:20.452948506Z
     completion_sha: 3436838988c5309901cad87b4193584a95d2b2c4
+- id: 019e3e58-ab47-73e2-8f9b-6008c02ac15e
+  spec_id: STORY-44
+  agreed_id: STORY-44
+  title: 'Review PR-10: [AI:claude] docs(tutor): content review pass — numbering, pickup, status (STORY-24)'
+  description: |
+    Auto-filed by `aida pr auto-queue-review` (typically from /aida-pr) (session `019e3e4f`) for branch `story-24`.
+
+    - PR: <https://github.com/joemooney/aida-tutor/pull/10>
+    - Branch: `story-24` → `master`
+
+    ## Covers
+
+    - STORY-24
+
+    ## Acceptance
+
+    - Generate a structured review prompt with `aida review prompt --pr 10` and verify each spec's acceptance criteria.
+    - Approve and merge, or request changes by spec id.
+    - Mark this story `completed` once the PR is merged.
+  status: Approved
+  priority: Medium
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-19T03:47:38.951912548Z
+  modified_at: 2026-05-19T03:47:39.688514635Z
+  req_type: Story
+  relationships:
+  - rel_type: !Custom implements
+    target_id: 019e0edd-2c5c-7dd3-acfd-14cd5a3acd65
+    created_at: 2026-05-19T03:47:39.688508591Z
+    created_by: joe
 - id: 019e10a8-c7fc-72d3-8171-192adceea067
   spec_id: STORY-28
   agreed_id: STORY-28
