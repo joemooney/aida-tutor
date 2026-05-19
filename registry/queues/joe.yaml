@@ -109,3 +109,10 @@
   note: auto-queued by `aida pr` (019e3de2); covers 1 spec
   added_at: 2026-05-19T01:54:47.664749478Z
   for_role: reviewer
+- user_id: joe
+  requirement_id: 019e3bbb-c1ad-7b90-b728-4389b1f1e6ff
+  position: 9223372036854775807
+  added_by: joe
+  note: 'Follow-up backlog: parse_requirement_yaml exits comments/relationships block on a blank line — re-add the !trimmed.is_empty() guard.'
+  added_at: 2026-05-19T15:48:04.698050171Z
+  for_role: implementer
