@@ -1,0 +1,26 @@
+id: 019e3e47-d2ba-7c60-b8ec-045863dcdf94
+spec_id: STORY-43
+agreed_id: STORY-43
+title: 'Review PR-9: [AI:claude] feat(tutor): invocation-logging wrapper for verifier rigor (STORY-22)'
+description: |
+  Auto-filed by `aida pr auto-queue-review` (typically from /aida-pr) (session `019e3e3b`) for branch `story-22`.
+
+  - PR: <https://github.com/joemooney/aida-tutor/pull/9>
+  - Branch: `story-22` → `master`
+
+  ## Covers
+
+  - STORY-22
+
+  ## Acceptance
+
+  - Generate a structured review prompt with `aida review prompt --pr 9` and verify each spec's acceptance criteria.
+  - Approve and merge, or request changes by spec id.
+  - Mark this story `completed` once the PR is merged.
+status: Approved
+priority: Medium
+owner: ''
+feature: Uncategorized
+created_at: 2026-05-19T03:29:14.938802794Z
+modified_at: 2026-05-19T03:29:14.938802794Z
+req_type: Story
