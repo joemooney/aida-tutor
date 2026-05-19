@@ -23,7 +23,7 @@ priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-18T03:18:10.974909989Z
-modified_at: 2026-05-19T14:47:26.918645081Z
+modified_at: 2026-05-19T15:03:54.459566126Z
 req_type: Epic
 relationships:
 - rel_type: Parent
@@ -52,3 +52,8 @@ comments:
   content: 'Owner approved starting the build, 2026-05-19. Routed to implementer. Build the WHOLE thin slice as ONE branch / ONE PR — it is cohesive and small (''days not weeks'' per the handoff), and this session showed that fragmenting cluster work across branches/PRs causes tangles. Follow docs/plans/2026-05-18-first-contact-onboarding-slice.md build order: STORY-31 (scratch project + ''onboard'' entry point) -> STORY-32 (6-8 step content) -> STORY-33 (on-disk verifiers) -> STORY-34 (wow payoff + Act-II signpost). TASK-2 (moderated human test) is NOT build work — it is the post-build gate (AC-6). Build to AC-1: the cold-start shared-memory wow.'
   created_at: 2026-05-19T14:41:09.740191681Z
   modified_at: 2026-05-19T14:41:09.740191681Z
+- id: 019e40c3-cd5b-7c20-b6bb-9c5c0b3677b0
+  author: joe
+  content: Commit 6ba3c09 references this requirement
+  created_at: 2026-05-19T15:03:54.459566126Z
+  modified_at: 2026-05-19T15:03:54.459566126Z
