@@ -22,10 +22,10 @@ Combine them.
 ## What to do
 
 From `workspace/`, run `aida list`. You should see five rows — one per
-type — with globally-sequential numbers: VIS-1, PRIN-2, ADR-3, FR-4,
-BUG-5 (one shared counter, prefix tells you the type). The display
-order is most-recently-modified first, so you'll likely see BUG at top
-and VIS at bottom.
+type: VIS-1, PRIN-1, ADR-1, FR-1, BUG-1. Each type has its own counter
+starting at 1, so the prefix tells you the type and the number is the
+nth-of-that-type. The display order is most-recently-modified first, so
+you'll likely see BUG at top and VIS at bottom.
 
 ## Tip
 

@@ -10,9 +10,9 @@ eventually corresponds to (a) a chunk of code and (b) trace comments
 linking that code back to this FR.
 
 FRs are status-tracked: `approved` → `in-progress` → `completed`. The
-status moves as work happens. AIDA's `/aida-pickup` slash command picks
-the highest-priority `approved` FR off the queue when a developer or
-agent says "what should I do next?".
+status moves as work happens. AIDA's `/aida-pickup` slash command pulls
+the next requirement off your work queue when a developer or agent says
+"what should I do next?".
 
 ## What to do
 
