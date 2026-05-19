@@ -970,18 +970,28 @@ requirements:
     - Generate a structured review prompt with `aida review prompt --pr 5` and verify each spec's acceptance criteria.
     - Approve and merge, or request changes by spec id.
     - Mark this story `completed` once the PR is merged.
-  status: Approved
+  status: Completed
   priority: Medium
   owner: ''
   feature: Uncategorized
   created_at: 2026-05-18T15:56:01.051052330Z
-  modified_at: 2026-05-18T15:56:01.807533471Z
+  modified_at: 2026-05-18T16:04:48.379100809Z
   req_type: Story
   relationships:
   - rel_type: !Custom implements
     target_id: 019e10a8-c7fc-72d3-8171-192adceea067
     created_at: 2026-05-18T15:56:01.807527069Z
     created_by: joe
+  comments:
+  - id: 019e3bd5-327b-7362-bfc9-c416c8ead902
+    author: aida-auto-bump
+    content: 'Auto-completed: PR #5 merged without a re-review iteration — the review story was left at In Progress.'
+    created_at: 2026-05-18T16:04:48.379071709Z
+    modified_at: 2026-05-18T16:04:48.379071709Z
+  implementation_info:
+    implemented: false
+    completed_at: 2026-05-18T16:04:48.359729336Z
+    completion_sha: c0b88f19e5eee996f47de59fb046e4ec3dc5add3
 - id: 019e39b1-375c-7861-b079-c344cd82d725
   spec_id: STORY-36
   agreed_id: STORY-36
@@ -1160,12 +1170,12 @@ requirements:
     - **eXX session-list-and-show** (optional): demonstrate `aida session leases` and `aida session show <id>` (the latter ships in STORY-68)
 
     Verifiers inspect: `git worktree list` output, `.aida/sessions/` contents, lease toml.
-  status: Done
+  status: Completed
   priority: Medium
   owner: ''
   feature: Uncategorized
   created_at: 2026-05-10T06:52:37.244051073Z
-  modified_at: 2026-05-18T15:56:02.795575827Z
+  modified_at: 2026-05-18T16:04:48.359729336Z
   req_type: Story
   relationships:
   - rel_type: Child
@@ -1204,6 +1214,8 @@ requirements:
     implemented: true
     implemented_at: 2026-05-18T15:54:42.606474364Z
     implemented_by: joe
+    completed_at: 2026-05-18T16:04:48.359729336Z
+    completion_sha: c0b88f19e5eee996f47de59fb046e4ec3dc5add3
 - id: 019e0edd-1fac-72d2-b3c3-0b05f7744ecb
   spec_id: STORY-19
   agreed_id: STORY-19
