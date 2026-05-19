@@ -981,12 +981,12 @@ requirements:
   agreed_id: STORY-20
   title: 'Multi-level hints: --more, --solution escape valves'
   description: 'Current hint is one paragraph. Add: `aida-tutor hint --more` for a multi-step nudge (concrete steps, less direct than the command) and `aida-tutor hint --solution` for the literal command (last resort). Persist whether a learner used --solution so it shows up in their progress as ''completed-with-solution'' vs ''completed''.'
-  status: Done
+  status: Completed
   priority: Medium
   owner: ''
   feature: Uncategorized
   created_at: 2026-05-09T22:30:33.797545295Z
-  modified_at: 2026-05-19T03:07:07.404045196Z
+  modified_at: 2026-05-19T03:15:20.452948506Z
   req_type: Story
   relationships:
   - rel_type: !Custom implemented-by
@@ -1010,6 +1010,8 @@ requirements:
     implemented: true
     implemented_at: 2026-05-19T03:04:50.894602346Z
     implemented_by: joe
+    completed_at: 2026-05-19T03:15:20.452948506Z
+    completion_sha: 3436838988c5309901cad87b4193584a95d2b2c4
 - id: 019e0ed2-33dd-75c2-8a85-adbecdd7ef7a
   spec_id: STORY-12
   agreed_id: STORY-12
@@ -1316,18 +1318,28 @@ requirements:
     - Generate a structured review prompt with `aida review prompt --pr 8` and verify each spec's acceptance criteria.
     - Approve and merge, or request changes by spec id.
     - Mark this story `completed` once the PR is merged.
-  status: Approved
+  status: Completed
   priority: Medium
   owner: ''
   feature: Uncategorized
   created_at: 2026-05-19T03:07:05.710267252Z
-  modified_at: 2026-05-19T03:07:06.387908863Z
+  modified_at: 2026-05-19T03:15:20.467760592Z
   req_type: Story
   relationships:
   - rel_type: !Custom implements
     target_id: 019e0edd-2245-7a91-bd43-5cca5b7d11b7
     created_at: 2026-05-19T03:07:06.387891878Z
     created_by: joe
+  comments:
+  - id: 019e3e3b-1713-77a2-9ec5-427195153793
+    author: aida-auto-bump
+    content: 'Auto-completed: PR #8 merged without a re-review iteration — the review story was left at In Progress.'
+    created_at: 2026-05-19T03:15:20.467716784Z
+    modified_at: 2026-05-19T03:15:20.467716784Z
+  implementation_info:
+    implemented: false
+    completed_at: 2026-05-19T03:15:20.452948506Z
+    completion_sha: 3436838988c5309901cad87b4193584a95d2b2c4
 - id: 019e10a8-c7fc-72d3-8171-192adceea067
   spec_id: STORY-28
   agreed_id: STORY-28
