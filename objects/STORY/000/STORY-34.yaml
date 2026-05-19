@@ -3,12 +3,12 @@ spec_id: STORY-34
 agreed_id: STORY-34
 title: 'Onboarding slice: the wow payoff + Act-II signpost'
 description: 'The content + display for steps 5-7: the ''aida show <SPEC>'' reveal framed as linkage that assembled itself (not hand-maintained); the cold-agent step that dramatizes the cold-start contrast (a fresh session answering from the AIDA graph over MCP); and exactly ONE forward-signpost paragraph naming the agent-collaboration layer (queue/roles/orchestrator) as ''Act II, coming when it settles'' — pointing forward WITHOUT teaching the volatile layer. The wow is the cold-start contrast, not ''I tracked a requirement.'' Owns AC-4; load-bearing for AC-1.'
-status: Approved
+status: Done
 priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-18T03:18:43.315343242Z
-modified_at: 2026-05-19T15:04:19.876626641Z
+modified_at: 2026-05-19T15:04:24.016067424Z
 req_type: Story
 relationships:
 - rel_type: Child
