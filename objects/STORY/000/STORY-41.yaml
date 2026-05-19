@@ -17,15 +17,25 @@ description: |
   - Generate a structured review prompt with `aida review prompt --pr 7` and verify each spec's acceptance criteria.
   - Approve and merge, or request changes by spec id.
   - Mark this story `completed` once the PR is merged.
-status: InProgress
+status: Completed
 priority: Medium
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-19T02:40:28.861735368Z
-modified_at: 2026-05-19T02:44:54.107652583Z
+modified_at: 2026-05-19T14:29:21.640114191Z
 req_type: Story
 relationships:
 - rel_type: !Custom implements
   target_id: 019e10a8-e18e-79e0-8aa7-8652636258f6
   created_at: 2026-05-19T02:40:29.555910859Z
   created_by: joe
+comments:
+- id: 019e40a4-2c68-75a0-b796-d7a883f7a39c
+  author: aida-auto-bump
+  content: 'Auto-completed: PR #7 merged without a re-review iteration — the review story was left at In Progress.'
+  created_at: 2026-05-19T14:29:21.640085653Z
+  modified_at: 2026-05-19T14:29:21.640085653Z
+implementation_info:
+  implemented: false
+  completed_at: 2026-05-19T14:29:21.619408597Z
+  completion_sha: 94fb3faacbfe7b969476dab37197ea2a4fb472d5
