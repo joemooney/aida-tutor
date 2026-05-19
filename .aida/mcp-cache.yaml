@@ -981,13 +981,35 @@ requirements:
   agreed_id: STORY-20
   title: 'Multi-level hints: --more, --solution escape valves'
   description: 'Current hint is one paragraph. Add: `aida-tutor hint --more` for a multi-step nudge (concrete steps, less direct than the command) and `aida-tutor hint --solution` for the literal command (last resort). Persist whether a learner used --solution so it shows up in their progress as ''completed-with-solution'' vs ''completed''.'
-  status: Approved
+  status: Done
   priority: Medium
   owner: ''
   feature: Uncategorized
   created_at: 2026-05-09T22:30:33.797545295Z
-  modified_at: 2026-05-09T22:30:33.797545295Z
+  modified_at: 2026-05-19T03:07:07.404045196Z
   req_type: Story
+  relationships:
+  - rel_type: !Custom implemented-by
+    target_id: 019e3e33-8a6e-75d3-996b-07fea3599eba
+    created_at: 2026-05-19T03:07:07.404035994Z
+    created_by: joe
+  comments:
+  - id: 019e3e33-81a9-7bb0-8323-142b5ddb78b6
+    author: joe
+    content: |-
+      Implemented via PR-8 (commit 80019d6): https://github.com/joemooney/aida-tutor/pull/8
+
+      - hint becomes a 3-rung ladder: hint -> hint --more (multi-step) -> hint --solution (literal command); --more/--solution mutually exclusive
+      - new Exercise::hint_more / hint_solution trait methods, content filled for all 32 exercises (--solution mirrors each demo())
+      - Progress gains a solution_used set; completions render as completed-with-solution vs completed in list + progress
+
+      Test status: aida-tutor demo 32/32 green; cargo build --release clean
+    created_at: 2026-05-19T03:07:03.465943925Z
+    modified_at: 2026-05-19T03:07:03.465943925Z
+  implementation_info:
+    implemented: true
+    implemented_at: 2026-05-19T03:04:50.894602346Z
+    implemented_by: joe
 - id: 019e0ed2-33dd-75c2-8a85-adbecdd7ef7a
   spec_id: STORY-12
   agreed_id: STORY-12
@@ -1275,6 +1297,37 @@ requirements:
     implemented_by: joe
     completed_at: 2026-05-18T06:16:30.153600523Z
     completion_sha: 1bc397d4f051f69bc574e9b471e3df5c9695c38c
+- id: 019e3e33-8a6e-75d3-996b-07fea3599eba
+  spec_id: STORY-42
+  agreed_id: STORY-42
+  title: 'Review PR-8: feat(tutor): multi-level hints --more/--solution (STORY-20)'
+  description: |
+    Auto-filed by `aida pr auto-queue-review` (typically from /aida-pr) (session `019e3e24`) for branch `story-20`.
+
+    - PR: <https://github.com/joemooney/aida-tutor/pull/8>
+    - Branch: `story-20` → `master`
+
+    ## Covers
+
+    - STORY-20
+
+    ## Acceptance
+
+    - Generate a structured review prompt with `aida review prompt --pr 8` and verify each spec's acceptance criteria.
+    - Approve and merge, or request changes by spec id.
+    - Mark this story `completed` once the PR is merged.
+  status: Approved
+  priority: Medium
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-19T03:07:05.710267252Z
+  modified_at: 2026-05-19T03:07:06.387908863Z
+  req_type: Story
+  relationships:
+  - rel_type: !Custom implements
+    target_id: 019e0edd-2245-7a91-bd43-5cca5b7d11b7
+    created_at: 2026-05-19T03:07:06.387891878Z
+    created_by: joe
 - id: 019e10a8-c7fc-72d3-8171-192adceea067
   spec_id: STORY-28
   agreed_id: STORY-28
