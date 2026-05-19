@@ -1,4 +1,12 @@
 - user_id: joe
+  requirement_id: 019e3917-551e-71b3-9214-4bdd105a6121
+  position: 9223372036854766807
+  added_by: joe
+  note: Onboarding slice — owner-approved 2026-05-19. ONE branch / ONE PR for the whole slice. Build order + acceptance in docs/plans/2026-05-18-first-contact-onboarding-slice.md and EPIC-5 AC-1..AC-6. TASK-2 is the post-build human-test gate, not build work.
+  added_at: 2026-05-19T14:41:10.723880860Z
+  for_role: implementer
+  for_scope: EPIC-5
+- user_id: joe
   requirement_id: 019e3911-9432-72b2-bed4-19521eac3397
   position: 9223372036854767807
   added_by: joe
