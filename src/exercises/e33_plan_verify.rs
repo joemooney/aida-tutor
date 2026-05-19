@@ -50,8 +50,15 @@ impl Exercise for E {
             let Ok(content) = std::fs::read_to_string(path) else {
                 continue;
             };
+            // Match each required section as an h2 heading LINE, not a
+            // bare substring: `lc.contains("## critical files")` is also
+            // true for an h3 `### Critical Files`, which `aida plan verify`
+            // rejects (it wants h2). trace:STORY-30
             let lc = content.to_lowercase();
-            if REQUIRED_SECTIONS.iter().all(|s| lc.contains(s)) {
+            if REQUIRED_SECTIONS
+                .iter()
+                .all(|s| lc.lines().any(|l| l.trim_start().starts_with(s)))
+            {
                 return VerifyResult::Pass;
             }
         }

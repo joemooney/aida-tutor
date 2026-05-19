@@ -595,10 +595,13 @@ pub fn invoked(workspace: &Path, subcommand: &str, with: &[&str]) -> Option<bool
     }))
 }
 
-/// Every `*.md` file under `workspace/docs/plans/`. AIDA archives
-/// implementation plans there; `aida plan verify` lints them against the
-/// structured template. Returns empty vec when the directory is absent.
-/// trace:STORY-30 | ai:claude
+/// Every learner-authored `*.md` plan under `workspace/docs/plans/`. AIDA
+/// archives implementation plans there; `aida plan verify` lints them
+/// against the structured template. The `_`-prefixed template
+/// (`_TEMPLATE.md`, scaffolded by `aida init`) is excluded: it already
+/// carries every required section, so counting it would let the
+/// plan-verify exercise pass before the learner writes a real plan.
+/// Returns empty vec when the directory is absent. trace:STORY-30 | ai:claude
 pub fn plan_files(workspace: &Path) -> Vec<std::path::PathBuf> {
     let dir = workspace.join("docs").join("plans");
     let mut out = Vec::new();
@@ -607,9 +610,20 @@ pub fn plan_files(workspace: &Path) -> Vec<std::path::PathBuf> {
     };
     for entry in read_dir.filter_map(Result::ok) {
         let path = entry.path();
-        if path.extension().and_then(|s| s.to_str()) == Some("md") {
-            out.push(path);
+        if path.extension().and_then(|s| s.to_str()) != Some("md") {
+            continue;
         }
+        // Skip `_`-prefixed scaffolding (`_TEMPLATE.md`) — only a
+        // learner-authored plan should satisfy the exercise. trace:STORY-30
+        let underscore_prefixed = path
+            .file_name()
+            .and_then(|n| n.to_str())
+            .map(|n| n.starts_with('_'))
+            .unwrap_or(false);
+        if underscore_prefixed {
+            continue;
+        }
+        out.push(path);
     }
     out.sort();
     out
