@@ -1,0 +1,26 @@
+id: 019e40c6-c1e1-7e01-8445-edcc6e91d9a3
+spec_id: STORY-45
+agreed_id: STORY-45
+title: 'Review PR-11: feat(tutor): first-contact onboarding slice (EPIC-5)'
+description: |
+  Auto-filed by `aida pr auto-queue-review` (typically from /aida-pr) (session `019e40b4`) for branch `epic-5`.
+
+  - PR: <https://github.com/joemooney/aida-tutor/pull/11>
+  - Branch: `epic-5` → `master`
+
+  ## Covers
+
+  - EPIC-5
+
+  ## Acceptance
+
+  - Generate a structured review prompt with `aida review prompt --pr 11` and verify each spec's acceptance criteria.
+  - Approve and merge, or request changes by spec id.
+  - Mark this story `completed` once the PR is merged.
+status: Approved
+priority: Medium
+owner: ''
+feature: Uncategorized
+created_at: 2026-05-19T15:07:08.129205874Z
+modified_at: 2026-05-19T15:07:08.129205874Z
+req_type: Story
