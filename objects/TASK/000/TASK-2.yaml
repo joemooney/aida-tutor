@@ -3,12 +3,12 @@ spec_id: TASK-2
 agreed_id: TASK-2
 title: Moderated human-test protocol for the wow (AC-1 gate)
 description: 'Write the moderated-test script that gates further investment (AC-6): the exact small real task to hand 1-2 first-time AIDA users, the observation rubric, and the pass/fail call. PASS = a majority of testers, UNPROMPTED, articulate that the project itself now holds the memory and a fresh agent can read it. FAIL signal = a tester who only says ''nice, it tracked my requirement'' (the floor reaction). Calibrate the wow''s one-line framing from what testers actually say. This task''s output is run AFTER the slice is built and BEFORE any Act II / restructure investment.'
-status: Approved
+status: InProgress
 priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-18T03:18:46.003426633Z
-modified_at: 2026-05-19T15:48:02.476409961Z
+modified_at: 2026-05-19T16:34:41.413495344Z
 req_type: Task
 relationships:
 - rel_type: Child
