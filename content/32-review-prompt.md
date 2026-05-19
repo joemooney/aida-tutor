@@ -57,9 +57,7 @@ offline workspace. `--write` works there too.
 
 ## What's next
 
-That's the last exercise — and the whole tour. You've walked AIDA end
-to end: `init`, capture, trace comments, AIDA-format commits, the
-distributed orphan store, roles and the producer/consumer queue, the
-requirement graph, scoped sessions with worktrees, and now commit
-pairing and the review workflow. Run `aida-tutor progress` to see
-32/32. Go capture your own project's first requirement.
+Exercise 33 opens the final cluster — AIDA's *maintenance and
+integration* surface: linting an implementation plan with `aida plan
+verify`, auditing the store's health, and the MCP bridge that connects
+AIDA to an AI agent.

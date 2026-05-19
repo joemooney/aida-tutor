@@ -100,7 +100,7 @@ fn main() -> Result<()> {
     // workspace bootstrapped → print a 6-line orientation instead of
     // jumping straight into exercise 1. trace:STORY-23 | ai:claude
     if cli.command.is_none() && prog.completed.is_empty() && !workspace.exists() {
-        cmd_welcome();
+        cmd_welcome(exercises.len());
         return Ok(());
     }
 
@@ -836,15 +836,15 @@ fn render_md_for_terminal(md: &str) -> String {
     out
 }
 
-fn cmd_welcome() {
+fn cmd_welcome(total: usize) {
     // trace:STORY-23 | ai:claude
     println!("{}", "Welcome to aida-tutor".cyan().bold());
     println!();
-    println!("30 hands-on exercises that walk you through AIDA's daily workflow:");
+    println!("{total} hands-on exercises that walk you through AIDA's daily workflow:");
     println!("  init → capture (vision/principle/decision/feature/bug) → list/show →");
     println!("  edit → trace + commit → docs build → search → status → push →");
     println!("  distributed store → roles + queue → relationships →");
-    println!("  sessions + worktrees.");
+    println!("  sessions + worktrees → code review → plans + store audit + MCP.");
     println!();
     println!(
         "First, make sure {} is on your PATH (run `aida --version` in another shell).",

@@ -44,6 +44,10 @@ mod e30_session_end;
 // Cluster 5 — code review + commit pairing. trace:STORY-29 | ai:claude
 mod e31_commit_pair_trailer;
 mod e32_review_prompt;
+// Cluster 6 — plans + store maintenance + MCP. trace:STORY-30 | ai:claude
+mod e33_plan_verify;
+mod e34_store_audit;
+mod e35_mcp_serve;
 
 pub fn all() -> Vec<Box<dyn Exercise>> {
     vec![
@@ -79,5 +83,8 @@ pub fn all() -> Vec<Box<dyn Exercise>> {
         Box::new(e30_session_end::E),
         Box::new(e31_commit_pair_trailer::E),
         Box::new(e32_review_prompt::E),
+        Box::new(e33_plan_verify::E),
+        Box::new(e34_store_audit::E),
+        Box::new(e35_mcp_serve::E),
     ]
 }

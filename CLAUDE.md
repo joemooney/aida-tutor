@@ -84,19 +84,25 @@ Verifier rigor below).
 - **More exercises** — `aida history`, sessions + cross-project queue
   routing. Relationships shipped as 25–26 (STORY-26); roles + the
   producer/consumer queue as 21–24 (STORY-27); sessions + worktrees as
-  27–30 (STORY-28); code review + commit pairing as 31–32 (STORY-29).
-  The `aida review prompt --pr` form is taught in 32's content but not
-  verified — the PR-driven path needs `gh`/`glab` + a real forge remote,
-  out of reach for the offline workspace.
+  27–30 (STORY-28); code review + commit pairing as 31–32 (STORY-29);
+  plans + maintenance + MCP as 33–35 (STORY-30). The `aida review
+  prompt --pr` form is taught in 32's content but not verified — the
+  PR-driven path needs `gh`/`glab` + a real forge remote, out of reach
+  for the offline workspace.
 - **Verifier rigor** — `aida-tutor wrapper` (STORY-22) installs an
   optional workspace-local `aida` shim that logs every invocation to
   `.aida-tutor-invocations.log`; once it's first on `PATH` the read-only
   exercises 7, 8, 13, 15, 16 and 17 verify the command actually ran
   rather than passing on prerequisite state alone. Off by default,
-  wiped by `reset`. Remaining gap: exercise 29 (`session leases`/`show`)
-  still passes on prerequisite state — `verify_invocation`'s
-  single-token subcommand match doesn't yet cover the two-level `aida
-  session ...` form.
+  wiped by `reset`. Remaining gap: exercises 29 (`session leases`/`show`)
+  and 34 (`aida db info`/`db check` audit — leaves no on-disk trace)
+  still pass on prerequisite state; `verify_invocation`'s single-token
+  subcommand match doesn't yet cover the two-level `aida session ...`
+  form.
+- **Counter-scope migration** — STORY-30's original sketch included an
+  `aida config numbering` exercise, dropped because `aida config` is
+  "not supported for git backend" (the default mode) as of AIDA 0.7.0.
+  Worth an exercise once that command works on the git-canonical store.
 
 ## Important conventions
 
