@@ -554,12 +554,12 @@ requirements:
     NON-GOALS (decided, do not pull in): the full Act II restructure; the aida invocation-recording shim that would close the e08-e17 read-only verifier gap; rewriting/renumbering the 17 existing exercises; full framing re-anchor of README/cmd_welcome/CLAUDE.md (only minimal discoverability changes are in scope).
 
     Source: docs/2026-05-18-advisor-handoff.md, docs/plans/2026-05-18-aida-tutor-audit.md, plan docs/plans/2026-05-18-first-contact-onboarding-slice.md.
-  status: Approved
+  status: Done
   priority: High
   owner: ''
   feature: Uncategorized
   created_at: 2026-05-18T03:18:10.974909989Z
-  modified_at: 2026-05-19T14:41:09.740191681Z
+  modified_at: 2026-05-19T15:07:09.644131404Z
   req_type: Epic
   relationships:
   - rel_type: Parent
@@ -577,6 +577,10 @@ requirements:
   - rel_type: Parent
     target_id: 019e3917-ddf3-7d81-8dbf-7b1e505002d5
     created_at: 2026-05-18T03:18:46.666744145Z
+  - rel_type: !Custom implemented-by
+    target_id: 019e40c6-c1e1-7e01-8445-edcc6e91d9a3
+    created_at: 2026-05-19T15:07:09.644124888Z
+    created_by: joe
   comments:
   - id: 019e3919-9eb5-7f03-9568-2aae9fb25658
     author: joe
@@ -588,6 +592,44 @@ requirements:
     content: 'Owner approved starting the build, 2026-05-19. Routed to implementer. Build the WHOLE thin slice as ONE branch / ONE PR — it is cohesive and small (''days not weeks'' per the handoff), and this session showed that fragmenting cluster work across branches/PRs causes tangles. Follow docs/plans/2026-05-18-first-contact-onboarding-slice.md build order: STORY-31 (scratch project + ''onboard'' entry point) -> STORY-32 (6-8 step content) -> STORY-33 (on-disk verifiers) -> STORY-34 (wow payoff + Act-II signpost). TASK-2 (moderated human test) is NOT build work — it is the post-build gate (AC-6). Build to AC-1: the cold-start shared-memory wow.'
     created_at: 2026-05-19T14:41:09.740191681Z
     modified_at: 2026-05-19T14:41:09.740191681Z
+  - id: 019e40c3-cd5b-7c20-b6bb-9c5c0b3677b0
+    author: joe
+    content: Commit 6ba3c09 references this requirement
+    created_at: 2026-05-19T15:03:54.459566126Z
+    modified_at: 2026-05-19T15:03:54.459566126Z
+  - id: 019e40c4-5d30-7193-9a1f-6745a92adf4c
+    author: joe
+    content: 'Slice built end-to-end on branch epic-5 (commit 6ba3c09). `aida-tutor onboard` drives the round trip — verified by hand: aida init → FR-1 captured → trace comment → linking commit → status flip → `aida show FR-1` renders the spec/commit/file linkage cleanly. All 35 existing exercises still pass (demo). AC-1 (the wow landing) remains gated on TASK-2''s moderated human test — not run as part of this build.'
+    created_at: 2026-05-19T15:04:31.280783894Z
+    modified_at: 2026-05-19T15:04:31.280783894Z
+  - id: 019e40c4-72ed-7200-a108-d0eabc901e12
+    author: joe
+    content: |-
+      [aida:followups] extracted from docs/plans/2026-05-18-first-contact-onboarding-slice.md
+      filed 0 task(s)
+      declined 5:
+        - The full "Act II" agent-collaboration restructure (queue/roles/sessions/
+        - The `aida` invocation-recording verifier shim that closes the e08–e17
+        - Fix the 4 drifted Act-I exercises the audit flagged (ex.5, 7, 8, 14, 16)
+        - The ex.14 `done` vs `completed` concept fix (belongs at the Act I/II seam)
+        - Full framing re-anchor of README / `cmd_welcome()` / CLAUDE.md narrative
+    created_at: 2026-05-19T15:04:36.845426211Z
+    modified_at: 2026-05-19T15:04:36.845426211Z
+  - id: 019e40c5-fbf6-7203-b6ee-93f2468880c2
+    author: joe
+    content: |-
+      Opening PR from branch epic-5 (commit 6ba3c09):
+
+      - new `aida-tutor onboard` slice — 8 step files, scratch greet CLI, 5 on-disk checkpoints
+      - STORY-31/32/33/34 all Done; TASK-2 (moderated human test) stays the post-build AC-1 gate
+
+      Test status: 8/8 unit tests green; all 35 existing exercises pass (aida-tutor demo)
+    created_at: 2026-05-19T15:06:17.462371123Z
+    modified_at: 2026-05-19T15:06:17.462371123Z
+  implementation_info:
+    implemented: true
+    implemented_at: 2026-05-19T15:04:36.749530713Z
+    implemented_by: joe
 - id: 019e0edd-0e98-7ab1-8192-c13a1baa3acc
   spec_id: EPIC-3
   agreed_id: EPIC-3
@@ -1004,17 +1046,23 @@ requirements:
   agreed_id: STORY-31
   title: 'Onboarding slice: scratch project + entry point'
   description: 'Ship the tiny REAL stub project the learner works on during the slice (a ~20-line CLI in a language most devs read on sight — Python is the default for lowest setup friction) and the way the slice is launched. Add an ''onboard'' entry point to aida-tutor (new Cmd variant in src/main.rs alongside List/Show/Verify) so the slice is a distinct first-contact path, separate from the 17-exercise track. Minimal discoverability only: cmd_welcome() at src/main.rs:524 gains one line pointing at ''aida-tutor onboard''. NOT a full framing re-anchor (out of scope per EPIC-5 non-goals). The stub project lives under workspace/ semantics (gitignored, reset-safe). trace target: EPIC-5.'
-  status: Approved
+  status: Done
   priority: High
   owner: ''
   feature: Uncategorized
   created_at: 2026-05-18T03:18:35.468112100Z
-  modified_at: 2026-05-18T03:18:35.468112100Z
+  modified_at: 2026-05-19T15:04:21.066795235Z
   req_type: Story
   relationships:
   - rel_type: Child
     target_id: 019e3917-551e-71b3-9214-4bdd105a6121
     created_at: 2026-05-18T03:18:36.071800549Z
+  comments:
+  - id: 019e40c4-23e0-76e0-9e6c-689b5ab0c20f
+    author: joe
+    content: 'Shipped: src/onboarding.rs seeds workspace/ from content/onboarding/scratch-template (Python greet CLI); new `aida-tutor onboard` command + one cmd_welcome() discoverability line. Commit 6ba3c09.'
+    created_at: 2026-05-19T15:04:16.608781719Z
+    modified_at: 2026-05-19T15:04:16.608781719Z
 - id: 019e0edd-2245-7a91-bd43-5cca5b7d11b7
   spec_id: STORY-20
   agreed_id: STORY-20
@@ -1068,17 +1116,23 @@ requirements:
   agreed_id: STORY-33
   title: 'Onboarding slice: on-disk round-trip verifiers'
   description: 'Verifiers for the slice''s state-changing checkpoints, reusing the existing src/verify.rs read-only inspection model and the Exercise trait (slug/title/verify/hint): spec file created in .aida-store, // trace:<SPEC> comment present in the scratch code, commit subject references the SPEC, status flip observed. Explicitly does NOT build the aida invocation-recording shim — the read-only steps (aida show, the cold-agent query) are the experiential payoff, observed in the human test, not Rust-verified. Owns AC-5.'
-  status: Approved
+  status: Done
   priority: Medium
   owner: ''
   feature: Uncategorized
   created_at: 2026-05-18T03:18:40.697284487Z
-  modified_at: 2026-05-18T03:18:40.697284487Z
+  modified_at: 2026-05-19T15:04:23.134414888Z
   req_type: Story
   relationships:
   - rel_type: Child
     target_id: 019e3917-551e-71b3-9214-4bdd105a6121
     created_at: 2026-05-18T03:18:41.330124463Z
+  comments:
+  - id: 019e40c4-2b15-71d0-9ec8-03f368f1c685
+    author: joe
+    content: 'Shipped: 5 on-disk checkpoints in onboarding.rs (init/spec/trace/commit/status), reusing verify.rs; added verify::commit_subject_references. 5 named unit tests pass. No invocation shim. Commit 6ba3c09.'
+    created_at: 2026-05-19T15:04:18.453386797Z
+    modified_at: 2026-05-19T15:04:18.453386797Z
 - id: 019e0ed2-3f20-7530-9fea-e55f72be970b
   spec_id: STORY-16
   agreed_id: STORY-16
@@ -1275,6 +1329,37 @@ requirements:
   created_at: 2026-05-09T22:18:33.222401027Z
   modified_at: 2026-05-09T22:29:50.555014411Z
   req_type: Story
+- id: 019e40c6-c1e1-7e01-8445-edcc6e91d9a3
+  spec_id: STORY-45
+  agreed_id: STORY-45
+  title: 'Review PR-11: feat(tutor): first-contact onboarding slice (EPIC-5)'
+  description: |
+    Auto-filed by `aida pr auto-queue-review` (typically from /aida-pr) (session `019e40b4`) for branch `epic-5`.
+
+    - PR: <https://github.com/joemooney/aida-tutor/pull/11>
+    - Branch: `epic-5` → `master`
+
+    ## Covers
+
+    - EPIC-5
+
+    ## Acceptance
+
+    - Generate a structured review prompt with `aida review prompt --pr 11` and verify each spec's acceptance criteria.
+    - Approve and merge, or request changes by spec id.
+    - Mark this story `completed` once the PR is merged.
+  status: Approved
+  priority: Medium
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-19T15:07:08.129205874Z
+  modified_at: 2026-05-19T15:07:08.738624073Z
+  req_type: Story
+  relationships:
+  - rel_type: !Custom implements
+    target_id: 019e3917-551e-71b3-9214-4bdd105a6121
+    created_at: 2026-05-19T15:07:08.738612243Z
+    created_by: joe
 - id: 019e0ed2-18e4-7803-b7a0-a66172fc3e07
   spec_id: STORY-4
   agreed_id: STORY-4
@@ -1696,17 +1781,23 @@ requirements:
   agreed_id: STORY-34
   title: 'Onboarding slice: the wow payoff + Act-II signpost'
   description: 'The content + display for steps 5-7: the ''aida show <SPEC>'' reveal framed as linkage that assembled itself (not hand-maintained); the cold-agent step that dramatizes the cold-start contrast (a fresh session answering from the AIDA graph over MCP); and exactly ONE forward-signpost paragraph naming the agent-collaboration layer (queue/roles/orchestrator) as ''Act II, coming when it settles'' — pointing forward WITHOUT teaching the volatile layer. The wow is the cold-start contrast, not ''I tracked a requirement.'' Owns AC-4; load-bearing for AC-1.'
-  status: Approved
+  status: Done
   priority: High
   owner: ''
   feature: Uncategorized
   created_at: 2026-05-18T03:18:43.315343242Z
-  modified_at: 2026-05-18T03:18:43.315343242Z
+  modified_at: 2026-05-19T15:04:24.016067424Z
   req_type: Story
   relationships:
   - rel_type: Child
     target_id: 019e3917-551e-71b3-9214-4bdd105a6121
     created_at: 2026-05-18T03:18:43.953474219Z
+  comments:
+  - id: 019e40c4-30a4-7741-abd1-4db676ec1416
+    author: joe
+    content: 'Shipped: content/onboarding/05-reveal,06-cold-agent,07-signpost — the aida show reveal, the cold-agent wow, one Act-II signpost paragraph. Commit 6ba3c09.'
+    created_at: 2026-05-19T15:04:19.876626641Z
+    modified_at: 2026-05-19T15:04:19.876626641Z
 - id: 019e0ed2-2748-73f1-96af-dddc29bf1928
   spec_id: STORY-8
   agreed_id: STORY-8
@@ -1795,17 +1886,23 @@ requirements:
   agreed_id: STORY-32
   title: 'Onboarding slice: the 6-8 step content'
   description: 'Write the onboarding content (markdown, content/onboarding/ NN-slug.md mirroring the existing content/ convention). Step arc: (0) why-you''re-here screen — ''AIDA gives your project a memory your coding agent can read; you''ll feel it in 15 min''; (1) aida init the scratch project; (2) capture one real intent as a spec — aida add / or /aida-req — yields FR-1; (3) hand FR-1 to the agent, it implements + writes the // trace:FR-1 comment; (4) commit with the linking message; (5) THE REVEAL — aida show FR-1; (6) THE WOW — fresh/cold agent answers about the feature from the graph; (7) the forward signpost paragraph. ~15 min total, no AIDA knowledge assumed beyond ''you use a coding agent.'' Owns AC-2.'
-  status: Approved
+  status: Done
   priority: High
   owner: ''
   feature: Uncategorized
   created_at: 2026-05-18T03:18:37.919154302Z
-  modified_at: 2026-05-18T03:18:37.919154302Z
+  modified_at: 2026-05-19T15:04:22.103895139Z
   req_type: Story
   relationships:
   - rel_type: Child
     target_id: 019e3917-551e-71b3-9214-4bdd105a6121
     created_at: 2026-05-18T03:18:38.800541147Z
+  comments:
+  - id: 019e40c4-275d-7220-a4ae-8702fdfc8011
+    author: joe
+    content: 'Shipped: content/onboarding/00..04 — the why-screen + init/capture/implement/commit steps. 8 step files, 6 rendered screens. Commit 6ba3c09.'
+    created_at: 2026-05-19T15:04:17.501646808Z
+    modified_at: 2026-05-19T15:04:17.501646808Z
 - id: 019e3928-8e27-7300-9544-0a33ae277e90
   spec_id: STORY-35
   agreed_id: STORY-35
