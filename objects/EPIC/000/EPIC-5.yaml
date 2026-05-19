@@ -18,12 +18,12 @@ description: |-
   NON-GOALS (decided, do not pull in): the full Act II restructure; the aida invocation-recording shim that would close the e08-e17 read-only verifier gap; rewriting/renumbering the 17 existing exercises; full framing re-anchor of README/cmd_welcome/CLAUDE.md (only minimal discoverability changes are in scope).
 
   Source: docs/2026-05-18-advisor-handoff.md, docs/plans/2026-05-18-aida-tutor-audit.md, plan docs/plans/2026-05-18-first-contact-onboarding-slice.md.
-status: Approved
+status: InProgress
 priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-18T03:18:10.974909989Z
-modified_at: 2026-05-19T14:41:09.740191681Z
+modified_at: 2026-05-19T14:47:26.918645081Z
 req_type: Epic
 relationships:
 - rel_type: Parent
