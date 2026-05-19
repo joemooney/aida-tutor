@@ -1,0 +1,26 @@
+id: 019e3df1-4f03-75b2-8a38-e650d8ad1723
+spec_id: STORY-40
+agreed_id: STORY-40
+title: 'Review PR-6: feat(tutor): code review + commit pairing exercises 31-32 (STORY-29)'
+description: |
+  Auto-filed by `aida pr auto-queue-review` (typically from /aida-pr) (session `019e3de2`) for branch `epic-4-3`.
+
+  - PR: <https://github.com/joemooney/aida-tutor/pull/6>
+  - Branch: `epic-4-3` → `master`
+
+  ## Covers
+
+  - STORY-29
+
+  ## Acceptance
+
+  - Generate a structured review prompt with `aida review prompt --pr 6` and verify each spec's acceptance criteria.
+  - Approve and merge, or request changes by spec id.
+  - Mark this story `completed` once the PR is merged.
+status: Approved
+priority: Medium
+owner: ''
+feature: Uncategorized
+created_at: 2026-05-19T01:54:45.123755768Z
+modified_at: 2026-05-19T01:54:45.123755768Z
+req_type: Story
