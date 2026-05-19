@@ -27,6 +27,13 @@
   added_at: 2026-05-19T03:07:08.452822722Z
   for_role: reviewer
 - user_id: joe
+  requirement_id: 019e3e47-d2ba-7c60-b8ec-045863dcdf94
+  position: 9223372036854771807
+  added_by: joe
+  note: auto-queued by `aida pr` (019e3e3b); covers 1 spec
+  added_at: 2026-05-19T03:29:17.623417918Z
+  for_role: reviewer
+- user_id: joe
   requirement_id: 019e0edd-1fac-72d2-b3c3-0b05f7744ecb
   position: 9223372036854775807
   added_by: joe
