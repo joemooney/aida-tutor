@@ -3,6 +3,7 @@
 
 mod exercise;
 mod exercises;
+mod onboarding;
 mod progress;
 mod verify;
 
@@ -83,6 +84,15 @@ enum Cmd {
         #[arg(long)]
         uninstall: bool,
     },
+    /// Run the first-contact onboarding slice — a 15-minute guided tour of
+    /// the AIDA round trip (capture → trace → commit → `aida show`), built
+    /// only on the stable surface. A separate path from the 35-exercise
+    /// track; self-paced, re-run it to advance. trace:EPIC-5 | ai:claude
+    Onboard {
+        /// Wipe workspace/ and restart the tour from step 1.
+        #[arg(long)]
+        reset: bool,
+    },
 }
 
 fn main() -> Result<()> {
@@ -116,6 +126,7 @@ fn main() -> Result<()> {
         Cmd::Watch { interval_ms } => cmd_watch(&exercises, &workspace, &repo_root, &mut prog, interval_ms),
         Cmd::Demo => cmd_demo(&exercises, &workspace),
         Cmd::Wrapper { uninstall } => cmd_wrapper(&workspace, uninstall),
+        Cmd::Onboard { reset } => onboarding::run(&workspace, &repo_root, reset),
     }
 }
 
@@ -803,7 +814,8 @@ fn find_tutor_root(start: &Path) -> Option<PathBuf> {
 /// - Inline `` `backticks` `` → cyan
 /// Everything else passes through unchanged. Not a full markdown
 /// renderer — pulls just enough to make commands visually prominent.
-fn render_md_for_terminal(md: &str) -> String {
+/// Shared with the onboarding slice (`onboarding.rs`). trace:EPIC-5
+pub(crate) fn render_md_for_terminal(md: &str) -> String {
     let inline_re = regex::Regex::new(r"`([^`]+)`").unwrap();
     let mut out = String::new();
     let mut in_fence = false;
@@ -845,6 +857,16 @@ fn cmd_welcome(total: usize) {
     println!("  edit → trace + commit → docs build → search → status → push →");
     println!("  distributed store → roles + queue → relationships →");
     println!("  sessions + worktrees → code review → plans + store audit + MCP.");
+    println!();
+    // One discoverability line for the first-contact onboarding slice —
+    // the recommended starting point for someone new to AIDA.
+    // trace:STORY-31 | ai:claude
+    println!(
+        "{}",
+        "New to AIDA? `aida-tutor onboard` is a 15-minute guided tour — start there."
+            .cyan()
+            .bold()
+    );
     println!();
     println!(
         "First, make sure {} is on your PATH (run `aida --version` in another shell).",
