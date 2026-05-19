@@ -11,12 +11,12 @@ description: |
   - **eXX mcp-serve**: `aida mcp-serve` in background, exercise asks learner to query via MCP client (or via `claude` with `.mcp.json`) — harder to verify automatically; may be a "manual" exercise with an instructed `aida-tutor verify --self-check` flag
 
   This cluster is lowest-priority because it's the most "advanced/admin" — most learners reach it after they've internalized the daily-use loop.
-status: Approved
+status: InProgress
 priority: Low
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-10T06:52:43.790093199Z
-modified_at: 2026-05-10T06:53:33.476239556Z
+modified_at: 2026-05-19T02:24:30.437804403Z
 req_type: Story
 relationships:
 - rel_type: Child
