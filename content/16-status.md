@@ -5,8 +5,14 @@ Read the project pulse with one command.
 ## Why
 
 `aida status` is the most informative single command in AIDA. It
-pulls together everything important about a project's state:
+answers "where am I, what changed, what needs my attention" in one
+screen. Depending on what's set up, you'll see some or all of:
 
+- **Session** — the active scoped session covering this directory
+  (id, scope, role, worktree) — covered in exercises 27-30
+- **Branch** — current branch, dirty state, ahead/behind origin
+- **PR / CI** — open pull request for the branch + check status
+- **Queue** — items routed to your active role — covered in 21-24
 - **Project** — name, mode, store path
 - **Requirements** — count by status (Approved/InProgress/Completed/...)
 - **Cache** — freshness (FRESH = good; STALE/MISSING = run
@@ -18,8 +24,10 @@ pulls together everything important about a project's state:
 - **Scaffolding** — whether AIDA-owned files match embedded templates,
   separately surfaced from user customizations to CLAUDE.md/AGENTS.md
 
-This is the command you run at the start of a session: "where am I,
-what changed since last time, what needs my attention."
+Each section graceful-degrades: when there's nothing to report (no
+session yet, no open PR, empty queue) it stays quiet. Early in this
+tutorial you'll see the bottom half of that list — the session and
+queue sections fill in once you reach those exercises.
 
 Inside Claude Code, the `/aida-status` slash command runs the same
 output and helps the model orient before you give your next instruction.
@@ -30,11 +38,10 @@ From `workspace/`, run `aida status`. Read all the sections.
 
 ## Tip
 
-`aida status` ends with a "AIDA development context" section ONLY when
-you're inside the AIDA repo itself (it shows binary version, release
-readiness, template symlink health). For your own projects that section
-is hidden by default — pass `--no-dev-context` to suppress it explicitly,
-or it just won't appear.
+`aida status --short` collapses everything into a one-line readout —
+role, scope, branch — for a quick "where am I" without the full screen.
+`--queue` and `--ci` zoom in on a single section, and `--json` emits
+the whole thing machine-readably.
 
 ## Verify
 

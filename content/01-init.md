@@ -28,9 +28,11 @@ In a shell, `cd` into the `workspace/` directory and run `aida init`.
 
 ## What you'll see
 
-A line for the orphan branch creation, a line for `metadata.yaml`, and
-either an "acquired node id JM" line (if you have `~/.aida/preferences.toml`
-set up with a preferred node id) or just a quiet skip message. Either is fine.
+A line for the orphan branch creation, a line for `metadata.yaml`, an
+"acquired node id" line (the short id AIDA picks for you — from
+`~/.aida/preferences.toml` if you've set a preferred one, otherwise
+derived for you), and a final `AIDA initialized ✓`. The exact node id
+doesn't matter — the verifier only checks the store exists.
 
 ## Verify
 
