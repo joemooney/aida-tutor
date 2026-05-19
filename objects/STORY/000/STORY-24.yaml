@@ -3,10 +3,10 @@ spec_id: STORY-24
 agreed_id: STORY-24
 title: Exercise content review pass — voice, length, accuracy
 description: 'All 17 content/*.md files were drafted in one sitting. Sweep for: voice consistency (some are more terse than others), length normalization (currently 30-100 lines), accuracy against current AIDA behavior (test each tip works), and remove anything that''s actually for AIDA contributors not learners.'
-status: Approved
+status: InProgress
 priority: Medium
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-09T22:30:36.380590195Z
-modified_at: 2026-05-09T22:30:36.380590195Z
+modified_at: 2026-05-19T03:38:37.314384026Z
 req_type: Story
