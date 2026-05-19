@@ -18,12 +18,12 @@ description: |-
   NON-GOALS (decided, do not pull in): the full Act II restructure; the aida invocation-recording shim that would close the e08-e17 read-only verifier gap; rewriting/renumbering the 17 existing exercises; full framing re-anchor of README/cmd_welcome/CLAUDE.md (only minimal discoverability changes are in scope).
 
   Source: docs/2026-05-18-advisor-handoff.md, docs/plans/2026-05-18-aida-tutor-audit.md, plan docs/plans/2026-05-18-first-contact-onboarding-slice.md.
-status: InProgress
+status: Done
 priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-18T03:18:10.974909989Z
-modified_at: 2026-05-19T15:04:31.280783894Z
+modified_at: 2026-05-19T15:04:36.749530713Z
 req_type: Epic
 relationships:
 - rel_type: Parent
@@ -62,3 +62,7 @@ comments:
   content: 'Slice built end-to-end on branch epic-5 (commit 6ba3c09). `aida-tutor onboard` drives the round trip — verified by hand: aida init → FR-1 captured → trace comment → linking commit → status flip → `aida show FR-1` renders the spec/commit/file linkage cleanly. All 35 existing exercises still pass (demo). AC-1 (the wow landing) remains gated on TASK-2''s moderated human test — not run as part of this build.'
   created_at: 2026-05-19T15:04:31.280783894Z
   modified_at: 2026-05-19T15:04:31.280783894Z
+implementation_info:
+  implemented: true
+  implemented_at: 2026-05-19T15:04:36.749530713Z
+  implemented_by: joe
