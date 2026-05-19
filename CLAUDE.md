@@ -73,9 +73,11 @@ EPIC-1 (CLI v0) and EPIC-2 (Tutorial Exercises) are the umbrellas.
 
 **Shipped CLI polish** — `aida-tutor watch` (STORY-18, auto-re-run verify
 on `workspace/` changes), `aida-tutor demo` (STORY-19, non-interactive CI
-walkthrough), and three-depth hints (STORY-20): `hint` → `hint --more`
+walkthrough), three-depth hints (STORY-20): `hint` → `hint --more`
 (multi-step nudge) → `hint --solution` (the literal command), with
-`--solution` use recorded as `completed-with-solution` in progress.
+`--solution` use recorded as `completed-with-solution` in progress, and
+`aida-tutor wrapper` (STORY-22, opt-in invocation-logging shim — see
+Verifier rigor below).
 
 **Next-up backlog ideas** — file as new stories when picking them up:
 
@@ -86,10 +88,15 @@ walkthrough), and three-depth hints (STORY-20): `hint` → `hint --more`
   The `aida review prompt --pr` form is taught in 32's content but not
   verified — the PR-driven path needs `gh`/`glab` + a real forge remote,
   out of reach for the offline workspace.
-- **Verifier rigor** — exercises 7, 8, 13, 15, 16, 17, 29 currently pass
-  on prerequisite state alone (we can't tell whether the user actually
-  ran a read-only command). A workspace-level `aida` wrapper that
-  records invocations could close that gap.
+- **Verifier rigor** — `aida-tutor wrapper` (STORY-22) installs an
+  optional workspace-local `aida` shim that logs every invocation to
+  `.aida-tutor-invocations.log`; once it's first on `PATH` the read-only
+  exercises 7, 8, 13, 15, 16 and 17 verify the command actually ran
+  rather than passing on prerequisite state alone. Off by default,
+  wiped by `reset`. Remaining gap: exercise 29 (`session leases`/`show`)
+  still passes on prerequisite state — `verify_invocation`'s
+  single-token subcommand match doesn't yet cover the two-level `aida
+  session ...` form.
 
 ## Important conventions
 

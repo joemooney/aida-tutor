@@ -102,6 +102,37 @@ pub fn demo_session_lease(
         .with_context(|| format!("demo: no `aida session` lease on branch {branch:?}"))
 }
 
+/// Verifier-side rigor gate for the read-only exercises (STORY-22).
+///
+/// `aida list`, `show`, `search`, `status` and `push` leave no on-disk
+/// trace, so their verifiers historically passed on prerequisite state
+/// alone — they couldn't tell whether the learner actually ran the
+/// command. When the learner opts into the invocation-logging wrapper
+/// (`aida-tutor wrapper`) we *can* tell, so hold them to it:
+///
+/// - wrapper not installed (`invoked` → `None`) → opt-in is off; the
+///   caller's prerequisite checks already passed, so this is a clean
+///   [`VerifyResult::Pass`];
+/// - wrapper installed and `aida <subcommand> [with...]` was logged →
+///   `Pass`;
+/// - wrapper installed but the command never ran → `Pending(nudge)`.
+///
+/// Callers run their prerequisite checks first and end with this.
+/// trace:STORY-22 | ai:claude
+pub fn verify_invocation(
+    workspace: &Path,
+    subcommand: &str,
+    with: &[&str],
+    nudge: &str,
+) -> VerifyResult {
+    match crate::verify::invoked(workspace, subcommand, with) {
+        Some(false) => VerifyResult::Pending(nudge.to_string()),
+        // Some(true) → command ran; None → wrapper not installed, the
+        // caller's prerequisite state stands.
+        _ => VerifyResult::Pass,
+    }
+}
+
 /// Run `program args...` with `workspace` as the working directory,
 /// capturing output so demo logs stay quiet on success. Errors (with the
 /// captured stdout/stderr) if the process can't spawn or exits non-zero.
