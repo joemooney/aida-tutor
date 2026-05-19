@@ -8,9 +8,15 @@ priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-18T03:18:37.919154302Z
-modified_at: 2026-05-18T03:18:37.919154302Z
+modified_at: 2026-05-19T15:04:17.501646808Z
 req_type: Story
 relationships:
 - rel_type: Child
   target_id: 019e3917-551e-71b3-9214-4bdd105a6121
   created_at: 2026-05-18T03:18:38.800541147Z
+comments:
+- id: 019e40c4-275d-7220-a4ae-8702fdfc8011
+  author: joe
+  content: 'Shipped: content/onboarding/00..04 — the why-screen + init/capture/implement/commit steps. 8 step files, 6 rendered screens. Commit 6ba3c09.'
+  created_at: 2026-05-19T15:04:17.501646808Z
+  modified_at: 2026-05-19T15:04:17.501646808Z
