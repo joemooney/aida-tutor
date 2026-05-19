@@ -116,3 +116,9 @@
   note: 'Follow-up backlog: parse_requirement_yaml exits comments/relationships block on a blank line — re-add the !trimmed.is_empty() guard.'
   added_at: 2026-05-19T15:48:04.698050171Z
   for_role: implementer
+- user_id: joe
+  requirement_id: 019e3917-551e-71b3-9214-4bdd105a6121
+  position: 9223372036854775807
+  added_by: joe
+  added_at: 2026-05-19T16:06:59.570082797Z
+  for_role: implementer
