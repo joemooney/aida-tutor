@@ -1082,6 +1082,37 @@ requirements:
     implemented_by: joe
     completed_at: 2026-05-18T06:48:47.349404678Z
     completion_sha: b4addb264847f10d2322e025917b84fac6dd7944
+- id: 019e3df1-4f03-75b2-8a38-e650d8ad1723
+  spec_id: STORY-40
+  agreed_id: STORY-40
+  title: 'Review PR-6: feat(tutor): code review + commit pairing exercises 31-32 (STORY-29)'
+  description: |
+    Auto-filed by `aida pr auto-queue-review` (typically from /aida-pr) (session `019e3de2`) for branch `epic-4-3`.
+
+    - PR: <https://github.com/joemooney/aida-tutor/pull/6>
+    - Branch: `epic-4-3` → `master`
+
+    ## Covers
+
+    - STORY-29
+
+    ## Acceptance
+
+    - Generate a structured review prompt with `aida review prompt --pr 6` and verify each spec's acceptance criteria.
+    - Approve and merge, or request changes by spec id.
+    - Mark this story `completed` once the PR is merged.
+  status: Approved
+  priority: Medium
+  owner: ''
+  feature: Uncategorized
+  created_at: 2026-05-19T01:54:45.123755768Z
+  modified_at: 2026-05-19T01:54:45.754940728Z
+  req_type: Story
+  relationships:
+  - rel_type: !Custom implements
+    target_id: 019e10a8-d777-79f3-af29-fc569524bc1e
+    created_at: 2026-05-19T01:54:45.754928497Z
+    created_by: joe
 - id: 019e0ed2-2386-76b3-8927-53781f7b5a63
   spec_id: STORY-7
   agreed_id: STORY-7
@@ -1364,18 +1395,45 @@ requirements:
     - **eXX review-prompt-pr**: `gh pr create` (mock or real), `aida review prompt --pr 1` → verify it pulls all linked specs and emits a review brief
 
     Note: the `--pr` exercise needs `gh` available. Mark as optional or scaffold a fake-gh wrapper for the workspace.
-  status: Approved
+  status: Done
   priority: Medium
   owner: ''
   feature: Uncategorized
   created_at: 2026-05-10T06:52:41.207540256Z
-  modified_at: 2026-05-10T06:53:29.129004947Z
+  modified_at: 2026-05-19T01:54:46.730771337Z
   req_type: Story
   relationships:
   - rel_type: Child
     target_id: 019e10a8-a6e6-7060-a1fd-612e294cbb55
     created_at: 2026-05-10T06:53:29.128989124Z
     created_by: joe
+  - rel_type: !Custom implemented-by
+    target_id: 019e3df1-4f03-75b2-8a38-e650d8ad1723
+    created_at: 2026-05-19T01:54:46.730763071Z
+    created_by: joe
+  comments:
+  - id: 019e3dec-1118-77d0-83d9-547cbe9caee9
+    author: joe
+    content: 'Shipped as 2 verified exercises (31 commit-pair-trailer, 32 review-prompt) rather than 3. The ''review-prompt-pr'' candidate was dropped as a separate verified exercise: aida review prompt --pr needs gh/glab + a real forge remote, and the no-forge fallback (base=main + local pr-N branch) is fragile for an offline CI demo. The --pr form is instead taught in content/32''s Tip section as a variant. e31 reframed: aida init already installs the prepare-commit-msg hook, so the learner observes the auto-added Aida-Store: trailer rather than installing anything. All 32 exercises pass aida-tutor demo.'
+    created_at: 2026-05-19T01:49:01.592591478Z
+    modified_at: 2026-05-19T01:49:01.592591478Z
+  - id: 019e3ded-15af-7972-843b-bd0dea6c93cb
+    author: joe
+    content: |-
+      Implemented via commit a8e34ee (PR pending):
+
+      - e31 commit-pair-trailer + e32 review-prompt added; registered in src/exercises/mod.rs
+      - new verify helper last_commit_message_for_path() inspects the learner's commit, not HEAD
+      - content/30 + CLAUDE.md updated for the 32-exercise count and cluster 5
+
+      Test status: `aida-tutor demo` — 32/32 exercises pass end-to-end
+      Follow-up: `aida review prompt --pr` taught in content/32 as a variant, not verified (needs gh/glab + forge remote)
+    created_at: 2026-05-19T01:50:08.303184481Z
+    modified_at: 2026-05-19T01:50:08.303184481Z
+  implementation_info:
+    implemented: true
+    implemented_at: 2026-05-19T01:48:54.121356577Z
+    implemented_by: joe
 - id: 019e0edd-2487-7f11-af5a-0343c93bfa1a
   spec_id: STORY-21
   agreed_id: STORY-21
