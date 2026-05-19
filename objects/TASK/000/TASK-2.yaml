@@ -8,9 +8,15 @@ priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-18T03:18:46.003426633Z
-modified_at: 2026-05-18T03:18:46.003426633Z
+modified_at: 2026-05-19T15:48:02.476409961Z
 req_type: Task
 relationships:
 - rel_type: Child
   target_id: 019e3917-551e-71b3-9214-4bdd105a6121
   created_at: 2026-05-18T03:18:46.666744145Z
+comments:
+- id: 019e40ec-352c-7ff0-ad61-199870a4d4ca
+  author: joe
+  content: 'Test protocol drafted and committed: docs/2026-05-19-onboarding-human-test.md — recruit, run, AC-1 pass/fail rubric, decision gate. Queued --for dialog (the moderated test is a captain/PO activity, not implementer work). EPIC-5''s slice shipped via PR #11; this test is the unmet AC-6 gate before any Act II investment.'
+  created_at: 2026-05-19T15:48:02.476409961Z
+  modified_at: 2026-05-19T15:48:02.476409961Z
