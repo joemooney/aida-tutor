@@ -1,4 +1,11 @@
 - user_id: joe
+  requirement_id: 019e3917-ddf3-7d81-8dbf-7b1e505002d5
+  position: 9223372036854766807
+  added_by: joe
+  note: 'GATE: moderated human test of the onboarding wow (EPIC-5 AC-1). Run it before any investment beyond the slice. Protocol: docs/2026-05-19-onboarding-human-test.md. Recruit 1-2 real first-time AIDA users; this is a person-in-the-room activity, not an agent task.'
+  added_at: 2026-05-19T15:48:03.421035227Z
+  for_role: dialog
+- user_id: joe
   requirement_id: 019e3911-9432-72b2-bed4-19521eac3397
   position: 9223372036854767807
   added_by: joe
