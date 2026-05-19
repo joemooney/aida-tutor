@@ -595,6 +595,47 @@ pub fn invoked(workspace: &Path, subcommand: &str, with: &[&str]) -> Option<bool
     }))
 }
 
+/// Every `*.md` file under `workspace/docs/plans/`. AIDA archives
+/// implementation plans there; `aida plan verify` lints them against the
+/// structured template. Returns empty vec when the directory is absent.
+/// trace:STORY-30 | ai:claude
+pub fn plan_files(workspace: &Path) -> Vec<std::path::PathBuf> {
+    let dir = workspace.join("docs").join("plans");
+    let mut out = Vec::new();
+    let Ok(read_dir) = std::fs::read_dir(&dir) else {
+        return out;
+    };
+    for entry in read_dir.filter_map(Result::ok) {
+        let path = entry.path();
+        if path.extension().and_then(|s| s.to_str()) == Some("md") {
+            out.push(path);
+        }
+    }
+    out.sort();
+    out
+}
+
+/// Spec ids claimed by more than one requirement in the store, sorted and
+/// deduped. `aida db check --collisions` reports exactly this shape; the
+/// store-audit exercise's verifier runs the same scan independently.
+/// Empty vec for a healthy store. trace:STORY-30 | ai:claude
+pub fn duplicate_spec_ids(workspace: &Path) -> Vec<String> {
+    use std::collections::HashMap;
+    let mut counts: HashMap<String, usize> = HashMap::new();
+    for req in all_requirements(workspace) {
+        if let Some(id) = req.spec_id {
+            *counts.entry(id).or_insert(0) += 1;
+        }
+    }
+    let mut dups: Vec<String> = counts
+        .into_iter()
+        .filter(|(_, n)| *n > 1)
+        .map(|(id, _)| id)
+        .collect();
+    dups.sort();
+    dups
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
