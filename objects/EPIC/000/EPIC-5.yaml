@@ -23,7 +23,7 @@ priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-18T03:18:10.974909989Z
-modified_at: 2026-05-19T15:04:36.841715766Z
+modified_at: 2026-05-19T15:06:17.462371123Z
 req_type: Epic
 relationships:
 - rel_type: Parent
@@ -75,6 +75,17 @@ comments:
       - Full framing re-anchor of README / `cmd_welcome()` / CLAUDE.md narrative
   created_at: 2026-05-19T15:04:36.845426211Z
   modified_at: 2026-05-19T15:04:36.845426211Z
+- id: 019e40c5-fbf6-7203-b6ee-93f2468880c2
+  author: joe
+  content: |-
+    Opening PR from branch epic-5 (commit 6ba3c09):
+
+    - new `aida-tutor onboard` slice — 8 step files, scratch greet CLI, 5 on-disk checkpoints
+    - STORY-31/32/33/34 all Done; TASK-2 (moderated human test) stays the post-build AC-1 gate
+
+    Test status: 8/8 unit tests green; all 35 existing exercises pass (aida-tutor demo)
+  created_at: 2026-05-19T15:06:17.462371123Z
+  modified_at: 2026-05-19T15:06:17.462371123Z
 implementation_info:
   implemented: true
   implemented_at: 2026-05-19T15:04:36.749530713Z
