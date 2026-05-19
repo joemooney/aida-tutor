@@ -32,6 +32,26 @@ and VIS at bottom.
 When the list gets long, lean on filters. `aida list --status approved
 --priority high` is the natural "what should I do next?" query.
 
+## Optional: stricter verification
+
+`aida list` leaves nothing on disk, so this exercise — like the other
+read-only ones (8, 13, 15, 16, 17) — passes once the prerequisite state
+exists, whether or not you actually ran the command.
+
+If you'd like the tutor to hold you to it, install the optional
+invocation-logging wrapper:
+
+```
+aida-tutor wrapper
+```
+
+It drops a tiny `aida` shim into `workspace/.aida-tutor-bin/`; put that
+directory first on your `PATH` and every `aida` call is logged. With the
+wrapper active, these exercises verify you actually ran the command. It
+is off by default — `aida-tutor wrapper --uninstall` (or any `aida-tutor
+reset`) removes it.
+
 ## Verify
 
-`aida-tutor verify` — checks that all five req types now exist.
+`aida-tutor verify` — checks that all five req types now exist (and, if
+the wrapper is installed, that you ran `aida list`).

@@ -1,6 +1,6 @@
 //! Exercise 13 — `aida search`. trace:STORY-13 | ai:claude
 
-use crate::exercise::{run, Exercise, VerifyResult};
+use crate::exercise::{run, verify_invocation, Exercise, VerifyResult};
 use crate::verify::is_aida_initialized;
 use std::path::Path;
 
@@ -31,8 +31,15 @@ impl Exercise for E {
         if !is_aida_initialized(workspace) {
             return VerifyResult::Pending("complete exercise 01 first".into());
         }
-        // Read-only command — pass on prerequisite state.
-        VerifyResult::Pass
+        // Read-only command — see exercise 07: the invocation-logging
+        // wrapper opt-in (`aida-tutor wrapper`) upgrades this to a real
+        // proof-of-execution check. trace:STORY-22 | ai:claude
+        verify_invocation(
+            workspace,
+            "search",
+            &[],
+            "the invocation wrapper is installed but shows no `aida search` yet — run it",
+        )
     }
     fn demo(&self, workspace: &Path) -> anyhow::Result<()> {
         run(workspace, "aida", &["search", "JSON"])

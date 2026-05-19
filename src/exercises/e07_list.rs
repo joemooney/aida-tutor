@@ -1,7 +1,7 @@
 //! Exercise 07 — `aida list` (read-only; we verify via "all 5 types exist").
 //! trace:STORY-7 | ai:claude
 
-use crate::exercise::{run, Exercise, VerifyResult};
+use crate::exercise::{run, verify_invocation, Exercise, VerifyResult};
 use crate::verify::{is_aida_initialized, requirements_with_prefix};
 use std::path::Path;
 
@@ -39,10 +39,17 @@ impl Exercise for E {
                 );
             }
         }
-        // Best-effort: this exercise has no concrete proof-of-execution
-        // beyond "by now you should have run it". Pass once the prerequisite
-        // state exists. trace:PRIN-1 — verifier inspects state, not history.
-        VerifyResult::Pass
+        // Read-only command: with the invocation-logging wrapper opted
+        // in (`aida-tutor wrapper`) require a real `aida list` run;
+        // without it, the 5-type prerequisite above is the best signal
+        // we have. trace:PRIN-1 — verifier inspects state, not history.
+        // trace:STORY-22 | ai:claude
+        verify_invocation(
+            workspace,
+            "list",
+            &[],
+            "all 5 types are present, but the invocation wrapper shows no `aida list` yet — run it",
+        )
     }
     fn demo(&self, workspace: &Path) -> anyhow::Result<()> {
         run(workspace, "aida", &["list"])

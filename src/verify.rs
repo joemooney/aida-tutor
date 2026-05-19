@@ -533,3 +533,124 @@ pub fn session_lease_for_branch(workspace: &Path, branch: &str) -> Option<Sessio
         .into_iter()
         .find(|l| l.branch.as_deref() == Some(branch))
 }
+
+/// One `aida` invocation logged by the optional `aida-tutor wrapper`
+/// script. Each log line is `<rfc3339-utc-timestamp>\t<args>`; the
+/// timestamp column is kept in the file for the learner to read but
+/// dropped here — verifiers only ever ask "was this command run?".
+/// trace:STORY-22 | ai:claude
+#[derive(Debug, Clone)]
+pub struct Invocation {
+    /// The `aida` arguments, whitespace-split (`["show", "FR-1",
+    /// "--comments"]`) — the wrapper's `$*`.
+    pub args: Vec<String>,
+}
+
+/// Read `.aida-tutor-invocations.log` — the record the optional
+/// `aida-tutor wrapper` shim appends to on every `aida` call.
+///
+/// `None` means the wrapper was never installed (no log file): the
+/// learner hasn't opted into invocation tracking, so verifiers fall back
+/// to prerequisite-state checks. `Some(_)` — possibly an empty vec —
+/// means the wrapper is installed. trace:STORY-22 | ai:claude
+pub fn aida_invocations(workspace: &Path) -> Option<Vec<Invocation>> {
+    let content =
+        std::fs::read_to_string(workspace.join(".aida-tutor-invocations.log")).ok()?;
+    let mut out = Vec::new();
+    for line in content.lines() {
+        let line = line.trim_end();
+        if line.is_empty() {
+            continue;
+        }
+        // Drop the leading `<timestamp>\t` column if present.
+        let args = line.split_once('\t').map(|(_, rest)| rest).unwrap_or(line);
+        out.push(Invocation {
+            args: args.split_whitespace().map(str::to_string).collect(),
+        });
+    }
+    Some(out)
+}
+
+/// Tri-state: has the learner run `aida <subcommand>` (with every token
+/// in `with` also present among the args) through the invocation-logging
+/// wrapper?
+///
+/// - `None` — the wrapper isn't installed; the caller can't tell, and
+///   should fall back to prerequisite state.
+/// - `Some(true)` — a matching invocation is logged.
+/// - `Some(false)` — the wrapper is installed but no matching invocation
+///   was logged yet.
+///
+/// The subcommand is matched against the first non-flag argument, so a
+/// global flag before it (`aida --verbose list`) still resolves to
+/// `list`. trace:STORY-22 | ai:claude
+pub fn invoked(workspace: &Path, subcommand: &str, with: &[&str]) -> Option<bool> {
+    let invocations = aida_invocations(workspace)?;
+    Some(invocations.iter().any(|inv| {
+        let resolved = inv.args.iter().find(|a| !a.starts_with('-'));
+        resolved.map(|s| s == subcommand).unwrap_or(false)
+            && with
+                .iter()
+                .all(|want| inv.args.iter().any(|a| a == want))
+    }))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// A throwaway directory under the OS temp dir, unique per call.
+    fn temp_workspace() -> std::path::PathBuf {
+        let uniq = format!(
+            "aida-tutor-test-{}-{}",
+            std::process::id(),
+            std::time::SystemTime::now()
+                .duration_since(std::time::UNIX_EPOCH)
+                .unwrap()
+                .as_nanos()
+        );
+        let dir = std::env::temp_dir().join(uniq);
+        std::fs::create_dir_all(&dir).unwrap();
+        dir
+    }
+
+    #[test]
+    fn no_log_means_opt_in_off() {
+        let ws = temp_workspace();
+        assert!(aida_invocations(&ws).is_none());
+        assert!(invoked(&ws, "list", &[]).is_none());
+        std::fs::remove_dir_all(&ws).ok();
+    }
+
+    #[test]
+    fn empty_log_means_opted_in_but_nothing_run() {
+        let ws = temp_workspace();
+        std::fs::write(ws.join(".aida-tutor-invocations.log"), "").unwrap();
+        assert_eq!(invoked(&ws, "list", &[]), Some(false));
+        std::fs::remove_dir_all(&ws).ok();
+    }
+
+    #[test]
+    fn parses_and_matches_logged_invocations() {
+        let ws = temp_workspace();
+        std::fs::write(
+            ws.join(".aida-tutor-invocations.log"),
+            "2026-05-18T10:00:00Z\tlist\n\
+             2026-05-18T10:01:00Z\tshow FR-1 --comments\n\
+             2026-05-18T10:02:00Z\t--verbose search JSON\n",
+        )
+        .unwrap();
+        // bare subcommand match
+        assert_eq!(invoked(&ws, "list", &[]), Some(true));
+        assert_eq!(invoked(&ws, "show", &[]), Some(true));
+        // `--comments` flag must also be present
+        assert_eq!(invoked(&ws, "show", &["--comments"]), Some(true));
+        // a global flag before the subcommand still resolves
+        assert_eq!(invoked(&ws, "search", &[]), Some(true));
+        // never ran `status`
+        assert_eq!(invoked(&ws, "status", &[]), Some(false));
+        // `list` ran, but never with `--comments`
+        assert_eq!(invoked(&ws, "list", &["--comments"]), Some(false));
+        std::fs::remove_dir_all(&ws).ok();
+    }
+}

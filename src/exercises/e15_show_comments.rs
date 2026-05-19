@@ -1,6 +1,6 @@
 //! Exercise 15 — `aida show <id> --comments`. trace:STORY-15 | ai:claude
 
-use crate::exercise::{demo_spec_id, run, Exercise, VerifyResult};
+use crate::exercise::{demo_spec_id, run, verify_invocation, Exercise, VerifyResult};
 use crate::verify::is_aida_initialized;
 use std::path::Path;
 
@@ -31,7 +31,15 @@ impl Exercise for E {
         if !is_aida_initialized(workspace) {
             return VerifyResult::Pending("complete exercise 01 first".into());
         }
-        VerifyResult::Pass
+        // Read-only command — see exercise 07. The wrapper opt-in here
+        // also checks the `--comments` flag actually appeared, not just
+        // a bare `aida show`. trace:STORY-22 | ai:claude
+        verify_invocation(
+            workspace,
+            "show",
+            &["--comments"],
+            "the invocation wrapper shows no `aida show <id> --comments` yet — run it with --comments",
+        )
     }
     fn demo(&self, workspace: &Path) -> anyhow::Result<()> {
         let fr = demo_spec_id(workspace, "FR")?;
