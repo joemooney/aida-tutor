@@ -15,6 +15,22 @@ impl Exercise for E {
          `[AI:tool] type(scope): description (REQ-ID)` — e.g. `[AI:claude] feat(stub): scaffold (FR-4)`. \
          AIDA's commit-msg hook will validate the format and ✓ when it matches."
     }
+    // trace:STORY-20 | ai:claude
+    fn hint_more(&self) -> Option<&'static str> {
+        Some(
+            "1. `git add` the file you wrote in exercise 10.\n\
+             2. `git commit` with a message shaped `[AI:tool] type(scope): description (REQ-ID)`.\n\
+             3. End it with `(FR-1)` — the commit-msg hook checks the shape."
+        )
+    }
+    // trace:STORY-20 | ai:claude
+    fn hint_solution(&self) -> Option<&'static str> {
+        Some(
+            "# from inside workspace/:\n\
+             git add src\n\
+             git commit -m \"[AI:claude] feat(parser): scaffold JSON parser (FR-1)\""
+        )
+    }
     fn verify(&self, workspace: &Path) -> VerifyResult {
         if !is_aida_initialized(workspace) {
             return VerifyResult::Pending("complete exercise 01 first".into());

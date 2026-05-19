@@ -15,6 +15,18 @@ impl Exercise for E {
          You'll see the title, status, priority, and the full description as readable prose. \
          If you also pass `--comments`, any audit-trail comments appear at the bottom."
     }
+    // trace:STORY-20 | ai:claude
+    fn hint_more(&self) -> Option<&'static str> {
+        Some(
+            "1. Pick any requirement id you've created — `aida list` shows them all.\n\
+             2. Run `aida show` on that id (the feature from exercise 05 is FR-1).\n\
+             3. Add `--comments` to also see the audit trail."
+        )
+    }
+    // trace:STORY-20 | ai:claude
+    fn hint_solution(&self) -> Option<&'static str> {
+        Some("aida show FR-1")
+    }
     fn verify(&self, workspace: &Path) -> VerifyResult {
         if !is_aida_initialized(workspace) {
             return VerifyResult::Pending("complete exercise 01 first".into());

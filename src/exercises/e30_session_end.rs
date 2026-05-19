@@ -21,6 +21,18 @@ impl Exercise for E {
          end it. Afterward `git worktree list` no longer shows the worktree, `aida session \
          leases` is empty — but `git branch` still lists `session-work`."
     }
+    // trace:STORY-20 | ai:claude
+    fn hint_more(&self) -> Option<&'static str> {
+        Some(
+            "1. Run `aida session leases` to find your open session's id.\n\
+             2. Run `aida session end <id>` — pass `--yes` to skip the confirmation.\n\
+             3. The worktree and lease are gone afterward; the `session-work` branch stays."
+        )
+    }
+    // trace:STORY-20 | ai:claude
+    fn hint_solution(&self) -> Option<&'static str> {
+        Some("aida session end <SESSION-ID> --yes")
+    }
     fn verify(&self, workspace: &Path) -> VerifyResult {
         if !is_aida_initialized(workspace) {
             return VerifyResult::Pending("complete exercise 01 first".into());

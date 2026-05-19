@@ -19,6 +19,22 @@ impl Exercise for E {
          `.aida-store/`. Run `git branch`, `git worktree list`, and `aida cache status` to see \
          all three pieces: the branch, the worktree, and the rebuildable `.aida/cache.db`."
     }
+    // trace:STORY-20 | ai:claude
+    fn hint_more(&self) -> Option<&'static str> {
+        Some(
+            "1. `git branch` — spot the `aida-store` orphan branch `aida init` created.\n\
+             2. `git worktree list` — see `.aida-store/` checked out on that branch.\n\
+             3. `aida cache status` — materializes `.aida/cache.db` if it isn't there yet."
+        )
+    }
+    // trace:STORY-20 | ai:claude
+    fn hint_solution(&self) -> Option<&'static str> {
+        Some(
+            "git branch --list aida-store\n\
+             git worktree list\n\
+             aida cache status"
+        )
+    }
     fn verify(&self, workspace: &Path) -> VerifyResult {
         if !is_aida_initialized(workspace) {
             return VerifyResult::Pending("complete exercise 01 first".into());

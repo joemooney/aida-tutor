@@ -16,6 +16,18 @@ impl Exercise for E {
          The display order is most-recently-modified first. META rows are hidden by default; pass \
          `--include-meta` if you want to peek under the hood."
     }
+    // trace:STORY-20 | ai:claude
+    fn hint_more(&self) -> Option<&'static str> {
+        Some(
+            "1. You should have one VIS, one PRIN, one ADR, one FR and one BUG captured by now.\n\
+             2. Run AIDA's listing command with no arguments.\n\
+             3. Confirm all five rows appear, then `aida-tutor verify`."
+        )
+    }
+    // trace:STORY-20 | ai:claude
+    fn hint_solution(&self) -> Option<&'static str> {
+        Some("aida list")
+    }
     fn verify(&self, workspace: &Path) -> VerifyResult {
         if !is_aida_initialized(workspace) {
             return VerifyResult::Pending("complete exercise 01 first".into());

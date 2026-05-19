@@ -18,6 +18,21 @@ impl Exercise for E {
          the `/aida-pickup` slash command does exactly this — peek the head, mark it in-progress, \
          render the spec — but the moving parts are just `queue next` + `edit`."
     }
+    // trace:STORY-20 | ai:claude
+    fn hint_more(&self) -> Option<&'static str> {
+        Some(
+            "1. Run `aida queue next` — it peeks at the head item routed to your role.\n\
+             2. Note that item's id.\n\
+             3. Claim it: `aida edit <id> --status in-progress`."
+        )
+    }
+    // trace:STORY-20 | ai:claude
+    fn hint_solution(&self) -> Option<&'static str> {
+        Some(
+            "aida queue next\n\
+             aida edit <ID> --status in-progress         # <ID> = the \"Queue demo\" task"
+        )
+    }
     fn verify(&self, workspace: &Path) -> VerifyResult {
         if !is_aida_initialized(workspace) {
             return VerifyResult::Pending("complete exercise 01 first".into());

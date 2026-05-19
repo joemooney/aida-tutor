@@ -25,6 +25,18 @@ impl Exercise for E {
          exercise 05 and capture the output to a file with `--write`: `aida review prompt \
          --specs FR-1 --write review-brief.md`. Then open `review-brief.md` to read the brief."
     }
+    // trace:STORY-20 | ai:claude
+    fn hint_more(&self) -> Option<&'static str> {
+        Some(
+            "1. The feature from exercise 05 is FR-1.\n\
+             2. Run `aida review prompt --specs FR-1`.\n\
+             3. Add `--write review-brief.md` so the brief lands on disk for the verifier to read."
+        )
+    }
+    // trace:STORY-20 | ai:claude
+    fn hint_solution(&self) -> Option<&'static str> {
+        Some("aida review prompt --specs FR-1 --write review-brief.md")
+    }
     fn verify(&self, workspace: &Path) -> VerifyResult {
         if !is_aida_initialized(workspace) {
             return VerifyResult::Pending("complete exercise 01 first".into());

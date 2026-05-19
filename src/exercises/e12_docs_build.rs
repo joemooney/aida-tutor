@@ -15,6 +15,18 @@ impl Exercise for E {
          `docs/aida/`. Vision goes to `01-vision.md`, principles to `00-constitution.md`, decisions to \
          `05-decisions/`. The README at `docs/aida/README.md` is the entry point."
     }
+    // trace:STORY-20 | ai:claude
+    fn hint_more(&self) -> Option<&'static str> {
+        Some(
+            "1. From `workspace/`, run `aida docs` with the `build` subcommand.\n\
+             2. It walks the requirement graph and writes a layered tree under `docs/aida/`.\n\
+             3. Confirm `docs/aida/README.md` now exists."
+        )
+    }
+    // trace:STORY-20 | ai:claude
+    fn hint_solution(&self) -> Option<&'static str> {
+        Some("aida docs build")
+    }
     fn verify(&self, workspace: &Path) -> VerifyResult {
         if !is_aida_initialized(workspace) {
             return VerifyResult::Pending("complete exercise 01 first".into());

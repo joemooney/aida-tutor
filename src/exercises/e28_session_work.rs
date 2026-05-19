@@ -24,6 +24,27 @@ impl Exercise for E {
          this exercise passes once the `session-work` branch has a commit the base branch \
          doesn't."
     }
+    // trace:STORY-20 | ai:claude
+    fn hint_more(&self) -> Option<&'static str> {
+        Some(
+            "1. `cd` into the session worktree `aida session start` printed — a sibling directory of `workspace/`.\n\
+             2. Make a change there: a source file with a trace comment.\n\
+             3. `git add` and `git commit` it — the commit lands on `session-work`, not the parent's branch."
+        )
+    }
+    // trace:STORY-20 | ai:claude
+    fn hint_solution(&self) -> Option<&'static str> {
+        Some(
+            "# cd into the session worktree (sibling dir `aida session start` printed):\n\
+             mkdir -p src\n\
+             cat > src/widget.rs <<'EOF'\n\
+             // trace:FR-1 | ai:claude\n\
+             pub fn widget() {}\n\
+             EOF\n\
+             git add src/widget.rs\n\
+             git commit -m \"[AI:claude] feat(widget): build widget in the session worktree (FR-1)\""
+        )
+    }
     fn verify(&self, workspace: &Path) -> VerifyResult {
         if !is_aida_initialized(workspace) {
             return VerifyResult::Pending("complete exercise 01 first".into());

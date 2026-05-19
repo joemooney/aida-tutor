@@ -19,6 +19,18 @@ impl Exercise for E {
          --status completed` plus `aida queue remove <ID>`, but atomic. Pass `--yes` to skip \
          the confirmation prompt."
     }
+    // trace:STORY-20 | ai:claude
+    fn hint_more(&self) -> Option<&'static str> {
+        Some(
+            "1. The \"Queue demo\" task is in-progress from exercise 23.\n\
+             2. Run `aida queue done <id>` — it completes the requirement AND dequeues it atomically.\n\
+             3. Add `--yes` to skip the confirmation prompt."
+        )
+    }
+    // trace:STORY-20 | ai:claude
+    fn hint_solution(&self) -> Option<&'static str> {
+        Some("aida queue done <ID> --yes                 # <ID> = the \"Queue demo\" task")
+    }
     fn verify(&self, workspace: &Path) -> VerifyResult {
         if !is_aida_initialized(workspace) {
             return VerifyResult::Pending("complete exercise 01 first".into());

@@ -27,6 +27,23 @@ impl Exercise for E {
          --title \"Relationships demo: umbrella epic\"`), note the ID it prints, then capture \
          a story with `--parent <that-ID> --type story`."
     }
+    // trace:STORY-20 | ai:claude
+    fn hint_more(&self) -> Option<&'static str> {
+        Some(
+            "1. Capture an epic: `aida add --type epic --status approved \
+                --title \"Relationships demo: umbrella epic\"`.\n\
+             2. Note the id it prints.\n\
+             3. Capture a story under it: `aida add --parent <epic-id> --type story \
+                --status approved --title \"Relationships demo: child story\"`."
+        )
+    }
+    // trace:STORY-20 | ai:claude
+    fn hint_solution(&self) -> Option<&'static str> {
+        Some(
+            "aida add --type epic --status approved --title \"Relationships demo: umbrella epic\"\n\
+             aida add --parent <EPIC-ID> --type story --status approved --title \"Relationships demo: child story\""
+        )
+    }
     fn verify(&self, workspace: &Path) -> VerifyResult {
         if !is_aida_initialized(workspace) {
             return VerifyResult::Pending("complete exercise 01 first".into());

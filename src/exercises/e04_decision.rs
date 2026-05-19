@@ -15,6 +15,18 @@ impl Exercise for E {
          is conventional). The description should record the choice + the trade-offs that drove it. \
          An ADR's value comes from why-we-chose-it, not what-we-chose."
     }
+    // trace:STORY-20 | ai:claude
+    fn hint_more(&self) -> Option<&'static str> {
+        Some(
+            "1. Run `aida add --type decision` — the type is `decision`, not `adr`.\n\
+             2. Use `--status approved`; record the trade-offs that drove the choice in the description.\n\
+             3. It lands as ADR-1."
+        )
+    }
+    // trace:STORY-20 | ai:claude
+    fn hint_solution(&self) -> Option<&'static str> {
+        Some("aida add --type decision --status approved --title \"Persist tasks in SQLite, not flat files\"")
+    }
     fn verify(&self, workspace: &Path) -> VerifyResult {
         if !is_aida_initialized(workspace) {
             return VerifyResult::Pending("complete exercise 01 first".into());

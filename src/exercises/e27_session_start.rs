@@ -27,6 +27,18 @@ impl Exercise for E {
          with `aida list --type functional`) and pin the branch: `aida session start --owns \
          FR-1 --branch session-work`."
     }
+    // trace:STORY-20 | ai:claude
+    fn hint_more(&self) -> Option<&'static str> {
+        Some(
+            "1. The feature from exercise 05 is FR-1 — confirm with `aida list --type functional`.\n\
+             2. Run `aida session start` with `--owns FR-1` and `--branch session-work`.\n\
+             3. It forks a sibling worktree and writes a lease under `.aida/sessions/`."
+        )
+    }
+    // trace:STORY-20 | ai:claude
+    fn hint_solution(&self) -> Option<&'static str> {
+        Some("aida session start --owns FR-1 --branch session-work")
+    }
     fn verify(&self, workspace: &Path) -> VerifyResult {
         if !is_aida_initialized(workspace) {
             return VerifyResult::Pending("complete exercise 01 first".into());

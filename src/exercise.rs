@@ -42,6 +42,21 @@ pub trait Exercise: Sync + Send {
     /// One-paragraph nudge surfaced via `aida-tutor hint`. Avoid showing
     /// the literal command — that defeats the point. trace:PRIN-3
     fn hint(&self) -> &'static str;
+    /// Level-2 hint: concrete multi-step guidance surfaced via
+    /// `aida-tutor hint --more`. More directive than [`hint`], but still
+    /// stops short of the literal command. `None` → the CLI falls back to
+    /// the level-1 [`hint`]. trace:STORY-20 | ai:claude
+    fn hint_more(&self) -> Option<&'static str> {
+        None
+    }
+    /// Level-3 hint: the literal command(s), surfaced via
+    /// `aida-tutor hint --solution`. The last-resort escape valve —
+    /// viewing it stamps the exercise `completed-with-solution` in the
+    /// learner's progress. `None` → no literal solution recorded.
+    /// trace:STORY-20 | ai:claude
+    fn hint_solution(&self) -> Option<&'static str> {
+        None
+    }
     /// Drive this exercise to a passing state non-interactively — run the
     /// `aida` commands (and any file writes) a learner would. Used by
     /// `aida-tutor demo` to walk every exercise without a human, so CI can

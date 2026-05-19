@@ -36,9 +36,20 @@ enum Cmd {
         /// Override the current exercise to verify.
         target: Option<String>,
     },
-    /// Show a one-paragraph hint for the current (or specified) exercise.
+    /// Show a hint for the current (or specified) exercise. Hints come in
+    /// three depths: the bare `hint` is a one-paragraph nudge, `--more`
+    /// gives concrete multi-step guidance, and `--solution` reveals the
+    /// literal command as a last resort. trace:STORY-20 | ai:claude
     Hint {
         target: Option<String>,
+        /// Multi-step nudge — concrete steps, stopping short of the
+        /// literal command.
+        #[arg(long)]
+        more: bool,
+        /// Reveal the literal command. Last resort: viewing it records
+        /// the exercise as 'completed-with-solution' in your progress.
+        #[arg(long, conflicts_with = "more")]
+        solution: bool,
     },
     /// Wipe the workspace/ directory so you can start the current
     /// exercise fresh. Use with care — anything you've built is deleted.
@@ -86,7 +97,9 @@ fn main() -> Result<()> {
         Cmd::List => cmd_list(&exercises, &workspace, &prog),
         Cmd::Show { target } => cmd_show(&exercises, &workspace, &repo_root, &prog, target.as_deref()),
         Cmd::Verify { target } => cmd_verify(&exercises, &workspace, &repo_root, &mut prog, target.as_deref()),
-        Cmd::Hint { target } => cmd_hint(&exercises, &prog, target.as_deref()),
+        Cmd::Hint { target, more, solution } => {
+            cmd_hint(&exercises, &repo_root, &mut prog, target.as_deref(), more, solution)
+        }
         Cmd::Reset { yes } => cmd_reset(&workspace, yes),
         Cmd::Progress => cmd_progress(&exercises, &prog),
         Cmd::Watch { interval_ms } => cmd_watch(&exercises, &workspace, &repo_root, &mut prog, interval_ms),
@@ -311,7 +324,13 @@ fn cmd_list(
         // Inline live-verify state to give the user a quick "where am I"
         // snapshot without running `verify` per row by hand.
         let state = if prog.is_completed(e.id()) {
-            "done".green().to_string()
+            // 'completed-with-solution' marks a finish that leaned on the
+            // `hint --solution` escape valve. trace:STORY-20 | ai:claude
+            if prog.used_solution(e.id()) {
+                "completed-with-solution".yellow().to_string()
+            } else {
+                "completed".green().to_string()
+            }
         } else {
             match e.verify(workspace) {
                 VerifyResult::Pass => "passes (run `verify` to record)".yellow().to_string(),
@@ -365,7 +384,8 @@ fn cmd_show(
             println!("{} pending: {}", "·".dimmed(), msg.dimmed());
             println!(
                 "{}",
-                "Run `aida-tutor hint` if you'd like a nudge.".dimmed()
+                "Run `aida-tutor hint` for a nudge — `--more` for steps, `--solution` for the command."
+                    .dimmed()
             );
         }
         VerifyResult::Fail(msg) => {
@@ -440,22 +460,99 @@ fn cmd_verify(
     Ok(())
 }
 
+/// Render a hint at one of three depths for the current (or targeted)
+/// exercise. Plain `hint` is a one-paragraph nudge; `--more` surfaces the
+/// per-exercise multi-step guidance; `--solution` reveals the literal
+/// command and stamps the exercise `completed-with-solution` in progress.
+/// trace:STORY-20 | ai:claude
 fn cmd_hint(
     exercises: &[Box<dyn Exercise>],
-    prog: &Progress,
+    repo_root: &Path,
+    prog: &mut Progress,
     target: Option<&str>,
+    more: bool,
+    solution: bool,
 ) -> Result<()> {
     let Some(ex) = pick(exercises, target, prog) else {
         anyhow::bail!("no such exercise");
     };
+    let id = ex.id();
     println!(
         "{} {:02} — {}",
         "Hint for exercise".bold(),
-        ex.id(),
+        id,
         ex.title()
     );
     println!();
-    println!("{}", ex.hint());
+
+    if solution {
+        // Level 3 — the literal command, the deepest escape valve.
+        match ex.hint_solution() {
+            Some(cmd) => {
+                println!(
+                    "{}",
+                    "Solution — the literal command (last resort):".yellow().bold()
+                );
+                println!();
+                for line in cmd.lines() {
+                    println!("    {}", line.cyan().bold());
+                }
+                // Stamp solution use so completion records as
+                // 'completed-with-solution' — but only while the exercise
+                // is still open. Peeking after a clean finish is harmless
+                // review and shouldn't tarnish the record.
+                if !prog.is_completed(id) {
+                    if !prog.used_solution(id) {
+                        prog.record_solution_used(id);
+                        prog.save(repo_root)?;
+                    }
+                    println!();
+                    println!(
+                        "{}",
+                        "(noted — this exercise will show as 'completed-with-solution')".dimmed()
+                    );
+                }
+            }
+            None => {
+                println!(
+                    "{}",
+                    "No literal solution is recorded for this exercise.".dimmed()
+                );
+                println!();
+                println!("{}", ex.hint_more().unwrap_or_else(|| ex.hint()));
+            }
+        }
+    } else if more {
+        // Level 2 — concrete multi-step guidance.
+        match ex.hint_more() {
+            Some(steps) => {
+                println!("{}", steps);
+                println!();
+                println!(
+                    "{}",
+                    "Still stuck? `aida-tutor hint --solution` shows the literal command."
+                        .dimmed()
+                );
+            }
+            None => {
+                println!("{}", ex.hint());
+                println!();
+                println!(
+                    "{}",
+                    "(no extra steps for this one — `aida-tutor hint --solution` for the command)"
+                        .dimmed()
+                );
+            }
+        }
+    } else {
+        // Level 1 — the one-paragraph nudge.
+        println!("{}", ex.hint());
+        println!();
+        println!(
+            "{}",
+            "Stuck? `aida-tutor hint --more` for steps, `--solution` for the command.".dimmed()
+        );
+    }
     Ok(())
 }
 
@@ -626,6 +723,20 @@ fn cmd_progress(exercises: &[Box<dyn Exercise>], prog: &Progress) -> Result<()> 
     let done = prog.completed.len();
     let pct = if total == 0 { 0 } else { (done * 100) / total };
     println!("{} / {} exercises complete ({}%)", done, total, pct);
+    // Surface how many completions leaned on the `--solution` escape
+    // valve — 'completed-with-solution' vs a clean 'completed'.
+    // trace:STORY-20 | ai:claude
+    let with_solution = prog
+        .completed
+        .iter()
+        .filter(|id| prog.used_solution(**id))
+        .count();
+    if with_solution > 0 {
+        println!(
+            "  {} of those completed-with-solution (used `aida-tutor hint --solution`)",
+            with_solution
+        );
+    }
     Ok(())
 }
 

@@ -15,6 +15,18 @@ impl Exercise for E {
          (Type is `functional`; the prefix `FR` is short for Functional Requirement.) \
          Status approved, priority high. Pick anything concrete: 'parse JSON input', 'persist user prefs', etc."
     }
+    // trace:STORY-20 | ai:claude
+    fn hint_more(&self) -> Option<&'static str> {
+        Some(
+            "1. Run `aida add --type functional` — the prefix `FR` is short for Functional Requirement.\n\
+             2. Pass `--status approved --priority high` and a concrete `--title`.\n\
+             3. `aida list --type functional` confirms FR-1."
+        )
+    }
+    // trace:STORY-20 | ai:claude
+    fn hint_solution(&self) -> Option<&'static str> {
+        Some("aida add --type functional --status approved --priority high --title \"Parse JSON task input from stdin\"")
+    }
     fn verify(&self, workspace: &Path) -> VerifyResult {
         if !is_aida_initialized(workspace) {
             return VerifyResult::Pending("complete exercise 01 first".into());
