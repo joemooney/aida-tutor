@@ -10,12 +10,12 @@ description: |
   - **eXX review-prompt-pr**: `gh pr create` (mock or real), `aida review prompt --pr 1` → verify it pulls all linked specs and emits a review brief
 
   Note: the `--pr` exercise needs `gh` available. Mark as optional or scaffold a fake-gh wrapper for the workspace.
-status: Approved
+status: InProgress
 priority: Medium
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-10T06:52:41.207540256Z
-modified_at: 2026-05-10T06:53:29.129004947Z
+modified_at: 2026-05-19T01:38:53.984553525Z
 req_type: Story
 relationships:
 - rel_type: Child
