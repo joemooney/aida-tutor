@@ -559,7 +559,7 @@ requirements:
   owner: ''
   feature: Uncategorized
   created_at: 2026-05-18T03:18:10.974909989Z
-  modified_at: 2026-05-18T03:20:40.885609941Z
+  modified_at: 2026-05-19T14:41:09.740191681Z
   req_type: Epic
   relationships:
   - rel_type: Parent
@@ -583,6 +583,11 @@ requirements:
     content: 'Rewrite plan filed: docs/plans/2026-05-18-first-contact-onboarding-slice.md (11-section AIDA template). Decomposition: STORY-31 (scratch project + entry point), STORY-32 (6-8 step content), STORY-33 (on-disk verifiers), STORY-34 (wow payoff + Act-II signpost), TASK-2 (moderated human-test gate). ''One wow'' CONFIRMED as the round-trip / shared-queryable-memory moment, sharpened to the cold-start contrast. Build NOT yet routed to implementer — held pending owner confirm of the wow framing (advisor surfacing 2026-05-18).'
     created_at: 2026-05-18T03:20:40.885609941Z
     modified_at: 2026-05-18T03:20:40.885609941Z
+  - id: 019e40ae-fa6c-7a13-8edd-a74ae98ba6d0
+    author: joe
+    content: 'Owner approved starting the build, 2026-05-19. Routed to implementer. Build the WHOLE thin slice as ONE branch / ONE PR — it is cohesive and small (''days not weeks'' per the handoff), and this session showed that fragmenting cluster work across branches/PRs causes tangles. Follow docs/plans/2026-05-18-first-contact-onboarding-slice.md build order: STORY-31 (scratch project + ''onboard'' entry point) -> STORY-32 (6-8 step content) -> STORY-33 (on-disk verifiers) -> STORY-34 (wow payoff + Act-II signpost). TASK-2 (moderated human test) is NOT build work — it is the post-build gate (AC-6). Build to AC-1: the cold-start shared-memory wow.'
+    created_at: 2026-05-19T14:41:09.740191681Z
+    modified_at: 2026-05-19T14:41:09.740191681Z
 - id: 019e0edd-0e98-7ab1-8192-c13a1baa3acc
   spec_id: EPIC-3
   agreed_id: EPIC-3
@@ -767,18 +772,28 @@ requirements:
     - Generate a structured review prompt with `aida review prompt --pr 7` and verify each spec's acceptance criteria.
     - Approve and merge, or request changes by spec id.
     - Mark this story `completed` once the PR is merged.
-  status: InProgress
+  status: Completed
   priority: Medium
   owner: ''
   feature: Uncategorized
   created_at: 2026-05-19T02:40:28.861735368Z
-  modified_at: 2026-05-19T02:44:54.107652583Z
+  modified_at: 2026-05-19T14:29:21.640114191Z
   req_type: Story
   relationships:
   - rel_type: !Custom implements
     target_id: 019e10a8-e18e-79e0-8aa7-8652636258f6
     created_at: 2026-05-19T02:40:29.555910859Z
     created_by: joe
+  comments:
+  - id: 019e40a4-2c68-75a0-b796-d7a883f7a39c
+    author: aida-auto-bump
+    content: 'Auto-completed: PR #7 merged without a re-review iteration — the review story was left at In Progress.'
+    created_at: 2026-05-19T14:29:21.640085653Z
+    modified_at: 2026-05-19T14:29:21.640085653Z
+  implementation_info:
+    implemented: false
+    completed_at: 2026-05-19T14:29:21.619408597Z
+    completion_sha: 94fb3faacbfe7b969476dab37197ea2a4fb472d5
 - id: 019e39cc-e05b-7bd0-a27f-f7ca7cb0bcb7
   spec_id: STORY-37
   agreed_id: STORY-37
@@ -825,12 +840,12 @@ requirements:
   agreed_id: STORY-24
   title: Exercise content review pass — voice, length, accuracy
   description: 'All 17 content/*.md files were drafted in one sitting. Sweep for: voice consistency (some are more terse than others), length normalization (currently 30-100 lines), accuracy against current AIDA behavior (test each tip works), and remove anything that''s actually for AIDA contributors not learners.'
-  status: Done
+  status: Completed
   priority: Medium
   owner: ''
   feature: Uncategorized
   created_at: 2026-05-09T22:30:36.380590195Z
-  modified_at: 2026-05-19T03:47:40.573540842Z
+  modified_at: 2026-05-19T03:55:53.392079799Z
   req_type: Story
   relationships:
   - rel_type: !Custom implemented-by
@@ -854,6 +869,8 @@ requirements:
     implemented: true
     implemented_at: 2026-05-19T03:45:47.029956506Z
     implemented_by: joe
+    completed_at: 2026-05-19T03:55:53.392079799Z
+    completion_sha: 7ee19b296aa1ba0643c67f29907e006588b6299a
 - id: 019e0ed2-13ab-7ee3-a430-37b4a9e849a5
   spec_id: STORY-3
   agreed_id: STORY-3
@@ -1381,18 +1398,28 @@ requirements:
     - Generate a structured review prompt with `aida review prompt --pr 10` and verify each spec's acceptance criteria.
     - Approve and merge, or request changes by spec id.
     - Mark this story `completed` once the PR is merged.
-  status: Approved
+  status: Completed
   priority: Medium
   owner: ''
   feature: Uncategorized
   created_at: 2026-05-19T03:47:38.951912548Z
-  modified_at: 2026-05-19T03:47:39.688514635Z
+  modified_at: 2026-05-19T03:55:53.395765043Z
   req_type: Story
   relationships:
   - rel_type: !Custom implements
     target_id: 019e0edd-2c5c-7dd3-acfd-14cd5a3acd65
     created_at: 2026-05-19T03:47:39.688508591Z
     created_by: joe
+  comments:
+  - id: 019e3e60-36b3-7bf0-8e9b-30e05f250ba9
+    author: aida-auto-bump
+    content: 'Auto-completed: PR #10 merged without a re-review iteration — the review story was left at In Progress.'
+    created_at: 2026-05-19T03:55:53.395741890Z
+    modified_at: 2026-05-19T03:55:53.395741890Z
+  implementation_info:
+    implemented: false
+    completed_at: 2026-05-19T03:55:53.392079799Z
+    completion_sha: 7ee19b296aa1ba0643c67f29907e006588b6299a
 - id: 019e10a8-c7fc-72d3-8171-192adceea067
   spec_id: STORY-28
   agreed_id: STORY-28
@@ -1541,12 +1568,12 @@ requirements:
     - **eXX mcp-serve**: `aida mcp-serve` in background, exercise asks learner to query via MCP client (or via `claude` with `.mcp.json`) — harder to verify automatically; may be a "manual" exercise with an instructed `aida-tutor verify --self-check` flag
 
     This cluster is lowest-priority because it's the most "advanced/admin" — most learners reach it after they've internalized the daily-use loop.
-  status: Done
+  status: Completed
   priority: Low
   owner: ''
   feature: Uncategorized
   created_at: 2026-05-10T06:52:43.790093199Z
-  modified_at: 2026-05-19T02:40:30.513387256Z
+  modified_at: 2026-05-19T14:29:21.619408597Z
   req_type: Story
   relationships:
   - rel_type: Child
@@ -1585,6 +1612,8 @@ requirements:
     implemented: true
     implemented_at: 2026-05-19T02:38:15.676601907Z
     implemented_by: joe
+    completed_at: 2026-05-19T14:29:21.619408597Z
+    completion_sha: 94fb3faacbfe7b969476dab37197ea2a4fb472d5
 - id: 019e0edd-26ef-7370-9195-a1720f7abb5b
   spec_id: STORY-22
   agreed_id: STORY-22
