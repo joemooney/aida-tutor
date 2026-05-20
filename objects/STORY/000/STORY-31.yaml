@@ -3,12 +3,12 @@ spec_id: STORY-31
 agreed_id: STORY-31
 title: 'Onboarding slice: scratch project + entry point'
 description: 'Ship the tiny REAL stub project the learner works on during the slice (a ~20-line CLI in a language most devs read on sight — Python is the default for lowest setup friction) and the way the slice is launched. Add an ''onboard'' entry point to aida-tutor (new Cmd variant in src/main.rs alongside List/Show/Verify) so the slice is a distinct first-contact path, separate from the 17-exercise track. Minimal discoverability only: cmd_welcome() at src/main.rs:524 gains one line pointing at ''aida-tutor onboard''. NOT a full framing re-anchor (out of scope per EPIC-5 non-goals). The stub project lives under workspace/ semantics (gitignored, reset-safe). trace target: EPIC-5.'
-status: Done
+status: Completed
 priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-18T03:18:35.468112100Z
-modified_at: 2026-05-19T15:04:21.066795235Z
+modified_at: 2026-05-20T01:59:04.014483116Z
 req_type: Story
 relationships:
 - rel_type: Child
