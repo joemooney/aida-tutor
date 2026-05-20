@@ -23,7 +23,7 @@ priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-18T03:18:10.974909989Z
-modified_at: 2026-05-19T16:07:11.658293651Z
+modified_at: 2026-05-20T01:59:08.106098902Z
 req_type: Epic
 relationships:
 - rel_type: Parent
@@ -90,6 +90,11 @@ comments:
     Test status: 8/8 unit tests green; all 35 existing exercises pass (aida-tutor demo)
   created_at: 2026-05-19T15:06:17.462371123Z
   modified_at: 2026-05-19T15:06:17.462371123Z
+- id: 019e431b-ae4a-7ac1-b3ea-818aabcbfe7b
+  author: joe
+  content: 'STORY-31..34 manually flipped to Completed — PR #11''s squash subject only carried (EPIC-5); the per-child (STORY-3X) trailers were lost in the squash so the done->completed auto-bump missed them. Work is on master in 670df1e. Note: TASK-2 (moderated human test, AC-6) remains the actual EPIC-5 validation gate — the slice''s code shipped but the wow is unproven until a real first-timer hits it.'
+  created_at: 2026-05-20T01:59:08.106098902Z
+  modified_at: 2026-05-20T01:59:08.106098902Z
 implementation_info:
   implemented: true
   implemented_at: 2026-05-19T15:04:36.749530713Z
