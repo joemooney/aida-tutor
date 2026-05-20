@@ -49,12 +49,18 @@ requirements:
   owner: ''
   feature: Uncategorized
   created_at: 2026-05-18T03:18:46.003426633Z
-  modified_at: 2026-05-18T03:18:46.003426633Z
+  modified_at: 2026-05-19T15:48:02.476409961Z
   req_type: Task
   relationships:
   - rel_type: Child
     target_id: 019e3917-551e-71b3-9214-4bdd105a6121
     created_at: 2026-05-18T03:18:46.666744145Z
+  comments:
+  - id: 019e40ec-352c-7ff0-ad61-199870a4d4ca
+    author: joe
+    content: 'Test protocol drafted and committed: docs/2026-05-19-onboarding-human-test.md — recruit, run, AC-1 pass/fail rubric, decision gate. Queued --for dialog (the moderated test is a captain/PO activity, not implementer work). EPIC-5''s slice shipped via PR #11; this test is the unmet AC-6 gate before any Act II investment.'
+    created_at: 2026-05-19T15:48:02.476409961Z
+    modified_at: 2026-05-19T15:48:02.476409961Z
 - id: 019e3b8e-4130-7c01-b40e-6a5bb0f9c435
   spec_id: TASK-3
   agreed_id: TASK-3
@@ -554,12 +560,12 @@ requirements:
     NON-GOALS (decided, do not pull in): the full Act II restructure; the aida invocation-recording shim that would close the e08-e17 read-only verifier gap; rewriting/renumbering the 17 existing exercises; full framing re-anchor of README/cmd_welcome/CLAUDE.md (only minimal discoverability changes are in scope).
 
     Source: docs/2026-05-18-advisor-handoff.md, docs/plans/2026-05-18-aida-tutor-audit.md, plan docs/plans/2026-05-18-first-contact-onboarding-slice.md.
-  status: Done
+  status: Completed
   priority: High
   owner: ''
   feature: Uncategorized
   created_at: 2026-05-18T03:18:10.974909989Z
-  modified_at: 2026-05-19T15:07:09.644131404Z
+  modified_at: 2026-05-19T16:07:11.658293651Z
   req_type: Epic
   relationships:
   - rel_type: Parent
@@ -630,6 +636,8 @@ requirements:
     implemented: true
     implemented_at: 2026-05-19T15:04:36.749530713Z
     implemented_by: joe
+    completed_at: 2026-05-19T16:07:11.658293651Z
+    completion_sha: 670df1e0e50187fd4311ee899ab3cdcda226e378
 - id: 019e0edd-0e98-7ab1-8192-c13a1baa3acc
   spec_id: EPIC-3
   agreed_id: EPIC-3
@@ -1348,18 +1356,28 @@ requirements:
     - Generate a structured review prompt with `aida review prompt --pr 11` and verify each spec's acceptance criteria.
     - Approve and merge, or request changes by spec id.
     - Mark this story `completed` once the PR is merged.
-  status: Approved
+  status: Completed
   priority: Medium
   owner: ''
   feature: Uncategorized
   created_at: 2026-05-19T15:07:08.129205874Z
-  modified_at: 2026-05-19T15:07:08.738624073Z
+  modified_at: 2026-05-19T16:07:11.664566011Z
   req_type: Story
   relationships:
   - rel_type: !Custom implements
     target_id: 019e3917-551e-71b3-9214-4bdd105a6121
     created_at: 2026-05-19T15:07:08.738612243Z
     created_by: joe
+  comments:
+  - id: 019e40fd-be30-7031-ad09-0cd0a9746554
+    author: aida-auto-bump
+    content: 'Auto-completed: PR #11 merged without a re-review iteration — the review story was left at In Progress.'
+    created_at: 2026-05-19T16:07:11.664535501Z
+    modified_at: 2026-05-19T16:07:11.664535501Z
+  implementation_info:
+    implemented: false
+    completed_at: 2026-05-19T16:07:11.658293651Z
+    completion_sha: 670df1e0e50187fd4311ee899ab3cdcda226e378
 - id: 019e0ed2-18e4-7803-b7a0-a66172fc3e07
   spec_id: STORY-4
   agreed_id: STORY-4
