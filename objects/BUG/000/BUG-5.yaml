@@ -35,10 +35,16 @@ priority: Medium
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-18T05:29:20.557730992Z
-modified_at: 2026-05-18T05:29:20.557730992Z
+modified_at: 2026-06-11T06:50:05.121584956Z
 req_type: Bug
 tags:
 - auto-complete
 - auto-drafted
 - failure-1
 - implementer
+comments:
+- id: 019eb571-f5c1-7f31-a8ed-1908888903df
+  author: joe
+  content: 'Triage: not a tutor bug. ''Implementer exits cleanly with no PR'' is already tracked and FIXED upstream as ~/ai/aida BUG-459 (Completed) + sibling BUG-462. Stale drain artifact on STORY-25 (old binary_sha). Rejecting; no upstream filing needed (would duplicate a Completed bug).'
+  created_at: 2026-06-11T06:50:05.121584956Z
+  modified_at: 2026-06-11T06:50:05.121584956Z
