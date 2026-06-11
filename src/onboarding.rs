@@ -1,6 +1,6 @@
 //! The first-contact onboarding slice (EPIC-5).
 //!
-//! A thin, guided track — separate from the 35-exercise registry — that
+//! A thin, guided track — separate from the 36-exercise registry — that
 //! delivers one round-trip "the project remembers" wow in 10-15 minutes.
 //! Built only on AIDA's stable surface (spec graph, capture, trace
 //! comments, `aida show`, commits); the agent-collaboration layer is
@@ -18,7 +18,7 @@ use std::path::Path;
 use crate::verify;
 
 /// Marker file proving `workspace/` holds the onboarding scratch project
-/// rather than the exercise-track playground. trace:STORY-31 | ai:claude
+/// rather than the exercise-track playground. trace:STORY-46 | ai:claude
 const SCRATCH_MARKER: &str = "greet.py";
 
 /// Content files for each screen, in render order. The screen index is the
@@ -134,7 +134,7 @@ fn cp_status_flipped(workspace: &Path) -> bool {
 /// Run the onboarding slice: seed the workspace if needed, figure out how
 /// far the learner has got from on-disk state, and render the current
 /// screen. `reset` wipes `workspace/` and restarts from screen 0.
-/// trace:STORY-31 | ai:claude
+/// trace:STORY-46 | ai:claude
 pub fn run(workspace: &Path, repo_root: &Path, reset: bool) -> Result<()> {
     if reset {
         reseed(workspace, repo_root)?;
@@ -207,7 +207,7 @@ fn print_footer(workspace: &Path, cps: &[Checkpoint; 5], passed: usize) {
         );
         println!(
             "  {}",
-            "Browse the full 35-exercise track any time with `aida-tutor list`.".dimmed()
+            "Browse the full 36-exercise track any time with `aida-tutor list`.".dimmed()
         );
         return;
     }
@@ -221,10 +221,7 @@ fn print_footer(workspace: &Path, cps: &[Checkpoint; 5], passed: usize) {
     );
     println!("  {}", cp.nudge.dimmed());
     println!();
-    println!(
-        "  workspace: {}",
-        workspace.display().to_string().cyan()
-    );
+    println!("  workspace: {}", workspace.display().to_string().cyan());
     println!(
         "  {}",
         "Run `aida-tutor onboard` again once that checkpoint is met.".dimmed()
@@ -244,7 +241,7 @@ fn render_content(repo_root: &Path, slug: &str) -> String {
 
 /// Seed `workspace/` only if it isn't already the onboarding scratch
 /// project. Refuses to clobber an in-progress exercise-track workspace —
-/// the learner must opt in with `--reset`. trace:STORY-31 | ai:claude
+/// the learner must opt in with `--reset`. trace:STORY-46 | ai:claude
 fn ensure_seeded(workspace: &Path, repo_root: &Path) -> Result<()> {
     if workspace.join(SCRATCH_MARKER).exists() {
         return Ok(()); // already on the tour — keep the learner's state
@@ -272,7 +269,7 @@ fn dir_has_entries(dir: &Path) -> bool {
 }
 
 /// Wipe `workspace/` and seed it fresh — the `--reset` path.
-/// trace:STORY-31 | ai:claude
+/// trace:STORY-46 | ai:claude
 fn reseed(workspace: &Path, repo_root: &Path) -> Result<()> {
     if workspace.exists() {
         std::fs::remove_dir_all(workspace)
@@ -286,7 +283,7 @@ fn reseed(workspace: &Path, repo_root: &Path) -> Result<()> {
 ///
 /// Touches ONLY `workspace/` — never the repo-root progress file — which
 /// is what keeps `--reset` from wiping a learner's exercise-track progress
-/// (AC-5, `onboard_seed_is_reset_safe`). trace:STORY-31 | ai:claude
+/// (AC-5, `onboard_seed_is_reset_safe`). trace:STORY-46 | ai:claude
 fn seed(workspace: &Path, repo_root: &Path) -> Result<()> {
     let template = repo_root.join("content/onboarding/scratch-template");
     if !template.is_dir() {
@@ -294,8 +291,8 @@ fn seed(workspace: &Path, repo_root: &Path) -> Result<()> {
     }
     std::fs::create_dir_all(workspace)
         .with_context(|| format!("creating {}", workspace.display()))?;
-    for entry in std::fs::read_dir(&template)
-        .with_context(|| format!("reading {}", template.display()))?
+    for entry in
+        std::fs::read_dir(&template).with_context(|| format!("reading {}", template.display()))?
     {
         let entry = entry?;
         if entry.file_type()?.is_file() {
@@ -307,7 +304,10 @@ fn seed(workspace: &Path, repo_root: &Path) -> Result<()> {
     // `-b main` pins the default branch name so `aida show`'s git-linkage
     // section resolves cleanly at step 5's reveal (AIDA looks for `main`).
     git(workspace, &["init", "-q", "-b", "main"])?;
-    git(workspace, &["config", "user.email", "learner@aida-tutor.local"])?;
+    git(
+        workspace,
+        &["config", "user.email", "learner@aida-tutor.local"],
+    )?;
     git(workspace, &["config", "user.name", "AIDA Learner"])?;
     git(workspace, &["add", "-A"])?;
     // `-c commit.gpgsign=false` keeps the seed commit working on machines
@@ -421,7 +421,17 @@ mod tests {
         run_git(&ws, &["config", "user.name", "T"]);
         std::fs::write(ws.join("greet.py"), "x\n").unwrap();
         run_git(&ws, &["add", "-A"]);
-        run_git(&ws, &["-c", "commit.gpgsign=false", "commit", "-q", "-m", "Initial greet CLI"]);
+        run_git(
+            &ws,
+            &[
+                "-c",
+                "commit.gpgsign=false",
+                "commit",
+                "-q",
+                "-m",
+                "Initial greet CLI",
+            ],
+        );
         assert!(!cp_commit_links(&ws), "no commit names FR-1 yet");
         std::fs::write(ws.join("greet.py"), "y\n").unwrap();
         run_git(&ws, &["add", "-A"]);
@@ -468,7 +478,10 @@ mod tests {
         seed(&ws, repo_root).unwrap();
         assert!(ws.join(SCRATCH_MARKER).exists(), "scratch project seeded");
         reseed(&ws, repo_root).unwrap();
-        assert!(ws.join(SCRATCH_MARKER).exists(), "scratch project re-seeded");
+        assert!(
+            ws.join(SCRATCH_MARKER).exists(),
+            "scratch project re-seeded"
+        );
 
         assert_eq!(
             std::fs::read_to_string(&progress).unwrap(),

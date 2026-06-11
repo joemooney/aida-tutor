@@ -143,6 +143,23 @@ pub fn commit_subject_references(workspace: &Path, spec: &str) -> bool {
         .any(|line| line.contains(&needle))
 }
 
+/// Run `aida show <spec>` read-only in `workspace` and return its stdout,
+/// or None if the command can't spawn or exits non-zero. The "see the
+/// link" exercise (07) asserts the Git-linkage section this renders once a
+/// commit references the spec and a `trace:` comment points at it. Reading
+/// is side-effect-free — `aida show` mutates nothing. trace:STORY-46
+pub fn aida_show_output(workspace: &Path, spec: &str) -> Option<String> {
+    let out = std::process::Command::new("aida")
+        .current_dir(workspace)
+        .args(["show", spec])
+        .output()
+        .ok()?;
+    if !out.status.success() {
+        return None;
+    }
+    Some(String::from_utf8_lossy(&out.stdout).into_owned())
+}
+
 /// True if `branch` exists as a local git branch in `workspace`. Used by
 /// the distributed-store exercises to confirm the orphan `aida-store`
 /// branch is present. trace:STORY-25 | ai:claude
@@ -477,7 +494,10 @@ pub fn git_worktrees(workspace: &Path) -> Vec<GitWorktree> {
 /// list`. None if `workspace` isn't a git repo or HEAD is detached.
 /// trace:STORY-28 | ai:claude
 pub fn main_worktree_branch(workspace: &Path) -> Option<String> {
-    git_worktrees(workspace).into_iter().next().and_then(|w| w.branch)
+    git_worktrees(workspace)
+        .into_iter()
+        .next()
+        .and_then(|w| w.branch)
 }
 
 /// Commits on `branch` not reachable from `base` — `git rev-list --count
@@ -577,8 +597,7 @@ pub struct Invocation {
 /// to prerequisite-state checks. `Some(_)` — possibly an empty vec —
 /// means the wrapper is installed. trace:STORY-22 | ai:claude
 pub fn aida_invocations(workspace: &Path) -> Option<Vec<Invocation>> {
-    let content =
-        std::fs::read_to_string(workspace.join(".aida-tutor-invocations.log")).ok()?;
+    let content = std::fs::read_to_string(workspace.join(".aida-tutor-invocations.log")).ok()?;
     let mut out = Vec::new();
     for line in content.lines() {
         let line = line.trim_end();
@@ -612,9 +631,7 @@ pub fn invoked(workspace: &Path, subcommand: &str, with: &[&str]) -> Option<bool
     Some(invocations.iter().any(|inv| {
         let resolved = inv.args.iter().find(|a| !a.starts_with('-'));
         resolved.map(|s| s == subcommand).unwrap_or(false)
-            && with
-                .iter()
-                .all(|want| inv.args.iter().any(|a| a == want))
+            && with.iter().all(|want| inv.args.iter().any(|a| a == want))
     }))
 }
 

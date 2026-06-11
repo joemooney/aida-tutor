@@ -5,7 +5,7 @@ a memoryless agent answer from the project's own record. That round trip —
 spec to commit to code, readable by any agent — is the core of AIDA, and
 you now have the one idea the rest of it builds on. When you want the
 guided depth — the distributed store, search, the full command surface —
-the 35-exercise track is one command away: `aida-tutor list`.
+the 36-exercise track is one command away: `aida-tutor list`.
 
 ## What's next — Act II, when it settles
 

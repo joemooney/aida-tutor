@@ -75,8 +75,8 @@ enum Cmd {
     Demo,
     /// Install (or remove) a workspace-local `aida` wrapper that logs
     /// every invocation to `.aida-tutor-invocations.log`. Opt-in rigor:
-    /// once the wrapper is on your PATH, the read-only exercises (7, 8,
-    /// 13, 15, 16, 17) verify you actually ran the command, not just
+    /// once the wrapper is on your PATH, the read-only exercises (3, 4,
+    /// 10, 15, 17, 18) verify you actually ran the command, not just
     /// that the prerequisite state exists. trace:STORY-22 | ai:claude
     Wrapper {
         /// Remove the wrapper script + invocation log instead of
@@ -86,7 +86,7 @@ enum Cmd {
     },
     /// Run the first-contact onboarding slice — a 15-minute guided tour of
     /// the AIDA round trip (capture → trace → commit → `aida show`), built
-    /// only on the stable surface. A separate path from the 35-exercise
+    /// only on the stable surface. A separate path from the 36-exercise
     /// track; self-paced, re-run it to advance. trace:EPIC-5 | ai:claude
     Onboard {
         /// Wipe workspace/ and restart the tour from step 1.
@@ -116,14 +116,33 @@ fn main() -> Result<()> {
 
     match cli.command.unwrap_or(Cmd::Show { target: None }) {
         Cmd::List => cmd_list(&exercises, &workspace, &prog),
-        Cmd::Show { target } => cmd_show(&exercises, &workspace, &repo_root, &prog, target.as_deref()),
-        Cmd::Verify { target } => cmd_verify(&exercises, &workspace, &repo_root, &mut prog, target.as_deref()),
-        Cmd::Hint { target, more, solution } => {
-            cmd_hint(&exercises, &repo_root, &mut prog, target.as_deref(), more, solution)
+        Cmd::Show { target } => {
+            cmd_show(&exercises, &workspace, &repo_root, &prog, target.as_deref())
         }
+        Cmd::Verify { target } => cmd_verify(
+            &exercises,
+            &workspace,
+            &repo_root,
+            &mut prog,
+            target.as_deref(),
+        ),
+        Cmd::Hint {
+            target,
+            more,
+            solution,
+        } => cmd_hint(
+            &exercises,
+            &repo_root,
+            &mut prog,
+            target.as_deref(),
+            more,
+            solution,
+        ),
         Cmd::Reset { yes } => cmd_reset(&workspace, yes),
         Cmd::Progress => cmd_progress(&exercises, &prog),
-        Cmd::Watch { interval_ms } => cmd_watch(&exercises, &workspace, &repo_root, &mut prog, interval_ms),
+        Cmd::Watch { interval_ms } => {
+            cmd_watch(&exercises, &workspace, &repo_root, &mut prog, interval_ms)
+        }
         Cmd::Demo => cmd_demo(&exercises, &workspace),
         Cmd::Wrapper { uninstall } => cmd_wrapper(&workspace, uninstall),
         Cmd::Onboard { reset } => onboarding::run(&workspace, &repo_root, reset),
@@ -136,12 +155,17 @@ fn main() -> Result<()> {
 /// way to earn completion credit. trace:STORY-19 | ai:claude
 fn cmd_demo(exercises: &[Box<dyn Exercise>], workspace: &Path) -> Result<()> {
     if !workspace.exists() {
-        anyhow::bail!(
-            "workspace/ doesn't exist — run `aida-tutor reset --yes` before `demo`"
-        );
+        anyhow::bail!("workspace/ doesn't exist — run `aida-tutor reset --yes` before `demo`");
     }
     println!("{}", "aida-tutor demo — non-interactive walkthrough".bold());
     println!();
+    // A real learner works the exercises interactively, and AIDA grants an
+    // interactive session the authority to approve specs, mark them done,
+    // and route work to queues. The demo is the non-interactive CI proxy
+    // for that learner, so it carries the equivalent advisor authority from
+    // the start. Individual exercise demos may switch roles (e.g. the
+    // producer/consumer queue arc). trace:STORY-46 | ai:claude
+    std::env::set_var("AIDA_SESSION_ROLE", "advisor");
     let mut failures = 0u32;
     for ex in exercises {
         match ex.demo(workspace).map(|()| ex.verify(workspace)) {
@@ -151,21 +175,30 @@ fn cmd_demo(exercises: &[Box<dyn Exercise>], workspace: &Path) -> Result<()> {
             Ok(VerifyResult::Pending(msg)) => {
                 println!(
                     "  {:>2} {:<22} {} pending: {}",
-                    ex.id(), ex.slug(), "✗".red().bold(), msg
+                    ex.id(),
+                    ex.slug(),
+                    "✗".red().bold(),
+                    msg
                 );
                 failures += 1;
             }
             Ok(VerifyResult::Fail(msg)) => {
                 println!(
                     "  {:>2} {:<22} {} fail: {}",
-                    ex.id(), ex.slug(), "✗".red().bold(), msg
+                    ex.id(),
+                    ex.slug(),
+                    "✗".red().bold(),
+                    msg
                 );
                 failures += 1;
             }
             Err(e) => {
                 println!(
                     "  {:>2} {:<22} {} demo step errored:\n{}",
-                    ex.id(), ex.slug(), "✗".red().bold(), e
+                    ex.id(),
+                    ex.slug(),
+                    "✗".red().bold(),
+                    e
                 );
                 failures += 1;
             }
@@ -227,11 +260,7 @@ fn cmd_watch(
 
             match current_id {
                 None => {
-                    println!(
-                        "{} all {} exercises complete.",
-                        "🎉".green().bold(),
-                        total
-                    );
+                    println!("{} all {} exercises complete.", "🎉".green().bold(), total);
                 }
                 Some(id) => {
                     if let Some(ex) = exercises.iter().find(|e| e.id() == id) {
@@ -327,16 +356,27 @@ fn pick<'a>(
     exercises.iter().find(|e| e.id() == cur_id)
 }
 
-fn cmd_list(
-    exercises: &[Box<dyn Exercise>],
-    workspace: &Path,
-    prog: &Progress,
-) -> Result<()> {
+/// Last exercise of the core "15-minute novice loop" (capture → build →
+/// link → done). Exercises past this are the optional "Going further"
+/// track. trace:STORY-46 | ai:claude
+const CORE_LAST: u32 = 8;
+
+fn cmd_list(exercises: &[Box<dyn Exercise>], workspace: &Path, prog: &Progress) -> Result<()> {
     let total = exercises.len() as u32;
     let current = prog.current(total).unwrap_or(0);
     println!("{}", format!("aida-tutor — {} exercises", total).bold());
     println!();
+    println!("{}", "  Core — the 15-minute loop".cyan().bold());
     for e in exercises {
+        if e.id() == CORE_LAST + 1 {
+            println!();
+            println!(
+                "{}",
+                "  Going further (optional) — pick what's useful, in any order"
+                    .cyan()
+                    .bold()
+            );
+        }
         let marker = if prog.is_completed(e.id()) {
             "✓".green().to_string()
         } else if e.id() == current {
@@ -361,13 +401,7 @@ fn cmd_list(
                 VerifyResult::Fail(_) => "needs fix".red().to_string(),
             }
         };
-        println!(
-            "{} {:>2}. {:<48} [{}]",
-            marker,
-            e.id(),
-            e.title(),
-            state
-        );
+        println!("{} {:>2}. {:<48} [{}]", marker, e.id(), e.title(), state);
     }
     Ok(())
 }
@@ -384,7 +418,9 @@ fn cmd_show(
     };
     println!(
         "{}",
-        format!("Exercise {:02} — {}", ex.id(), ex.title()).cyan().bold()
+        format!("Exercise {:02} — {}", ex.id(), ex.title())
+            .cyan()
+            .bold()
     );
     println!("{}", "─".repeat(60).dimmed());
     println!();
@@ -416,10 +452,7 @@ fn cmd_show(
         }
     }
     println!();
-    println!(
-        "Workspace: {}",
-        workspace.display().to_string().cyan()
-    );
+    println!("Workspace: {}", workspace.display().to_string().cyan());
     Ok(())
 }
 
@@ -436,11 +469,7 @@ fn cmd_verify(
     match ex.verify(workspace) {
         VerifyResult::Pass => {
             if prog.is_completed(ex.id()) {
-                println!(
-                    "{} exercise {:02} already complete.",
-                    "✓".green(),
-                    ex.id()
-                );
+                println!("{} exercise {:02} already complete.", "✓".green(), ex.id());
             } else {
                 prog.record_completion(ex.id());
                 // Save progress at the *repo root* (resolved by
@@ -454,21 +483,38 @@ fn cmd_verify(
                     ex.id(),
                     ex.title()
                 );
+                // Finishing the core loop is its own milestone — call it
+                // out, and frame the rest as optional. trace:STORY-46
+                if ex.id() == CORE_LAST {
+                    println!();
+                    println!(
+                        "{}",
+                        "🎉 Core loop complete — you captured a spec, built it, linked the \
+                         code, and closed it out."
+                            .green()
+                            .bold()
+                    );
+                    println!(
+                        "{}",
+                        "Everything past here is optional 'Going further'. Take it in any \
+                         order, or stop here — you've got the loop."
+                            .dimmed()
+                    );
+                    println!();
+                }
                 let total = exercises.len() as u32;
                 if let Some(next_id) = prog.current(total) {
                     if let Some(next_ex) = exercises.iter().find(|e| e.id() == next_id) {
-                        println!(
-                            "Next: {:02} — {}",
-                            next_ex.id(),
-                            next_ex.title().cyan()
-                        );
+                        println!("Next: {:02} — {}", next_ex.id(), next_ex.title().cyan());
                         println!("Run `aida-tutor show` to see the next exercise.");
                     }
                 } else {
                     println!();
                     println!(
                         "{}",
-                        "🎉 All exercises complete. You've walked the full AIDA loop.".green().bold()
+                        "🎉 All exercises complete. You've walked the full AIDA loop."
+                            .green()
+                            .bold()
                     );
                 }
             }
@@ -500,12 +546,7 @@ fn cmd_hint(
         anyhow::bail!("no such exercise");
     };
     let id = ex.id();
-    println!(
-        "{} {:02} — {}",
-        "Hint for exercise".bold(),
-        id,
-        ex.title()
-    );
+    println!("{} {:02} — {}", "Hint for exercise".bold(), id, ex.title());
     println!();
 
     if solution {
@@ -514,7 +555,9 @@ fn cmd_hint(
             Some(cmd) => {
                 println!(
                     "{}",
-                    "Solution — the literal command (last resort):".yellow().bold()
+                    "Solution — the literal command (last resort):"
+                        .yellow()
+                        .bold()
                 );
                 println!();
                 for line in cmd.lines() {
@@ -553,8 +596,7 @@ fn cmd_hint(
                 println!();
                 println!(
                     "{}",
-                    "Still stuck? `aida-tutor hint --solution` shows the literal command."
-                        .dimmed()
+                    "Still stuck? `aida-tutor hint --solution` shows the literal command.".dimmed()
                 );
             }
             None => {
@@ -584,8 +626,8 @@ fn cmd_hint(
 /// The wrapper is a tiny `/bin/sh` script at `workspace/.aida-tutor-bin/
 /// aida` that appends every call to `.aida-tutor-invocations.log` and
 /// then exec's the real `aida`. Putting `.aida-tutor-bin/` first on
-/// `PATH` routes `aida` through it; the read-only exercises (7, 8, 13,
-/// 15, 16, 17) then verify the command actually ran instead of passing
+/// `PATH` routes `aida` through it; the read-only exercises (3, 4, 10,
+/// 15, 17, 18) then verify the command actually ran instead of passing
 /// on prerequisite state. Opt-in, and wiped by any `reset`.
 /// trace:STORY-22 | ai:claude
 fn cmd_wrapper(workspace: &Path, uninstall: bool) -> Result<()> {
@@ -608,18 +650,20 @@ fn cmd_wrapper(workspace: &Path, uninstall: bool) -> Result<()> {
                 "✓".green()
             );
         } else {
-            println!("{} no wrapper was installed — nothing to remove.", "·".dimmed());
+            println!(
+                "{} no wrapper was installed — nothing to remove.",
+                "·".dimmed()
+            );
         }
         return Ok(());
     }
 
     // Resolve the real `aida` so the wrapper exec's the CLI, never
     // itself. Skip our own script if a previous install left it on PATH.
-    let real_aida = find_real_aida(&script)
-        .context("locating a real `aida` on PATH — install AIDA first")?;
+    let real_aida =
+        find_real_aida(&script).context("locating a real `aida` on PATH — install AIDA first")?;
 
-    std::fs::create_dir_all(&bin_dir)
-        .with_context(|| format!("creating {}", bin_dir.display()))?;
+    std::fs::create_dir_all(&bin_dir).with_context(|| format!("creating {}", bin_dir.display()))?;
     // Note: the script body deliberately carries no `trace:` token —
     // it lives under workspace/ and would otherwise be picked up by the
     // exercise-10 trace-comment scan.
@@ -644,12 +688,14 @@ fn cmd_wrapper(workspace: &Path, uninstall: bool) -> Result<()> {
     // Arm the opt-in immediately: an empty log makes the read-only
     // verifiers expect a real invocation from this point on.
     if !log.exists() {
-        std::fs::write(&log, "")
-            .with_context(|| format!("creating {}", log.display()))?;
+        std::fs::write(&log, "").with_context(|| format!("creating {}", log.display()))?;
     }
 
     let abs_bin = bin_dir.canonicalize().unwrap_or_else(|_| bin_dir.clone());
-    println!("{} invocation-logging wrapper installed.", "✓".green().bold());
+    println!(
+        "{} invocation-logging wrapper installed.",
+        "✓".green().bold()
+    );
     println!();
     println!("  shim       {}", script.display().to_string().cyan());
     println!("  real aida  {}", real_aida.display().to_string().dimmed());
@@ -839,9 +885,8 @@ pub(crate) fn render_md_for_terminal(md: &str) -> String {
             continue;
         }
         // Inline `backticks` → cyan.
-        let processed = inline_re.replace_all(line, |caps: &regex::Captures| {
-            caps[1].cyan().to_string()
-        });
+        let processed =
+            inline_re.replace_all(line, |caps: &regex::Captures| caps[1].cyan().to_string());
         out.push_str(&processed);
         out.push('\n');
     }
@@ -860,7 +905,7 @@ fn cmd_welcome(total: usize) {
     println!();
     // One discoverability line for the first-contact onboarding slice —
     // the recommended starting point for someone new to AIDA.
-    // trace:STORY-31 | ai:claude
+    // trace:STORY-46 | ai:claude
     println!(
         "{}",
         "New to AIDA? `aida-tutor onboard` is a 15-minute guided tour — start there."
@@ -875,9 +920,18 @@ fn cmd_welcome(total: usize) {
     println!();
     println!("Then bootstrap your workspace and start exercise 01:");
     println!();
-    println!("  {}", "aida-tutor reset --yes      # creates workspace/, fresh git repo".cyan());
-    println!("  {}", "aida-tutor show              # see the current exercise".cyan());
-    println!("  {}", "aida-tutor verify            # check your work after each step".cyan());
+    println!(
+        "  {}",
+        "aida-tutor reset --yes      # creates workspace/, fresh git repo".cyan()
+    );
+    println!(
+        "  {}",
+        "aida-tutor show              # see the current exercise".cyan()
+    );
+    println!(
+        "  {}",
+        "aida-tutor verify            # check your work after each step".cyan()
+    );
     println!();
     println!(
         "{}",

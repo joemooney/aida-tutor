@@ -7,21 +7,35 @@ Guidance for Claude Code working in this repository.
 ## Project overview
 
 **aida-tutor** is a hands-on tutorial for [AIDA](../aida/), in the spirit of
-[rustlings](https://github.com/rust-lang/rustlings). 32 exercises that walk a
-learner from `aida init` through the full capture → trace → commit → close
-loop, into distributed storage, the roles + queue workflow, the requirement
-graph, scoped sessions with git worktrees, and the code-review + commit-
-pairing workflow, with an on-disk verifier per exercise.
+[rustlings](https://github.com/rust-lang/rustlings). 36 exercises, split into
+a tight **core loop** (01–08) and an optional **"Going further"** track
+(09–36), each with an on-disk verifier.
 
-Status: **v0 complete and end-to-end verified** as of 2026-05-09 (exercises
-01–17). EPIC-4 cluster 1 adds the distributed-storage trio (18–20: orphan
-branch, store sync, cache rebuild); cluster 3 adds the roles + producer/
-consumer queue arc (21–24: role enter, queue add `--for`, pickup, done);
-cluster 2 adds the relationships pair (25–26: `add --parent`, `rel add`);
-cluster 4 adds the sessions + worktrees quartet (27–30: session start,
-work-in-worktree, leases/show, session end); cluster 5 adds the code-review
-+ commit-pairing pair (31–32: `Aida-Store:` trailer, `review prompt`).
-All 32 exercises pass when worked in order (`aida-tutor demo`).
+The **core** is the ~15-minute novice arc — capture → build → link → done:
+
+1. init · 2. feature (`aida add "..."`) · 3. list · 4. show (linkage empty —
+foreshadow) · 5. trace-comment · 6. aida-commit · 7. **see-link** (re-run
+`aida show` and watch the Git-linkage section fill in — the emotional peak) ·
+8. done (`aida done`).
+
+**Going further** (optional, any order) covers the requirement-type tour
+(vision/principle/decision/bug), search/docs/status/push, distributed storage
+(19–21), the roles + producer/consumer queue arc (22–25), the requirement
+graph (26–27: `add --parent`, `rel add`), scoped sessions + worktrees
+(28–31), code-review + commit-pairing (32–33), and plans/store-audit/MCP
+(34–36).
+
+Status: **re-aligned to AIDA 0.12 and end-to-end verified** as of 2026-06-10.
+All 36 exercises pass when worked in order — `./target/release/aida-tutor
+reset --yes && ./target/release/aida-tutor demo` is green against the
+installed `aida 0.12.0`. The realignment centered the code↔spec link as the
+core "aha" (exercise 07) and modernized the close step to `aida done`.
+
+> The `demo` command sets `AIDA_SESSION_ROLE=advisor` so the non-interactive
+> CI walk carries the same authority a real (interactive) learner has — under
+> 0.12, approving specs / `aida done` / routing work to queues all require an
+> interactive session or the advisor role. The queue arc's producer demo
+> (ex 23) runs as advisor and the consumer demo (ex 24) as implementer.
 
 ## Architecture
 
@@ -82,20 +96,20 @@ Verifier rigor below).
 **Next-up backlog ideas** — file as new stories when picking them up:
 
 - **More exercises** — `aida history`, sessions + cross-project queue
-  routing. Relationships shipped as 25–26 (STORY-26); roles + the
-  producer/consumer queue as 21–24 (STORY-27); sessions + worktrees as
-  27–30 (STORY-28); code review + commit pairing as 31–32 (STORY-29);
-  plans + maintenance + MCP as 33–35 (STORY-30). The `aida review
-  prompt --pr` form is taught in 32's content but not verified — the
-  PR-driven path needs `gh`/`glab` + a real forge remote, out of reach
-  for the offline workspace.
+  routing. (Going-further numbering, post-0.12 realignment:) relationships
+  as 26–27 (STORY-26); roles + the producer/consumer queue as 22–25
+  (STORY-27); sessions + worktrees as 28–31 (STORY-28); code review +
+  commit pairing as 32–33 (STORY-29); plans + maintenance + MCP as 34–36
+  (STORY-30). The `aida review prompt --pr` form is taught in 33's content
+  but not verified — the PR-driven path needs `gh`/`glab` + a real forge
+  remote, out of reach for the offline workspace.
 - **Verifier rigor** — `aida-tutor wrapper` (STORY-22) installs an
   optional workspace-local `aida` shim that logs every invocation to
   `.aida-tutor-invocations.log`; once it's first on `PATH` the read-only
-  exercises 7, 8, 13, 15, 16 and 17 verify the command actually ran
+  exercises 3, 4, 10, 15, 17 and 18 verify the command actually ran
   rather than passing on prerequisite state alone. Off by default,
-  wiped by `reset`. Remaining gap: exercises 29 (`session leases`/`show`)
-  and 34 (`aida db info`/`db check` audit — leaves no on-disk trace)
+  wiped by `reset`. Remaining gap: exercises 30 (`session leases`/`show`)
+  and 35 (`aida db info`/`db check` audit — leaves no on-disk trace)
   still pass on prerequisite state; `verify_invocation`'s single-token
   subcommand match doesn't yet cover the two-level `aida session ...`
   form.

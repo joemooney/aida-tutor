@@ -35,8 +35,7 @@ impl Progress {
         if !p.exists() {
             return Ok(Self::default());
         }
-        let s = std::fs::read_to_string(&p)
-            .with_context(|| format!("reading {}", p.display()))?;
+        let s = std::fs::read_to_string(&p).with_context(|| format!("reading {}", p.display()))?;
         toml::from_str(&s).with_context(|| format!("parsing {}", p.display()))
     }
 
