@@ -10,3 +10,7 @@ feature: Uncategorized
 created_at: 2026-05-09T22:30:28.760158655Z
 modified_at: 2026-05-09T22:30:28.760158655Z
 req_type: Epic
+relationships:
+- rel_type: Parent
+  target_id: 019eb513-afe1-7a90-b7ed-7825e10b500d
+  created_at: 2026-06-11T05:07:19.862818962Z
