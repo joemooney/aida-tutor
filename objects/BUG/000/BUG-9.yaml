@@ -37,10 +37,16 @@ priority: Medium
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-19T02:50:36.873402044Z
-modified_at: 2026-05-19T02:50:36.873402044Z
+modified_at: 2026-06-11T06:50:14.665833780Z
 req_type: Bug
 tags:
 - auto-complete
 - auto-drafted
 - failure-3
 - reviewer
+comments:
+- id: 019eb572-1b09-7140-bf7a-44983e3587b3
+  author: joe
+  content: 'Triage: not a bug. A reviewer verdict of RequestChanges is the auto-complete loop working as designed — recovery is ''aida queue rework'', not a code fix. AIDA rejects these auto-drafted reviewer-phase drafts by convention (cf. ~/ai/aida BUG-441/439/437). Rejecting.'
+  created_at: 2026-06-11T06:50:14.665833780Z
+  modified_at: 2026-06-11T06:50:14.665833780Z
