@@ -3,14 +3,28 @@ spec_id: STORY-53
 agreed_id: STORY-53
 title: Onboarding next explains agent handoff for implementation step
 description: Improve aida-tutor next for onboarding step 3 so it does not imply the learner should only add a trace comment to unspecified new code. It should name greet.py and print an explicit prompt to give the selected implementer, e.g. Codex, to add the --upper flag with the required trace comment.
-status: InProgress
+status: Completed
 priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-08-29T23:46:14.503908264Z
-modified_at: 2026-08-29T23:46:28.345195898Z
+modified_at: 2026-08-29T23:47:15.394322258Z
 req_type: Story
 tags:
 - codex
 - onboarding
 - ux
+comments:
+- id: 01a04feb-9892-7ad0-a3ad-ec101f30c4a8
+  author: joe
+  content: 'Implemented: step 3 onboarding guidance now names workspace/greet.py and frames the action as an explicit handoff to the selected implementer. aida-tutor next now says ''Ask Codex to edit workspace/greet.py'' and includes the exact --upper/trace-comment prompt. The full lesson now states that aida-tutor guides/verifies and does not edit greet.py itself. Added a regression test for the step 3 nudge. Verified with cargo fmt --check and cargo test.'
+  created_at: 2026-08-29T23:47:15.218578028Z
+  modified_at: 2026-08-29T23:47:15.218578028Z
+history:
+- id: 01a04feb-9942-7dd3-9c6f-08538ccc52c8
+  author: codex-advisor-1
+  timestamp: 2026-08-29T23:47:15.394321768Z
+  changes:
+  - field_name: status
+    old_value: In Progress
+    new_value: Completed
