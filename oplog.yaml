@@ -757,5 +757,17 @@ operations:
   timestamp: 2026-08-29T20:57:23.784971558Z
   kind: !SetStatus
     status: Completed
-clock: 83
+- id: 01a04fca-5912-7102-98cc-6f9521f47162
+  target_id: 01a04fca-5399-72b3-9638-d9343db0b630
+  author: aida
+  node_id: ''
+  lamport: 84
+  timestamp: 2026-08-29T23:10:56.274987500Z
+  kind: !Create
+    title: Add aida-tutor next for onboarding guidance
+    description: Add an aida-tutor next command that evaluates the onboarding checkpoints and prints a concise next action. If a checkpoint just became complete, it should say which step is complete and show the next step/action. If the current checkpoint is blocked, it should print the diagnostic next action without re-rendering the full onboarding lesson.
+    req_type: Story
+    status: Approved
+    priority: High
+clock: 84
 node_id: ''

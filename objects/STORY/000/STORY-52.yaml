@@ -1,0 +1,16 @@
+id: 01a04fca-5399-72b3-9638-d9343db0b630
+spec_id: STORY-52
+agreed_id: STORY-52
+title: Add aida-tutor next for onboarding guidance
+description: Add an aida-tutor next command that evaluates the onboarding checkpoints and prints a concise next action. If a checkpoint just became complete, it should say which step is complete and show the next step/action. If the current checkpoint is blocked, it should print the diagnostic next action without re-rendering the full onboarding lesson.
+status: Approved
+priority: High
+owner: ''
+feature: Uncategorized
+created_at: 2026-08-29T23:10:54.873099292Z
+modified_at: 2026-08-29T23:10:54.873099292Z
+req_type: Story
+tags:
+- cli
+- onboarding
+- ux
