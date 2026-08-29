@@ -527,5 +527,27 @@ operations:
   timestamp: 2026-06-11T06:50:15.824345031Z
   kind: !SetStatus
     status: Rejected
-clock: 66
+- id: 01a04f1c-d974-7c20-a3c3-af0b9742d9d0
+  target_id: 01a04f1c-a7a3-77d2-9642-2f0c5e93091b
+  author: aida
+  node_id: ''
+  lamport: 67
+  timestamp: 2026-08-29T20:01:25.876810482Z
+  kind: !Create
+    title: Refresh tutor for AIDA 0.14 project setup flows
+    description: |-
+      AIDA 0.14 has expanded first-run and project-enablement behavior beyond the tutor's current framing. The tutor should explicitly teach how to start a new project with AIDA and how to enable AIDA in an existing project, including the current init choices, agent scaffolding, and remote/sync posture.
+
+      Primary callers: terminal learner using aida-tutor; maintainer running cargo run -- demo; docs reader evaluating whether AIDA fits their project.
+
+      Acceptance:
+      - The README and welcome/current overview describe the current 36-exercise track plus onboarding path instead of the stale 17-exercise map.
+      - The setup narrative distinguishes a brand-new project, an existing git repo, a non-git directory using --git-init, a markdown-only --minimal first run, and full git-canonical init.
+      - The enablement narrative names the scaffolded agent surfaces for 0.14: CLAUDE.md/.claude, AGENTS.md/.codex skills, .antigravity where applicable, .mcp.json, hooks, roles, and machine-level agent posture.
+      - The path to sharing/deploying a new AIDA-backed project includes remote setup, aida push/pull, and the orphan store branch, without implying users must manage requirements.db.
+      - cargo test and cargo run -- reset --yes && cargo run -- demo pass against the installed aida 0.14 CLI.
+    req_type: Epic
+    status: Approved
+    priority: High
+clock: 67
 node_id: ''
