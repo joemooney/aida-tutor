@@ -13,12 +13,12 @@ description: |-
   - Content mentions --agent claude|codex|both and --no-skills only as setup choices, with default behavior matching current aida init help.
   - Verifier/demo exercises remain deterministic and pass non-interactively.
   - The text avoids deprecated centralized/requirements.db language except as a legacy opt-out warning if mentioned at all.
-status: Approved
+status: Completed
 priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-08-29T20:01:48.779143819Z
-modified_at: 2026-08-29T20:08:57.217056166Z
+modified_at: 2026-08-29T20:08:58.015188757Z
 req_type: Story
 tags:
 - aida-0.14
@@ -34,3 +34,11 @@ comments:
   content: 'Implemented: README, exercise 01, and onboarding step 1 now teach AIDA 0.14 new-project bootstrap choices including --git-init, --minimal, --agent, sibling/attach stores, and full git-canonical init. Verified with cargo test and full demo.'
   created_at: 2026-08-29T20:08:57.217056166Z
   modified_at: 2026-08-29T20:08:57.217056166Z
+history:
+- id: 01a04f23-bf9f-7b91-80dc-3b3e066a0875
+  author: codex-advisor-1
+  timestamp: 2026-08-29T20:08:58.015188112Z
+  changes:
+  - field_name: status
+    old_value: Approved
+    new_value: Completed
