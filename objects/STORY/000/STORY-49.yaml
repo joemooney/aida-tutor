@@ -14,12 +14,12 @@ description: |-
   - Step 3 implementation instructions and expected trace marker use the selected implementer, e.g. ai:codex, ai:claude, ai:antigravity, or ai:human.
   - Verification accepts the selected implementer marker and preserves backward compatibility with existing completed tours where possible.
   - cargo fmt --check, cargo test, and cargo run -- reset --yes && cargo run -- demo pass.
-status: Approved
+status: InProgress
 priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-08-29T20:18:43.908363999Z
-modified_at: 2026-08-29T20:18:43.908363999Z
+modified_at: 2026-08-29T20:19:13.552370121Z
 req_type: Story
 tags:
 - agents
