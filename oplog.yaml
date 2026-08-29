@@ -709,5 +709,17 @@ operations:
   timestamp: 2026-08-29T20:35:07.901432058Z
   kind: !SetStatus
     status: Completed
-clock: 78
+- id: 01a04f46-40e9-7de1-b522-bbb2a12218e3
+  target_id: 01a04f46-3d20-7e41-815d-91e8b90ce705
+  author: aida
+  node_id: ''
+  lamport: 79
+  timestamp: 2026-08-29T20:46:39.337713106Z
+  kind: !Create
+    title: Codex-only onboarding accepts unselected Antigravity scaffold
+    description: 'When a learner selects only Codex in aida-tutor onboard, current AIDA 0.14 may still create .antigravity/ during aida init --agent codex. The tutor should not quietly accept unselected agent scaffold directories. It should fail the init checkpoint when .antigravity/ exists and Antigravity was not selected, with guidance to remove it or rerun once upstream strict allow-list behavior is fixed. Parent: STORY-50.'
+    req_type: Bug
+    status: Approved
+    priority: High
+clock: 79
 node_id: ''
