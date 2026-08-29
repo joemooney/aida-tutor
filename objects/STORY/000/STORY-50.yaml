@@ -15,12 +15,12 @@ description: |-
   - Manual/human remains available for implementation, but does not imply any prohibited agent scaffold.
   - The persisted onboarding state records selected scaffold agents and primary implementer.
   - cargo fmt --check, cargo test, cargo run -- onboard --reset, and cargo run -- reset --yes && cargo run -- demo pass.
-status: Approved
+status: Completed
 priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-08-29T20:27:59.925756262Z
-modified_at: 2026-08-29T20:35:02.294216077Z
+modified_at: 2026-08-29T20:35:07.897875556Z
 req_type: Story
 tags:
 - agents
@@ -37,3 +37,11 @@ comments:
   content: 'Implemented: onboarding agent selection now controls the rendered init profile; Codex-only renders aida init --agent codex and the verifier rejects .claude when Claude is not selected. Added multi-select scaffold selection with a separate primary implementer choice, persisted scaffold_agents, and documented the AIDA 0.14 Antigravity strict allow-list limitation via upstream BUG-794. Verified with cargo fmt --check, cargo test, Codex-only onboarding smoke, and cargo run -- reset --yes && cargo run -- demo.'
   created_at: 2026-08-29T20:35:02.294216077Z
   modified_at: 2026-08-29T20:35:02.294216077Z
+history:
+- id: 01a04f3b-b3f9-7af2-be91-41f3142975e4
+  author: codex-advisor-1
+  timestamp: 2026-08-29T20:35:07.897875066Z
+  changes:
+  - field_name: status
+    old_value: Approved
+    new_value: Completed
