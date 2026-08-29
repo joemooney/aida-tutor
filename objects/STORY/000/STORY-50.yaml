@@ -20,7 +20,7 @@ priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-08-29T20:27:59.925756262Z
-modified_at: 2026-08-29T20:27:59.925756262Z
+modified_at: 2026-08-29T20:35:02.294216077Z
 req_type: Story
 tags:
 - agents
@@ -31,3 +31,9 @@ relationships:
 - rel_type: Child
   target_id: 01a04f1c-a7a3-77d2-9642-2f0c5e93091b
   created_at: 2026-08-29T20:28:02.315887994Z
+comments:
+- id: 01a04f3b-9e16-77b2-9c69-f26680141e4d
+  author: joe
+  content: 'Implemented: onboarding agent selection now controls the rendered init profile; Codex-only renders aida init --agent codex and the verifier rejects .claude when Claude is not selected. Added multi-select scaffold selection with a separate primary implementer choice, persisted scaffold_agents, and documented the AIDA 0.14 Antigravity strict allow-list limitation via upstream BUG-794. Verified with cargo fmt --check, cargo test, Codex-only onboarding smoke, and cargo run -- reset --yes && cargo run -- demo.'
+  created_at: 2026-08-29T20:35:02.294216077Z
+  modified_at: 2026-08-29T20:35:02.294216077Z
