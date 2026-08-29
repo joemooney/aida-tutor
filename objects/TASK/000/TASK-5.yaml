@@ -12,12 +12,12 @@ description: |-
   - The verifier either pins aida show --format human when checking for the Git linkage block or accepts a stable machine-readable linkage signal.
   - Learner-facing text still matches what an interactive terminal user sees.
   - cargo test passes.
-status: Approved
+status: Completed
 priority: Medium
 owner: ''
 feature: Uncategorized
 created_at: 2026-08-29T20:01:48.796621834Z
-modified_at: 2026-08-29T20:08:57.208959092Z
+modified_at: 2026-08-29T20:08:59.665433710Z
 req_type: Task
 tags:
 - aida-0.14
@@ -33,3 +33,11 @@ comments:
   content: 'Implemented: aida_show_output now pins --format human so the non-TTY verifier sees the same Git linkage block learners see interactively. Verified with cargo test and full cargo run -- reset --yes && cargo run -- demo.'
   created_at: 2026-08-29T20:08:57.208959092Z
   modified_at: 2026-08-29T20:08:57.208959092Z
+history:
+- id: 01a04f23-c611-7711-9430-1c1976ad3f5a
+  author: codex-advisor-1
+  timestamp: 2026-08-29T20:08:59.665432583Z
+  changes:
+  - field_name: status
+    old_value: Approved
+    new_value: Completed
