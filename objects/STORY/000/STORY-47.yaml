@@ -18,7 +18,7 @@ priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-08-29T20:01:48.779143819Z
-modified_at: 2026-08-29T20:01:48.779143819Z
+modified_at: 2026-08-29T20:08:57.217056166Z
 req_type: Story
 tags:
 - aida-0.14
@@ -28,3 +28,9 @@ relationships:
 - rel_type: Child
   target_id: 01a04f1c-a7a3-77d2-9642-2f0c5e93091b
   created_at: 2026-08-29T20:01:51.381371792Z
+comments:
+- id: 01a04f23-bc81-70a0-9786-0c644dbe089e
+  author: joe
+  content: 'Implemented: README, exercise 01, and onboarding step 1 now teach AIDA 0.14 new-project bootstrap choices including --git-init, --minimal, --agent, sibling/attach stores, and full git-canonical init. Verified with cargo test and full demo.'
+  created_at: 2026-08-29T20:08:57.217056166Z
+  modified_at: 2026-08-29T20:08:57.217056166Z
