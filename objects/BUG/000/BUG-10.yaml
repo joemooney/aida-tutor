@@ -8,7 +8,7 @@ priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-08-29T20:46:38.368383599Z
-modified_at: 2026-08-29T20:47:33.173006705Z
+modified_at: 2026-08-29T20:48:35.837547541Z
 req_type: Bug
 tags:
 - agents
@@ -20,3 +20,9 @@ relationships:
   target_id: 01a04f35-2c35-7831-b18d-0d02c384f148
   created_at: 2026-08-29T20:47:33.173001319Z
   created_by: joe
+comments:
+- id: 01a04f48-07fd-7ba3-b399-e52879f3bb02
+  author: joe
+  content: 'Implemented: Codex-only onboarding now rejects .antigravity/ when Antigravity was not selected, matching the existing unselected .claude/.codex checks. Step 1 copy now calls out the current AIDA 0.14 behavior and tells learners to remove .antigravity/ before continuing until upstream BUG-794 provides strict allow-list scaffolding. Verified with cargo fmt --check, cargo test, Codex-only reproduction/cleanup smoke, and full cargo run -- reset --yes && cargo run -- demo.'
+  created_at: 2026-08-29T20:48:35.837547541Z
+  modified_at: 2026-08-29T20:48:35.837547541Z
