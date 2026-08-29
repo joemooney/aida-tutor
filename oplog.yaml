@@ -785,5 +785,17 @@ operations:
   timestamp: 2026-08-29T23:14:00.477625655Z
   kind: !SetStatus
     status: Completed
-clock: 86
+- id: 01a04fea-b0fd-7513-a7f9-a74083b36653
+  target_id: 01a04fea-ab67-7ff2-86dc-fe8a1b07e112
+  author: aida
+  node_id: ''
+  lamport: 87
+  timestamp: 2026-08-29T23:46:15.933507653Z
+  kind: !Create
+    title: Onboarding next explains agent handoff for implementation step
+    description: Improve aida-tutor next for onboarding step 3 so it does not imply the learner should only add a trace comment to unspecified new code. It should name greet.py and print an explicit prompt to give the selected implementer, e.g. Codex, to add the --upper flag with the required trace comment.
+    req_type: Story
+    status: Approved
+    priority: High
+clock: 87
 node_id: ''
