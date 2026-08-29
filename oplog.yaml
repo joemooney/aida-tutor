@@ -729,5 +729,17 @@ operations:
   timestamp: 2026-08-29T20:48:40.276458538Z
   kind: !SetStatus
     status: Completed
-clock: 80
+- id: 01a04f4d-e79c-7da3-aacb-b3f0e7dcf355
+  target_id: 01a04f4d-cfa3-74c2-952f-8ce74dcc8d23
+  author: aida
+  node_id: ''
+  lamport: 81
+  timestamp: 2026-08-29T20:55:00.764912272Z
+  kind: !Create
+    title: Onboarding explains blocked checkpoints interactively
+    description: Improve aida-tutor onboard so learners are not left at a generic step footer after running the instructed command. When a checkpoint is blocked by a known condition such as an unselected agent scaffold directory, the screen should say exactly what was found and what command to run next. The onboarding footer should also present the next command as an actionable prompt instead of a passive 'run again' loop.
+    req_type: Story
+    status: Approved
+    priority: High
+clock: 81
 node_id: ''
