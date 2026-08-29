@@ -1,0 +1,30 @@
+id: 01a04f1d-32eb-7913-9168-c109de7762c8
+spec_id: STORY-47
+agreed_id: STORY-47
+title: Teach new-project bootstrap paths for AIDA 0.14
+description: |-
+  Add a focused new-project setup path to aida-tutor. It should show the practical choices a user faces before first capture: create a git repo separately or let aida init --git-init do it, start with --minimal for a markdown-only trial, or run full git-canonical aida init for the normal AIDA workflow.
+
+  Primary callers: first-time terminal learner; docs reader starting a real project; cargo run -- demo.
+
+  Acceptance:
+  - Content teaches the recommended full path: mkdir/cd, git init or aida init --git-init, aida init --name <project>, first aida add, first trace/commit.
+  - Content explicitly frames --minimal as a 60-second markdown-only trial that can be followed by full init later, not as the default production setup.
+  - Content mentions --agent claude|codex|both and --no-skills only as setup choices, with default behavior matching current aida init help.
+  - Verifier/demo exercises remain deterministic and pass non-interactively.
+  - The text avoids deprecated centralized/requirements.db language except as a legacy opt-out warning if mentioned at all.
+status: Approved
+priority: High
+owner: ''
+feature: Uncategorized
+created_at: 2026-08-29T20:01:48.779143819Z
+modified_at: 2026-08-29T20:01:48.779143819Z
+req_type: Story
+tags:
+- aida-0.14
+- init
+- new-project
+relationships:
+- rel_type: Child
+  target_id: 01a04f1c-a7a3-77d2-9642-2f0c5e93091b
+  created_at: 2026-08-29T20:01:51.381371792Z
