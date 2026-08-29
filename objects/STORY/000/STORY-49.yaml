@@ -19,7 +19,7 @@ priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-08-29T20:18:43.908363999Z
-modified_at: 2026-08-29T20:22:27.571706636Z
+modified_at: 2026-08-29T20:24:02.414272858Z
 req_type: Story
 tags:
 - agents
@@ -35,6 +35,11 @@ comments:
   content: 'Implemented: onboard now detects codex, claude, and ag/antigravity on PATH, persists a workspace-local primary implementer choice, renders implementation/commit/cold-start steps from that choice, and verifies the selected ai:<tool> trace marker while preserving older tours. Verified with cargo fmt --check, cargo test, cargo run -- onboard --reset, and full cargo run -- reset --yes && cargo run -- demo.'
   created_at: 2026-08-29T20:22:26.627866251Z
   modified_at: 2026-08-29T20:22:26.627866251Z
+- id: 01a04f31-8c6e-77a0-85c0-eba7445747fd
+  author: joe
+  content: 'Follow-up: tightened trace verification so new tours require the persisted selected agent marker, while legacy tours without a persisted choice still pass. Re-ran full demo successfully after the tightening.'
+  created_at: 2026-08-29T20:24:02.414272858Z
+  modified_at: 2026-08-29T20:24:02.414272858Z
 history:
 - id: 01a04f30-19f3-7580-b694-6d892649ed77
   author: codex-advisor-1
