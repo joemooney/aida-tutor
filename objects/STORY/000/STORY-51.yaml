@@ -8,9 +8,15 @@ priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-08-29T20:54:54.627327775Z
-modified_at: 2026-08-29T20:55:09.212537156Z
+modified_at: 2026-08-29T20:57:18.783750534Z
 req_type: Story
 tags:
 - interactive
 - onboarding
 - ux
+comments:
+- id: 01a04f50-02bf-76d3-a1cc-9b337addafdb
+  author: joe
+  content: 'Implemented: onboarding footer now prints a Next action block with concrete commands. Step 1 distinguishes missing init from initialized-but-blocked state and names unselected scaffold directories such as .antigravity, including cleanup and rerun commands. Step 2 now prints the exact aida add command instead of prose. Verified with cargo fmt --check, cargo test, Codex-only blocked/cleanup smoke, and full cargo run -- reset --yes && cargo run -- demo.'
+  created_at: 2026-08-29T20:57:18.783750534Z
+  modified_at: 2026-08-29T20:57:18.783750534Z
