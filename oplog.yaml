@@ -677,5 +677,29 @@ operations:
   timestamp: 2026-08-29T20:22:27.579494136Z
   kind: !SetStatus
     status: Completed
-clock: 76
+- id: 01a04f35-3329-7e52-948a-7cd7474e3280
+  target_id: 01a04f35-2c35-7831-b18d-0d02c384f148
+  author: aida
+  node_id: ''
+  lamport: 77
+  timestamp: 2026-08-29T20:28:01.705944574Z
+  kind: !Create
+    title: Onboarding agent selection controls scaffolded agents
+    description: |-
+      Update aida-tutor onboard so agent selection is compliance-safe: users can select one or more allowed agents, and the Step 1 aida init command scaffolds only those selected agents when AIDA supports that shape. A user selecting only Codex must not be instructed to run plain aida init that scaffolds Claude.
+
+      Primary callers: terminal learner at an employer where some agents are prohibited; learner selecting only Codex; learner selecting multiple allowed agents; non-interactive cargo run -- onboard --reset smoke runs.
+
+      Acceptance:
+      - Onboarding presents agent selection as allowed scaffold targets, not only the Step 3 implementer.
+      - Selecting only Codex renders aida init --agent codex and no Claude-specific scaffold expectation in the setup guidance.
+      - Selecting only Claude renders aida init --agent claude.
+      - Selecting multiple supported agents renders the appropriate broad scaffold command; if AIDA only supports both for claude+codex, the copy explains that limitation clearly.
+      - Manual/human remains available for implementation, but does not imply any prohibited agent scaffold.
+      - The persisted onboarding state records selected scaffold agents and primary implementer.
+      - cargo fmt --check, cargo test, cargo run -- onboard --reset, and cargo run -- reset --yes && cargo run -- demo pass.
+    req_type: Story
+    status: Approved
+    priority: High
+clock: 77
 node_id: ''
