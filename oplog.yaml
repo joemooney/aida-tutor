@@ -549,5 +549,70 @@ operations:
     req_type: Epic
     status: Approved
     priority: High
-clock: 67
+- id: 01a04f1d-35ef-7580-a317-42940a642325
+  target_id: 01a04f1d-32eb-7913-9168-c109de7762c8
+  author: aida
+  node_id: ''
+  lamport: 68
+  timestamp: 2026-08-29T20:01:49.551662105Z
+  kind: !Create
+    title: Teach new-project bootstrap paths for AIDA 0.14
+    description: |-
+      Add a focused new-project setup path to aida-tutor. It should show the practical choices a user faces before first capture: create a git repo separately or let aida init --git-init do it, start with --minimal for a markdown-only trial, or run full git-canonical aida init for the normal AIDA workflow.
+
+      Primary callers: first-time terminal learner; docs reader starting a real project; cargo run -- demo.
+
+      Acceptance:
+      - Content teaches the recommended full path: mkdir/cd, git init or aida init --git-init, aida init --name <project>, first aida add, first trace/commit.
+      - Content explicitly frames --minimal as a 60-second markdown-only trial that can be followed by full init later, not as the default production setup.
+      - Content mentions --agent claude|codex|both and --no-skills only as setup choices, with default behavior matching current aida init help.
+      - Verifier/demo exercises remain deterministic and pass non-interactively.
+      - The text avoids deprecated centralized/requirements.db language except as a legacy opt-out warning if mentioned at all.
+    req_type: Story
+    status: Approved
+    priority: High
+- id: 01a04f1d-3813-7863-8c33-e22464f3f32a
+  target_id: 01a04f1d-32fc-74e1-a103-6bd110bc74d7
+  author: aida
+  node_id: ''
+  lamport: 69
+  timestamp: 2026-08-29T20:01:50.099723702Z
+  kind: !Create
+    title: Fix non-TTY Git linkage verifier drift
+    description: |-
+      The end-to-end demo currently fails exercise 7 against aida 0.14 because the verifier shells out to aida show in a non-TTY context, where AIDA defaults to compact TOON output that omits the human Git linkage block. Manual aida show FR-1 --format human does show the linkage.
+
+      Primary callers: cargo run -- demo in CI/non-TTY; terminal learner running aida-tutor verify; exercise 7 verifier.
+
+      Acceptance:
+      - Exercise 7 passes under cargo run -- reset --yes && cargo run -- demo against aida 0.14.
+      - The verifier either pins aida show --format human when checking for the Git linkage block or accepts a stable machine-readable linkage signal.
+      - Learner-facing text still matches what an interactive terminal user sees.
+      - cargo test passes.
+    req_type: Task
+    status: Approved
+    priority: Medium
+- id: 01a04f1d-38fc-72c1-afe7-fca47d878c66
+  target_id: 01a04f1d-32f5-7713-893f-be1824ee98ab
+  author: aida
+  node_id: ''
+  lamport: 70
+  timestamp: 2026-08-29T20:01:50.332464082Z
+  kind: !Create
+    title: Teach enabling AIDA in an existing project
+    description: |-
+      Add an existing-project enablement path to aida-tutor. The learner should understand what aida init writes into an already-live repository, how to keep scaffold changes reviewable, how to wire agent/MCP access, and how to retrofit hooks without disrupting unrelated work.
+
+      Primary callers: terminal learner inside an existing git repo; maintainer adding AIDA to a production repository; docs reader comparing agent integrations.
+
+      Acceptance:
+      - Content starts from a pre-existing git repo with commits and shows aida init without implying the repo must be empty.
+      - Content names the scaffolded files/directories and separates project files from rebuildable/local state: .aida/config.toml, .aida-store/, .mcp.json, CLAUDE.md, AGENTS.md, .claude/, .codex/skills/, hooks, and cache.db.
+      - Content covers --commit-scaffold and --force at a practical level: when to use them and when not to.
+      - Content includes Codex/Claude MCP enablement expectations: .mcp.json for Claude Code and manual codex mcp add aida -- aida mcp-serve where needed.
+      - Content includes a safe verification checklist: aida status, aida list, aida store status, aida docs build/check as appropriate.
+    req_type: Story
+    status: Approved
+    priority: High
+clock: 70
 node_id: ''

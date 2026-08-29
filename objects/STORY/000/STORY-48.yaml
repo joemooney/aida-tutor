@@ -1,0 +1,26 @@
+id: 01a04f1d-32f5-7713-893f-be1824ee98ab
+spec_id: STORY-48
+agreed_id: STORY-48
+title: Teach enabling AIDA in an existing project
+description: |-
+  Add an existing-project enablement path to aida-tutor. The learner should understand what aida init writes into an already-live repository, how to keep scaffold changes reviewable, how to wire agent/MCP access, and how to retrofit hooks without disrupting unrelated work.
+
+  Primary callers: terminal learner inside an existing git repo; maintainer adding AIDA to a production repository; docs reader comparing agent integrations.
+
+  Acceptance:
+  - Content starts from a pre-existing git repo with commits and shows aida init without implying the repo must be empty.
+  - Content names the scaffolded files/directories and separates project files from rebuildable/local state: .aida/config.toml, .aida-store/, .mcp.json, CLAUDE.md, AGENTS.md, .claude/, .codex/skills/, hooks, and cache.db.
+  - Content covers --commit-scaffold and --force at a practical level: when to use them and when not to.
+  - Content includes Codex/Claude MCP enablement expectations: .mcp.json for Claude Code and manual codex mcp add aida -- aida mcp-serve where needed.
+  - Content includes a safe verification checklist: aida status, aida list, aida store status, aida docs build/check as appropriate.
+status: Approved
+priority: High
+owner: ''
+feature: Uncategorized
+created_at: 2026-08-29T20:01:48.789848151Z
+modified_at: 2026-08-29T20:01:48.789848151Z
+req_type: Story
+tags:
+- agent-setup
+- aida-0.14
+- existing-project
