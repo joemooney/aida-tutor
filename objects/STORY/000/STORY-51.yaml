@@ -3,12 +3,12 @@ spec_id: STORY-51
 agreed_id: STORY-51
 title: Onboarding explains blocked checkpoints interactively
 description: Improve aida-tutor onboard so learners are not left at a generic step footer after running the instructed command. When a checkpoint is blocked by a known condition such as an unselected agent scaffold directory, the screen should say exactly what was found and what command to run next. The onboarding footer should also present the next command as an actionable prompt instead of a passive 'run again' loop.
-status: Approved
+status: InProgress
 priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-08-29T20:54:54.627327775Z
-modified_at: 2026-08-29T20:54:54.627327775Z
+modified_at: 2026-08-29T20:55:09.212537156Z
 req_type: Story
 tags:
 - interactive
