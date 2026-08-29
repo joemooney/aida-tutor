@@ -20,7 +20,7 @@ priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-08-29T20:27:59.925756262Z
-modified_at: 2026-08-29T20:35:07.897875556Z
+modified_at: 2026-08-29T20:47:32.368332109Z
 req_type: Story
 tags:
 - agents
@@ -31,6 +31,10 @@ relationships:
 - rel_type: Child
   target_id: 01a04f1c-a7a3-77d2-9642-2f0c5e93091b
   created_at: 2026-08-29T20:28:02.315887994Z
+- rel_type: Parent
+  target_id: 01a04f46-3d20-7e41-815d-91e8b90ce705
+  created_at: 2026-08-29T20:47:32.368327147Z
+  created_by: joe
 comments:
 - id: 01a04f3b-9e16-77b2-9c69-f26680141e4d
   author: joe
