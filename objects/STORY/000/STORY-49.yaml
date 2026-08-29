@@ -1,0 +1,27 @@
+id: 01a04f2c-b044-7742-a82e-5326a8e42d53
+spec_id: STORY-49
+agreed_id: STORY-49
+title: Onboarding selects available coding agent
+description: |-
+  Update aida-tutor onboard so the first-contact tour detects available coding agents, lets the learner choose a primary implementer, and adapts implementation guidance and verification to that choice while keeping a manual path.
+
+  Primary callers: terminal learner running aida-tutor onboard; learner without any coding agent installed; cargo run -- demo / cargo test maintainers.
+
+  Acceptance:
+  - Onboarding detects at least codex, claude, and ag/antigravity from PATH and presents availability clearly.
+  - The learner can choose Codex, Claude Code, Antigravity, or Manual/Human; unavailable agents are not required for the tour.
+  - The selected primary implementer is persisted in onboarding workspace state and reused on later onboard invocations.
+  - Step 3 implementation instructions and expected trace marker use the selected implementer, e.g. ai:codex, ai:claude, ai:antigravity, or ai:human.
+  - Verification accepts the selected implementer marker and preserves backward compatibility with existing completed tours where possible.
+  - cargo fmt --check, cargo test, and cargo run -- reset --yes && cargo run -- demo pass.
+status: Approved
+priority: High
+owner: ''
+feature: Uncategorized
+created_at: 2026-08-29T20:18:43.908363999Z
+modified_at: 2026-08-29T20:18:43.908363999Z
+req_type: Story
+tags:
+- agents
+- aida-0.14
+- onboarding
