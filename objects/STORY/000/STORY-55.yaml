@@ -8,10 +8,16 @@ priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-08-30T01:36:35.972559773Z
-modified_at: 2026-08-30T01:36:54.211244520Z
+modified_at: 2026-08-30T01:41:44.381458821Z
 req_type: Story
 tags:
 - interactive
 - onboarding
 - shell
 - ux
+comments:
+- id: 01a05054-693d-7ca0-b2ca-12a6e311ce82
+  author: joe
+  content: 'Implemented: added aida-tutor shell as an interactive onboarding shell. It starts in workspace/, supports built-ins next/lesson/where/reset/help/exit plus cd, executes other input through sh -c from the shell''s current directory, and re-runs onboarding checkpoint verification after each external command. The shell announces completed steps automatically and prints shell-native next actions, including blocker diagnostics for unselected scaffold directories. README now recommends shell as the first-run path. Verified with cargo fmt --check, cargo test, top-level next smoke, scripted shell transcript through init/blocker/cleanup/add, and full cargo run -- reset --yes && cargo run -- demo.'
+  created_at: 2026-08-30T01:41:44.381458821Z
+  modified_at: 2026-08-30T01:41:44.381458821Z
