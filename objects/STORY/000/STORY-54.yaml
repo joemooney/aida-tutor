@@ -3,12 +3,12 @@ spec_id: STORY-54
 agreed_id: STORY-54
 title: Onboarding demonstrates AI implementation handoff
 description: 'Update aida-tutor onboard/next so the first-contact lesson demonstrates the intended AIDA workflow: capture an issue/spec, optionally ask the advisor to weigh in, then have the selected AI implementer make the greet.py change. The learner should not be instructed to edit code by hand unless they selected the manual path. The flow should provide concrete commands/prompts for Codex-oriented implementation and point toward queue/burndown style automation where available.'
-status: InProgress
+status: Completed
 priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-08-30T01:20:00.562739444Z
-modified_at: 2026-08-30T01:24:48.189247256Z
+modified_at: 2026-08-30T01:24:57.724525906Z
 req_type: Story
 tags:
 - advisor
@@ -21,3 +21,11 @@ comments:
   content: 'Implemented: onboarding now demonstrates an AI implementation handoff instead of asking the learner to edit greet.py manually. Step 2 creates a small implementer-ready FR-1 with description and acceptance criteria. Step 3 runs aida spec dryrun FR-1, then shows a concrete codex exec command that runs in workspace/ and asks Codex to implement --upper with the required trace comment, followed by cargo run -- next. The full lesson explains that aida-tutor guides/verifies while the selected implementer changes code, and the signpost now names aida zen --vendor codex plus burndown plan as production automation paths. Verified with cargo fmt --check, cargo test, reset/init/add/dryrun/next smoke, and full cargo run -- reset --yes && cargo run -- demo.'
   created_at: 2026-08-30T01:24:48.189247256Z
   modified_at: 2026-08-30T01:24:48.189247256Z
+history:
+- id: 01a05045-0cfc-7ea1-9593-3a577d29a115
+  author: codex-advisor-1
+  timestamp: 2026-08-30T01:24:57.724525424Z
+  changes:
+  - field_name: status
+    old_value: In Progress
+    new_value: Completed
