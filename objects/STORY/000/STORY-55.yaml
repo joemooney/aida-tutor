@@ -1,0 +1,17 @@
+id: 01a0504f-b484-7ea0-ba72-0a96f2456710
+spec_id: STORY-55
+agreed_id: STORY-55
+title: Add interactive onboarding shell
+description: Add an aida-tutor shell command that starts an interactive tutorial prompt. It should seed/select onboarding state, start in workspace/, execute normal shell commands, preserve cd as a built-in, support next/lesson/where/reset/exit built-ins, and re-run onboarding checkpoint verification after each command. When progress advances, it should print the completed step and current next action so the learner can demonstrate a single terminal flow.
+status: Approved
+priority: High
+owner: ''
+feature: Uncategorized
+created_at: 2026-08-30T01:36:35.972559773Z
+modified_at: 2026-08-30T01:36:35.972559773Z
+req_type: Story
+tags:
+- interactive
+- onboarding
+- shell
+- ux
