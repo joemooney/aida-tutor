@@ -3,14 +3,28 @@ spec_id: BUG-11
 agreed_id: BUG-11
 title: Shell next guidance repeats cd and next
 description: 'In aida-tutor shell, the Next action block is rendered as if the user were outside the shell: it includes cd /path/to/workspace even when the shell prompt is already in workspace/, and it embeds a next command even though the footer already says to type next after the action. Make shell-mode guidance context-aware and non-redundant.'
-status: InProgress
+status: Completed
 priority: Medium
 owner: ''
 feature: Uncategorized
 created_at: 2026-08-30T01:51:28.582430389Z
-modified_at: 2026-08-30T01:51:40.774100573Z
+modified_at: 2026-08-30T01:54:23.937563652Z
 req_type: Bug
 tags:
 - onboarding
 - shell
 - ux
+comments:
+- id: 01a0505f-fffa-7f11-8d7a-57a282976d4a
+  author: joe
+  content: 'Implemented: shell-mode next guidance is now context-aware. When aida-tutor shell is already in workspace/, Next action blocks omit the redundant cd line and do not embed a next command; the shell footer handles the follow-up instruction. Top-level cargo run -- next still keeps cd/cd .. guidance. Added a regression test for the shell step-2 nudge. Verified with cargo fmt --check, cargo test, and a scripted shell transcript through init/blocker/cleanup.'
+  created_at: 2026-08-30T01:54:23.866036337Z
+  modified_at: 2026-08-30T01:54:23.866036337Z
+history:
+- id: 01a05060-0041-7743-985d-d56f0e2a3672
+  author: codex-advisor-1
+  timestamp: 2026-08-30T01:54:23.937562439Z
+  changes:
+  - field_name: status
+    old_value: In Progress
+    new_value: Completed
