@@ -1,0 +1,17 @@
+id: 01a05040-8432-7622-88fa-28ff50109e76
+spec_id: STORY-54
+agreed_id: STORY-54
+title: Onboarding demonstrates AI implementation handoff
+description: 'Update aida-tutor onboard/next so the first-contact lesson demonstrates the intended AIDA workflow: capture an issue/spec, optionally ask the advisor to weigh in, then have the selected AI implementer make the greet.py change. The learner should not be instructed to edit code by hand unless they selected the manual path. The flow should provide concrete commands/prompts for Codex-oriented implementation and point toward queue/burndown style automation where available.'
+status: Approved
+priority: High
+owner: ''
+feature: Uncategorized
+created_at: 2026-08-30T01:20:00.562739444Z
+modified_at: 2026-08-30T01:20:00.562739444Z
+req_type: Story
+tags:
+- advisor
+- ai-handoff
+- burndown
+- onboarding

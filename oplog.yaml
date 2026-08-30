@@ -813,5 +813,17 @@ operations:
   timestamp: 2026-08-29T23:47:15.398684983Z
   kind: !SetStatus
     status: Completed
-clock: 89
+- id: 01a05040-89e4-7651-8b24-4d5536dde097
+  target_id: 01a05040-8432-7622-88fa-28ff50109e76
+  author: aida
+  node_id: ''
+  lamport: 90
+  timestamp: 2026-08-30T01:20:02.020465964Z
+  kind: !Create
+    title: Onboarding demonstrates AI implementation handoff
+    description: 'Update aida-tutor onboard/next so the first-contact lesson demonstrates the intended AIDA workflow: capture an issue/spec, optionally ask the advisor to weigh in, then have the selected AI implementer make the greet.py change. The learner should not be instructed to edit code by hand unless they selected the manual path. The flow should provide concrete commands/prompts for Codex-oriented implementation and point toward queue/burndown style automation where available.'
+    req_type: Story
+    status: Approved
+    priority: High
+clock: 90
 node_id: ''
