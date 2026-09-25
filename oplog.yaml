@@ -1009,5 +1009,17 @@ operations:
   timestamp: 2026-09-25T05:26:39.721088269Z
   kind: !SetStatus
     status: Superseded
-clock: 108
+- id: 01a0d77b-1a8d-7990-ba70-a5be921bdf82
+  target_id: 01a0d77b-1757-7343-b476-50e1f411858b
+  author: aida
+  node_id: ''
+  lamport: 109
+  timestamp: 2026-09-25T07:32:44.301193312Z
+  kind: !Create
+    title: Demo commit switches out of advisor seat
+    description: The non-interactive tutor demo currently sets AIDA_SESSION_ROLE=advisor for the whole walkthrough, but exercise 06 commits learner code. Current AIDA correctly rejects code commits from the advisor seat, so the demo must temporarily use the implementer seat for the code commit and restore advisor mode afterward.
+    req_type: Bug
+    status: Draft
+    priority: High
+clock: 109
 node_id: ''
