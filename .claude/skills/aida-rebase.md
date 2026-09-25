@@ -1,10 +1,14 @@
 ---
 name: aida-rebase
 description: Detect whether the current branch has drifted from its upstream and classify the rebase (clean / ahead-only / behind-only / diverged-safe / diverged-risky) before deciding whether to rebase. Thin wrapper around the `aida rebase` CLI. Use before committing, before opening a PR, when picking up a session, or whenever the user mentions rebase/pull/push/"is this up to date?".
+disable-model-invocation: true
 allowed-tools:
   - Bash
   - Read
 ---
+<!-- AIDA Generated: v2.0.0 | checksum:8b7c7803 | DO NOT EDIT DIRECTLY -->
+<!-- To customize: copy this file and modify the copy -->
+
 
 # AIDA Rebase Skill
 
@@ -38,6 +42,38 @@ and surface the result:
   said "don't rebase" / "I'll handle git" — **suppress for the rest of
   the session.** Respect the explicit opt-out.
 
+## Autonomy mode — `$AIDA_ZEN` / `$AIDA_HEADLESS` (TASK-297)
+
+The probe (Step 1) is always side-effect-free and safe in every mode. The
+interactive pauses are the **"Safe rebase — proceed?"** prompts in Steps 2–3.
+Classify and resolve them by mode:
+
+```bash
+aida zen status            # prints: zen | interactive
+echo "${AIDA_HEADLESS:-}"
+```
+
+- **`interactive`** (default) — surface the proceed-prompt unchanged.
+- **`zen`** (corroborated — never the bare `$AIDA_ZEN` env var, BUG-237) —
+  for a **safe** classification (`behind-only` / `diverged-safe`) this is a
+  `kind:confirmation`; auto-resolve to "proceed" via `aida rebase --auto` and
+  print `↳ zen: auto-resolved "rebase?" → proceed`. A `diverged-risky`
+  classification is a `kind:design-fork` (file overlap, real conflict risk)
+  and **still surfaces** — do not auto-rebase it.
+- **`AIDA_HEADLESS=1`** (a `--no-human` drain) overrides `--zen`. AskUserQuestion
+  under `--no-human=both` is permission-denied and crashes the session ~10s in
+  (SPIKE-7 / BUG-280) — so under headless the skill **never** prompts:
+  - `clean` / `ahead-only` → nothing to do, return.
+  - `behind-only` / `diverged-safe` → run `aida rebase --auto` (no prompt).
+  - `diverged-risky` → do **not** auto-rebase a conflict-prone tree headless;
+    leave the working tree untouched and invoke `/aida-punt` so the design-fork
+    (which files conflict, how to reconcile) reaches a human / advisor tier
+    instead of being guessed unattended.
+
+  `--no-human` > `--zen` > default. An un-annotated prompt defaults to
+  `design-fork` (pause-safe). Author guidance:
+  `docs/aida/discipline/skill-prompt-kinds.md`. trace:TASK-297
+
 ## Workflow
 
 ### Step 1: Probe (always side-effect-free)
@@ -52,6 +88,11 @@ the JSON: `classification`, `ahead`, `behind`, `overlap`,
 `working_tree_clean`, `followups`.
 
 ### Step 2: Surface the classification in natural language
+
+<!-- kind:confirmation -->
+The "Safe rebase — proceed?" prompts below auto-resolve under `$AIDA_ZEN` and
+are never surfaced under `AIDA_HEADLESS=1` (see *Autonomy mode* above);
+`diverged-risky` is a `kind:design-fork` that always surfaces / punts.
 
 - **clean** / **ahead-only** — "Already in sync (or only ahead). No
   rebase needed." Stop here.

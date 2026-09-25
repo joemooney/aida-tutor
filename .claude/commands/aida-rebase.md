@@ -1,3 +1,9 @@
+---
+description: Run /aida-rebase.
+---
+<!-- AIDA Generated: v2.0.0 | checksum:b8daeac4 | DO NOT EDIT DIRECTLY -->
+<!-- To customize: copy this file and modify the copy -->
+
 # AIDA Rebase
 
 Detect, classify, and (optionally) execute a rebase of the current
@@ -11,7 +17,7 @@ branch onto its upstream.
 
 ## Instructions
 
-Follow the workflow in `.claude/skills/aida-rebase.md`:
+Follow the workflow in `.claude/skills/aida-rebase/SKILL.md`:
 
 1. Probe with `aida rebase --dry-run --json` — fetches, classifies, no
    side effects

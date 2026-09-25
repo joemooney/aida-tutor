@@ -1,10 +1,16 @@
+---
+description: Run /aida-grill.
+---
+<!-- AIDA Generated: v2.0.0 | checksum:b50ee0c2 | DO NOT EDIT DIRECTLY -->
+<!-- To customize: copy this file and modify the copy -->
+
 # Grill A Requirement
 
 Interrogate a requirement or design decision by walking every branch of the tree.
 
 ## Instructions
 
-Follow the workflow in `.claude/skills/aida-grill.md`:
+Follow the workflow in `.claude/skills/aida-grill/SKILL.md`:
 
 1. Read the requirement or proposal under scrutiny
 2. Walk every decision branch — happy path, error paths, edge cases, scale, security, ops

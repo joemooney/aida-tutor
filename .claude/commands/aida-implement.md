@@ -1,3 +1,9 @@
+---
+description: Run /aida-implement.
+---
+<!-- AIDA Generated: v2.0.0 | checksum:a0658631 | DO NOT EDIT DIRECTLY -->
+<!-- To customize: copy this file and modify the copy -->
+
 # Implement AIDA Requirement
 
 Implement a requirement with full traceability.
@@ -8,7 +14,7 @@ Invoke with: `/aida-implement <SPEC-ID>`
 
 ## Instructions
 
-Follow the workflow in `.claude/skills/aida-implement.md`:
+Follow the workflow in `.claude/skills/aida-implement/SKILL.md`:
 
 1. Load requirement: `aida show $ARGUMENTS`
 2. Analyze scope and identify files to modify

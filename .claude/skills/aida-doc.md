@@ -8,6 +8,9 @@ allowed-tools:
   - Edit
   - Write
 ---
+<!-- AIDA Generated: v2.0.0 | checksum:2ce5924d | DO NOT EDIT DIRECTLY -->
+<!-- To customize: copy this file and modify the copy -->
+
 
 # AIDA Doc Capture Skill
 

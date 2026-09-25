@@ -8,6 +8,9 @@ allowed-tools:
   - Glob
   - Edit
 ---
+<!-- AIDA Generated: v2.0.0 | checksum:0f6b3a0b | DO NOT EDIT DIRECTLY -->
+<!-- To customize: copy this file and modify the copy -->
+
 
 # AIDA Warnings Analysis Skill
 

@@ -1,3 +1,9 @@
+---
+description: Run /aida-test.
+---
+<!-- AIDA Generated: v2.0.0 | checksum:d401f71c | DO NOT EDIT DIRECTLY -->
+<!-- To customize: copy this file and modify the copy -->
+
 # Generate Tests
 
 Generate tests linked to a requirement.

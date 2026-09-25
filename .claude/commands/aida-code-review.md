@@ -1,10 +1,16 @@
+---
+description: Run /aida-code-review.
+---
+<!-- AIDA Generated: v2.0.0 | checksum:ffcb4dfc | DO NOT EDIT DIRECTLY -->
+<!-- To customize: copy this file and modify the copy -->
+
 # Code Review
 
 Exhaustive code quality review with a structured report and before/after diffs.
 
 ## Instructions
 
-Follow the workflow in `.claude/skills/aida-code-review.md`:
+Follow the workflow in `.claude/skills/aida-code-review/SKILL.md`:
 
 1. Determine review scope (current branch diff, a specific path, or recent commits)
 2. Check for sloppy code, untested paths, missing trace comments, excessive complexity, inconsistent style

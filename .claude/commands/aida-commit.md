@@ -1,3 +1,9 @@
+---
+description: Run /aida-commit.
+---
+<!-- AIDA Generated: v2.0.0 | checksum:f3f05b4b | DO NOT EDIT DIRECTLY -->
+<!-- To customize: copy this file and modify the copy -->
+
 # AIDA Commit
 
 Commit staged changes with automatic requirement linking.
@@ -10,10 +16,11 @@ Commit staged changes with automatic requirement linking.
 
 ## Instructions
 
-Follow the workflow in `.claude/skills/aida-commit.md`:
+Follow the workflow in `.claude/skills/aida-commit/SKILL.md`:
 
 1. Analyze staged changes and extract requirement traces
 2. Check for untraced implementation code
 3. Offer to create requirements for untraced work
 4. Create commit with requirement links in message
 5. Update linked requirement statuses
+6. Shipped a new CLI slice verb? Update its parent skill to call it (no re-impl) — see `.aida/discipline/skill-cli-symmetry.md` <!-- trace:TASK-736 -->

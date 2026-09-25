@@ -5,6 +5,9 @@ allowed-tools:
   - Bash
   - Read
 ---
+<!-- AIDA Generated: v2.0.0 | checksum:dbace384 | DO NOT EDIT DIRECTLY -->
+<!-- To customize: copy this file and modify the copy -->
+
 
 # AIDA Requirement Evaluation Skill
 

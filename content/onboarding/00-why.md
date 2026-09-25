@@ -11,7 +11,7 @@ code that implements them. It lives in the repo. Any agent, in any
 session, can read it.
 
 In the next 15 minutes you'll feel the difference firsthand. You'll take a
-real feature request, capture it, have your agent build it, commit — and
+real feature request, capture it, have {{agent_display}} build it, commit — and
 then watch a brand-new agent session, with zero memory of your
 conversation, answer a question about that feature correctly. Not because
 you told it. Because the project remembered.

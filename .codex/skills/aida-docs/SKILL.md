@@ -1,4 +1,15 @@
-<!-- AIDA Generated: v2.0.0 | checksum:b6f44085 | DO NOT EDIT DIRECTLY -->
+---
+name: aida-docs
+description: Manage project documentation including guides, reports, and keeping docs in sync with the codebase and requirements.
+allowed-tools:
+  - Bash
+  - Read
+  - Edit
+  - Write
+  - Glob
+  - Grep
+---
+<!-- AIDA Generated: v2.0.0 | checksum:6abefdf6 | DO NOT EDIT DIRECTLY -->
 <!-- To customize: copy this file and modify the copy -->
 
 
@@ -70,7 +81,7 @@ For slideshow presentations:
 
 ```bash
 # Basic status report
-aida list --format markdown > docs/reports/requirements-status.md
+aida list > docs/reports/requirements-status.md
 
 # Filter by status
 aida list --status draft
@@ -102,8 +113,8 @@ aida list --type <type>
 # Show requirement details
 aida show <SPEC-ID>
 
-# Export requirements
-aida export --format markdown
+# Export requirements (formats: mapping, tree, json)
+aida export --format tree
 aida export --format json
 ```
 

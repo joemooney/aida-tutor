@@ -4,6 +4,9 @@ description: One-shot project status — requirement breakdown, cache freshness,
 allowed-tools:
   - Bash
 ---
+<!-- AIDA Generated: v2.0.0 | checksum:ee0fdc24 | DO NOT EDIT DIRECTLY -->
+<!-- To customize: copy this file and modify the copy -->
+
 
 # AIDA Status Skill
 

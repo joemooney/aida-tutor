@@ -107,6 +107,35 @@ the moment it lands.
 
 ---
 
+## Step 0 — PREREQUISITE: re-scaffold aida-tutor's `.claude/` before anything else
+
+aida-tutor's scaffold is **stale and partially inconsistent**, discovered 2026-05-18:
+
+- `.claude/commands/` has only **15 of AIDA's current 31** commands (May-9 vintage). Missing
+  the entire agent-collaboration command set: `aida-pickup`, `aida-pr`, `aida-queue`,
+  `aida-drain-queue`, `aida-plan`, `aida-rebase`, `aida-doc`, `aida-decompose`,
+  `aida-triage`, and more.
+- A partial uncommitted refresh left `.claude/` inconsistent — e.g.
+  `skills/aida-pickup.md` exists but `commands/aida-pickup.md` does not, so
+  `/aida-pickup` resolves as "Unknown command."
+
+**You cannot do your job until this is fixed** — you need `/aida-pickup`, `/aida-queue`,
+`/aida-pr` etc. to drive the work. Before First Actions:
+
+1. Inspect the uncommitted `.claude/` changes (`git status .claude/`). They are a
+   half-finished partial refresh — decide per file: keep, or discard and re-scaffold clean.
+2. Run a **full scaffold refresh** so aida-tutor has all 31 current commands + matching
+   skills + hooks. Check `aida init --help` for the safest flag. **Caveat:** `aida init
+   --force` overwrites `CLAUDE.md` — aida-tutor has a customized one; restore it from git
+   (`git checkout CLAUDE.md`) after, or use a more targeted skills/commands refresh if one
+   exists.
+3. Verify: `/aida-pickup` and `/aida-queue` resolve in a fresh Claude session in this repo.
+4. If you determine a scaffold-refresh *command* produced the skill-without-command
+   desync (reproduce it), file that as a BUG in the **AIDA** project's store — it would
+   hit every project doing a refresh.
+
+Only once the scaffold is current and consistent do the First Actions below apply.
+
 ## First actions
 
 1. Read the required reading above.

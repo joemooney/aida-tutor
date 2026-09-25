@@ -1,10 +1,16 @@
+---
+description: Run /aida-doc.
+---
+<!-- AIDA Generated: v2.0.0 | checksum:1f99b0e9 | DO NOT EDIT DIRECTLY -->
+<!-- To customize: copy this file and modify the copy -->
+
 # Capture Living Documentation
 
 Capture the WHY behind recently-touched specs as `Doc` requirements.
 
 ## Instructions
 
-Follow the workflow in `.claude/skills/aida-doc.md`:
+Follow the workflow in `.claude/skills/aida-doc/SKILL.md`:
 
 1. Pick the candidate spec — from `$ARGUMENTS` if provided, otherwise from `aida role show` recent activity
 2. If the candidate already has Doc entries, surface them first (`aida doc show <SPEC>`)

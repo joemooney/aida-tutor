@@ -7,6 +7,9 @@ allowed-tools:
   - Glob
   - Grep
 ---
+<!-- AIDA Generated: v2.0.0 | checksum:a34ef45d | DO NOT EDIT DIRECTLY -->
+<!-- To customize: copy this file and modify the copy -->
+
 
 # AIDA Glossary Skill
 

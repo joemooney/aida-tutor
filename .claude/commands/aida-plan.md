@@ -1,10 +1,16 @@
+---
+description: Run /aida-plan.
+---
+<!-- AIDA Generated: v2.0.0 | checksum:db6a0325 | DO NOT EDIT DIRECTLY -->
+<!-- To customize: copy this file and modify the copy -->
+
 # Plan Requirement Implementation
 
 Decompose and design an approved requirement before coding begins.
 
 ## Instructions
 
-Follow the workflow in `.claude/skills/aida-plan.md`:
+Follow the workflow in `.claude/skills/aida-plan/SKILL.md`:
 
 1. Read the requirement (`aida show <ID>`) and its related links
 2. Survey the affected code surface

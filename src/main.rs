@@ -59,7 +59,7 @@ enum Cmd {
         #[arg(long, short = 'y')]
         yes: bool,
     },
-    /// Print overall progress (e.g., "5/17 done — 29%").
+    /// Print overall progress (e.g., "5/36 done — 14%").
     Progress,
     /// Re-run verify on the current exercise every time the workspace
     /// changes. Polls workspace/ mtime ~every 1.5s; Ctrl-C to exit.
@@ -93,6 +93,12 @@ enum Cmd {
         #[arg(long)]
         reset: bool,
     },
+    /// Print the next onboarding action without re-rendering the lesson.
+    /// trace:STORY-52 | ai:codex
+    Next,
+    /// Start an interactive onboarding shell.
+    /// trace:STORY-55 | ai:codex
+    Shell,
 }
 
 fn main() -> Result<()> {
@@ -146,6 +152,8 @@ fn main() -> Result<()> {
         Cmd::Demo => cmd_demo(&exercises, &workspace),
         Cmd::Wrapper { uninstall } => cmd_wrapper(&workspace, uninstall),
         Cmd::Onboard { reset } => onboarding::run(&workspace, &repo_root, reset),
+        Cmd::Next => onboarding::next(&workspace, &repo_root),
+        Cmd::Shell => onboarding::shell(&workspace, &repo_root),
     }
 }
 
@@ -894,14 +902,13 @@ pub(crate) fn render_md_for_terminal(md: &str) -> String {
 }
 
 fn cmd_welcome(total: usize) {
-    // trace:STORY-23 | ai:claude
+    // trace:STORY-23,STORY-47,STORY-48 | ai:claude,codex
     println!("{}", "Welcome to aida-tutor".cyan().bold());
     println!();
-    println!("{total} hands-on exercises that walk you through AIDA's daily workflow:");
-    println!("  init → capture (vision/principle/decision/feature/bug) → list/show →");
-    println!("  edit → trace + commit → docs build → search → status → push →");
-    println!("  distributed store → roles + queue → relationships →");
-    println!("  sessions + worktrees → code review → plans + store audit + MCP.");
+    println!("{total} hands-on exercises that walk you through AIDA's current workflow:");
+    println!("  project setup → capture → trace + commit → docs/search/status →");
+    println!("  push/pull the code + store → roles + queue → relationships →");
+    println!("  sessions + worktrees → review → plans + store audit + MCP.");
     println!();
     // One discoverability line for the first-contact onboarding slice —
     // the recommended starting point for someone new to AIDA.
@@ -918,7 +925,7 @@ fn cmd_welcome(total: usize) {
         "aida".cyan()
     );
     println!();
-    println!("Then bootstrap your workspace and start exercise 01:");
+    println!("Then bootstrap the tutor workspace and start exercise 01:");
     println!();
     println!(
         "  {}",

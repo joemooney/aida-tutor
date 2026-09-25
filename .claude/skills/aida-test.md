@@ -9,6 +9,9 @@ allowed-tools:
   - Glob
   - Grep
 ---
+<!-- AIDA Generated: v2.0.0 | checksum:dba13629 | DO NOT EDIT DIRECTLY -->
+<!-- To customize: copy this file and modify the copy -->
+
 
 # AIDA Test Generation Skill
 
@@ -26,7 +29,7 @@ Use this skill when:
 
 ## Requirement Context
 
-!`aida list --status completed --format brief 2>/dev/null | head -10 || echo "none"`
+!`aida list --status completed 2>/dev/null | head -10 || echo "none"`
 
 ## Workflow
 

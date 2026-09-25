@@ -1,10 +1,16 @@
+---
+description: Run /aida-capture.
+---
+<!-- AIDA Generated: v2.0.0 | checksum:4747bbc4 | DO NOT EDIT DIRECTLY -->
+<!-- To customize: copy this file and modify the copy -->
+
 # Capture Session Requirements
 
 Review conversation and capture any missed requirements.
 
 ## Instructions
 
-Follow the workflow in `.claude/skills/aida-capture.md`:
+Follow the workflow in `.claude/skills/aida-capture/SKILL.md`:
 
 1. Scan the conversation for discussed features, bugs, or ideas
 2. Identify any implemented work not yet in requirements database

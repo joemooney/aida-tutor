@@ -1,3 +1,9 @@
+---
+description: Run /aida-docs-review.
+---
+<!-- AIDA Generated: v2.0.0 | checksum:b38eac26 | DO NOT EDIT DIRECTLY -->
+<!-- To customize: copy this file and modify the copy -->
+
 # AIDA Documentation Review
 
 Exhaustive documentation quality review — finds stale, inconsistent, unprofessional, and hyped content.
@@ -10,7 +16,7 @@ Exhaustive documentation quality review — finds stale, inconsistent, unprofess
 
 ## Instructions
 
-Follow the workflow in `.claude/skills/aida-docs-review.md`:
+Follow the workflow in `.claude/skills/aida-docs-review/SKILL.md`:
 
 1. Inventory all documentation files
 2. Cross-reference factual claims against codebase

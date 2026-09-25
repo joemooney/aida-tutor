@@ -8,6 +8,9 @@ allowed-tools:
   - Edit
   - Write
 ---
+<!-- AIDA Generated: v2.0.0 | checksum:e7b2c4c8 | DO NOT EDIT DIRECTLY -->
+<!-- To customize: copy this file and modify the copy -->
+
 
 # AIDA Release Management Skill
 
@@ -131,8 +134,8 @@ aida db migrate --from sqlite --to yaml --force
 ### Step 9: Commit and Tag
 
 ```bash
-# Stage changes including requirements.yaml
-git add Cargo.toml CHANGELOG.md requirements.yaml  # or package.json
+# Stage the version + changelog (the AIDA store syncs separately, via aida push)
+git add Cargo.toml CHANGELOG.md  # or package.json
 
 # Commit version bump
 git commit -m "chore: release v{version}

@@ -1,5 +1,5 @@
 #!/bin/bash
-# AIDA Generated: v2.0.0 | checksum:f7094c6d
+# AIDA Generated: v2.0.0 | checksum:e74d90f0
 # To customize: copy this file and modify the copy
 # AIDA Claude Code Hook: per-role system-prompt addendum
 # SessionStart hook (runs once when a Claude Code session begins).
@@ -23,8 +23,8 @@ fi
 
 # Locate the role file. Honor AIDA_SESSION_PROJECT (set by `aida role enter`)
 # so the project copy takes precedence even when the hook fires from a
-# different cwd; fall back to $CLAUDE_PROJECT_DIR or pwd-walking.
-project_root="${AIDA_SESSION_PROJECT:-${CLAUDE_PROJECT_DIR:-$PWD}}"
+# different cwd; fall back to the vendor project var, then git, then pwd.
+project_root="${AIDA_SESSION_PROJECT:-${CLAUDE_PROJECT_DIR:-${CODEX_PROJECT_DIR:-$(git rev-parse --show-toplevel 2>/dev/null || printf %s "$PWD")}}}"
 role_file=""
 if [ -f "$project_root/.aida/roles/$role.toml" ]; then
     role_file="$project_root/.aida/roles/$role.toml"
@@ -81,9 +81,27 @@ extract_field() {
 purpose=$(extract_field purpose "$role_file")
 system_prompt=$(extract_field system_prompt "$role_file")
 
-# Build the addendum body. If neither purpose nor system_prompt is set,
-# the role provides no useful context for the model — exit silently.
-if [ -z "$purpose" ] && [ -z "$system_prompt" ]; then
+# STORY-278/STORY-285: the advisor seat triages findings the headless drain
+# files as draft TASKs — the reviewer (from-review:) and the implementer
+# (from-implementer:). Surface a pending count at session start so they aren't
+# missed. Non-zero count only — silent when clean. Best-effort: a missing/slow
+# `aida` degrades to no line.
+# TASK-586: match `advisor` (canonical) and `dialog` (deprecated alias, for a
+# shell whose AIDA_SESSION_ROLE predates the rename).
+findings_line=""
+if [ "$role" = "advisor" ] || [ "$role" = "dialog" ]; then
+    n=$(aida findings list --count 2>/dev/null || echo 0)
+    case "$n" in
+        '' | *[!0-9]*) n=0 ;;
+    esac
+    if [ "$n" -gt 0 ]; then
+        findings_line="${n} findings awaiting triage (use \`aida findings list\` to review)"
+    fi
+fi
+
+# Build the addendum body. If the role contributes no purpose/system_prompt
+# AND there is no findings line, there's nothing useful — exit silently.
+if [ -z "$purpose" ] && [ -z "$system_prompt" ] && [ -z "$findings_line" ]; then
     exit 0
 fi
 
@@ -97,6 +115,11 @@ if [ -n "$system_prompt" ]; then
     body="${body}
 
 ${system_prompt}"
+fi
+if [ -n "$findings_line" ]; then
+    body="${body}
+
+${findings_line}"
 fi
 
 # Emit JSON envelope so Claude Code injects body as additionalContext.

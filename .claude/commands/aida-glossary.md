@@ -1,10 +1,16 @@
+---
+description: Run /aida-glossary.
+---
+<!-- AIDA Generated: v2.0.0 | checksum:8a16f319 | DO NOT EDIT DIRECTLY -->
+<!-- To customize: copy this file and modify the copy -->
+
 # Maintain Project Glossary
 
 Build the ubiquitous language dictionary by scanning reqs and code for domain terms.
 
 ## Instructions
 
-Follow the workflow in `.claude/skills/aida-glossary.md`:
+Follow the workflow in `.claude/skills/aida-glossary/SKILL.md`:
 
 1. Scan requirements (`aida list`, `aida search`) and key code paths for domain terms
 2. Surface inconsistencies, synonyms, and ambiguous usage with file:line evidence

@@ -1,10 +1,16 @@
+---
+description: Run /aida-req.
+---
+<!-- AIDA Generated: v2.0.0 | checksum:7228693d | DO NOT EDIT DIRECTLY -->
+<!-- To customize: copy this file and modify the copy -->
+
 # Add AIDA Requirement
 
 Add a new requirement to the database with AI evaluation.
 
 ## Instructions
 
-Follow the workflow in `.claude/skills/aida-req.md`:
+Follow the workflow in `.claude/skills/aida-req/SKILL.md`:
 
 1. Ask user for requirement description (required) and optional: type, priority, feature, tags
 2. Generate a concise title from the description

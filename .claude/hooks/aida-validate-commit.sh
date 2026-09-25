@@ -1,5 +1,5 @@
 #!/bin/bash
-# AIDA Generated: v2.0.0 | checksum:0ba50ab2
+# AIDA Generated: v2.0.0 | checksum:72263eb0
 # To customize: copy this file and modify the copy
 # AIDA Claude Code Hook: Validate commits reference requirements
 # PreToolUse hook for Bash commands
@@ -12,13 +12,25 @@
 #   0 - Allow the command
 #   2 - Block the command (show stderr to Claude)
 
-set -euo pipefail
+set -Eeuo pipefail
+
+# Unexpected hook failures must be visible to the agent runtime. Claude/Codex
+# treat a silent non-zero hook as a block with no useful reason, so only the
+# deliberate `exit 2` path below should ever produce a non-zero status.
+# trace:BUG-1092 | ai:codex
+__aida_hook_unexpected_error() {
+    local status=$?
+    [ "$status" -eq 0 ] && return
+    printf 'AIDA hook internal error: aida-validate-commit.sh aborted unexpectedly at line %s (exit %s). This is a hook bug, not a policy block.\n' "${BASH_LINENO[0]:-unknown}" "$status" >&2
+    exit "$status"
+}
+trap __aida_hook_unexpected_error ERR
 
 # Read JSON input from stdin
 input=$(cat)
 
 # Extract the command being executed
-command=$(echo "$input" | jq -r '.tool_input.command // ""')
+command=$(echo "$input" | jq -r '.tool_input.command // ""' 2>/dev/null || echo "")
 
 # Only validate git commit commands
 if ! echo "$command" | grep -qE '^git commit'; then
@@ -68,7 +80,7 @@ EOF
 esac
 
 # Validate that the requirement exists
-req_id=$(echo "$msg" | grep -oE '\([A-Z]+(-[0-9]+){1,2}\)' | head -1 | tr -d '()')
+req_id=$(echo "$msg" | grep -oE '\([A-Z]+(-[0-9]+){1,2}\)' | head -1 | tr -d '()' || true)
 
 if [ -n "$req_id" ]; then
     if command -v aida &> /dev/null; then

@@ -1,10 +1,16 @@
+---
+description: Run /aida-decompose.
+---
+<!-- AIDA Generated: v2.0.0 | checksum:44f4f669 | DO NOT EDIT DIRECTLY -->
+<!-- To customize: copy this file and modify the copy -->
+
 # Decompose Requirement Into Vertical Slices
 
 Break a large requirement into independently deliverable vertical-slice children.
 
 ## Instructions
 
-Follow the workflow in `.claude/skills/aida-decompose.md`:
+Follow the workflow in `.claude/skills/aida-decompose/SKILL.md`:
 
 1. Read the parent requirement (`aida show <ID>`)
 2. Identify the layers it touches (DB, API, UI, infra, docs)

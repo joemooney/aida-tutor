@@ -7,6 +7,9 @@ allowed-tools:
   - Glob
   - Grep
 ---
+<!-- AIDA Generated: v2.0.0 | checksum:e0265bb7 | DO NOT EDIT DIRECTLY -->
+<!-- To customize: copy this file and modify the copy -->
+
 
 # AIDA Project Onboarding Skill
 
@@ -29,8 +32,9 @@ Use this skill when:
 # Detect project type
 ls Cargo.toml package.json pyproject.toml setup.py go.mod 2>/dev/null
 
-# Check for AIDA
-ls requirements.db requirements.yaml .aida/ 2>/dev/null
+# Check for AIDA (distributed git-canonical is the default; .aida/config.toml
+# + the .aida-store worktree are the markers)
+ls .aida/config.toml .aida-store 2>/dev/null
 
 # Read project instructions
 cat CLAUDE.md 2>/dev/null | head -50
@@ -54,11 +58,11 @@ Present a brief architecture summary:
 ### Step 3: Show Requirements Overview
 
 ```bash
-# Requirements summary
-aida list --format summary 2>/dev/null || echo "No AIDA database found"
+# Requirements overview (open work first; `--all` adds completed)
+aida list 2>/dev/null || echo "No AIDA store found — run 'aida init' first"
 
-# Feature areas
-aida feature list 2>/dev/null || echo "No features defined"
+# What's still to do
+aida list open 2>/dev/null
 
 # Priority items
 aida list --status approved --priority high 2>/dev/null | head -10
@@ -71,8 +75,8 @@ aida list --status approved --priority high 2>/dev/null | head -10
 git log --oneline -10 2>/dev/null
 
 # Recent requirement changes
-aida list --status in-progress --format brief 2>/dev/null | head -5
-aida list --status completed --format brief 2>/dev/null | head -5
+aida list --status in-progress 2>/dev/null | head -5
+aida list --status completed 2>/dev/null | head -5
 ```
 
 ### Step 5: Present Onboarding Summary

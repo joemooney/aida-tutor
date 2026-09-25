@@ -1,4 +1,4 @@
-<!-- AIDA Generated: v2.0.0 | checksum:b43918f7 | DO NOT EDIT DIRECTLY -->
+<!-- AIDA Generated: v2.0.0 | checksum:631a1764 | DO NOT EDIT DIRECTLY -->
 <!-- To customize: copy this file and modify the copy -->
 
 # AIDA Conventions
@@ -16,7 +16,17 @@ canonical.
 
 Requirements database: distributed git-canonical store at `.aida-store/` (orphan branch `aida-store`, plus a rebuildable SQLite cache at `.aida/cache.db`).
 
-Currently tracking **6** requirement(s).
+### Agent surface
+
+For CLI-capable agents, the AIDA CLI with compact TOON output is the
+primary agent surface. Use `AIDA_AGENT_OUTPUT=toon aida show`,
+`aida list`, and `aida search` for routine reads and coordination
+checks. AIDA MCP is the typed/structural option for MCP-native clients
+or explicit opt-ins; the 2026-06-29 benchmark found MCP costs about
+2x the token-efficient CLI for identical tasks at equal-or-lower
+success. Register MCP only when that typed surface is worth the
+token cost, for example with `aida init --with-mcp` or
+`aida mcp register-agent`.
 
 ### Daily commands
 
@@ -69,6 +79,7 @@ Examples:
 ```
 [AI:claude] feat(auth): add login validation (FR-0042)
 [AI:claude:med] fix(api): handle null response (BUG-0023)
+[AI:antigravity+claude] test(hooks): accept mixed authorship (TASK-509)
 chore(deps): update dependencies        # no REQ-ID needed
 docs: update README                     # no REQ-ID needed
 ```
@@ -76,7 +87,9 @@ docs: update README                     # no REQ-ID needed
 Rules:
 
 - `[AI:tool]` required when commit includes AI-assisted code (any file with a
-   `// trace:... | ai:tool` comment changed).
+   `// trace:... | ai:tool` comment changed). Use `[AI:tool1+tool2]` for
+   mixed-agent authorship, with optional confidence on the whole commit
+   (`[AI:tool1+tool2:med]`).
 - `type` required: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`,
    `build`, `ci`, `chore`, `revert`.
 - `(scope)` optional — component or area affected.
@@ -112,6 +125,17 @@ bar. It shows project · active role · queue depth · cache freshness. If the
 role you expect isn't there, you forgot to `aida role enter <name>` before
 starting the session.
 
+## Git sync & review workflow
+
+- **`aida pull` refusing (divergent branches)?** The code leg is
+   `git pull --ff-only` (won't auto-rebase your tree); the store leg
+   is `--rebase`. Recovery recipe + the one-time `git config` to make
+   raw `git pull` Just Work: `.aida/discipline/git-sync-and-review.md`.
+- **Reviewing a PR?** `aida review prompt --pr N` lifts each linked
+   spec's `## Acceptance` into a review prompt. Needs `gh`/`glab` for
+   `--pr` mode; write a `## Acceptance` section in every STORY/BUG so
+   there's something to lift. Detail: same discipline doc.
+
 ## Claude Code skills (slash commands)
 
 This project ships a curated set of `/aida-*` skills under `.claude/skills/`,
@@ -128,3 +152,25 @@ each with a matching slash command in `.claude/commands/`. Daily drivers:
 - `/aida-search` — unified search across requirements + code
 
 Run `ls .claude/skills/` for the full skill catalog.
+
+### Per-project skill extensions (STORY-305)
+
+Two mechanisms let a project extend skills without forking them.
+AIDA never overwrites either, and `make sync-templates` never
+touches them:
+
+1. **Project-owned new skills** live under
+   `.claude/skills/local/<my-skill>.md`. Claude Code discovers
+   them the same way it discovers stock skills.
+2. **Stock-skill extensions** live alongside the stock skill as
+   `.claude/skills/<name>.local.md`. When `/aida-<name>` is
+   invoked, treat the stock skill as the base and **append**
+   the `<name>.local.md` content as project-specific guidance
+   with last-word authority (later instructions override
+   earlier ones — normal markdown precedence).
+
+**For Claude Code**: whenever you load a stock skill from
+`.claude/skills/<name>.md`, also read `.claude/skills/<name>.local.md`
+if it exists in the same directory and treat its contents as
+appended to the stock skill. Both files together are the
+effective skill. See `docs/extending-skills.md` for examples.

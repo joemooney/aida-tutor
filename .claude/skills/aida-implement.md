@@ -1,6 +1,7 @@
 ---
 name: aida-implement
 description: Implement an approved requirement with full traceability. Use when user wants to implement a feature, fix a bug, or work on a requirement.
+disable-model-invocation: true
 allowed-tools:
   - Bash
   - Read
@@ -9,6 +10,9 @@ allowed-tools:
   - Glob
   - Grep
 ---
+<!-- AIDA Generated: v2.0.0 | checksum:e4ff8598 | DO NOT EDIT DIRECTLY -->
+<!-- To customize: copy this file and modify the copy -->
+
 
 # AIDA Implementation Skill
 
@@ -20,7 +24,6 @@ Implement an approved requirement with full traceability, evolving the requireme
 
 Use this skill when:
 - User says "implement <SPEC-ID>" or "work on <requirement>"
-- User triggers "Copy for Claude Code" from the aida-desktop AI menu
 - An approved requirement is ready to be implemented
 - Continuing implementation of a requirement from a previous session
 
@@ -49,7 +52,7 @@ Format: `ai:<tool>:<username>` (e.g., `ai:claude:joe`)
 
 ## Approved Requirements
 
-!`aida list --status approved --format brief 2>/dev/null | head -15 || echo "none"`
+!`aida list --status approved 2>/dev/null | head -15 || echo "none"`
 
 ## Autonomy mode — `$AIDA_ZEN` (STORY-287)
 
@@ -61,19 +64,27 @@ comment directly above each one:
 - `<!-- kind:design-fork -->` — a genuine choice between meaningful
   alternatives, where guessing wrong has real cost.
 
-Before surfacing any prompt, check the autonomy mode (`echo "${AIDA_ZEN:-}"`):
+Before surfacing any prompt, check the autonomy mode:
 
-- **Non-empty** — *advisor-on-standby* mode (`aida queue work --zen`, or
-  `AIDA_ZEN=1` exported). Auto-resolve every `kind:confirmation` prompt to
-  option 1 and proceed, printing `↳ zen: auto-resolved "<prompt>" →
-  option 1`. Still surface every `kind:design-fork` prompt unchanged —
-  implementation approach decisions are exactly what the advisor stays at
-  the keyboard for.
-- **Empty** — default mode: surface every prompt, no change.
+```bash
+aida zen status
+```
+
+- **`zen`** — *advisor-on-standby* mode, **corroborated** (`aida queue
+  work --zen`, or a live `--auto-complete --zen` orchestrator).
+  Auto-resolve every `kind:confirmation` prompt to option 1 and proceed,
+  printing `↳ zen: auto-resolved "<prompt>" → option 1`. Still surface
+  every `kind:design-fork` prompt unchanged — implementation approach
+  decisions are exactly what the advisor stays at the keyboard for.
+- **`interactive`** — default mode: surface every prompt, no change.
+  `aida zen status` prints `interactive` whenever zen is off *or*
+  `AIDA_ZEN=1` is set but its provenance cannot be corroborated — a
+  stale / leaked `AIDA_ZEN=1` never silently enables zen (BUG-237).
+  Branch off this word, **not** the bare `$AIDA_ZEN` env var. trace:BUG-237
 
 A headless `--no-human` drain (`AIDA_HEADLESS=1`) is the stronger mode and
 overrides `--zen`. An un-annotated prompt defaults to `design-fork`
-(pause-safe). Author guidance: `docs/aida-discipline/skill-prompt-kinds.md`.
+(pause-safe). Author guidance: `docs/aida/discipline/skill-prompt-kinds.md`.
 trace:STORY-287
 
 **Graceful exit under the orchestrator (TASK-329).** If this skill runs
@@ -89,7 +100,14 @@ and comment is done and there is no hand-off to another skill — the
 The orchestrator polls for that file and reaps the otherwise-idle REPL (a
 skill cannot synthesize the Ctrl+D it would press interactively — BUG-230).
 Touch it **once, last**; skip it entirely in default interactive mode. Full
-protocol: `docs/aida-discipline/skill-prompt-kinds.md`. trace:TASK-329
+protocol: `docs/aida/discipline/skill-prompt-kinds.md`. trace:TASK-329
+
+Key this off `$AIDA_EXIT_SENTINEL` being set — a per-session absolute path
+the orchestrator minted — not the bare `AIDA_AUTO_COMPLETE` env var. If you
+ever need the corroborated orchestrator verdict explicitly, run
+`aida orchestrator status` (`orchestrated` only when a live orchestrator run
+owns the session — BUG-233); never trust `AIDA_AUTO_COMPLETE` on its own.
+trace:BUG-233
 
 ## Workflow
 
@@ -199,6 +217,85 @@ aida comment add <SPEC-ID> "Implementation complete. Files modified: src/foo.rs,
 ```bash
 aida rel add --from <TEST-SPEC-ID> --to <SPEC-ID> --type Verifies
 ```
+
+4. **Under a headless drain (`AIDA_HEADLESS=1`)** — file conversational
+   flags raised at the end of the spec (a deviation from the acceptance
+   criteria, a non-obvious design call, a pre-existing bug spotted, a
+   follow-up suggestion) as draft `from-implementer:<SPEC-ID>` findings so
+   they reach the advisor instead of vanishing into conversation history.
+   The full procedure — categories, severity rubric, idempotency probe — is
+   `/aida-pickup` Step 5b; the queue-driven pickup loop is the canonical
+   home for it. In an interactive session a human reads the flags directly;
+   skip this step. trace:STORY-285
+
+5. **Finish-state communication (TASK-359).** When this skill is the
+   skill that ends the session — either a structured *"how should I
+   finish?"* menu or a closing summary block under autonomous drive —
+   apply the six-element finish-state rubric: labelled **State
+   snapshot**, **deciding factor** when one is in play, explicit
+   **recommendation + rationale** (or **`→ Next:` line** naming the
+   user-action on a closing summary), **per-option drain-state +
+   reversibility**, an **advise escape** when the call is genuinely
+   ambiguous, and **decoupled coupled decisions** (push/PR is one
+   prompt, followup-filing the next — never bundled). Silence on the
+   next user-action is not acceptable: a closing summary must name
+   *"→ Press Ctrl+D to advance the orchestrator"* or *"→ session will
+   auto-exit; nothing else needed"* explicitly. Full rubric:
+   `docs/aida/discipline/session-discipline.md` § *Finish-state
+   communication rubric*. The worked templates live in `/aida-pickup`
+   Step 6 (menu) and `/aida-pr` orchestrator-mode (closing block).
+   trace:TASK-359
+
+### Step 7: Exit after `aida pr ship` (or `aida queue done`) — do NOT linger watching CI
+
+**Your work ends the moment `aida pr ship` returns zero (or `aida queue
+done` if you intentionally stopped one step earlier).** Both commands
+print a loud "IMPLEMENTER COMPLETE — EXIT NOW" banner at success — that
+banner is the substrate's signal that the implementer Claude has
+nothing left to do. Read it and exit. trace:BUG-376 | ai:claude
+
+Do **NOT**, after a successful `aida pr ship`:
+
+- Watch CI further (`gh pr checks <N> --watch`, `gh run watch …`) — CI
+  already ran inside `aida pr ship` step 2 *before* the merge; it is
+  green by the time you see the banner. Re-watching it is theatre.
+- Wait for the merge to land — `aida pr ship` step 3 already merged it.
+- Run `aida pull` to verify the auto-bump fired — `aida pr ship` step 4
+  already ran `aida pull`.
+- Run `aida status` / `aida session leases` to confirm the lease
+  cleared — `aida pr ship` step 5 already ran `aida session end`.
+- "Helpfully" stay around in case something needs follow-up — the
+  orchestrator (under `--auto-complete`), the reviewer (under a
+  separate review session), or the next-phase agent owns everything
+  that happens after the implementer's chair empties. Lingering only
+  burns operator attention and forces a manual Ctrl-D.
+
+After `aida queue done` (without a subsequent `aida pr ship`): the same
+rule applies — the spec is on the branch, the queue position is closed,
+and whichever caller spawned this implementer (orchestrator, interactive
+shell, drain) owns the next phase. Print one closing line naming
+*"→ Press Ctrl+D to exit"* and exit. Under `$AIDA_EXIT_SENTINEL` the
+sentinel touch from Step 6 of the autonomy-mode section is the
+machine-readable equivalent — do that and exit; never both poll CI
+*and* touch the sentinel.
+
+The motivating incident is BUG-376: an interactive implementer ran
+`aida pr ship` correctly, then said *"Next action: watch CI on PR-296
+and merge when green"* and lingered. The PR was already merged; the
+lease was already released; the only thing left was the Ctrl-D the user
+then had to type twice manually. Don't reproduce that shape.
+
+### Substrate-as-bouncer for pending briefs (BUG-378)
+
+`aida queue done` and `aida edit --status done|completed` now scan the
+brief surface (`.aida/agent-briefs/<your-agent-type>/`) and print a loud
+`NEW BRIEF(S) PENDING` banner to stderr if work is queued for your agent
+type. **If you see that banner, read the listed brief file(s) before
+exiting — even if your local scratchpad / task.md says "all done."** Your
+internal session state is a private draft, not ground truth; the brief
+surface is the canonical pickup queue. The motivating incident is the
+scratchpad-drift loop where an agent re-reads its own `task.md` and keeps
+re-rendering "all shipped" while a new brief sits unread. trace:BUG-378
 
 ## State Transitions
 

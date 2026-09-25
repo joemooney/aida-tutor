@@ -1,5 +1,5 @@
 #!/bin/bash
-# AIDA Generated: v2.0.0 | checksum:c83d1601
+# AIDA Generated: v2.0.0 | checksum:775d1646
 # To customize: copy this file and modify the copy
 # AIDA Claude Code Hook: Track commits and update requirement status
 # PostToolUse hook for Bash commands
@@ -12,14 +12,25 @@
 # Exit codes:
 #   0 - Success (always, this is informational only)
 
-set -euo pipefail
+set -Eeuo pipefail
+
+# Unexpected hook failures must be visible to the agent runtime. This
+# informational hook should only fail through an explicit, diagnosed path.
+# trace:BUG-1092 | ai:codex
+__aida_hook_unexpected_error() {
+    local status=$?
+    [ "$status" -eq 0 ] && return
+    printf 'AIDA hook internal error: aida-track-commits.sh aborted unexpectedly at line %s (exit %s). This is a hook bug, not a policy block.\n' "${BASH_LINENO[0]:-unknown}" "$status" >&2
+    exit "$status"
+}
+trap __aida_hook_unexpected_error ERR
 
 # Read JSON input from stdin
 input=$(cat)
 
 # Extract command and response
-command=$(echo "$input" | jq -r '.tool_input.command // ""')
-tool_response=$(echo "$input" | jq -r '.tool_response // ""')
+command=$(echo "$input" | jq -r '.tool_input.command // ""' 2>/dev/null || echo "")
+tool_response=$(echo "$input" | jq -r '.tool_response // ""' 2>/dev/null || echo "")
 
 # Only process git commit commands
 if ! echo "$command" | grep -qE '^git commit'; then
@@ -27,6 +38,7 @@ if ! echo "$command" | grep -qE '^git commit'; then
 fi
 
 # Check if commit was successful (look for success indicators in response)
+# This is a heuristic - adjust based on actual tool_response format
 if echo "$tool_response" | grep -qiE '(error|failed|abort)'; then
     exit 0  # Commit failed, don't update
 fi

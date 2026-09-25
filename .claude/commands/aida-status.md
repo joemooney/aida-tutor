@@ -1,3 +1,9 @@
+---
+description: Run /aida-status.
+---
+<!-- AIDA Generated: v2.0.0 | checksum:18c09951 | DO NOT EDIT DIRECTLY -->
+<!-- To customize: copy this file and modify the copy -->
+
 # Project Status
 
 One-shot snapshot of the project: requirement breakdown, cache
@@ -9,7 +15,7 @@ freshness, sync state, recent activity.
 
 ## Instructions
 
-Follow the workflow in `.claude/skills/aida-status.md`:
+Follow the workflow in `.claude/skills/aida-status/SKILL.md`:
 
 1. Read the snapshot above and surface the sections that matter — don't
    recite the whole dump

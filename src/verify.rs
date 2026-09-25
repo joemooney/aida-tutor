@@ -144,14 +144,15 @@ pub fn commit_subject_references(workspace: &Path, spec: &str) -> bool {
 }
 
 /// Run `aida show <spec>` read-only in `workspace` and return its stdout,
-/// or None if the command can't spawn or exits non-zero. The "see the
-/// link" exercise (07) asserts the Git-linkage section this renders once a
-/// commit references the spec and a `trace:` comment points at it. Reading
-/// is side-effect-free — `aida show` mutates nothing. trace:STORY-46
+/// or None if the command can't spawn or exits non-zero. The verifier runs
+/// non-interactively, so pin human output; AIDA's compact non-TTY format
+/// omits the rendered Git-linkage block learners see in a terminal.
+/// Reading is side-effect-free — `aida show` mutates nothing.
+/// trace:STORY-46,TASK-5 | ai:claude,codex
 pub fn aida_show_output(workspace: &Path, spec: &str) -> Option<String> {
     let out = std::process::Command::new("aida")
         .current_dir(workspace)
-        .args(["show", spec])
+        .args(["show", spec, "--format", "human"])
         .output()
         .ok()?;
     if !out.status.success() {

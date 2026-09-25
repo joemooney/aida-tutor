@@ -1,4 +1,10 @@
-<!-- AIDA Generated: v2.0.0 | checksum:8181fb44 | DO NOT EDIT DIRECTLY -->
+---
+name: aida-sprint
+description: Sprint planning — select approved requirements, group by feature, create sprint containers, and set priorities for the iteration.
+allowed-tools:
+  - Bash
+---
+<!-- AIDA Generated: v2.0.0 | checksum:df533e59 | DO NOT EDIT DIRECTLY -->
 <!-- To customize: copy this file and modify the copy -->
 
 
@@ -18,7 +24,7 @@ Use this skill when:
 
 ## Available Work
 
-!`aida list --status approved --format brief 2>/dev/null | head -20 || echo "none"`
+!`aida list --status approved 2>/dev/null | head -20 || echo "none"`
 
 ## Workflow
 
@@ -37,7 +43,7 @@ aida list --status in-progress 2>/dev/null
 
 ```bash
 # List features with requirement counts
-aida feature list 2>/dev/null
+aida list 2>/dev/null
 ```
 
 Present requirements grouped by feature area, with priority indicators.
@@ -100,7 +106,7 @@ aida edit <REQ-ID> --status in-progress
 ```bash
 aida list --status approved                       # Available work
 aida list --status in-progress                    # Current work
-aida feature list                                 # Feature areas
+aida list                                 # Feature areas
 aida add --title "..." --type sprint              # Create sprint
 aida rel add --from <A> --to <B> --type Parent    # Link to sprint
 aida edit <SPEC-ID> --status in-progress          # Start work

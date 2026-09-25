@@ -1,16 +1,21 @@
+<!-- trace:STORY-49 | ai:codex -->
+
 ## Step 6 — the cold start
 
 This is the part a skeptic can't wave away. Everything so far, they'd say,
 is `git log --grep` with extra steps. Watch what that misses.
 
-In Claude Code, start a completely fresh session:
+In {{agent_display}}, start a completely fresh session. For Claude Code
+that is:
 
 ```
 /clear
 ```
 
-That agent now has **zero memory** of everything you just did — no
-conversation, no context, a blank slate. Now ask it:
+If your selected implementer uses a different reset command, start a new
+session or clear the current one there. The point is that the agent now has
+**zero memory** of everything you just did — no conversation, no context, a
+blank slate. Now ask it:
 
     What does FR-1 cover in this project, and is it finished?
 

@@ -1,3 +1,9 @@
+---
+description: Run /aida-drain-queue.
+---
+<!-- AIDA Generated: v2.0.0 | checksum:ed59e144 | DO NOT EDIT DIRECTLY -->
+<!-- To customize: copy this file and modify the copy -->
+
 # Drain Your Role's Work Queue
 
 Assemble a correctly-phrased `/goal` autonomous loop that drains your
@@ -5,7 +11,7 @@ active role's queue — one item at a time, until it is empty.
 
 ## Instructions
 
-Follow the workflow in `.claude/skills/aida-drain-queue.md`:
+Follow the workflow in `.claude/skills/aida-drain-queue/SKILL.md`:
 
 1. Resolve the parameters from `$ARGUMENTS`: `--mode review|merge`
    (default `review`), `--role <name>` (default the active role),
@@ -21,6 +27,11 @@ Follow the workflow in `.claude/skills/aida-drain-queue.md`:
      story); `merge` autonomously merges and skips the reviewer.
 4. With `--dry-run`: print the assembled `/goal` text and stop.
    Otherwise: invoke it as `/goal <text>` to start the drain.
+5. For an unattended / overnight loop, wait on the drain **event-driven**
+   — `Monitor(command: "aida watch --emit-wakes", persistent: true)` —
+   and restart that shell-side watcher if it fails. Never use model-side
+   `CronCreate`, `/loop`, or `ScheduleWakeup` polling. See the skill's
+   "Waiting between items" section. <!-- trace:BUG-1589 | ai:codex -->
 
 Pairs with `/aida-pickup` (the per-item loop body) and `aida goal`
 (machine-checkable completion conditions).

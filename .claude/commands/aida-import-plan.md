@@ -1,11 +1,16 @@
+---
+description: Run /aida-import-plan.
+---
+<!-- AIDA Generated: v2.0.0 | checksum:26a257b5 | DO NOT EDIT DIRECTLY -->
+<!-- To customize: copy this file and modify the copy -->
+
 # Import a Saved Plan into AIDA
 
-Turn a free-floating plan file (e.g. saved from `/ultraplan`'s teleport-back)
-into first-class AIDA state.
+Turn a free-floating planner output file into first-class AIDA state.
 
 ## Instructions
 
-Follow the workflow in `.claude/skills/aida-import-plan.md`:
+Follow the workflow in `.claude/skills/aida-import-plan/SKILL.md`:
 
 1. Read the file and detect its target SPEC-ID (frontmatter → heading → filename → ask)
 2. Move it to `docs/plans/YYYY-MM-DD-<slug>.md` per AIDA convention
@@ -17,4 +22,5 @@ Follow the workflow in `.claude/skills/aida-import-plan.md`:
 Flags: `--queue` (queue for implementer), `--auto-anchor` (auto-fix drifted
 refs), `--dry-run` (report only, no side effects).
 
-Use after a `/ultraplan` session saves a plan to a loose local file.
+Use after `/aida-plan`, a Plan agent, a multi-agent workflow, or another
+planner saves a plan to a loose local file. trace:BUG-1177

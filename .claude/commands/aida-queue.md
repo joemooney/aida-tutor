@@ -1,10 +1,16 @@
+---
+description: Run /aida-queue.
+---
+<!-- AIDA Generated: v2.0.0 | checksum:9d68a5a5 | DO NOT EDIT DIRECTLY -->
+<!-- To customize: copy this file and modify the copy -->
+
 # View Queue Contents
 
 Show what's queued for the active role — read-only counterpart to `/aida-pickup`.
 
 ## Instructions
 
-Follow the workflow in `.claude/skills/aida-queue.md`:
+Follow the workflow in `.claude/skills/aida-queue/SKILL.md`:
 
 1. Show active role + `aida queue list` (role-routed + scope-filtered by default)
 2. If filtered queue is empty, offer `--no-scope` and `--all` as broader views

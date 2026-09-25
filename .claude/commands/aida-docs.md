@@ -1,10 +1,16 @@
+---
+description: Run /aida-docs.
+---
+<!-- AIDA Generated: v2.0.0 | checksum:9a7377ee | DO NOT EDIT DIRECTLY -->
+<!-- To customize: copy this file and modify the copy -->
+
 # Manage Project Documentation
 
 Keep guides, reports, and reference docs in sync with code and requirements.
 
 ## Instructions
 
-Follow the workflow in `.claude/skills/aida-docs.md`:
+Follow the workflow in `.claude/skills/aida-docs/SKILL.md`:
 
 1. Identify the docs surface in scope (CLAUDE.md, OVERVIEW.md, docs/, READMEs)
 2. Compare against current code/requirements for drift

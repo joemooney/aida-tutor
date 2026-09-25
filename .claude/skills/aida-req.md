@@ -5,6 +5,9 @@ allowed-tools:
   - Bash
   - Read
 ---
+<!-- AIDA Generated: v2.0.0 | checksum:b7056ac4 | DO NOT EDIT DIRECTLY -->
+<!-- To customize: copy this file and modify the copy -->
+
 
 # AIDA Requirement Creation Skill
 
@@ -22,8 +25,8 @@ Use this skill when:
 
 ## Current Project Context
 
-- Features: !`aida feature list 2>/dev/null | head -20 || echo "none"`
-- Recent requirements: !`aida list --format brief 2>/dev/null | tail -10 || echo "none"`
+- Recent specs: !`aida list 2>/dev/null | head -15 || echo "none yet — run 'aida init' first"`
+- Still to do: !`aida list open 2>/dev/null | head -10 || echo "none"`
 
 ## Workflow
 
@@ -101,6 +104,34 @@ Based on the evaluation, offer:
 - **Link**: Suggest relationships to existing requirements
 - **Accept**: Keep as-is and approve
 
+### Step 6: Verify Acceptance Criteria Against the Primary Caller(s)
+
+Before treating a spec's acceptance criteria as done, **name the primary
+caller(s)** — the feature's top 1-3 invocation paths:
+
+- user-typed CLI in an interactive terminal (TTY)
+- a skill invoked via Claude Code's Bash tool (**always non-TTY**)
+- a git or Claude Code hook (non-interactive)
+- the MCP server (a different surface than the CLI)
+- a headless drive (`claude -p`) vs an interactive session
+
+For **each acceptance criterion**, ask: *does this criterion hold in those
+caller environments?* A criterion is **environment-coupled** when its truth
+depends on the runtime context — TTY vs piped stdout, headless vs
+interactive, first-time vs returning user, solo vs multi-node, same vs
+cross-worktree. If a criterion would *degrade the feature in its primary
+caller's environment*, the criterion is wrong — fix it **before filing**, not
+at implementer design-checkpoint.
+
+Worked failure: a criterion reading *"non-TTY mode degrades to a single-line
+summary"* on a feature whose primary caller is a skill (always non-TTY) would
+make the feature never render in its own main use case. Naming the caller
+first catches that at filing time.
+
+See `docs/aida/discipline/session-discipline.md` →
+"Verify acceptance criteria against the primary caller" for the full rule and
+the four worked examples that surfaced it.
+
 ## CLI Reference
 
 ```bash
@@ -113,12 +144,11 @@ aida show <SPEC-ID>
 # Edit requirement
 aida edit <SPEC-ID> --description "..."
 
-# List features
-aida feature list
+# See what's still to do
+aida list open
 ```
 
 ## Integration Notes
 
-- Requirements are stored in `requirements.yaml` or the configured project database
+- Requirements are stored git-canonically: one YAML file per spec on the `aida-store` orphan branch, with a rebuildable `.aida/cache.db` read cache
 - SPEC-IDs are auto-generated based on type prefix configuration
-- The GUI (aida-desktop) can be used to view and manage requirements with full AI features
