@@ -897,5 +897,17 @@ operations:
   timestamp: 2026-08-30T01:54:23.941532797Z
   kind: !SetStatus
     status: Completed
-clock: 98
+- id: 01a0d6dd-3284-7680-ae8b-ea7b2d881f41
+  target_id: 01a0d6dd-2b65-7110-8128-a1ed8a926ff2
+  author: aida
+  node_id: ''
+  lamport: 99
+  timestamp: 2026-09-25T04:40:15.748671946Z
+  kind: !Create
+    title: Provide a repository run.sh launcher
+    description: The repository shall provide an executable run.sh launcher that resolves the project root, builds the aida-tutor binary as needed, forwards command-line arguments, and documents the common invocation for contributors and learners.
+    req_type: Functional
+    status: Draft
+    priority: Medium
+clock: 99
 node_id: ''
