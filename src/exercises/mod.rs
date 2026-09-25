@@ -54,6 +54,12 @@ mod e33_review_prompt;
 mod e34_plan_verify;
 mod e35_store_audit;
 mod e36_mcp_serve;
+// AIDA 0.15 learner-facing coverage. trace:EPIC-7 | ai:codex
+mod e37_minimal_why;
+mod e38_graph_focus;
+mod e39_dispatch_dryrun;
+mod e40_advisor_routing;
+mod e41_coordination;
 
 pub fn all() -> Vec<Box<dyn Exercise>> {
     vec![
@@ -93,5 +99,10 @@ pub fn all() -> Vec<Box<dyn Exercise>> {
         Box::new(e34_plan_verify::E),
         Box::new(e35_store_audit::E),
         Box::new(e36_mcp_serve::E),
+        Box::new(e37_minimal_why::E),
+        Box::new(e38_graph_focus::E),
+        Box::new(e39_dispatch_dryrun::E),
+        Box::new(e40_advisor_routing::E),
+        Box::new(e41_coordination::E),
     ]
 }

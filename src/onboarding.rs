@@ -445,7 +445,7 @@ fn print_next_state(workspace: &Path, repo_root: &Path, mode: GuidanceMode) -> R
         );
         println!(
             "  {}",
-            "Browse the full 36-exercise track with `cargo run -- list`.".dimmed()
+            "Browse the full 41-exercise track with `cargo run -- list`.".dimmed()
         );
         return Ok(passed);
     }
@@ -772,7 +772,7 @@ fn print_footer(
         );
         println!(
             "  {}",
-            "Browse the full 36-exercise track any time with `aida-tutor list`.".dimmed()
+            "Browse the full 41-exercise track any time with `aida-tutor list`.".dimmed()
         );
         return;
     }

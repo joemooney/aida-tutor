@@ -276,10 +276,13 @@ pub fn parse_requirement_yaml(content: &str) -> Option<RequirementYaml> {
     let mut block = Block::None;
     for line in content.lines() {
         let trimmed = line.trim_start();
-        // An unindented line either opens a block or closes the current
-        // one; a `- ` list entry stays part of the block it's under.
+        // An unindented non-blank line either opens a block or closes the
+        // current one; blank lines and list entries stay in the block.
+        // trace:TASK-4 | ai:codex
         if !line.starts_with(' ') {
-            if trimmed.starts_with("relationships:") {
+            if trimmed.is_empty() {
+                // Blank lines are harmless inside comments/relationships.
+            } else if trimmed.starts_with("relationships:") {
                 block = Block::Relationships;
                 continue;
             } else if trimmed.starts_with("comments:") {
@@ -407,33 +410,52 @@ pub fn queue_entries(workspace: &Path) -> Vec<QueueEntry> {
         if path.extension().and_then(|s| s.to_str()) != Some("yaml") {
             continue;
         }
-        let Ok(content) = std::fs::read_to_string(&path) else {
-            continue;
-        };
-        let mut cur: Option<QueueEntry> = None;
-        for line in content.lines() {
-            let trimmed = line.trim_start();
-            // A `- ` at the start of a (trimmed) line opens a new entry.
-            if trimmed.starts_with("- ") {
-                if let Some(done) = cur.take() {
-                    out.push(done);
-                }
-                cur = Some(QueueEntry::default());
+        out.extend(parse_queue_file(&path));
+    }
+    out
+}
+
+/// Entries in one user's queue file. A role queue is a global routing queue,
+/// not the current user's personal queue; `queue done` removes the latter.
+/// trace:BUG-12 | ai:codex
+pub fn queue_entries_for_user(workspace: &Path, user: &str) -> Vec<QueueEntry> {
+    let encoded = user.replace(':', "%3A");
+    let path = workspace
+        .join(".aida-store")
+        .join("registry")
+        .join("queues")
+        .join(format!("{encoded}.yaml"));
+    parse_queue_file(&path)
+}
+
+fn parse_queue_file(path: &std::path::Path) -> Vec<QueueEntry> {
+    let mut out = Vec::new();
+    let Ok(content) = std::fs::read_to_string(path) else {
+        return out;
+    };
+    let mut cur: Option<QueueEntry> = None;
+    for line in content.lines() {
+        let trimmed = line.trim_start();
+        // A `- ` at the start of a (trimmed) line opens a new entry.
+        if trimmed.starts_with("- ") {
+            if let Some(done) = cur.take() {
+                out.push(done);
             }
-            // Drop a leading `- ` so the first field on the opening line
-            // parses like any other.
-            let field = trimmed.strip_prefix("- ").unwrap_or(trimmed);
-            if let Some(e) = cur.as_mut() {
-                if let Some(v) = field.strip_prefix("requirement_id:") {
-                    e.requirement_id = Some(strip_yaml_value(v));
-                } else if let Some(v) = field.strip_prefix("for_role:") {
-                    e.for_role = Some(strip_yaml_value(v));
-                }
+            cur = Some(QueueEntry::default());
+        }
+        // Drop a leading `- ` so the first field on the opening line parses
+        // like any other.
+        let field = trimmed.strip_prefix("- ").unwrap_or(trimmed);
+        if let Some(e) = cur.as_mut() {
+            if let Some(v) = field.strip_prefix("requirement_id:") {
+                e.requirement_id = Some(strip_yaml_value(v));
+            } else if let Some(v) = field.strip_prefix("for_role:") {
+                e.for_role = Some(strip_yaml_value(v));
             }
         }
-        if let Some(done) = cur.take() {
-            out.push(done);
-        }
+    }
+    if let Some(done) = cur.take() {
+        out.push(done);
     }
     out
 }
@@ -748,5 +770,13 @@ mod tests {
         // `list` ran, but never with `--comments`
         assert_eq!(invoked(&ws, "list", &["--comments"]), Some(false));
         std::fs::remove_dir_all(&ws).ok();
+    }
+
+    #[test]
+    fn blank_lines_do_not_truncate_yaml_blocks() {
+        let yaml = "id: uuid-1\nspec_id: FR-1\nrelationships:\n- rel_type: Parent\n  target_id: uuid-2\n\n- rel_type: References\n  target_id: uuid-3\ncomments:\n- id: c1\n\n- id: c2\n";
+        let parsed = parse_requirement_yaml(yaml).expect("yaml should parse");
+        assert_eq!(parsed.relationships.len(), 2);
+        assert_eq!(parsed.comment_count, 2);
     }
 }

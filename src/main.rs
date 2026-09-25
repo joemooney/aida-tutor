@@ -59,7 +59,7 @@ enum Cmd {
         #[arg(long, short = 'y')]
         yes: bool,
     },
-    /// Print overall progress (e.g., "5/36 done — 14%").
+    /// Print overall progress (e.g., "5/41 done — 12%").
     Progress,
     /// Re-run verify on the current exercise every time the workspace
     /// changes. Polls workspace/ mtime ~every 1.5s; Ctrl-C to exit.
@@ -86,7 +86,7 @@ enum Cmd {
     },
     /// Run the first-contact onboarding slice — a 15-minute guided tour of
     /// the AIDA round trip (capture → trace → commit → `aida show`), built
-    /// only on the stable surface. A separate path from the 36-exercise
+    /// only on the stable surface. A separate path from the 41-exercise
     /// track; self-paced, re-run it to advance. trace:EPIC-5 | ai:claude
     Onboard {
         /// Wipe workspace/ and restart the tour from step 1.
@@ -480,6 +480,14 @@ fn cmd_verify(
                 println!("{} exercise {:02} already complete.", "✓".green(), ex.id());
             } else {
                 prog.record_completion(ex.id());
+                // Capture the distributed-store baseline at the boundary
+                // between exercises 19 and 20. A fixed bootstrap count is
+                // coupled to aida init internals and can false-pass when
+                // that bootstrap history changes. trace:TASK-3 | ai:codex
+                if ex.id() == 19 && prog.store_commit_baseline.is_none() {
+                    prog.store_commit_baseline =
+                        crate::verify::git_commit_count(workspace, "aida-store");
+                }
                 // Save progress at the *repo root* (resolved by
                 // find_tutor_root), not CWD — otherwise running verify
                 // from inside workspace/ writes the progress file to

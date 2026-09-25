@@ -7,6 +7,8 @@ use crate::verify::{
 };
 use std::path::Path;
 
+pub const DEMO_STORE_BASELINE: &str = ".aida-tutor-store-baseline";
+
 pub struct E;
 
 impl Exercise for E {
@@ -74,6 +76,14 @@ impl Exercise for E {
         run(workspace, "git", &["branch", "--list", "aida-store"])?;
         run(workspace, "git", &["worktree", "list"])?;
         run(workspace, "aida", &["db", "path"])?;
-        run(workspace, "aida", &["cache", "status"])
+        run(workspace, "aida", &["cache", "status"])?;
+        // `demo` intentionally does not write learner progress, so preserve
+        // the exercise-19 boundary in a disposable workspace marker for
+        // exercise 20's CI walk. Real learners use Progress instead.
+        // trace:TASK-3 | ai:codex
+        if let Some(count) = crate::verify::git_commit_count(workspace, "aida-store") {
+            std::fs::write(workspace.join(DEMO_STORE_BASELINE), count.to_string())?;
+        }
+        Ok(())
     }
 }

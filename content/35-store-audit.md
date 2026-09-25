@@ -60,5 +60,5 @@ any unresolved conflicts.
 
 ## What's next
 
-Exercise 36 — the last one — connects AIDA to an AI agent with
+Exercise 36 — the last exercise in the original cluster — connects AIDA to an AI agent with
 `aida mcp-serve`.

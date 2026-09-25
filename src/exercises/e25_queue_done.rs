@@ -3,7 +3,7 @@
 
 use super::e23_queue_add::QUEUE_DEMO_NEEDLE;
 use crate::exercise::{demo_req_by_title, run, Exercise, VerifyResult};
-use crate::verify::{is_aida_initialized, queue_entries, requirement_by_title};
+use crate::verify::{is_aida_initialized, queue_entries_for_user, requirement_by_title};
 use std::path::Path;
 
 pub struct E;
@@ -63,7 +63,10 @@ impl Exercise for E {
         // `queue done` is atomic — a finished task must no longer be in
         // any queue. If it is, the dequeue half didn't happen.
         let uuid = task.uuid.as_deref().unwrap_or_default();
-        let still_queued = queue_entries(workspace)
+        let user = std::env::var("AIDA_USER")
+            .or_else(|_| std::env::var("USER"))
+            .unwrap_or_else(|_| "unknown".into());
+        let still_queued = queue_entries_for_user(workspace, &user)
             .into_iter()
             .any(|e| e.requirement_id.as_deref() == Some(uuid));
         if still_queued {

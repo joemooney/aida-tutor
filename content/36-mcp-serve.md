@@ -71,7 +71,7 @@ to learn what it can do with your store.
 
 ## What's next
 
-That's the whole tour — all 36 exercises. You started with an empty git
+That's the original core tour — exercises 01–36. You started with an empty git
 repo and `aida init`; you've walked capture, trace comments, AIDA-format
 commits and the docs build, search and status, the two-leg push, the
 distributed orphan store and its rebuildable cache, roles and the
@@ -79,5 +79,5 @@ producer/consumer queue, the requirement graph, scoped sessions with
 worktrees, the code-review and commit-pairing workflow, and finally
 plan linting, store auditing, and the MCP bridge.
 
-Run `aida-tutor progress` to see 36/36. Now go run `aida init` in a
+Run `aida-tutor progress` to see the full track. Now go run `aida init` in a
 project of your own and capture its first real requirement.

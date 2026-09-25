@@ -2,8 +2,11 @@
 //! ships it alongside your code. trace:STORY-25 | ai:claude
 
 use crate::exercise::{run, Exercise, VerifyResult};
+use crate::progress::Progress;
 use crate::verify::{git_branch_exists, git_commit_count, is_aida_initialized};
 use std::path::Path;
+
+use super::e19_distributed_store::DEMO_STORE_BASELINE;
 
 pub struct E;
 
@@ -49,13 +52,28 @@ impl Exercise for E {
                 "no `aida-store` branch — complete exercise 19 first".into(),
             );
         }
-        // `aida init` lays down ~4 bootstrap commits on the orphan branch;
-        // every capture or edit auto-commits another. More than 4 means a
-        // real store mutation has landed on the branch. trace:STORY-25
+        // Compare against the count captured when exercise 19 passed. A
+        // fixed bootstrap count is coupled to aida init internals and could
+        // false-pass after a future init changes. trace:TASK-3
+        let baseline = workspace
+            .parent()
+            .and_then(|repo_root| Progress::load(repo_root).ok())
+            .and_then(|progress| progress.store_commit_baseline)
+            .or_else(|| {
+                std::fs::read_to_string(workspace.join(DEMO_STORE_BASELINE))
+                    .ok()
+                    .and_then(|value| value.trim().parse().ok())
+            });
+        let Some(baseline) = baseline else {
+            return VerifyResult::Pending(
+                "no exercise-19 store baseline recorded — verify exercise 19 again, then run this exercise."
+                    .into(),
+            );
+        };
         match git_commit_count(workspace, "aida-store") {
-            Some(n) if n > 4 => VerifyResult::Pass,
+            Some(n) if n > baseline => VerifyResult::Pass,
             Some(_) => VerifyResult::Pending(
-                "the `aida-store` branch only has its bootstrap commits — run `aida add ...` \
+                "the `aida-store` branch has not changed since exercise 19 — run `aida add ...` \
                  to land a capture as a commit on the orphan branch."
                     .into(),
             ),

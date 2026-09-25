@@ -23,6 +23,11 @@ pub struct Progress {
     /// trace:STORY-20 | ai:claude
     #[serde(default)]
     pub solution_used: Vec<u32>,
+    /// Store-branch commit count captured when exercise 19 passed. Exercise
+    /// 20 must observe a later store mutation, not merely the bootstrap
+    /// history created by `aida init`. trace:TASK-3 | ai:codex
+    #[serde(default)]
+    pub store_commit_baseline: Option<usize>,
 }
 
 impl Progress {

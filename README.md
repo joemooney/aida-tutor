@@ -8,7 +8,7 @@ Hands-on tutorial for **AIDA** (`aida-cli`), built in the spirit of
 - `aida-tutor onboard` — a 15-minute first-contact tour: initialize a
   scratch project, capture one requirement, trace code to it, commit it,
   and show the link back through AIDA.
-- The 36-exercise track — the fuller workflow: project setup, capture,
+- The 41-exercise track — the fuller workflow: project setup, capture,
   trace comments, AIDA-format commits, docs, search/status, push/pull,
   the distributed store, roles and queues, relationships, scoped
   sessions, review, plans, store audit, and MCP.
@@ -30,7 +30,7 @@ cd aida-tutor
 ./run.sh hint              # get a one-paragraph nudge
 ./run.sh verify            # check your work
 ./run.sh list              # see all exercises + state
-./run.sh progress          # e.g. 5/36 done - 14%
+./run.sh progress          # e.g. 5/41 done - 12%
 ```
 
 You'll need `aida` on `PATH` for the exercises themselves. `aida-tutor`

@@ -86,6 +86,11 @@ impl Exercise for E {
             workspace.join(ARTIFACT),
             "# Code <-> store pairing\n\nThis file's commit carries an `Aida-Store:` trailer.\n",
         )?;
+        // Recent AIDA init scaffolds ignored discipline files. Clear any
+        // incidental staged scaffold state before staging this exercise's
+        // artifact, matching the learner's intended single-file commit.
+        // trace:BUG-12 | ai:codex
+        run(workspace, "git", &["reset"])?;
         run(workspace, "git", &["add", ARTIFACT])?;
         let msg = format!("[AI:claude] docs(pairing): note the store trailer ({fr})");
         run(workspace, "git", &["commit", "-m", &msg])

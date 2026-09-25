@@ -71,7 +71,18 @@ impl Exercise for E {
     fn demo(&self, workspace: &Path) -> anyhow::Result<()> {
         let fr = demo_spec_id(workspace, "FR")?;
         let msg = format!("[AI:claude] feat(parser): scaffold JSON parser ({fr})");
+        // The demo starts in the advisor seat so it can seed requirements,
+        // but AIDA correctly refuses code commits from that seat. Mirror a
+        // real implementer handoff for this code-writing exercise, then
+        // restore the advisor seat for later setup work. trace:BUG-12
+        let previous_role = std::env::var("AIDA_SESSION_ROLE").ok();
+        std::env::set_var("AIDA_SESSION_ROLE", "implementer");
         run(workspace, "git", &["add", "src"])?;
-        run(workspace, "git", &["commit", "-m", &msg])
+        let result = run(workspace, "git", &["commit", "-m", &msg]);
+        match previous_role {
+            Some(role) => std::env::set_var("AIDA_SESSION_ROLE", role),
+            None => std::env::remove_var("AIDA_SESSION_ROLE"),
+        }
+        result
     }
 }
