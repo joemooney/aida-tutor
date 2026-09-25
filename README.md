@@ -22,16 +22,15 @@ you actually did the thing.
 ```bash
 git clone <this repo>
 cd aida-tutor
-cargo build --release
-./target/release/aida-tutor shell            # recommended first run
-./target/release/aida-tutor onboard          # full onboarding lesson
-./target/release/aida-tutor next             # terse next action
-./target/release/aida-tutor reset --yes      # bootstrap workspace/
-./target/release/aida-tutor show             # see the current exercise
-./target/release/aida-tutor hint             # get a one-paragraph nudge
-./target/release/aida-tutor verify           # check your work
-./target/release/aida-tutor list             # see all exercises + state
-./target/release/aida-tutor progress         # e.g. 5/36 done - 14%
+./run.sh shell             # recommended first run
+./run.sh onboard           # full onboarding lesson
+./run.sh next              # terse next action
+./run.sh reset --yes       # bootstrap workspace/
+./run.sh show              # see the current exercise
+./run.sh hint              # get a one-paragraph nudge
+./run.sh verify            # check your work
+./run.sh list              # see all exercises + state
+./run.sh progress          # e.g. 5/36 done - 14%
 ```
 
 You'll need `aida` on `PATH` for the exercises themselves. `aida-tutor`
