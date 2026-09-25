@@ -3,12 +3,12 @@ spec_id: STORY-61
 agreed_id: STORY-61
 title: Teach coordination and work visibility
 description: 'Add a tutor cluster for aida status, awaiting, ps, health, mailbox, team, worktree, node, identity, and assign. Focus on the daily operator loop: where work is, who owns it, what is stale or awaiting a human, and how a learner safely coordinates a second agent or clone. Prefer a small scenario-backed path with verifiers over a command catalog.'
-status: Draft
+status: Superseded
 priority: Medium
 owner: ''
 feature: Uncategorized
 created_at: 2026-09-25T05:25:47.813143065Z
-modified_at: 2026-09-25T05:25:47.813143065Z
+modified_at: 2026-09-25T05:26:39.716834264Z
 req_type: Story
 tags:
 - aida-0.15

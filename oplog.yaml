@@ -1001,5 +1001,13 @@ operations:
     req_type: Story
     status: Draft
     priority: Medium
-clock: 107
+- id: 01a0d707-ad69-75a0-8b8f-ab0c8c528f84
+  target_id: 01a0d706-e2a5-7cf0-8be0-cbafb57e7e6d
+  author: aida
+  node_id: ''
+  lamport: 108
+  timestamp: 2026-09-25T05:26:39.721088269Z
+  kind: !SetStatus
+    status: Superseded
+clock: 108
 node_id: ''
