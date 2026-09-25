@@ -8,7 +8,7 @@ priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-09-25T05:25:07.551552084Z
-modified_at: 2026-09-25T05:25:07.551552084Z
+modified_at: 2026-09-25T07:40:44.310635650Z
 req_type: Story
 tags:
 - aida-0.15
@@ -20,3 +20,9 @@ relationships:
 - rel_type: Child
   target_id: 01a0d706-35cb-7830-b366-00b9ba47a812
   created_at: 2026-09-25T05:25:19.239770683Z
+comments:
+- id: 01a0d782-6d96-7d90-a084-b87fac581994
+  author: ai:codex:joe
+  content: 'Implemented exercise 37 and content/37-minimal-why.md: safe aida init --minimal plus aida why trace resolution.'
+  created_at: 2026-09-25T07:40:44.310635650Z
+  modified_at: 2026-09-25T07:40:44.310635650Z
