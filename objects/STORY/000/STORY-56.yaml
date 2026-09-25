@@ -1,0 +1,18 @@
+id: 01a0d706-455f-7f80-89a5-2e661db1c3a9
+spec_id: STORY-56
+agreed_id: STORY-56
+title: Teach markdown-first projects and trace-to-intent navigation
+description: Add tutor coverage for aida init --minimal, markdown-only specs, aida why <file:line>, the plain-markdown fallback, and aida intent. Learners should understand how trace comments answer why code exists even before a git-canonical store is attached, and the exercises must verify both the minimal project and the fallback path.
+status: Draft
+priority: High
+owner: ''
+feature: Uncategorized
+created_at: 2026-09-25T05:25:07.551552084Z
+modified_at: 2026-09-25T05:25:07.551552084Z
+req_type: Story
+tags:
+- aida-0.15
+- init-minimal
+- intent
+- markdown
+- why

@@ -929,5 +929,17 @@ operations:
     req_type: Epic
     status: Draft
     priority: High
-clock: 101
+- id: 01a0d706-714c-7ef0-9e03-e94a04993959
+  target_id: 01a0d706-455f-7f80-89a5-2e661db1c3a9
+  author: aida
+  node_id: ''
+  lamport: 102
+  timestamp: 2026-09-25T05:25:18.796330841Z
+  kind: !Create
+    title: Teach markdown-first projects and trace-to-intent navigation
+    description: Add tutor coverage for aida init --minimal, markdown-only specs, aida why <file:line>, the plain-markdown fallback, and aida intent. Learners should understand how trace comments answer why code exists even before a git-canonical store is attached, and the exercises must verify both the minimal project and the fallback path.
+    req_type: Story
+    status: Draft
+    priority: High
+clock: 102
 node_id: ''
