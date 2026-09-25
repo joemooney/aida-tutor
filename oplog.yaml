@@ -953,5 +953,17 @@ operations:
     req_type: Story
     status: Draft
     priority: High
-clock: 103
+- id: 01a0d706-aca2-73a2-a39f-fc444832e445
+  target_id: 01a0d706-aa95-7542-9dad-001a82c2ec5b
+  author: aida
+  node_id: ''
+  lamport: 104
+  timestamp: 2026-09-25T05:25:33.986743230Z
+  kind: !Create
+    title: Teach one-verb implementation and shipping workflows
+    description: Add a tutor cluster for aida do, aida zen, and aida ship, including execution-mode selection, suitability gates, the explicit human checkpoint, and safe handoff at the PR boundary. The lesson must distinguish dry-run/propose behavior from side effects and must not launch unattended work against a learner sandbox without an explicit opt-in.
+    req_type: Story
+    status: Draft
+    priority: High
+clock: 104
 node_id: ''
