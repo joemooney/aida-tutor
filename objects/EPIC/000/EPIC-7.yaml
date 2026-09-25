@@ -1,0 +1,17 @@
+id: 01a0d706-35cb-7830-b366-00b9ba47a812
+spec_id: EPIC-7
+agreed_id: EPIC-7
+title: Refresh tutor for AIDA 0.15 workflows
+description: Bring aida-tutor up to date with the learner-facing AIDA surfaces shipped after the current 36-exercise track. The refresh should add focused, verifiable lessons rather than attempting to mirror every internal orchestration feature. Primary callers are a first-time terminal learner and a maintainer running the non-interactive demo. Cover markdown-first projects, trace-to-intent navigation, one-verb implementation workflows, advisor decision routing, and multi-agent coordination/observability. Keep the existing novice loop stable and gate each new cluster against the installed AIDA CLI version.
+status: Draft
+priority: High
+owner: ''
+feature: Uncategorized
+created_at: 2026-09-25T05:25:03.563524472Z
+modified_at: 2026-09-25T05:25:03.563524472Z
+req_type: Epic
+tags:
+- aida-0.15
+- coverage
+- roadmap
+- tutor

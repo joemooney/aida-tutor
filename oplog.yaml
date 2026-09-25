@@ -917,5 +917,17 @@ operations:
   timestamp: 2026-09-25T05:24:42.417778707Z
   kind: !SetStatus
     status: Completed
-clock: 100
+- id: 01a0d706-3a2c-7172-b40d-05cf60d8e980
+  target_id: 01a0d706-35cb-7830-b366-00b9ba47a812
+  author: aida
+  node_id: ''
+  lamport: 101
+  timestamp: 2026-09-25T05:25:04.684163299Z
+  kind: !Create
+    title: Refresh tutor for AIDA 0.15 workflows
+    description: Bring aida-tutor up to date with the learner-facing AIDA surfaces shipped after the current 36-exercise track. The refresh should add focused, verifiable lessons rather than attempting to mirror every internal orchestration feature. Primary callers are a first-time terminal learner and a maintainer running the non-interactive demo. Cover markdown-first projects, trace-to-intent navigation, one-verb implementation workflows, advisor decision routing, and multi-agent coordination/observability. Keep the existing novice loop stable and gate each new cluster against the installed AIDA CLI version.
+    req_type: Epic
+    status: Draft
+    priority: High
+clock: 101
 node_id: ''
