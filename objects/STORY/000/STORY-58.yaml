@@ -8,7 +8,7 @@ priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-09-25T05:25:33.461654439Z
-modified_at: 2026-09-25T05:25:33.461654439Z
+modified_at: 2026-09-25T07:40:46.054302729Z
 req_type: Story
 tags:
 - aida-0.15
@@ -20,3 +20,9 @@ relationships:
 - rel_type: Child
   target_id: 01a0d706-35cb-7830-b366-00b9ba47a812
   created_at: 2026-09-25T05:25:34.696090835Z
+comments:
+- id: 01a0d782-7466-7393-a1ac-a9e16636e60b
+  author: ai:codex:joe
+  content: 'Implemented exercise 39 and content/39-dispatch-dryrun.md: safe do/zen/ship previews with no real agent or PR side effects.'
+  created_at: 2026-09-25T07:40:46.054302729Z
+  modified_at: 2026-09-25T07:40:46.054302729Z
