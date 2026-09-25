@@ -12,12 +12,12 @@ description: |-
   Fix: re-add the '!trimmed.is_empty()' guard to the block-exit condition in parse_requirement_yaml (src/verify.rs) so a blank line no longer ends the block.
 
   Priority low — no learner-facing impact today. Source: PR #4 review, 2026-05-18.
-status: Approved
+status: Completed
 priority: Low
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-18T15:37:01.101283723Z
-modified_at: 2026-09-25T07:40:27.277497696Z
+modified_at: 2026-09-25T07:40:30.000066265Z
 req_type: Task
 relationships:
 - rel_type: Child
@@ -34,3 +34,11 @@ comments:
   content: 'Implemented: blank lines no longer close comments/relationships blocks in parse_requirement_yaml; added regression coverage in src/verify.rs. Verification: cargo test; full 41-exercise demo.'
   created_at: 2026-09-25T07:40:27.277497696Z
   modified_at: 2026-09-25T07:40:27.277497696Z
+history:
+- id: 01a0d782-35b0-7b73-bf47-c913ab75276f
+  author: joe
+  timestamp: 2026-09-25T07:40:30.000065996Z
+  changes:
+  - field_name: status
+    old_value: Approved
+    new_value: Completed
