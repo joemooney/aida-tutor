@@ -8,10 +8,16 @@ priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-09-25T07:32:43.479455475Z
-modified_at: 2026-09-25T07:32:43.479455475Z
+modified_at: 2026-09-25T07:40:28.063448055Z
 req_type: Bug
 tags:
 - aida-0.15
 - commit
 - demo
 - roles
+comments:
+- id: 01a0d782-2e1f-7852-9ad3-c3f5ec59a878
+  author: ai:codex:joe
+  content: 'Implemented compatibility fixes: demo temporarily uses implementer for code commits, clears incidental ignored scaffold staging before the pairing commit, and queue verification checks the personal queue rather than the global role routing queue. Files: src/exercises/e06_aida_commit.rs, src/exercises/e25_queue_done.rs, src/exercises/e32_commit_pair_trailer.rs, src/verify.rs.'
+  created_at: 2026-09-25T07:40:28.063448055Z
+  modified_at: 2026-09-25T07:40:28.063448055Z
