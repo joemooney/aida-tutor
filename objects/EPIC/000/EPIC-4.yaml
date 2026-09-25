@@ -29,12 +29,12 @@ description: |
   - [ ] `Cargo.toml` records `aida-min-version = "0.4.5"` (current AIDA version with the surface this EPIC tests)
   - [ ] CI workflow at `.github/workflows/exercises.yml` runs all exercises with `cargo run -- demo` against the pinned aida-min-version
   - [ ] CI updates: when aida-min-version bumps, CI matrix tests both old and new versions for one release cycle
-status: Approved
+status: Completed
 priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-10T06:52:28.774698339Z
-modified_at: 2026-05-10T06:53:39.007663356Z
+modified_at: 2026-09-25T05:24:42.413684090Z
 req_type: Epic
 relationships:
 - rel_type: Parent
@@ -74,3 +74,11 @@ relationships:
 - rel_type: Parent
   target_id: 019e3bbb-c1ad-7b90-b728-4389b1f1e6ff
   created_at: 2026-05-18T15:37:01.741857138Z
+history:
+- id: 01a0d705-e32d-7110-8d87-e2a7f6936e49
+  author: joe
+  timestamp: 2026-09-25T05:24:42.413683597Z
+  changes:
+  - field_name: status
+    old_value: Approved
+    new_value: Completed
