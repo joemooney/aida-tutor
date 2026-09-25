@@ -8,7 +8,7 @@ priority: Medium
 owner: ''
 feature: Uncategorized
 created_at: 2026-09-25T05:25:38.166621145Z
-modified_at: 2026-09-25T05:25:38.166621145Z
+modified_at: 2026-09-25T07:40:46.898793227Z
 req_type: Story
 tags:
 - advisor
@@ -21,3 +21,9 @@ relationships:
 - rel_type: Child
   target_id: 01a0d706-35cb-7830-b366-00b9ba47a812
   created_at: 2026-09-25T05:25:41.325555806Z
+comments:
+- id: 01a0d782-77b2-7f31-8ebd-a8053e151ea6
+  author: ai:codex:joe
+  content: 'Implemented exercise 40 and content/40-advisor-routing.md: punt, questions list, and groom dry-run routing path.'
+  created_at: 2026-09-25T07:40:46.898793227Z
+  modified_at: 2026-09-25T07:40:46.898793227Z
