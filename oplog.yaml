@@ -965,5 +965,17 @@ operations:
     req_type: Story
     status: Draft
     priority: High
-clock: 104
+- id: 01a0d706-bf1f-7b63-91f0-93a7116389ad
+  target_id: 01a0d706-bcf6-7e02-9915-c47b67badf30
+  author: aida
+  node_id: ''
+  lamport: 105
+  timestamp: 2026-09-25T05:25:38.719121672Z
+  kind: !Create
+    title: Teach advisor intake and decision routing
+    description: Add a tutor cluster for aida groom, aida questions, aida decide, aida research, and aida punt. Learners should see how an underspecified or blocked requirement is routed to a human decision instead of guessed through, how a SPIKE produces evidence, and how grooming separates draft triage from implementation queueing.
+    req_type: Story
+    status: Draft
+    priority: Medium
+clock: 105
 node_id: ''

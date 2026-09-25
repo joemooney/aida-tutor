@@ -1,0 +1,19 @@
+id: 01a0d706-bcf6-7e02-9915-c47b67badf30
+spec_id: STORY-59
+agreed_id: STORY-59
+title: Teach advisor intake and decision routing
+description: Add a tutor cluster for aida groom, aida questions, aida decide, aida research, and aida punt. Learners should see how an underspecified or blocked requirement is routed to a human decision instead of guessed through, how a SPIKE produces evidence, and how grooming separates draft triage from implementation queueing.
+status: Draft
+priority: Medium
+owner: ''
+feature: Uncategorized
+created_at: 2026-09-25T05:25:38.166621145Z
+modified_at: 2026-09-25T05:25:38.166621145Z
+req_type: Story
+tags:
+- advisor
+- aida-0.15
+- groom
+- punt
+- questions
+- research
