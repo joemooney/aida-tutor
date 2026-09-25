@@ -941,5 +941,17 @@ operations:
     req_type: Story
     status: Draft
     priority: High
-clock: 102
+- id: 01a0d706-907e-7833-9e11-cbc4817f2e73
+  target_id: 01a0d706-8e33-7471-bb90-4f0fbd8ba035
+  author: aida
+  node_id: ''
+  lamport: 103
+  timestamp: 2026-09-25T05:25:26.782207452Z
+  kind: !Create
+    title: Teach graph focus and requirement context
+    description: Add a tutor cluster for aida graph, aida focus, and related context navigation. Learners should move from a single requirement to its parent, children, blocked-by and reverse-impact neighborhood, then scope list/show reads to the focused subtree and clear the focus. Verification must assert graph edges and focus behavior, not just command exit codes.
+    req_type: Story
+    status: Draft
+    priority: High
+clock: 103
 node_id: ''

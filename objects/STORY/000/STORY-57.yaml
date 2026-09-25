@@ -1,0 +1,17 @@
+id: 01a0d706-8e33-7471-bb90-4f0fbd8ba035
+spec_id: STORY-57
+agreed_id: STORY-57
+title: Teach graph focus and requirement context
+description: Add a tutor cluster for aida graph, aida focus, and related context navigation. Learners should move from a single requirement to its parent, children, blocked-by and reverse-impact neighborhood, then scope list/show reads to the focused subtree and clear the focus. Verification must assert graph edges and focus behavior, not just command exit codes.
+status: Draft
+priority: High
+owner: ''
+feature: Uncategorized
+created_at: 2026-09-25T05:25:26.195528793Z
+modified_at: 2026-09-25T05:25:26.195528793Z
+req_type: Story
+tags:
+- aida-0.15
+- focus
+- graph
+- relationships
