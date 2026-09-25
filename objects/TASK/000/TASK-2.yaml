@@ -8,7 +8,7 @@ priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-18T03:18:46.003426633Z
-modified_at: 2026-05-20T02:05:54.818968846Z
+modified_at: 2026-09-25T05:24:44.235026919Z
 req_type: Task
 relationships:
 - rel_type: Child
@@ -20,3 +20,8 @@ comments:
   content: 'Test protocol drafted and committed: docs/2026-05-19-onboarding-human-test.md — recruit, run, AC-1 pass/fail rubric, decision gate. Queued --for dialog (the moderated test is a captain/PO activity, not implementer work). EPIC-5''s slice shipped via PR #11; this test is the unmet AC-6 gate before any Act II investment.'
   created_at: 2026-05-19T15:48:02.476409961Z
   modified_at: 2026-05-19T15:48:02.476409961Z
+- id: 01a0d705-ea4b-7c22-83bf-b5262b272bd0
+  author: joe
+  content: 'Audit 2026-09-24: protocol artifact exists at docs/2026-05-19-onboarding-human-test.md, but no tester result is recorded; keep open as a human validation gate.'
+  created_at: 2026-09-25T05:24:44.235026919Z
+  modified_at: 2026-09-25T05:24:44.235026919Z
