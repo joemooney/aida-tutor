@@ -17,7 +17,7 @@ priority: Low
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-18T15:37:01.101283723Z
-modified_at: 2026-09-25T05:24:45.720832096Z
+modified_at: 2026-09-25T07:40:27.277497696Z
 req_type: Task
 relationships:
 - rel_type: Child
@@ -29,3 +29,8 @@ comments:
   content: 'Audit 2026-09-24: still open. src/verify.rs parse_requirement_yaml still exits a block on any unindented line, including blank lines.'
   created_at: 2026-09-25T05:24:45.720832096Z
   modified_at: 2026-09-25T05:24:45.720832096Z
+- id: 01a0d782-2b0d-7553-ad46-7c33f41057b4
+  author: ai:codex:joe
+  content: 'Implemented: blank lines no longer close comments/relationships blocks in parse_requirement_yaml; added regression coverage in src/verify.rs. Verification: cargo test; full 41-exercise demo.'
+  created_at: 2026-09-25T07:40:27.277497696Z
+  modified_at: 2026-09-25T07:40:27.277497696Z
