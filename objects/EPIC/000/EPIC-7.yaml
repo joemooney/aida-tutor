@@ -8,7 +8,7 @@ priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-09-25T05:25:03.563524472Z
-modified_at: 2026-09-25T05:25:03.563524472Z
+modified_at: 2026-09-25T05:26:20.708904971Z
 req_type: Epic
 tags:
 - aida-0.15
@@ -34,3 +34,9 @@ relationships:
 - rel_type: Parent
   target_id: 01a0d706-e2a5-7cf0-8be0-cbafb57e7e6d
   created_at: 2026-09-25T05:25:49.079070154Z
+comments:
+- id: 01a0d707-6324-71b0-b47f-70d43105bd91
+  author: joe
+  content: Filed from the 2026-09-24 audit of AIDA v0.15.0 and current tutor coverage. Scope is learner-facing functionality, not a mirror of every internal orchestration feature.
+  created_at: 2026-09-25T05:26:20.708904971Z
+  modified_at: 2026-09-25T05:26:20.708904971Z
