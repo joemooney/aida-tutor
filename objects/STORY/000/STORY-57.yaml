@@ -8,7 +8,7 @@ priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-09-25T05:25:26.195528793Z
-modified_at: 2026-09-25T05:25:26.195528793Z
+modified_at: 2026-09-25T07:40:45.217268199Z
 req_type: Story
 tags:
 - aida-0.15
@@ -19,3 +19,9 @@ relationships:
 - rel_type: Child
   target_id: 01a0d706-35cb-7830-b366-00b9ba47a812
   created_at: 2026-09-25T05:25:30.548038418Z
+comments:
+- id: 01a0d782-7121-7f61-bcc2-ce241821fbef
+  author: ai:codex:joe
+  content: 'Implemented exercise 38 and content/38-graph-focus.md: graph traversal plus persisted focus context.'
+  created_at: 2026-09-25T07:40:45.217268199Z
+  modified_at: 2026-09-25T07:40:45.217268199Z
