@@ -1,0 +1,39 @@
+id: 01a0dfe7-d4ee-7dd2-90f0-cae94a8b251c
+spec_id: FR-8
+agreed_id: FR-8
+title: Add an interactive terminology reference menu
+description: The interactive shell shall provide a terminology menu with one-line definitions navigable by arrow keys, and Enter shall expand the selected term into a detailed explanation with a way to return to the glossary.
+status: Draft
+priority: Medium
+owner: ''
+feature: Uncategorized
+created_at: 2026-09-26T22:48:27.630565634Z
+modified_at: 2026-09-26T23:14:16.808393433Z
+req_type: Functional
+tags:
+- menu
+- onboarding
+- reference
+- terminology
+- ux
+comments:
+- id: 01a0dfea-dfee-7fb1-b2a1-a62839405305
+  author: ai:codex:joe
+  content: Implemented the interactive terminology reference in src/onboarding.rs. Added a top-level menu option, one-line glossary navigation with arrows/j/k, Enter-to-expand detail, Escape-to-return, and non-TTY fallback text. cargo test/build pass.
+  created_at: 2026-09-26T22:51:47.054794975Z
+  modified_at: 2026-09-26T22:51:47.054794975Z
+- id: 01a0dff4-7fe8-7383-923c-4f827ecdd71c
+  author: ai:codex:joe
+  content: Updated terminology to load from content/terminology.json with categories, tags, see_also links, and refs validated at runtime. Also reduced interactive-shell clutter by using a plain prompt after empty Enter instead of redrawing separators. cargo test/build pass.
+  created_at: 2026-09-26T23:02:17.832642865Z
+  modified_at: 2026-09-26T23:02:17.832642865Z
+- id: 01a0dffb-bd04-7970-84f1-4fcf77f2b364
+  author: ai:codex:joe
+  content: Fixed the terminology data validation gap by adding workflow.parent and verified the interactive loader in a real PTY. The glossary now loads all entries, expands terms, and displays category, tags, see_also, and refs without startup errors.
+  created_at: 2026-09-26T23:10:12.228202053Z
+  modified_at: 2026-09-26T23:10:12.228202053Z
+- id: 01a0dfff-7868-71e3-85c4-8cef698463a6
+  author: ai:codex:joe
+  content: Expanded the JSON glossary schema with optional examples, when_to_use, used_by, best_when, pros, and cons fields. The terminology detail view renders those fields when applicable; JSON see_also and refs remain validated. Verified interactively with spec; cargo test/build pass.
+  created_at: 2026-09-26T23:14:16.808393433Z
+  modified_at: 2026-09-26T23:14:16.808393433Z

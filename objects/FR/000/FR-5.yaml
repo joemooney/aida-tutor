@@ -1,0 +1,24 @@
+id: 01a0de43-c8e1-7ad3-860a-83fbec9a4fa0
+spec_id: FR-5
+agreed_id: FR-5
+title: Show tutorial choices from the interactive shell
+description: The interactive onboarding shell shall provide a menu command that clearly presents the available tutorial paths after onboarding completes, including the onboarding review and the full exercise track.
+status: Draft
+priority: Medium
+owner: ''
+feature: Uncategorized
+created_at: 2026-09-26T15:09:39.425816831Z
+modified_at: 2026-09-26T15:10:52.768288353Z
+req_type: Functional
+tags:
+- menu
+- onboarding
+- shell
+- tutorials
+- ux
+comments:
+- id: 01a0de44-e760-7880-9608-f42420f5da55
+  author: ai:codex:joe
+  content: Implemented the interactive shell menu/tutorials command and completion guidance. Users can now type menu to see onboarding and the full exercise track after the round trip. cargo test passes 20/20.
+  created_at: 2026-09-26T15:10:52.768288353Z
+  modified_at: 2026-09-26T15:10:52.768288353Z

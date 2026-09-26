@@ -1,0 +1,23 @@
+id: 01a0e000-24ae-7693-a8ba-47a2c776d384
+spec_id: FR-11
+agreed_id: FR-11
+title: Accept question mark as shell help alias
+description: The interactive shell shall treat a question mark entered by itself as an alias for help and list it in the built-in command guidance.
+status: Draft
+priority: Low
+owner: ''
+feature: Uncategorized
+created_at: 2026-09-26T23:15:00.910093402Z
+modified_at: 2026-09-26T23:15:35.414426009Z
+req_type: Functional
+tags:
+- alias
+- help
+- shell
+- ux
+comments:
+- id: 01a0e000-ab76-7b40-8de7-f4b636bec649
+  author: ai:codex:joe
+  content: Implemented `?` as an alias for the interactive shell help command and added it to the built-in help output. cargo test passes 20/20.
+  created_at: 2026-09-26T23:15:35.414426009Z
+  modified_at: 2026-09-26T23:15:35.414426009Z
