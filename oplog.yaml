@@ -1193,5 +1193,17 @@ operations:
     req_type: Functional
     status: Draft
     priority: Medium
-clock: 124
+- id: 01a0e00c-71dc-7fd3-b5b1-ea85b33a1544
+  target_id: 01a0e00c-3465-7d20-9778-613baa580402
+  author: aida
+  node_id: ''
+  lamport: 125
+  timestamp: 2026-09-26T23:28:27.100527812Z
+  kind: !Create
+    title: Organize FAQ into hierarchical topics
+    description: The FAQ should be organized as a navigable hierarchy of top-level topics such as new user, tutor, architecture, configuration, workflow, autonomy, and troubleshooting, with nested subtopics where useful. The interactive menu should let a learner choose a topic, browse its questions, open details, and return to the parent level with Esc. FAQ data should remain file-backed and validate references.
+    req_type: Functional
+    status: Draft
+    priority: Medium
+clock: 125
 node_id: ''

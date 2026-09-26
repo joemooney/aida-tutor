@@ -1,0 +1,17 @@
+id: 01a0e00c-3465-7d20-9778-613baa580402
+spec_id: FR-14
+agreed_id: FR-14
+title: Organize FAQ into hierarchical topics
+description: The FAQ should be organized as a navigable hierarchy of top-level topics such as new user, tutor, architecture, configuration, workflow, autonomy, and troubleshooting, with nested subtopics where useful. The interactive menu should let a learner choose a topic, browse its questions, open details, and return to the parent level with Esc. FAQ data should remain file-backed and validate references.
+status: Draft
+priority: Medium
+owner: ''
+feature: Uncategorized
+created_at: 2026-09-26T23:28:11.365490457Z
+modified_at: 2026-09-26T23:28:11.365490457Z
+req_type: Functional
+tags:
+- documentation
+- faq
+- hierarchy
+- navigation
