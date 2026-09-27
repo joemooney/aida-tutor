@@ -3,10 +3,18 @@ spec_id: STORY-5
 agreed_id: STORY-5
 title: 'Exercise 05: capture a feature (FR-1)'
 description: Learner adds a functional requirement. Verifier checks for FR-* in the store with status approved.
-status: InProgress
+status: Approved
 priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-05-09T22:18:31.444688803Z
-modified_at: 2026-05-10T04:52:27.744037465Z
+modified_at: 2026-09-27T20:51:01.533744494Z
 req_type: Story
+history:
+- id: 01a0e4a2-ad1d-7f03-8261-9eecdf75257d
+  author: joe
+  timestamp: 2026-09-27T20:51:01.533742215Z
+  changes:
+  - field_name: status
+    old_value: InProgress
+    new_value: Approved
