@@ -3,12 +3,12 @@ spec_id: FR-2
 agreed_id: FR-2
 title: Provide a repository run.sh launcher
 description: The repository shall provide an executable run.sh launcher that resolves the project root, builds the aida-tutor binary as needed, forwards command-line arguments, and documents the common invocation for contributors and learners.
-status: Approved
+status: Completed
 priority: Medium
 owner: ''
 feature: Uncategorized
 created_at: 2026-09-25T04:40:13.925428393Z
-modified_at: 2026-09-27T20:51:00.451165022Z
+modified_at: 2026-09-27T20:57:27.644793974Z
 req_type: Functional
 tags:
 - developer-experience
@@ -28,3 +28,13 @@ history:
   - field_name: status
     old_value: Draft
     new_value: Approved
+- id: 01a0e4a8-915c-7150-8f50-abb623e6f037
+  author: joe
+  timestamp: 2026-09-27T20:57:27.644791958Z
+  changes:
+  - field_name: status
+    old_value: Approved
+    new_value: Completed
+implementation_info:
+  implemented: false
+  completed_at: 2026-09-27T20:57:27.644754728Z
