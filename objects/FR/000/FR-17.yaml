@@ -1,0 +1,19 @@
+id: 01a0e4a4-b72c-7792-a575-1bb96794b452
+spec_id: FR-17
+agreed_id: FR-17
+title: Navigate command history with Up/Down arrows in AIDA shell
+description: The AIDA interactive shell shall maintain an in-memory command history and allow navigating previous and next commands using the Up and Down arrow keys, updating the prompt line appropriately.
+status: Approved
+priority: Medium
+owner: ''
+feature: Uncategorized
+created_at: 2026-09-27T20:53:15.180622107Z
+modified_at: 2026-09-27T20:53:15.180622107Z
+req_type: Functional
+filed_at:
+  code_sha: c4dd33625f0a3a9860699b0dc60a3eb07d34c5e2
+  branch: realign-novice-loop
+  dirty: true
+  aida_version: 0.15.0
+  aida_build_sha: '7201317922'
+  vendor: antigravity

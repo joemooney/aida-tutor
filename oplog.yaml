@@ -1437,5 +1437,17 @@ operations:
   timestamp: 2026-09-27T20:51:01.551873771Z
   kind: !SetStatus
     status: Approved
-clock: 153
+- id: 01a0e4a4-bb54-72c3-b6cd-32527c858644
+  target_id: 01a0e4a4-b72c-7792-a575-1bb96794b452
+  author: aida
+  node_id: ''
+  lamport: 154
+  timestamp: 2026-09-27T20:53:16.244760914Z
+  kind: !Create
+    title: Navigate command history with Up/Down arrows in AIDA shell
+    description: The AIDA interactive shell shall maintain an in-memory command history and allow navigating previous and next commands using the Up and Down arrow keys, updating the prompt line appropriately.
+    req_type: Functional
+    status: Approved
+    priority: Medium
+clock: 154
 node_id: ''
