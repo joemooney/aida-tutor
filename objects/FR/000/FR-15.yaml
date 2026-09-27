@@ -3,12 +3,12 @@ spec_id: FR-15
 agreed_id: FR-15
 title: Add generalized AIDA launchpad menu
 description: The default aida-tutor interface shall provide a top-level AIDA launchpad with Agent, Status, Shell, Help/Tutorials, and Exit options. Agent invokes aida agent new; Status opens an extensible status submenu; Shell provides an aida> command prompt that executes entered AIDA commands with arguments; Help/Tutorials opens the existing tutorial menu. Direct CLI commands remain available for scripting.
-status: Approved
+status: Completed
 priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-09-27T04:45:47.239911819Z
-modified_at: 2026-09-27T20:50:48.610031934Z
+modified_at: 2026-09-27T20:58:00.966901331Z
 req_type: Functional
 tags:
 - agent
@@ -41,3 +41,13 @@ history:
   - field_name: status
     old_value: Draft
     new_value: Approved
+- id: 01a0e4a9-1386-7da0-8b91-d85aac56662a
+  author: joe
+  timestamp: 2026-09-27T20:58:00.966895796Z
+  changes:
+  - field_name: status
+    old_value: Approved
+    new_value: Completed
+implementation_info:
+  implemented: false
+  completed_at: 2026-09-27T20:58:00.966859636Z
