@@ -3,12 +3,12 @@ spec_id: FR-8
 agreed_id: FR-8
 title: Add an interactive terminology reference menu
 description: The interactive shell shall provide a terminology menu with one-line definitions navigable by arrow keys, and Enter shall expand the selected term into a detailed explanation with a way to return to the glossary.
-status: Draft
+status: Approved
 priority: Medium
 owner: ''
 feature: Uncategorized
 created_at: 2026-09-26T22:48:27.630565634Z
-modified_at: 2026-09-26T23:14:16.808393433Z
+modified_at: 2026-09-27T20:50:51.813485056Z
 req_type: Functional
 tags:
 - menu
@@ -37,3 +37,11 @@ comments:
   content: Expanded the JSON glossary schema with optional examples, when_to_use, used_by, best_when, pros, and cons fields. The terminology detail view renders those fields when applicable; JSON see_also and refs remain validated. Verified interactively with spec; cargo test/build pass.
   created_at: 2026-09-26T23:14:16.808393433Z
   modified_at: 2026-09-26T23:14:16.808393433Z
+history:
+- id: 01a0e4a2-8725-7b71-b614-0d2494e8847c
+  author: joe
+  timestamp: 2026-09-27T20:50:51.813482936Z
+  changes:
+  - field_name: status
+    old_value: Draft
+    new_value: Approved
