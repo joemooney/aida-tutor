@@ -1205,5 +1205,17 @@ operations:
     req_type: Functional
     status: Draft
     priority: Medium
-clock: 125
+- id: 01a0e12f-1f8c-7eb3-ab4e-92c88f3a6983
+  target_id: 01a0e12e-f967-7023-8dc4-1063d7c56785
+  author: aida
+  node_id: ''
+  lamport: 126
+  timestamp: 2026-09-27T04:45:57.004880158Z
+  kind: !Create
+    title: Add generalized AIDA launchpad menu
+    description: The default aida-tutor interface shall provide a top-level AIDA launchpad with Agent, Status, Shell, Help/Tutorials, and Exit options. Agent invokes aida agent new; Status opens an extensible status submenu; Shell provides an aida> command prompt that executes entered AIDA commands with arguments; Help/Tutorials opens the existing tutorial menu. Direct CLI commands remain available for scripting.
+    req_type: Functional
+    status: Draft
+    priority: High
+clock: 126
 node_id: ''
