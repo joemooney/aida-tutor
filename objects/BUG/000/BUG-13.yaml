@@ -3,12 +3,12 @@ spec_id: BUG-13
 agreed_id: BUG-13
 title: Onboarding Step 3 adapts to readiness blockers
 description: The onboarding Step 3 next action shall interpret the selected spec readiness pre-check, explain expected standalone-demo warnings without looping, and stop with actionable guidance for genuine blockers instead of repeating the same implementation command.
-status: Draft
+status: Approved
 priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-09-26T14:30:47.074534998Z
-modified_at: 2026-09-26T14:33:21.669797837Z
+modified_at: 2026-09-27T20:50:55.191074045Z
 req_type: Bug
 tags:
 - loop
@@ -21,3 +21,11 @@ comments:
   content: 'Implemented in src/onboarding.rs and content/onboarding/03-implement.md. Step 3 now parses aida spec dryrun FR-1: parent-only is explained as safe for the standalone tour, while other readiness failures stop with actionable guidance. Added parser regression tests; cargo test passes 17/17.'
   created_at: 2026-09-26T14:33:21.669797837Z
   modified_at: 2026-09-26T14:33:21.669797837Z
+history:
+- id: 01a0e4a2-9457-7ef3-9f7d-1b0ca5559295
+  author: joe
+  timestamp: 2026-09-27T20:50:55.191071796Z
+  changes:
+  - field_name: status
+    old_value: Draft
+    new_value: Approved
