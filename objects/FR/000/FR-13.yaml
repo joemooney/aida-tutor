@@ -8,7 +8,7 @@ priority: Medium
 owner: ''
 feature: Uncategorized
 created_at: 2026-09-26T23:21:58.556857394Z
-modified_at: 2026-09-26T23:25:13.869052362Z
+modified_at: 2026-09-27T00:56:30.474756440Z
 req_type: Functional
 tags:
 - glossary
@@ -27,3 +27,13 @@ comments:
   content: 'Clarified terminology navigation prompts: Esc from the glossary returns to the tutorial menu; Esc from a term detail returns to the terminology list.'
   created_at: 2026-09-26T23:25:13.869052362Z
   modified_at: 2026-09-26T23:25:13.869052362Z
+- id: 01a0e040-2c82-70f0-9d01-d69be15c6bf5
+  author: ai:codex:joe
+  content: 'Fixed terminology keyboard navigation: bare Esc no longer consumes later input, Left returns to the parent menu/list, and Right advances to the next term detail. Parent tutorial navigation now reopens after leaving Terminology or FAQ.'
+  created_at: 2026-09-27T00:24:57.218191262Z
+  modified_at: 2026-09-27T00:24:57.218191262Z
+- id: 01a0e05d-100a-7ce3-94b4-f2f0a5e9d55c
+  author: ai:codex:joe
+  content: Fixed arrow-key handling across interactive menus by reading terminal bytes unbuffered; Down/Up no longer exit due to stdin buffering, and bare Esc remains distinct from arrow sequences.
+  created_at: 2026-09-27T00:56:30.474756440Z
+  modified_at: 2026-09-27T00:56:30.474756440Z

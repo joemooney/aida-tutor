@@ -8,10 +8,21 @@ priority: Medium
 owner: ''
 feature: Uncategorized
 created_at: 2026-09-26T23:28:11.365490457Z
-modified_at: 2026-09-26T23:28:11.365490457Z
+modified_at: 2026-09-26T23:32:19.637518407Z
 req_type: Functional
 tags:
 - documentation
 - faq
 - hierarchy
 - navigation
+comments:
+- id: 01a0e00d-e52f-7760-85cd-72732e58d297
+  author: ai:codex:joe
+  content: 'Implemented a file-backed hierarchical FAQ: top-level topics with nested subtopics, question entries, arrow/j/k navigation, Enter to descend/open, and Esc to return one level or to the tutorial menu. Added Autonomy and Troubleshooting entries.'
+  created_at: 2026-09-26T23:30:02.159143873Z
+  modified_at: 2026-09-26T23:30:02.159143873Z
+- id: 01a0e00f-fe35-79c3-8b30-4cdc85776b47
+  author: ai:codex:joe
+  content: Fixed FAQ leaf filtering so entering a nested topic renders its questions instead of treating the topic as empty and returning to the shell. Added a regression test for category-to-question traversal.
+  created_at: 2026-09-26T23:32:19.637518407Z
+  modified_at: 2026-09-26T23:32:19.637518407Z
