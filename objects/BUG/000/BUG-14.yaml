@@ -3,12 +3,12 @@ spec_id: BUG-14
 agreed_id: BUG-14
 title: Show an explicit onboarding commit command
 description: The onboarding commit checkpoint shall show a concrete copyable git add and git commit command using the captured spec id and selected implementer attribution, instead of an ambiguous commit-message example.
-status: Approved
+status: Completed
 priority: Medium
 owner: ''
 feature: Uncategorized
 created_at: 2026-09-26T14:53:35.228824224Z
-modified_at: 2026-09-27T20:50:53.587359174Z
+modified_at: 2026-09-27T20:57:48.719094978Z
 req_type: Bug
 tags:
 - commit
@@ -29,3 +29,13 @@ history:
   - field_name: status
     old_value: Draft
     new_value: Approved
+- id: 01a0e4a8-e3af-7120-b64d-184cba4012a6
+  author: joe
+  timestamp: 2026-09-27T20:57:48.719093351Z
+  changes:
+  - field_name: status
+    old_value: Approved
+    new_value: Completed
+implementation_info:
+  implemented: false
+  completed_at: 2026-09-27T20:57:48.719057890Z
