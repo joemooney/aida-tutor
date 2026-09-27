@@ -3,12 +3,12 @@ spec_id: BUG-12
 agreed_id: BUG-12
 title: Demo commit switches out of advisor seat
 description: The non-interactive tutor demo currently sets AIDA_SESSION_ROLE=advisor for the whole walkthrough, but exercise 06 commits learner code. Current AIDA correctly rejects code commits from the advisor seat, so the demo must temporarily use the implementer seat for the code commit and restore advisor mode afterward.
-status: Draft
+status: Approved
 priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-09-25T07:32:43.479455475Z
-modified_at: 2026-09-25T07:40:28.063448055Z
+modified_at: 2026-09-27T20:50:58.700140801Z
 req_type: Bug
 tags:
 - aida-0.15
@@ -21,3 +21,11 @@ comments:
   content: 'Implemented compatibility fixes: demo temporarily uses implementer for code commits, clears incidental ignored scaffold staging before the pairing commit, and queue verification checks the personal queue rather than the global role routing queue. Files: src/exercises/e06_aida_commit.rs, src/exercises/e25_queue_done.rs, src/exercises/e32_commit_pair_trailer.rs, src/verify.rs.'
   created_at: 2026-09-25T07:40:28.063448055Z
   modified_at: 2026-09-25T07:40:28.063448055Z
+history:
+- id: 01a0e4a2-a20c-7883-9d4f-8424cc2ded1f
+  author: joe
+  timestamp: 2026-09-27T20:50:58.700135190Z
+  changes:
+  - field_name: status
+    old_value: Draft
+    new_value: Approved
