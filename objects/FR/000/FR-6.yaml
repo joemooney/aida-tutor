@@ -3,12 +3,12 @@ spec_id: FR-6
 agreed_id: FR-6
 title: Navigate tutorial choices with an arrow-key menu
 description: The interactive onboarding shell shall present tutorial choices as a terminal menu navigable with up and down arrows, selectable with Enter, and safely fall back to readable text when no interactive terminal is available.
-status: Draft
+status: Approved
 priority: Medium
 owner: ''
 feature: Uncategorized
 created_at: 2026-09-26T15:31:14.680201678Z
-modified_at: 2026-09-26T15:39:10.276852664Z
+modified_at: 2026-09-27T20:50:53.092513444Z
 req_type: Functional
 tags:
 - menu
@@ -27,3 +27,11 @@ comments:
   content: 'Extended the arrow-key navigation to the exercise track: selecting exercises now opens a 41-item picker with completed/ready/not-started/needs-work states, defaults to the next incomplete exercise, and Enter opens the selected exercise for review. Also fixed terminal restore fallback and verified cargo test/build.'
   created_at: 2026-09-26T15:39:10.276852664Z
   modified_at: 2026-09-26T15:39:10.276852664Z
+history:
+- id: 01a0e4a2-8c24-7443-a224-e1f077caed20
+  author: joe
+  timestamp: 2026-09-27T20:50:53.092510895Z
+  changes:
+  - field_name: status
+    old_value: Draft
+    new_value: Approved
