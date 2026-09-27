@@ -3,12 +3,12 @@ spec_id: FR-10
 agreed_id: FR-10
 title: Make the tutorial menu the persistent front door
 description: Interactive tutor launches shall always show a menu whose first option resumes the current onboarding state, followed by onboarding review, exercises, terminology, and exit, so learners always have an obvious next destination.
-status: Approved
+status: Completed
 priority: Medium
 owner: ''
 feature: Uncategorized
 created_at: 2026-09-26T23:06:31.491646124Z
-modified_at: 2026-09-27T20:50:49.650632224Z
+modified_at: 2026-09-27T20:57:58.892373397Z
 req_type: Functional
 tags:
 - cli
@@ -35,3 +35,13 @@ history:
   - field_name: status
     old_value: Draft
     new_value: Approved
+- id: 01a0e4a9-0b6c-7b20-865b-f1047f3b7024
+  author: joe
+  timestamp: 2026-09-27T20:57:58.892369391Z
+  changes:
+  - field_name: status
+    old_value: Approved
+    new_value: Completed
+implementation_info:
+  implemented: false
+  completed_at: 2026-09-27T20:57:58.892332510Z
