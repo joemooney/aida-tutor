@@ -8,7 +8,7 @@ priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-09-27T04:45:47.239911819Z
-modified_at: 2026-09-27T04:45:47.239911819Z
+modified_at: 2026-09-27T17:49:03.143394422Z
 req_type: Functional
 tags:
 - agent
@@ -17,3 +17,19 @@ tags:
 - menu
 - shell
 - status
+comments:
+- id: 01a0e131-d839-74c2-b9b2-7c414177dbce
+  author: ai:codex:joe
+  content: 'Implemented the generalized AIDA launchpad: default AIDA menu, Agent invocation, extensible Status submenu with drain status, copper aida> shell with quoted argument parsing, and Help / Tutorials routing. Updated README quickstart.'
+  created_at: 2026-09-27T04:48:55.353174546Z
+  modified_at: 2026-09-27T04:48:55.353174546Z
+- id: 01a0e3f9-43d5-7a52-84cd-69dc9f112845
+  author: ai:codex:joe
+  content: Adjusted the interactive aida> prompt to true-color copper (#C06D2B), matching the requested appearance instead of the darker ANSI palette rendering.
+  created_at: 2026-09-27T17:45:58.997761754Z
+  modified_at: 2026-09-27T17:45:58.997761754Z
+- id: 01a0e3fc-1327-7253-a45b-77bc6cf17cf9
+  author: ai:codex:joe
+  content: 'Matched the AIDA shimmer.py prompt exactly: bold true-color copper using ESC[1;38;2;225;175;115m for aida>.'
+  created_at: 2026-09-27T17:49:03.143394422Z
+  modified_at: 2026-09-27T17:49:03.143394422Z
