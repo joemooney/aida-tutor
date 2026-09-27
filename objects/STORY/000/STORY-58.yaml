@@ -3,12 +3,12 @@ spec_id: STORY-58
 agreed_id: STORY-58
 title: Teach one-verb implementation and shipping workflows
 description: Add a tutor cluster for aida do, aida zen, and aida ship, including execution-mode selection, suitability gates, the explicit human checkpoint, and safe handoff at the PR boundary. The lesson must distinguish dry-run/propose behavior from side effects and must not launch unattended work against a learner sandbox without an explicit opt-in.
-status: Draft
+status: Approved
 priority: High
 owner: ''
 feature: Uncategorized
 created_at: 2026-09-25T05:25:33.461654439Z
-modified_at: 2026-09-25T07:40:46.054302729Z
+modified_at: 2026-09-27T20:50:56.936410488Z
 req_type: Story
 tags:
 - aida-0.15
@@ -26,3 +26,11 @@ comments:
   content: 'Implemented exercise 39 and content/39-dispatch-dryrun.md: safe do/zen/ship previews with no real agent or PR side effects.'
   created_at: 2026-09-25T07:40:46.054302729Z
   modified_at: 2026-09-25T07:40:46.054302729Z
+history:
+- id: 01a0e4a2-9b28-7241-a8ac-46baf93bc8d1
+  author: joe
+  timestamp: 2026-09-27T20:50:56.936407685Z
+  changes:
+  - field_name: status
+    old_value: Draft
+    new_value: Approved
