@@ -1,0 +1,19 @@
+id: 01a0e4b9-2366-7ac0-b316-3c8ea63ce3f4
+spec_id: FR-19
+agreed_id: FR-19
+title: Context-aware AIDA launchpad menu with init flow
+description: The interactive AIDA launchpad shall detect whether the target directory is an initialized AIDA project. When uninitialized, agent, status, and shell options are hidden and an init option is presented. Selecting init initializes AIDA directly if .git exists, or prompts to initialize the current directory or create a new project subdirectory if no git repository exists.
+status: Approved
+priority: High
+owner: ''
+feature: Uncategorized
+created_at: 2026-09-27T21:15:33.606772189Z
+modified_at: 2026-09-27T21:15:33.606772189Z
+req_type: Functional
+filed_at:
+  code_sha: c4dd33625f0a3a9860699b0dc60a3eb07d34c5e2
+  branch: realign-novice-loop
+  dirty: true
+  aida_version: 0.15.0
+  aida_build_sha: '7201317922'
+  vendor: antigravity

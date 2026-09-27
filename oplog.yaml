@@ -1705,5 +1705,17 @@ operations:
   timestamp: 2026-09-27T21:08:26.909376347Z
   kind: !SetStatus
     status: Completed
-clock: 185
+- id: 01a0e4b9-44bb-7082-a5ac-564f4e8015c1
+  target_id: 01a0e4b9-2366-7ac0-b316-3c8ea63ce3f4
+  author: aida
+  node_id: ''
+  lamport: 186
+  timestamp: 2026-09-27T21:15:42.139791481Z
+  kind: !Create
+    title: Context-aware AIDA launchpad menu with init flow
+    description: The interactive AIDA launchpad shall detect whether the target directory is an initialized AIDA project. When uninitialized, agent, status, and shell options are hidden and an init option is presented. Selecting init initializes AIDA directly if .git exists, or prompts to initialize the current directory or create a new project subdirectory if no git repository exists.
+    req_type: Functional
+    status: Approved
+    priority: High
+clock: 186
 node_id: ''
