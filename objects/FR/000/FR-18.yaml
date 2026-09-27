@@ -1,0 +1,19 @@
+id: 01a0e4a7-4204-7b03-8b30-997402eec251
+spec_id: FR-18
+agreed_id: FR-18
+title: Return to menu when entering menu in AIDA shell
+description: The AIDA interactive shell shall treat `menu` as a built-in command that returns to the interactive launchpad menu, rather than dispatching it to `aida menu`.
+status: Approved
+priority: Medium
+owner: ''
+feature: Uncategorized
+created_at: 2026-09-27T20:56:01.796670394Z
+modified_at: 2026-09-27T20:56:01.796670394Z
+req_type: Functional
+filed_at:
+  code_sha: c4dd33625f0a3a9860699b0dc60a3eb07d34c5e2
+  branch: realign-novice-loop
+  dirty: true
+  aida_version: 0.15.0
+  aida_build_sha: '7201317922'
+  vendor: antigravity

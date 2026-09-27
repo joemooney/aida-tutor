@@ -1457,5 +1457,17 @@ operations:
   timestamp: 2026-09-27T20:55:04.775127936Z
   kind: !SetStatus
     status: Completed
-clock: 155
+- id: 01a0e4a7-480e-7571-b268-5a09f7388fe9
+  target_id: 01a0e4a7-4204-7b03-8b30-997402eec251
+  author: aida
+  node_id: ''
+  lamport: 156
+  timestamp: 2026-09-27T20:56:03.342172461Z
+  kind: !Create
+    title: Return to menu when entering menu in AIDA shell
+    description: The AIDA interactive shell shall treat `menu` as a built-in command that returns to the interactive launchpad menu, rather than dispatching it to `aida menu`.
+    req_type: Functional
+    status: Approved
+    priority: Medium
+clock: 156
 node_id: ''
