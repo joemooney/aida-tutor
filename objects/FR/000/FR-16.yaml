@@ -3,12 +3,12 @@ spec_id: FR-16
 agreed_id: FR-16
 title: Show shimmering AIDA launch banner
 description: The interactive AIDA launchpad shall begin with a Rust-rendered shimmering AIDA terminal banner and display the active menu or prompt beneath it. The shimmer must stop on the first user keystroke, return that keystroke to the caller without losing it, restore terminal state and cursor visibility, and allow the caller to continue normal menu or prompt input.
-status: Draft
+status: Approved
 priority: Medium
 owner: ''
 feature: Uncategorized
 created_at: 2026-09-27T17:56:47.948069365Z
-modified_at: 2026-09-27T17:56:47.948069365Z
+modified_at: 2026-09-27T20:50:48.193531692Z
 req_type: Functional
 tags:
 - banner
@@ -16,3 +16,57 @@ tags:
 - launchpad
 - shimmer
 - terminal
+comments:
+- id: 01a0e408-09be-7541-b602-c333eedf6580
+  author: ai:codex:joe
+  content: 'Ported the shimmer_prompt behavior into Rust: animated copper banner, menu/prompt rendered beneath it, raw first-byte capture, terminal restoration, and cursor cleanup. Verified first `j` keystroke navigates the launchpad.'
+  created_at: 2026-09-27T18:02:07.166130790Z
+  modified_at: 2026-09-27T18:02:07.166130790Z
+- id: 01a0e40f-2511-7681-ac32-485e7a624732
+  author: ai:codex:joe
+  content: 'Added configurable banner modes: static uses the exact copper arch, shimmer is the Rust port of the interactive shimmer prompt, and off disables the banner. Both visible modes share version, user, role, path, and spec metadata; AIDA_TUTOR_BANNER overrides .aida-tutor.toml.'
+  created_at: 2026-09-27T18:09:52.913581470Z
+  modified_at: 2026-09-27T18:09:52.913581470Z
+- id: 01a0e414-c2ca-76d2-8ef3-7b098137f9c3
+  author: ai:codex:joe
+  content: Fixed launchpad redraw offsets so static, shimmer, and off banner modes all replace the menu cleanly during arrow-key navigation.
+  created_at: 2026-09-27T18:16:00.970256467Z
+  modified_at: 2026-09-27T18:16:00.970256467Z
+- id: 01a0e416-6344-77d3-ac23-91ff399f6872
+  author: ai:codex:joe
+  content: Replaced ANSI row-offset menu updates with full-screen redraws, preserving the static banner and preventing stale or wrapped lines from overlapping during navigation.
+  created_at: 2026-09-27T18:17:47.587995529Z
+  modified_at: 2026-09-27T18:17:47.587995529Z
+- id: 01a0e41c-2bb7-7f32-9a53-af9b35f0f516
+  author: ai:codex:joe
+  content: Menu redraws now repaint the configured banner before the menu, preserving the same relative layout during navigation and leaving the banner available as a future system-information surface.
+  created_at: 2026-09-27T18:24:06.583505101Z
+  modified_at: 2026-09-27T18:24:06.583505101Z
+- id: 01a0e421-554f-73a1-ad14-91f37ac51af4
+  author: ai:codex:joe
+  content: 'Added Rust-native logo selection: --logo pyramid (default) or --logo arch, with the arch geometry ported from shimmer.py and also available as logo = "arch" in .aida-tutor.toml. No Python process is invoked.'
+  created_at: 2026-09-27T18:29:44.911334680Z
+  modified_at: 2026-09-27T18:29:44.911334680Z
+- id: 01a0e423-9464-7ed0-be80-ebcedb7a523d
+  author: ai:codex:joe
+  content: Improved the Rust arch variant with cell-level copper shading, champagne highlights, and fold shadows matching the dimensional color variation of shimmer.py.
+  created_at: 2026-09-27T18:32:12.132797136Z
+  modified_at: 2026-09-27T18:32:12.132797136Z
+- id: 01a0e428-6efc-7761-8f08-16bd6bc30dab
+  author: ai:codex:joe
+  content: Reshaped the Rust arch into a ribbon-style arch with an explicit inner opening, dark curled underside, warm outer face, and terminal-black negative space.
+  created_at: 2026-09-27T18:37:30.236039996Z
+  modified_at: 2026-09-27T18:37:30.236039996Z
+- id: 01a0e42b-f90c-76a2-90de-fbfa4a635a35
+  author: ai:codex:joe
+  content: Replaced procedural arch colors with the original shimmer_data.json RGB matrix and mask, so the Rust arch now follows the Python renderer cell-for-cell, including its highlights and shadows.
+  created_at: 2026-09-27T18:41:22.188174247Z
+  modified_at: 2026-09-27T18:41:22.188174247Z
+history:
+- id: 01a0e4a2-7901-7ea2-abbd-76920e09e36e
+  author: joe
+  timestamp: 2026-09-27T20:50:48.193529304Z
+  changes:
+  - field_name: status
+    old_value: Draft
+    new_value: Approved
