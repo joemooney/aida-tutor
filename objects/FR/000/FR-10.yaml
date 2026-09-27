@@ -3,12 +3,12 @@ spec_id: FR-10
 agreed_id: FR-10
 title: Make the tutorial menu the persistent front door
 description: Interactive tutor launches shall always show a menu whose first option resumes the current onboarding state, followed by onboarding review, exercises, terminology, and exit, so learners always have an obvious next destination.
-status: Draft
+status: Approved
 priority: Medium
 owner: ''
 feature: Uncategorized
 created_at: 2026-09-26T23:06:31.491646124Z
-modified_at: 2026-09-27T02:30:12.084349164Z
+modified_at: 2026-09-27T20:50:49.650632224Z
 req_type: Functional
 tags:
 - cli
@@ -27,3 +27,11 @@ comments:
   content: 'Made the tutorial menu onboarding entry state-aware: incomplete onboarding shows Resume, while completed onboarding shows Repeat and resets the onboarding workspace when selected.'
   created_at: 2026-09-27T02:30:12.084349164Z
   modified_at: 2026-09-27T02:30:12.084349164Z
+history:
+- id: 01a0e4a2-7eb2-7310-8af7-a45f8d6e8fc6
+  author: joe
+  timestamp: 2026-09-27T20:50:49.650629417Z
+  changes:
+  - field_name: status
+    old_value: Draft
+    new_value: Approved
