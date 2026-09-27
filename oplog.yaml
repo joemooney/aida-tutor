@@ -1685,5 +1685,17 @@ operations:
   timestamp: 2026-09-27T20:58:02.030247517Z
   kind: !SetStatus
     status: Completed
-clock: 183
+- id: 01a0e4b1-ba45-7b93-98dd-3c398e53c7f2
+  target_id: 01a0e4b1-b54a-7881-970f-96d6535afffc
+  author: aida
+  node_id: ''
+  lamport: 184
+  timestamp: 2026-09-27T21:07:27.941277286Z
+  kind: !Create
+    title: Document VIS and PRIN lifecycle states in the FAQ
+    description: Add an entry to content/faq.json explaining why Vision (VIS) and Principle (PRIN) requirements stay in Approved status instead of transitioning to Completed.
+    req_type: Doc
+    status: Approved
+    priority: Medium
+clock: 184
 node_id: ''

@@ -1,0 +1,18 @@
+id: 01a0e4b1-b54a-7881-970f-96d6535afffc
+spec_id: DOC-JM-001
+title: Document VIS and PRIN lifecycle states in the FAQ
+description: Add an entry to content/faq.json explaining why Vision (VIS) and Principle (PRIN) requirements stay in Approved status instead of transitioning to Completed.
+status: Approved
+priority: Medium
+owner: ''
+feature: Uncategorized
+created_at: 2026-09-27T21:07:26.666468520Z
+modified_at: 2026-09-27T21:07:26.666468520Z
+req_type: Doc
+filed_at:
+  code_sha: c4dd33625f0a3a9860699b0dc60a3eb07d34c5e2
+  branch: realign-novice-loop
+  dirty: true
+  aida_version: 0.15.0
+  aida_build_sha: '7201317922'
+  vendor: antigravity
