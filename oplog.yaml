@@ -1217,5 +1217,17 @@ operations:
     req_type: Functional
     status: Draft
     priority: High
-clock: 126
+- id: 01a0e403-477d-79e3-8307-10d7c98fc892
+  target_id: 01a0e403-2acc-7141-b677-7529fe4b5b8f
+  author: aida
+  node_id: ''
+  lamport: 127
+  timestamp: 2026-09-27T17:56:55.293282920Z
+  kind: !Create
+    title: Show shimmering AIDA launch banner
+    description: The interactive AIDA launchpad shall begin with a Rust-rendered shimmering AIDA terminal banner and display the active menu or prompt beneath it. The shimmer must stop on the first user keystroke, return that keystroke to the caller without losing it, restore terminal state and cursor visibility, and allow the caller to continue normal menu or prompt input.
+    req_type: Functional
+    status: Draft
+    priority: Medium
+clock: 127
 node_id: ''

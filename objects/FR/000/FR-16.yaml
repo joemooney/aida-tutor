@@ -1,0 +1,18 @@
+id: 01a0e403-2acc-7141-b677-7529fe4b5b8f
+spec_id: FR-16
+agreed_id: FR-16
+title: Show shimmering AIDA launch banner
+description: The interactive AIDA launchpad shall begin with a Rust-rendered shimmering AIDA terminal banner and display the active menu or prompt beneath it. The shimmer must stop on the first user keystroke, return that keystroke to the caller without losing it, restore terminal state and cursor visibility, and allow the caller to continue normal menu or prompt input.
+status: Draft
+priority: Medium
+owner: ''
+feature: Uncategorized
+created_at: 2026-09-27T17:56:47.948069365Z
+modified_at: 2026-09-27T17:56:47.948069365Z
+req_type: Functional
+tags:
+- banner
+- input
+- launchpad
+- shimmer
+- terminal
