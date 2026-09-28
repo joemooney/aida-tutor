@@ -3,13 +3,21 @@ spec_id: BUG-15
 agreed_id: BUG-15
 title: Fix invalid resume option and record durable onboarding completion
 description: The Help/Tutorials menu must distinguish between Not Started, In Progress, and Completed onboarding states. The resume option must not be shown when onboarding has not been started. Onboarding completion must be durably recorded in .aida-tutor-progress.toml so a fresh workspace remembers that onboarding was previously completed and offers repeat.
-status: InProgress
+status: Completed
 priority: Medium
 owner: ''
 feature: Uncategorized
 created_at: 2026-09-28T02:19:51.190714161Z
-modified_at: 2026-09-28T02:19:51.190714161Z
+modified_at: 2026-09-28T02:30:28.613176925Z
 req_type: Bug
+history:
+- id: 01a0e5d9-7405-72e1-a718-51ff8bfa298e
+  author: joe
+  timestamp: 2026-09-28T02:30:28.613175349Z
+  changes:
+  - field_name: status
+    old_value: InProgress
+    new_value: Completed
 filed_at:
   code_sha: c4dd33625f0a3a9860699b0dc60a3eb07d34c5e2
   branch: realign-novice-loop
@@ -17,3 +25,6 @@ filed_at:
   aida_version: 0.15.0
   aida_build_sha: '7201317922'
   vendor: antigravity
+implementation_info:
+  implemented: false
+  completed_at: 2026-09-28T02:30:28.613148038Z
