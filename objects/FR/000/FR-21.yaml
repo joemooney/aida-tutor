@@ -3,12 +3,12 @@ spec_id: FR-21
 agreed_id: FR-21
 title: Add screen clear toggle and prompt on command error or lesson display
 description: Prevent menu screen clears from wiping tutorial lesson output and error messages before the user can read them. Add a hotkey ('c') to toggle screen clearing mode (on/off), prompt 'Press Enter to continue...' on command errors or bad exit codes, and prompt 'Press Enter to return to menu...' after rendering lesson content.
-status: InProgress
+status: Completed
 priority: Medium
 owner: ''
 feature: Uncategorized
 created_at: 2026-09-28T03:25:13.372564106Z
-modified_at: 2026-09-28T03:25:32.145467111Z
+modified_at: 2026-09-28T03:36:48.408500929Z
 req_type: Functional
 history:
 - id: 01a0e60b-dc71-7621-b8bf-ff41b86053b4
@@ -18,6 +18,13 @@ history:
   - field_name: status
     old_value: Approved
     new_value: InProgress
+- id: 01a0e616-2e18-74a2-9473-7c37b73703f7
+  author: joe
+  timestamp: 2026-09-28T03:36:48.408499112Z
+  changes:
+  - field_name: status
+    old_value: InProgress
+    new_value: Completed
 filed_at:
   code_sha: c4dd33625f0a3a9860699b0dc60a3eb07d34c5e2
   branch: realign-novice-loop
@@ -25,3 +32,6 @@ filed_at:
   aida_version: 0.15.0
   aida_build_sha: 9099f64c8c
   vendor: antigravity
+implementation_info:
+  implemented: false
+  completed_at: 2026-09-28T03:36:48.408461982Z
