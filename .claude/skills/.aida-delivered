@@ -1,0 +1,63 @@
+# aida-delivered v2
+# Skills AIDA has delivered into this pack. A listed skill is never
+# re-created by `aida init`, `aida scaffold upgrade` or
+# `aida scaffold refresh`, so deleting one sticks. Remove a line to
+# have AIDA deliver that skill again. Unconfirmed skills are never
+# created by refresh; `aida scaffold upgrade` delivers them once. To
+# decline an unconfirmed skill for good, move its line under the
+# `# opted-out` heading (add the heading if it is absent).
+aida-architecture
+aida-backlog-groom
+aida-burndown
+aida-capture
+aida-clarify
+aida-code-review
+aida-commit
+aida-compiler-warnings
+aida-decide
+aida-decompose
+aida-derisk
+aida-digest
+aida-doc
+aida-docs
+aida-docs-review
+aida-doctor
+aida-drain-queue
+aida-ecosystem-scan
+aida-evaluate
+aida-fasttrack
+aida-fleet-watch
+aida-glossary
+aida-grill
+aida-guided-implement
+aida-handoff
+aida-human-audit
+aida-implement
+aida-import-plan
+aida-insights
+aida-integrate
+aida-learn
+aida-memory-capture
+aida-memory-query
+aida-onboard
+aida-orchestrate
+aida-oversee
+aida-pickup
+aida-plan
+aida-pr
+aida-punt
+aida-queue
+aida-read-mail
+aida-rebase
+aida-release
+aida-req
+aida-review
+aida-search
+aida-solo
+aida-sprint
+aida-standup
+aida-status
+aida-sync
+aida-techdebt
+aida-test
+aida-triage

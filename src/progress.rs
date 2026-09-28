@@ -28,6 +28,10 @@ pub struct Progress {
     /// history created by `aida init`. trace:TASK-3 | ai:codex
     #[serde(default)]
     pub store_commit_baseline: Option<usize>,
+    /// Whether the first-contact onboarding tour has been completed.
+    // trace:BUG-15 | ai:antigravity
+    #[serde(default)]
+    pub onboarding_completed: bool,
 }
 
 impl Progress {
@@ -63,6 +67,16 @@ impl Progress {
         if id > self.completed_through {
             self.completed_through = id;
         }
+    }
+
+    // trace:BUG-15 | ai:antigravity
+    pub fn is_onboarding_completed(&self) -> bool {
+        self.onboarding_completed
+    }
+
+    // trace:BUG-15 | ai:antigravity
+    pub fn record_onboarding_completion(&mut self) {
+        self.onboarding_completed = true;
     }
 
     /// True if the learner viewed `hint --solution` for this exercise

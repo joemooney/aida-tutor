@@ -3,7 +3,8 @@
 Hands-on tutorial for **AIDA** (`aida-cli`), built in the spirit of
 [rustlings](https://github.com/rust-lang/rustlings).
 
-`aida-tutor` has two paths:
+`aida-tutor` is a generalized AIDA launchpad with Help / Tutorials as one
+of its paths:
 
 - `aida-tutor onboard` — a 15-minute first-contact tour: initialize a
   scratch project, capture one requirement, trace code to it, commit it,
@@ -22,7 +23,9 @@ you actually did the thing.
 ```bash
 git clone <this repo>
 cd aida-tutor
-./run.sh shell             # recommended first run
+./run.sh                  # AIDA launchpad: agent, status, shell, help
+./run.sh shell             # direct `aida>` command shell
+# choose Help from the launchpad for the tutorial menu
 ./run.sh onboard           # full onboarding lesson
 ./run.sh next              # terse next action
 ./run.sh reset --yes       # bootstrap workspace/
@@ -32,6 +35,21 @@ cd aida-tutor
 ./run.sh list              # see all exercises + state
 ./run.sh progress          # e.g. 5/41 done - 12%
 ```
+
+The launch banner is configurable in `.aida-tutor.toml`:
+
+```toml
+banner = "shimmer" # "static", "shimmer", or "off"
+logo = "pyramid"    # "pyramid" or "arch"
+```
+
+`shimmer` is the default. `AIDA_TUTOR_BANNER` overrides the file setting for
+one invocation, and `--logo arch` selects the Rust port of `shimmer.py`'s
+metallic arch for that invocation.
+
+The launchpad's `shell` option accepts normal AIDA commands, for example
+`list`, `history`, or `show FR-1`; type `exit` to return to the launchpad.
+The `help` option opens the interactive Help / Tutorials menu.
 
 You'll need `aida` on `PATH` for the exercises themselves. `aida-tutor`
 spawns it as a subprocess to give you the real CLI surface.

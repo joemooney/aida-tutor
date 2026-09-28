@@ -157,7 +157,7 @@ Found 49 finding(s):
 ```text
 Found 1 active lease(s):
 
-- 019e5089edee scope=TASK-438 role=implementer owner=agent@example.invalid kind=session started_at=2026-05-22T16:34:37.216236922Z
+- 019e5089edee scope=TASK-438 role=implementer owner=joe.mooney@gmail.com kind=session started_at=2026-05-22T16:34:37.216236922Z
 ```
 
 ### 5. Worker Directives Cluster

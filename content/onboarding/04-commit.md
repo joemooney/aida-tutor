@@ -2,12 +2,12 @@
 
 ## Step 4 — commit, and name the spec
 
-Commit the change with the spec id in the message — that trailing `(FR-1)`
-is the load-bearing part:
+Run the concrete command below. It stages only `greet.py` and commits the
+change with the spec id in the message — that trailing `(FR-1)` is the
+load-bearing part:
 
 ```
-git add greet.py
-git commit -m "{{commit_prefix}}(greet): add --upper flag (FR-1)"
+git add greet.py && git commit -m "{{commit_prefix}}(greet): add --upper flag (FR-1)"
 ```
 
 The `(FR-1)` makes this commit part of FR-1's history — not in a tracker

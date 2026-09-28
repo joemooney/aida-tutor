@@ -1,6 +1,7 @@
 //! aida-tutor — exercise-by-exercise walkthrough of the AIDA workflow.
 //! trace:VIS-1, EPIC-1 | ai:claude
 
+mod banner;
 mod exercise;
 mod exercises;
 mod onboarding;
@@ -18,6 +19,9 @@ use crate::progress::Progress;
 #[derive(Parser, Debug)]
 #[command(name = "aida-tutor", version, about = "Hands-on tutor for AIDA")]
 struct Cli {
+    /// Banner logo geometry: `pyramid` (default) or the arch from shimmer.py.
+    #[arg(long, global = true, value_enum)]
+    logo: Option<banner::BannerLogo>,
     #[command(subcommand)]
     command: Option<Cmd>,
 }
@@ -99,28 +103,29 @@ enum Cmd {
     /// Start an interactive onboarding shell.
     /// trace:STORY-55 | ai:codex
     Shell,
+    /// Start the legacy onboarding shell directly.
+    #[command(name = "tutorial-shell", hide = true)]
+    TutorialShell,
+    /// Open the tutorial selector menu.
+    /// trace:FR-9 | ai:codex
+    Menu,
 }
 
 fn main() -> Result<()> {
     let cli = Cli::parse();
+    if let Some(logo) = cli.logo {
+        std::env::set_var("AIDA_TUTOR_LOGO", logo.as_str());
+    }
     // Walk up from CWD to locate the aida-tutor repo root. This lets the
     // user run `aida-tutor` from inside `workspace/` (the natural place
     // when working on an exercise) without having to `cd ..` first.
     let cwd = std::env::current_dir()?;
-    let repo_root = find_tutor_root(&cwd).unwrap_or(cwd);
+    let repo_root = find_tutor_root(&cwd).unwrap_or_else(|| cwd.clone());
     let workspace = repo_root.join("workspace");
     let exercises = exercises::all();
     let mut prog = Progress::load(&repo_root)?;
 
-    // First-run welcome: no sub-command AND nothing recorded yet AND no
-    // workspace bootstrapped → print a 6-line orientation instead of
-    // jumping straight into exercise 1. trace:STORY-23 | ai:claude
-    if cli.command.is_none() && prog.completed.is_empty() && !workspace.exists() {
-        cmd_welcome(exercises.len());
-        return Ok(());
-    }
-
-    match cli.command.unwrap_or(Cmd::Show { target: None }) {
+    match cli.command.unwrap_or(Cmd::Menu) {
         Cmd::List => cmd_list(&exercises, &workspace, &prog),
         Cmd::Show { target } => {
             cmd_show(&exercises, &workspace, &repo_root, &prog, target.as_deref())
@@ -153,7 +158,9 @@ fn main() -> Result<()> {
         Cmd::Wrapper { uninstall } => cmd_wrapper(&workspace, uninstall),
         Cmd::Onboard { reset } => onboarding::run(&workspace, &repo_root, reset),
         Cmd::Next => onboarding::next(&workspace, &repo_root),
-        Cmd::Shell => onboarding::shell(&workspace, &repo_root),
+        Cmd::Shell => onboarding::aida_shell(&cwd, &repo_root),
+        Cmd::TutorialShell => onboarding::shell(&workspace, &repo_root),
+        Cmd::Menu => onboarding::menu(&cwd, &repo_root),
     }
 }
 
@@ -404,13 +411,21 @@ fn cmd_list(exercises: &[Box<dyn Exercise>], workspace: &Path, prog: &Progress) 
             }
         } else {
             match e.verify(workspace) {
-                VerifyResult::Pass => "passes (run `verify` to record)".yellow().to_string(),
+                VerifyResult::Pass => "passes — run `aida-tutor verify <number>` to record"
+                    .yellow()
+                    .to_string(),
                 VerifyResult::Pending(_) => "pending".dimmed().to_string(),
                 VerifyResult::Fail(_) => "needs fix".red().to_string(),
             }
         };
         println!("{} {:>2}. {:<48} [{}]", marker, e.id(), e.title(), state);
     }
+    println!();
+    println!(
+        "{}",
+        "To continue: `aida-tutor show <number>` opens an exercise; `aida-tutor verify <number>` records a pass."
+            .dimmed()
+    );
     Ok(())
 }
 
@@ -857,7 +872,14 @@ fn cmd_reset(workspace: &Path, yes: bool) -> Result<()> {
 /// AND `Cargo.toml` (so we don't accidentally match a sibling project
 /// that happens to have a `content/` dir). Returns None if no ancestor
 /// matches — caller should fall back to CWD.
-fn find_tutor_root(start: &Path) -> Option<PathBuf> {
+// trace:FR-19,FR-20 | ai:antigravity
+pub(crate) fn find_tutor_root(start: &Path) -> Option<PathBuf> {
+    if let Ok(env_root) = std::env::var("AIDA_TUTOR_ROOT") {
+        let p = PathBuf::from(env_root);
+        if p.join("content/01-init.md").exists() && p.join("Cargo.toml").exists() {
+            return Some(p);
+        }
+    }
     let mut cur = Some(start.to_path_buf());
     while let Some(dir) = cur {
         if dir.join("content/01-init.md").exists() && dir.join("Cargo.toml").exists() {
@@ -865,93 +887,256 @@ fn find_tutor_root(start: &Path) -> Option<PathBuf> {
         }
         cur = dir.parent().map(|p| p.to_path_buf());
     }
+    if let Ok(exe) = std::env::current_exe() {
+        let mut cur = exe.parent().map(|p| p.to_path_buf());
+        while let Some(dir) = cur {
+            if dir.join("content/01-init.md").exists() && dir.join("Cargo.toml").exists() {
+                return Some(dir);
+            }
+            cur = dir.parent().map(|p| p.to_path_buf());
+        }
+    }
     None
 }
 
-/// Lightweight markdown-to-terminal renderer for exercise content.
-/// Handles three things:
-/// - `## Heading` lines → bold
-/// - Triple-backtick fenced blocks → indented + cyan-bold (each line is a
-///   command the user is meant to copy/run)
-/// - Inline `` `backticks` `` → cyan
-/// Everything else passes through unchanged. Not a full markdown
-/// renderer — pulls just enough to make commands visually prominent.
-/// Shared with the onboarding slice (`onboarding.rs`). trace:EPIC-5
-pub(crate) fn render_md_for_terminal(md: &str) -> String {
-    let inline_re = regex::Regex::new(r"`([^`]+)`").unwrap();
+fn detect_terminal_width() -> Option<usize> {
+    use std::io::IsTerminal;
+    if !std::io::stdout().is_terminal() {
+        return None;
+    }
+    #[cfg(unix)]
+    unsafe {
+        let mut winsize: libc::winsize = std::mem::zeroed();
+        if libc::ioctl(libc::STDOUT_FILENO, libc::TIOCGWINSZ, &mut winsize) == 0 && winsize.ws_col > 0 {
+            return Some(winsize.ws_col as usize);
+        }
+    }
+    std::env::var("COLUMNS")
+        .ok()
+        .and_then(|c| c.parse::<usize>().ok())
+}
+
+// trace:FR-22 | ai:antigravity
+pub(crate) fn target_terminal_width() -> usize {
+    detect_terminal_width()
+        .map(|w| (w.saturating_sub(2)).clamp(40, 78))
+        .unwrap_or(78)
+}
+
+// trace:FR-22 | ai:antigravity
+fn visible_len(s: &str) -> usize {
+    let mut len = 0;
+    let mut in_escape = false;
+    for ch in s.chars() {
+        if ch == '\x1b' {
+            in_escape = true;
+        } else if in_escape {
+            if ch == 'm' {
+                in_escape = false;
+            }
+        } else {
+            len += 1;
+        }
+    }
+    len
+}
+
+// trace:FR-22 | ai:antigravity
+fn style_inline(text: &str) -> String {
+    static INLINE_CODE_RE: std::sync::OnceLock<regex::Regex> = std::sync::OnceLock::new();
+    static BOLD_RE: std::sync::OnceLock<regex::Regex> = std::sync::OnceLock::new();
+    static ITALIC_RE: std::sync::OnceLock<regex::Regex> = std::sync::OnceLock::new();
+
+    let code_re = INLINE_CODE_RE.get_or_init(|| regex::Regex::new(r"`([^`]+)`").unwrap());
+    let bold_re = BOLD_RE.get_or_init(|| regex::Regex::new(r"\*\*([^*]+)\*\*").unwrap());
+    let italic_re = ITALIC_RE.get_or_init(|| regex::Regex::new(r"(?:\*|_)([^*_]+)(?:\*|_)").unwrap());
+
+    // 1. Inline code: `...` -> cyan per word
+    let s = code_re.replace_all(text, |caps: &regex::Captures| {
+        caps[1]
+            .split(' ')
+            .map(|w| w.cyan().to_string())
+            .collect::<Vec<_>>()
+            .join(" ")
+    });
+    // 2. Bold: **...** -> bold per word
+    let s = bold_re.replace_all(&s, |caps: &regex::Captures| {
+        caps[1]
+            .split(' ')
+            .map(|w| w.bold().to_string())
+            .collect::<Vec<_>>()
+            .join(" ")
+    });
+    // 3. Italic: *...* or _..._ -> italic per word
+    let s = italic_re.replace_all(&s, |caps: &regex::Captures| {
+        caps[1]
+            .split(' ')
+            .map(|w| w.italic().to_string())
+            .collect::<Vec<_>>()
+            .join(" ")
+    });
+    s.to_string()
+}
+
+// trace:FR-22 | ai:antigravity
+fn wrap_words(text: &str, max_width: usize, first_prefix: &str, rest_prefix: &str) -> String {
     let mut out = String::new();
-    let mut in_fence = false;
-    for line in md.lines() {
-        let t = line.trim_start();
-        if t.starts_with("```") {
-            // Don't print the fence markers — they're noise in a terminal
-            // view. The indent + color on the fenced lines below is the
-            // visual signal that "this is a command block".
-            in_fence = !in_fence;
-            continue;
+    let mut current_line = String::new();
+    let mut current_len = 0;
+    let mut prefix = first_prefix;
+
+    for word in text.split_whitespace() {
+        let w_len = visible_len(word);
+        if current_len == 0 {
+            current_line.push_str(prefix);
+            current_line.push_str(word);
+            current_len = visible_len(prefix) + w_len;
+        } else if current_len + 1 + w_len <= max_width {
+            current_line.push(' ');
+            current_line.push_str(word);
+            current_len += 1 + w_len;
+        } else {
+            out.push_str(&current_line);
+            out.push('\n');
+            current_line.clear();
+            prefix = rest_prefix;
+            current_line.push_str(prefix);
+            current_line.push_str(word);
+            current_len = visible_len(prefix) + w_len;
         }
-        if in_fence {
-            // Whole line is a command. Indent + cyan-bold.
-            out.push_str(&format!("    {}\n", line.cyan().bold()));
-            continue;
-        }
-        // Bold any heading line.
-        if t.starts_with('#') {
-            out.push_str(&format!("{}\n", line.bold()));
-            continue;
-        }
-        // Inline `backticks` → cyan.
-        let processed =
-            inline_re.replace_all(line, |caps: &regex::Captures| caps[1].cyan().to_string());
-        out.push_str(&processed);
+    }
+    if !current_line.is_empty() {
+        out.push_str(&current_line);
         out.push('\n');
     }
     out
 }
 
-fn cmd_welcome(total: usize) {
-    // trace:STORY-23,STORY-47,STORY-48 | ai:claude,codex
-    println!("{}", "Welcome to aida-tutor".cyan().bold());
-    println!();
-    println!("{total} hands-on exercises that walk you through AIDA's current workflow:");
-    println!("  project setup → capture → trace + commit → docs/search/status →");
-    println!("  push/pull the code + store → roles + queue → relationships →");
-    println!("  sessions + worktrees → review → plans + store audit + MCP.");
-    println!();
-    // One discoverability line for the first-contact onboarding slice —
-    // the recommended starting point for someone new to AIDA.
-    // trace:STORY-46 | ai:claude
-    println!(
-        "{}",
-        "New to AIDA? `aida-tutor onboard` is a 15-minute guided tour — start there."
-            .cyan()
-            .bold()
-    );
-    println!();
-    println!(
-        "First, make sure {} is on your PATH (run `aida --version` in another shell).",
-        "aida".cyan()
-    );
-    println!();
-    println!("Then bootstrap the tutor workspace and start exercise 01:");
-    println!();
-    println!(
-        "  {}",
-        "aida-tutor reset --yes      # creates workspace/, fresh git repo".cyan()
-    );
-    println!(
-        "  {}",
-        "aida-tutor show              # see the current exercise".cyan()
-    );
-    println!(
-        "  {}",
-        "aida-tutor verify            # check your work after each step".cyan()
-    );
-    println!();
-    println!(
-        "{}",
-        "Tip: `aida-tutor list` shows all exercises and their state.".dimmed()
-    );
+fn flush_prose(out: &mut String, pending: &mut Vec<String>, max_width: usize) {
+    if pending.is_empty() {
+        return;
+    }
+    let p_text = pending.join(" ");
+    pending.clear();
+    let styled = style_inline(&p_text);
+    let wrapped = wrap_words(&styled, max_width, "", "");
+    out.push_str(&wrapped);
+    out.push('\n');
+}
+
+/// Markdown-to-terminal renderer with word wrapping and clean styling.
+// trace:EPIC-5,FR-22 | ai:codex,antigravity
+pub(crate) fn render_md_for_terminal_with_width(md: &str, max_width: usize) -> String {
+    let mut out = String::new();
+    let mut in_fence = false;
+    let mut in_html_comment = false;
+    let mut pending_prose: Vec<String> = Vec::new();
+
+    for line in md.lines() {
+        let t = line.trim();
+
+        if in_fence {
+            if t.starts_with("```") {
+                in_fence = false;
+                if !out.ends_with("\n\n") {
+                    out.push('\n');
+                }
+            } else {
+                out.push_str(&format!("    {}\n", line.cyan().bold()));
+            }
+            continue;
+        }
+
+        if in_html_comment {
+            if t.contains("-->") {
+                in_html_comment = false;
+            }
+            continue;
+        }
+
+        if t.starts_with("<!--") {
+            if !t.contains("-->") {
+                in_html_comment = true;
+            }
+            continue;
+        }
+
+        if t.starts_with("```") {
+            flush_prose(&mut out, &mut pending_prose, max_width);
+            in_fence = true;
+            continue;
+        }
+
+        if t.is_empty() {
+            flush_prose(&mut out, &mut pending_prose, max_width);
+            continue;
+        }
+
+        if t.starts_with('#') {
+            flush_prose(&mut out, &mut pending_prose, max_width);
+            let level = t.chars().take_while(|c| *c == '#').count();
+            let htext = t[level..].trim();
+            if !out.is_empty() && !out.ends_with("\n\n") {
+                out.push('\n');
+            }
+            if level <= 2 {
+                out.push_str(&format!("{}\n\n", htext.cyan().bold()));
+            } else {
+                out.push_str(&format!("{}\n\n", htext.bold()));
+            }
+            continue;
+        }
+
+        if t == "---" || t == "***" || (t.starts_with("───") && t.chars().all(|c| c == '─')) {
+            flush_prose(&mut out, &mut pending_prose, max_width);
+            if !out.is_empty() && !out.ends_with("\n\n") {
+                out.push('\n');
+            }
+            let rule_len = max_width.min(78);
+            out.push_str(&format!("{}\n\n", "─".repeat(rule_len).dimmed()));
+            continue;
+        }
+
+        if t.starts_with("- ") || t.starts_with("* ") || t.starts_with("+ ") {
+            flush_prose(&mut out, &mut pending_prose, max_width);
+            let item_text = style_inline(t[2..].trim());
+            out.push_str(&wrap_words(&item_text, max_width, "  • ", "    "));
+            continue;
+        }
+
+        let digit_count = t.chars().take_while(|c| c.is_ascii_digit()).count();
+        if digit_count > 0 && t[digit_count..].starts_with(". ") {
+            flush_prose(&mut out, &mut pending_prose, max_width);
+            let num_str = &t[..digit_count + 1];
+            let prefix = format!("  {num_str} ");
+            let hang = " ".repeat(prefix.len());
+            let item_text = style_inline(t[digit_count + 2..].trim());
+            out.push_str(&wrap_words(&item_text, max_width, &prefix, &hang));
+            continue;
+        }
+
+        if line.starts_with("    ")
+            || line.starts_with('\t')
+            || line.starts_with("  →")
+            || line.starts_with("  ○")
+            || line.starts_with("  ✓")
+        {
+            flush_prose(&mut out, &mut pending_prose, max_width);
+            out.push_str(&style_inline(line));
+            out.push('\n');
+            continue;
+        }
+
+        pending_prose.push(t.to_string());
+    }
+
+    flush_prose(&mut out, &mut pending_prose, max_width);
+    out
+}
+
+// trace:EPIC-5,FR-22 | ai:codex,antigravity
+pub(crate) fn render_md_for_terminal(md: &str) -> String {
+    render_md_for_terminal_with_width(md, target_terminal_width())
 }
 
 fn cmd_progress(exercises: &[Box<dyn Exercise>], prog: &Progress) -> Result<()> {
@@ -979,4 +1164,81 @@ fn cmd_progress(exercises: &[Box<dyn Exercise>], prog: &Progress) -> Result<()> 
 #[allow(dead_code)]
 fn pretty_pathbuf(p: &PathBuf) -> String {
     p.display().to_string()
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    // trace:FR-22 | ai:antigravity
+    #[test]
+    fn render_md_strips_html_comments() {
+        let md = "<!-- trace:STORY-47,STORY-48 | ai:codex -->\n## Step 1\nHello world";
+        let rendered = render_md_for_terminal_with_width(md, 78);
+        assert!(!rendered.contains("trace:STORY-47"));
+        assert!(!rendered.contains("<!--"));
+        assert!(rendered.contains("Step 1"));
+        assert!(rendered.contains("Hello world"));
+    }
+
+    // trace:FR-22 | ai:antigravity
+    #[test]
+    fn render_md_formats_headings_without_octothorpes() {
+        let md = "## Step 1 — give the project a memory\nParagraph text";
+        let rendered = render_md_for_terminal_with_width(md, 78);
+        assert!(!rendered.contains("##"));
+        assert!(rendered.contains("Step 1 — give the project a memory"));
+    }
+
+    // trace:FR-22 | ai:antigravity
+    #[test]
+    fn render_md_wraps_long_paragraphs_cleanly() {
+        let md = "This uses AIDA's Codex init profile and does not scaffold Claude Code. Current AIDA 0.14 may still write .antigravity/ even though Antigravity was not selected; strict all-agent allow-list behavior is tracked upstream as BUG-794. If .antigravity/ appears, remove it before continuing this compliance-safe tour.";
+        let rendered = render_md_for_terminal_with_width(md, 78);
+        for line in rendered.lines() {
+            assert!(
+                visible_len(line) <= 78,
+                "Line exceeded 78 columns: visible_len={}, line={}",
+                visible_len(line),
+                line
+            );
+        }
+        // Word "behavior" should remain intact, not split into "b \n ehavior"
+        assert!(rendered.contains("behavior"));
+        assert!(!rendered.contains("\nb\n") && !rendered.contains("b\nehavior"));
+    }
+
+    // trace:FR-22 | ai:antigravity
+    #[test]
+    fn render_md_preserves_fenced_code_blocks() {
+        let md = "Before code:\n```\ncd workspace\naida init --agent codex\n```\nAfter code";
+        let rendered = render_md_for_terminal_with_width(md, 78);
+        assert!(rendered.contains("cd workspace"));
+        assert!(rendered.contains("aida init --agent codex"));
+        assert!(rendered.contains("    "));
+        assert!(!rendered.contains("```"));
+    }
+
+    // trace:FR-22 | ai:antigravity
+    #[test]
+    fn render_md_formats_lists_with_hanging_indent() {
+        let md = "- First item that is fairly long and will wrap onto the next line to demonstrate hanging indentation in list rendering.\n- Second item";
+        let rendered = render_md_for_terminal_with_width(md, 50);
+        assert!(rendered.contains("  • First item"));
+        assert!(rendered.contains("  • Second item"));
+        for line in rendered.lines() {
+            assert!(visible_len(line) <= 50);
+        }
+    }
+
+    // trace:FR-22 | ai:antigravity
+    #[test]
+    fn render_md_styles_inline_code_and_bold() {
+        let md = "Check `.aida-store/` and **important** note.";
+        let rendered = render_md_for_terminal_with_width(md, 78);
+        assert!(!rendered.contains("`"));
+        assert!(!rendered.contains("**"));
+        assert!(rendered.contains(".aida-store/"));
+        assert!(rendered.contains("important"));
+    }
 }

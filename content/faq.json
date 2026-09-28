@@ -1,0 +1,172 @@
+[
+  {
+    "id": "faq.start",
+    "question": "Where should I start?",
+    "answer": "Run the tutor without arguments and choose Resume or Onboarding from the menu.",
+    "detail": "Resume shows the next action for the current tour. Onboarding replays the first-contact round trip. Exercises opens the full track, and Terminology or FAQ provide reference material.",
+    "path": ["New user", "Getting started"],
+    "tags": ["start", "menu", "onboarding"],
+    "see_also": ["faq.resume", "faq.exercises"],
+    "refs": ["README.md", "content/onboarding/00-why.md"]
+  },
+  {
+    "id": "faq.resume",
+    "question": "What does Resume do?",
+    "answer": "It reads the project state and shows the next onboarding action.",
+    "detail": "Resume is state-aware: it does not rely on a hidden lesson counter. It checks the workspace, AIDA store, trace comments, commits, and requirement status to find where the round trip currently stops.",
+    "path": ["New user", "Getting started"],
+    "tags": ["resume", "state", "onboarding"],
+    "see_also": ["faq.start", "faq.next"],
+    "refs": ["content/onboarding/03-implement.md", "content/onboarding/04-commit.md"]
+  },
+  {
+    "id": "faq.exercises",
+    "question": "How do I choose an exercise?",
+    "answer": "Open Exercises, move with the arrows, and press Enter on an exercise.",
+    "detail": "The exercise picker opens at the next incomplete exercise. Completed exercises can still be selected for review. A ready exercise has passing observable state; opening the picker records that pass automatically.",
+    "path": ["New user", "Getting started"],
+    "tags": ["exercises", "picker", "progress"],
+    "see_also": ["faq.verify", "faq.completed"],
+    "refs": ["content/03-list.md", "content/04-show.md"]
+  },
+  {
+    "id": "faq.next",
+    "question": "What does next do?",
+    "answer": "It re-reads the project and shows the current onboarding step without replaying the lesson.",
+    "detail": "Use next after completing an action outside the tutor shell or when you want a compact status check. Inside the shell, Resume provides the same guidance from the menu and the shell refreshes progress after commands.",
+    "path": ["New user", "Getting started"],
+    "tags": ["next", "resume", "state"],
+    "see_also": ["faq.resume", "faq.start"],
+    "refs": ["README.md"]
+  },
+  {
+    "id": "faq.verify",
+    "question": "Why does verification matter?",
+    "answer": "Verification turns observable work into recorded progress.",
+    "detail": "A verifier checks files, commands, git history, and AIDA state against the exercise's expectation. In the interactive picker this reconciliation happens when the menu opens; the explicit verify command remains useful from a normal shell or CI workflow.",
+    "path": ["Tutor", "Exercises and progress"],
+    "tags": ["verify", "evidence", "progress"],
+    "see_also": ["faq.completed", "faq.passing"],
+    "refs": ["content/17-status.md", "content/34-plan-verify.md"]
+  },
+  {
+    "id": "faq.completed",
+    "question": "Can I revisit a completed exercise?",
+    "answer": "Yes. Select it in the exercise picker to reopen its explanation and current state.",
+    "detail": "Opening a completed exercise is review, not a reset. It does not remove credit or rewrite progress. To practice it again, follow its instructions against the current workspace or reset only when you intentionally want a fresh track.",
+    "path": ["Tutor", "Exercises and progress"],
+    "tags": ["completed", "review", "reset"],
+    "see_also": ["faq.exercises", "faq.reset"],
+    "refs": ["content/04-show.md", "content/01-init.md"]
+  },
+  {
+    "id": "faq.passing",
+    "question": "What does ready or passes mean?",
+    "answer": "The current workspace already satisfies the exercise's observable check.",
+    "detail": "A passing verifier does not mean you must repeat the exercise. The interactive menu records it as completed. If the pass was unexpected, open the exercise and inspect its verifier explanation before moving on.",
+    "path": ["Tutor", "Exercises and progress"],
+    "tags": ["passes", "ready", "verifier"],
+    "see_also": ["faq.verify", "faq.completed"],
+    "refs": ["content/17-status.md"]
+  },
+  {
+    "id": "faq.reset",
+    "question": "What does reset remove?",
+    "answer": "Reset recreates the tutor workspace and clears the exercise sandbox; use it deliberately.",
+    "detail": "The onboarding reset path reseeds the scratch project. The exercise reset path wipes workspace state and can remove work you created there. Tutor progress is stored separately, so resetting the workspace does not automatically erase recorded exercise history.",
+    "path": ["Configuration", "Workspace and safety"],
+    "tags": ["reset", "workspace", "safety"],
+    "see_also": ["faq.completed", "faq.workspace"],
+    "refs": ["content/01-init.md", "README.md"]
+  },
+  {
+    "id": "faq.workspace",
+    "question": "Where does my work live?",
+    "answer": "The exercises use workspace/; the tutor's progress and AIDA store are separate project data.",
+    "detail": "The workspace is the learner's scratch project. The tutor repository holds exercise progress, while the workspace's AIDA store holds the requirements created during the exercises. This separation lets the tutor reset the playground without confusing its own source or progress.",
+    "path": ["Configuration", "Workspace and safety"],
+    "tags": ["workspace", "store", "progress"],
+    "see_also": ["faq.reset", "faq.store"],
+    "refs": ["README.md", "content/19-distributed-store.md"]
+  },
+  {
+    "id": "faq.store",
+    "question": "What is the AIDA Store?",
+    "answer": "It is the canonical project-local history of requirements, relationships, comments, and events.",
+    "detail": "The store is not just a cache or a task list. It preserves the project memory that lets a future agent understand why code exists, what was decided, and how work moved through the workflow.",
+    "path": ["Architecture", "AIDA and traceability"],
+    "tags": ["store", "history", "requirements"],
+    "see_also": ["faq.cache", "faq.trace"],
+    "refs": ["content/19-distributed-store.md", "content/20-store-sync.md"]
+  },
+  {
+    "id": "faq.cache",
+    "question": "Is the AIDA cache the source of truth?",
+    "answer": "No. The cache is rebuildable; the distributed store is canonical.",
+    "detail": "Use the cache for fast local reads, but do not treat it as the authoritative record. If it is stale or damaged, rebuild it from the store rather than manually editing the database.",
+    "path": ["Architecture", "AIDA and traceability"],
+    "tags": ["cache", "store", "rebuild"],
+    "see_also": ["faq.store"],
+    "refs": ["content/20-store-sync.md", "content/21-cache-rebuild.md"]
+  },
+  {
+    "id": "faq.trace",
+    "question": "Why add a trace comment?",
+    "answer": "It keeps the code-to-requirement link next to the implementation.",
+    "detail": "A trace comment makes intent discoverable during code review, debugging, onboarding, and future maintenance. It is deliberately small, searchable, and carried with the source instead of living in a separate spreadsheet.",
+    "path": ["Architecture", "AIDA and traceability"],
+    "tags": ["trace", "code", "requirements"],
+    "see_also": ["faq.store", "faq.commit"],
+    "refs": ["content/05-trace-comment.md"]
+  },
+  {
+    "id": "faq.commit",
+    "question": "Why put the requirement ID in the commit?",
+    "answer": "The commit trailer connects implementation history to the requirement history.",
+    "detail": "A commit such as `[AI:codex] feat(greet): add --upper flag (FR-1)` lets a future reader move from a code change to the requirement and its acceptance. The trace comment and commit link provide two durable paths through the same history.",
+    "path": ["Architecture", "AIDA and traceability"],
+    "tags": ["commit", "traceability", "git"],
+    "see_also": ["faq.trace", "faq.review"],
+    "refs": ["content/06-aida-commit.md", "content/32-commit-pair-trailer.md"]
+  },
+  {
+    "id": "faq.canonical_lifecycle",
+    "question": "Do approved Vision and Principle requirements stay in Approved?",
+    "answer": "Yes. Approved is the permanent active state for VIS and PRIN declarations; they do not move to Completed.",
+    "detail": "Visions and principles belong to AIDA's canonical governance layer rather than the task burndown. They are foundational declarations and constitution rules that govern the project over its lifetime. They remain Approved while active, moving only to Superseded if replaced by an updated requirement, or Rejected if repealed. AIDA's default work queue and task listing automatically omit them so they do not clutter the active implementation burndown.",
+    "path": ["Architecture", "AIDA and traceability"],
+    "tags": ["vision", "principle", "lifecycle", "status", "canonical"],
+    "see_also": ["faq.store", "faq.completed"],
+    "refs": ["content/11-vision.md", "content/12-principle.md"]
+  },
+  {
+    "id": "faq.review",
+    "question": "When should work be reviewed?",
+    "answer": "After implementation and verification, before treating the requirement as complete.",
+    "detail": "Review is the fresh-eyes check that compares the change with acceptance, tests, traceability, and linked requirements. It is distinct from merely observing that a command ran or a verifier returned pass.",
+    "path": ["Workflow", "Review and delivery"],
+    "tags": ["review", "acceptance", "quality"],
+    "see_also": ["faq.verify", "faq.commit"],
+    "refs": ["content/33-review-prompt.md"]
+  },
+  {
+    "id": "faq.autonomy",
+    "question": "What does the tutor do automatically?",
+    "answer": "It reads observable project state and keeps the learning path in sync.",
+    "detail": "The tutor can reconcile exercise progress when you open the exercise picker, refresh the current onboarding action, and show runnable commands. It does not make irreversible project changes without an explicit command or selection.",
+    "path": ["Autonomy", "Safety and control"],
+    "tags": ["automation", "safety", "progress"],
+    "see_also": ["faq.verify", "faq.reset"],
+    "refs": ["README.md", "content/17-status.md"]
+  },
+  {
+    "id": "faq.troubleshooting",
+    "question": "What should I do when a check fails?",
+    "answer": "Open the related exercise, read its observable check, and inspect the reported project state.",
+    "detail": "A failed check usually means the expected file, command, trace, commit, or AIDA state is missing or differs from the exercise. Fix the underlying state, then return to the exercise picker so progress can be reconciled again.",
+    "path": ["Troubleshooting", "Checks and recovery"],
+    "tags": ["errors", "checks", "recovery"],
+    "see_also": ["faq.verify", "faq.completed"],
+    "refs": ["content/17-status.md", "README.md"]
+  }
+]

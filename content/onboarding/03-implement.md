@@ -11,14 +11,13 @@
 headless Codex run in the scratch workspace; you should see `greet.py`
 change without editing it by hand.
 
-Before the edit, the command runs `aida spec dryrun FR-1`. That is the
+Before the edit, the command checks `aida spec dryrun FR-1`. That is the
 small advisor-style gate for this first tour: it checks whether the spec is
-ready for an implementer before the AI starts changing files.
-
-In this scratch project, `dryrun` may warn that FR-1 has no parent. That is
-fine for the tour because this is a one-feature toy repo. In a production
-burndown, the advisor would normally link ready work under an epic before
-queueing it.
+ready for an implementer before the AI starts changing files. If the only
+warning is the missing parent, the tutor explains that this standalone tour
+does not queue the work and continues directly; it will not send you around
+the same dryrun loop. Other readiness failures stop the action and tell you
+what to fix before asking for the next action again.
 
 The implementer should add the flag and — this is the part that matters —
 leave a **trace comment** next to the code:
