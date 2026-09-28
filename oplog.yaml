@@ -1753,5 +1753,17 @@ operations:
   timestamp: 2026-09-28T02:30:28.630849933Z
   kind: !SetStatus
     status: Completed
-clock: 190
+- id: 01a0e5dc-5165-7993-941d-564236ba0812
+  target_id: 01a0e5dc-4d77-72c2-b507-5fd80f7368fd
+  author: aida
+  node_id: ''
+  lamport: 191
+  timestamp: 2026-09-28T02:33:36.357035208Z
+  kind: !Create
+    title: Display active AIDA project name or parent aida-store in banner
+    description: The launchpad banner info lines must dynamically display the active AIDA project or inherited parent directory aida-store instead of hardcoded mock paths. When inside an AIDA project root, display the project name and branch; when in a child directory using a parent aida-store, clearly display the parent aida-store or project name; when outside any AIDA project, indicate no AIDA project is active.
+    req_type: Functional
+    status: Approved
+    priority: Medium
+clock: 191
 node_id: ''

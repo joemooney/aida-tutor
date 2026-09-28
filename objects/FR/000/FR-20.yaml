@@ -1,0 +1,19 @@
+id: 01a0e5dc-4d77-72c2-b507-5fd80f7368fd
+spec_id: FR-20
+agreed_id: FR-20
+title: Display active AIDA project name or parent aida-store in banner
+description: The launchpad banner info lines must dynamically display the active AIDA project or inherited parent directory aida-store instead of hardcoded mock paths. When inside an AIDA project root, display the project name and branch; when in a child directory using a parent aida-store, clearly display the parent aida-store or project name; when outside any AIDA project, indicate no AIDA project is active.
+status: Approved
+priority: Medium
+owner: ''
+feature: Uncategorized
+created_at: 2026-09-28T02:33:35.351489713Z
+modified_at: 2026-09-28T02:33:35.351489713Z
+req_type: Functional
+filed_at:
+  code_sha: c4dd33625f0a3a9860699b0dc60a3eb07d34c5e2
+  branch: realign-novice-loop
+  dirty: true
+  aida_version: 0.15.0
+  aida_build_sha: bb445e1236
+  vendor: antigravity
