@@ -1,0 +1,19 @@
+id: 01a0e66e-fc8b-7861-9808-710537f88ff9
+spec_id: FR-22
+agreed_id: FR-22
+title: Format markdown tutorial content with capped max width, word wrap, and clean headings
+description: ''
+status: InProgress
+priority: Medium
+owner: ''
+feature: Uncategorized
+created_at: 2026-09-28T05:13:48.427645550Z
+modified_at: 2026-09-28T05:13:48.427645550Z
+req_type: Functional
+filed_at:
+  code_sha: c4dd33625f0a3a9860699b0dc60a3eb07d34c5e2
+  branch: realign-novice-loop
+  dirty: true
+  aida_version: 0.15.0
+  aida_build_sha: bcd7822d28
+  vendor: antigravity
