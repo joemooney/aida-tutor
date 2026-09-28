@@ -1733,5 +1733,17 @@ operations:
   timestamp: 2026-09-27T21:24:35.560915194Z
   kind: !SetStatus
     status: Completed
-clock: 188
+- id: 01a0e5cf-c124-7891-9cdb-69058a8968cd
+  target_id: 01a0e5cf-ba16-7a53-85fe-c42ee8926bf7
+  author: aida
+  node_id: ''
+  lamport: 189
+  timestamp: 2026-09-28T02:19:52.996899399Z
+  kind: !Create
+    title: Fix invalid resume option and record durable onboarding completion
+    description: The Help/Tutorials menu must distinguish between Not Started, In Progress, and Completed onboarding states. The resume option must not be shown when onboarding has not been started. Onboarding completion must be durably recorded in .aida-tutor-progress.toml so a fresh workspace remembers that onboarding was previously completed and offers repeat.
+    req_type: Bug
+    status: In Progress
+    priority: Medium
+clock: 189
 node_id: ''
