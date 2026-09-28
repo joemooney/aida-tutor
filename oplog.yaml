@@ -1781,5 +1781,17 @@ operations:
   timestamp: 2026-09-28T02:41:51.942485465Z
   kind: !SetStatus
     status: Completed
-clock: 193
+- id: 01a0e60b-ac52-7273-b6f4-01a472c895d0
+  target_id: 01a0e60b-931c-7253-b181-bf8dc2de5233
+  author: aida
+  node_id: ''
+  lamport: 194
+  timestamp: 2026-09-28T03:25:19.826224103Z
+  kind: !Create
+    title: Add screen clear toggle and prompt on command error or lesson display
+    description: Prevent menu screen clears from wiping tutorial lesson output and error messages before the user can read them. Add a hotkey ('c') to toggle screen clearing mode (on/off), prompt 'Press Enter to continue...' on command errors or bad exit codes, and prompt 'Press Enter to return to menu...' after rendering lesson content.
+    req_type: Functional
+    status: Approved
+    priority: Medium
+clock: 194
 node_id: ''
