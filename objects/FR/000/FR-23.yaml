@@ -1,0 +1,32 @@
+id: 01a1215b-daf1-7c60-9972-34f1f348fe24
+spec_id: FR-23
+agreed_id: FR-23
+title: 'Launchpad: relay — plan, implement, review approved specs (launch an autonomous aida-relay session)'
+description: |
+  Add a top-level launchpad menu option (AIDA projects only) that starts an autonomous daisy-chained Claude session via aida-relay's `claude_relay.sh`, seeded with a backlog-drain prompt: read `aida list --status approved`, pick the highest-priority actionable item, plan, implement, review, then move on to the next.
+
+  Script resolution: `$AIDA_RELAY_SCRIPT`, then `claude_relay.sh` on PATH, then `~/ai/aida-relay/bin/claude_relay.sh`. The relay keeps its handoff file and session logs under its own repo by default, so the launcher passes `--handoff-file <project>/.aida/handoff/advisor/latest.md` and `--sessions-dir <project>/.aida/relay-sessions`, keeping relay state per project. It runs from the project root.
+
+  Because the session works unattended (spending quota, editing code, committing), the option shows a confirmation screen first: project, script, prompt, and whether an AIDA seat grant (`AIDA_SESSION_GRANT`) will be inherited. Without a grant, the agent can't approve, mark done, or route work (ADR-66).
+
+  ## Acceptance
+  - The launchpad shows a `relay` option inside an AIDA project and hides it outside one
+  - Selecting it shows the project dir, resolved script, prompt, and grant status, then asks y/N; anything but y returns to the menu without launching
+  - On y, runs `<script> --handoff-file <root>/.aida/handoff/advisor/latest.md --sessions-dir <root>/.aida/relay-sessions "<prompt>"` with cwd = AIDA project root, then returns to the menu on exit
+  - When no script resolves, it says how to set AIDA_RELAY_SCRIPT and returns to the menu
+  - Unit tests cover option visibility and script resolution order
+status: Draft
+priority: Medium
+owner: ''
+feature: Uncategorized
+created_at: 2026-10-09T15:50:30.385165132Z
+modified_at: 2026-10-09T15:50:30.385165132Z
+req_type: Functional
+filed_at:
+  code_sha: 38a0aa8a55b140f0e007495827077d240c999c75
+  branch: launchpad-relay
+  dirty: false
+  aida_version: 0.15.0
+  aida_build_sha: be4800bea7
+  vendor: antigravity
+  session: fcee9bd0-2320-40ca-915c-57193749c95d
