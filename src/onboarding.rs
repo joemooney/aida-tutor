@@ -550,6 +550,7 @@ pub fn find_git_project_root(start: &Path) -> Option<PathBuf> {
 pub(crate) enum LaunchpadOption {
     Init,
     Agent,
+    Relay,
     Status,
     Shell,
     Help,
@@ -561,6 +562,7 @@ impl LaunchpadOption {
         match self {
             LaunchpadOption::Init => "init        — initialize this project for AIDA",
             LaunchpadOption::Agent => "agent       — create or configure an agent",
+            LaunchpadOption::Relay => "relay       — plan, implement, review approved specs",
             LaunchpadOption::Status => "status      — inspect AIDA status",
             LaunchpadOption::Shell => "shell       — run AIDA commands",
             LaunchpadOption::Help => "help        — tutorials and documentation",
@@ -574,6 +576,7 @@ pub(crate) fn launchpad_options(is_aida: bool) -> &'static [LaunchpadOption] {
     if is_aida {
         &[
             LaunchpadOption::Agent,
+            LaunchpadOption::Relay,
             LaunchpadOption::Status,
             LaunchpadOption::Shell,
             LaunchpadOption::Help,
@@ -959,6 +962,9 @@ fn run_launchpad_menu(start_dir: &Path, repo_root: &Path) -> Result<()> {
                     pause_for_enter_prompt("Press Enter to return to menu...");
                 }
             }
+            LaunchpadOption::Relay => {
+                run_relay_flow(&current_dir)?;
+            }
             LaunchpadOption::Status => {
                 run_status_menu(&current_dir)?;
             }
@@ -979,6 +985,112 @@ fn run_launchpad_menu(start_dir: &Path, repo_root: &Path) -> Result<()> {
             }
         }
     }
+}
+
+// trace:FR-23 | ai:claude
+const RELAY_SCRIPT_NAME: &str = "claude_relay.sh";
+
+// trace:FR-23 | ai:claude
+const RELAY_PROMPT: &str = "Read the open items in the backlog using 'aida list --status approved'. \
+    Pick the highest priority actionable item, plan the fix, and implement it. \
+    Review the change before committing it. When finished, move on to the next item.";
+
+/// Locate aida-relay's `claude_relay.sh`: an explicit `AIDA_RELAY_SCRIPT`
+/// wins, then the first hit on `PATH`, then the conventional
+/// `~/ai/aida-relay` checkout. Inputs are passed in so tests can pin them.
+// trace:FR-23 | ai:claude
+pub(crate) fn resolve_relay_script(
+    override_path: Option<PathBuf>,
+    path_var: Option<std::ffi::OsString>,
+    home: Option<PathBuf>,
+) -> Option<PathBuf> {
+    if let Some(p) = override_path.filter(|p| !p.as_os_str().is_empty()) {
+        return p.is_file().then_some(p);
+    }
+    if let Some(path_var) = path_var {
+        if let Some(hit) = std::env::split_paths(&path_var)
+            .map(|dir| dir.join(RELAY_SCRIPT_NAME))
+            .find(|candidate| candidate.is_file())
+        {
+            return Some(hit);
+        }
+    }
+    home.map(|h| h.join("ai/aida-relay/bin").join(RELAY_SCRIPT_NAME))
+        .filter(|p| p.is_file())
+}
+
+/// Launch an autonomous aida-relay session that drains the approved
+/// backlog. Relay state (handoff + session logs) is pinned inside the
+/// target project — the script otherwise keeps it under its own repo,
+/// where relays for two projects would share one handoff file.
+// trace:FR-23 | ai:claude
+fn run_relay_flow(current_dir: &Path) -> Result<()> {
+    let root = find_aida_project_root(current_dir).unwrap_or_else(|| current_dir.to_path_buf());
+    println!();
+    println!("{}", "AIDA / Relay".cyan().bold());
+    println!();
+
+    let script = resolve_relay_script(
+        std::env::var_os("AIDA_RELAY_SCRIPT").map(PathBuf::from),
+        std::env::var_os("PATH"),
+        std::env::var_os("HOME").map(PathBuf::from),
+    );
+    let Some(script) = script else {
+        println!(
+            "{} couldn't find {RELAY_SCRIPT_NAME}. Set AIDA_RELAY_SCRIPT to its path, \
+             put it on PATH, or clone aida-relay to ~/ai/aida-relay.",
+            "✗".red().bold()
+        );
+        pause_for_enter_prompt("Press Enter to return to menu...");
+        return Ok(());
+    };
+
+    println!("  project  {}", root.display());
+    println!("  script   {}", script.display());
+    println!("  prompt   {RELAY_PROMPT}");
+    // ADR-66: authority comes only from a validated seat grant, which the
+    // relay's sessions inherit from this shell.
+    match std::env::var("AIDA_SESSION_GRANT") {
+        Ok(grant) if !grant.trim().is_empty() => {
+            let role = std::env::var("AIDA_SESSION_ROLE").unwrap_or_else(|_| "?".into());
+            println!("  seat     inherits this shell's seat grant (role: {role})");
+        }
+        _ => println!(
+            "  seat     {} no AIDA_SESSION_GRANT — the agent can't approve, mark done, or \
+             route work. Run `eval \"$(aida role enter advisor)\"` first to give it a seat.",
+            "⚠".yellow().bold()
+        ),
+    }
+    println!();
+    println!("This starts unattended Claude sessions that edit code and commit in this project.");
+    print!("Launch? [y/N] ");
+    io::stdout().flush()?;
+    let mut answer = String::new();
+    io::stdin().read_line(&mut answer)?;
+    if !matches!(answer.trim().to_lowercase().as_str(), "y" | "yes") {
+        println!("Not launched.");
+        pause_for_enter_prompt("Press Enter to return to menu...");
+        return Ok(());
+    }
+
+    let status = Command::new(&script)
+        .arg("--handoff-file")
+        .arg(root.join(".aida/handoff/advisor/latest.md"))
+        .arg("--sessions-dir")
+        .arg(root.join(".aida/relay-sessions"))
+        .arg(RELAY_PROMPT)
+        .current_dir(&root)
+        .status()
+        .with_context(|| format!("running {}", script.display()))?;
+    if !status.success() {
+        println!(
+            "{} relay exited with status {}",
+            "✗".red().bold(),
+            status.code().unwrap_or(1)
+        );
+    }
+    pause_for_enter_prompt("Press Enter to return to menu...");
+    Ok(())
 }
 
 // trace:FR-15,FR-21 | ai:codex,antigravity
@@ -3898,12 +4010,14 @@ mod tests {
         assert!(!uninit_text.contains("agent"));
         assert!(!uninit_text.contains("status"));
         assert!(!uninit_text.contains("shell"));
+        assert!(!uninit_text.contains("relay"));
 
         let init = launchpad_options(true);
         assert_eq!(
             init,
             &[
                 LaunchpadOption::Agent,
+                LaunchpadOption::Relay,
                 LaunchpadOption::Status,
                 LaunchpadOption::Shell,
                 LaunchpadOption::Help,
@@ -3912,12 +4026,53 @@ mod tests {
         );
         let init_text = launchpad_menu_text(init, 0, false);
         assert!(init_text.contains("agent"));
+        assert!(init_text.contains("relay"));
         assert!(init_text.contains("status"));
         assert!(init_text.contains("shell"));
         assert!(init_text.contains("help"));
         assert!(init_text.contains("exit"));
         assert!(init_text.contains("c to toggle clear [off]"));
         assert!(!init_text.contains("init"));
+    }
+
+    // trace:FR-23 | ai:claude
+    #[test]
+    fn relay_script_resolution_order() {
+        let base = tmp();
+        let explicit = base.join("explicit/claude_relay.sh");
+        let on_path = base.join("path-dir/claude_relay.sh");
+        let home = base.join("home");
+        let home_script = home.join("ai/aida-relay/bin/claude_relay.sh");
+        for script in [&explicit, &on_path, &home_script] {
+            std::fs::create_dir_all(script.parent().unwrap()).unwrap();
+            std::fs::write(script, "#!/bin/sh\n").unwrap();
+        }
+        let path_var = std::env::join_paths([base.join("empty-dir"), base.join("path-dir")]).ok();
+
+        // An explicit override wins over PATH and HOME.
+        assert_eq!(
+            resolve_relay_script(Some(explicit.clone()), path_var.clone(), Some(home.clone())),
+            Some(explicit.clone())
+        );
+        // An override that doesn't exist resolves to nothing rather than
+        // silently launching a different script.
+        assert_eq!(
+            resolve_relay_script(Some(base.join("missing.sh")), path_var.clone(), Some(home.clone())),
+            None
+        );
+        // An empty override counts as unset; PATH beats the HOME fallback.
+        assert_eq!(
+            resolve_relay_script(Some(PathBuf::new()), path_var.clone(), Some(home.clone())),
+            Some(on_path.clone())
+        );
+        // HOME fallback when PATH has no hit.
+        assert_eq!(
+            resolve_relay_script(None, None, Some(home.clone())),
+            Some(home_script)
+        );
+        // Nothing anywhere.
+        assert_eq!(resolve_relay_script(None, None, Some(base.join("nohome"))), None);
+        let _ = std::fs::remove_dir_all(&base);
     }
 
     // trace:FR-19 | ai:antigravity

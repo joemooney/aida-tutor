@@ -93,6 +93,14 @@ walkthrough), three-depth hints (STORY-20): `hint` → `hint --more`
 `aida-tutor wrapper` (STORY-22, opt-in invocation-logging shim — see
 Verifier rigor below).
 
+**Launchpad `relay`** (FR-23) — the bare `aida-tutor` menu's `relay`
+option (AIDA projects only) launches aida-relay's `claude_relay.sh` with
+a drain-the-approved-backlog prompt, after a y/N confirm. Script lookup:
+`$AIDA_RELAY_SCRIPT` → `PATH` → `~/ai/aida-relay/bin/`. Handoff + session
+logs are pinned under the target project's `.aida/`. Sessions inherit the
+shell's `AIDA_SESSION_GRANT`; without one the agent can't approve or
+mark done (ADR-66).
+
 **Next-up backlog ideas** — file as new stories when picking them up:
 
 - **More exercises** — `aida history`, sessions + cross-project queue
