@@ -16,7 +16,7 @@ priority: Medium
 owner: ''
 feature: Uncategorized
 created_at: 2026-10-09T06:38:35.928889991Z
-modified_at: 2026-10-09T07:08:02.649964780Z
+modified_at: 2026-10-09T07:10:29.268023796Z
 req_type: Story
 comments:
 - id: 01a11f7d-86da-7561-a222-775682c33c21
@@ -24,6 +24,12 @@ comments:
   content: 'Root cause confirmed: ADR-66 / STORY-1473 (aida b602a5d, 2026-10-04) deliberately removed ambient authority (env role, bare TTY, roster-as-seat). Only validated seat grants confer authority: eval "$(aida role enter advisor --delegate-seat implementer)" at a human TTY exports AIDA_SESSION_GRANT. Impacts learners too (core ex 2 approved status, ex 8 aida done). Plan: (1) teach role enter in the core right after init; rewrite ex 22 to the grant model. (2) demo drops set_var(AIDA_SESSION_ROLE) and requires an inherited AIDA_SESSION_GRANT, failing fast with the eval command; implementer steps (6, 24, 29) use a delegated child grant. (3) Do NOT forge grant records like aida''s test fixture. (4) demo is no longer headless-CI-capable; a headless issuance path would be an AIDA-side spec. First check: can a delegated implementer child grant be entered non-interactively?'
   created_at: 2026-10-09T07:08:02.649964780Z
   modified_at: 2026-10-09T07:08:02.649964780Z
+  session_id: fcee9bd0-2320-40ca-915c-57193749c95d
+- id: 01a11f7f-c394-7cb2-9023-f86c5b0e180f
+  author: joe
+  content: 'Update 2026-10-09: grants also need the roster of the project the command runs in to allow the seat; a fresh aida init store has no roster, and allow-seat is human-TTY-only. So the learner needs team allow-seat (advisor, implementer) + role enter after init, and a reset+init demo can''t be pre-seated. Filed upstream as aida STORY-1540 (init at a human TTY seeds the initializer''s roster). Tutor plan: teach seating in the core after init; rewrite ex 22 to the grant model; demo requires a pre-initialized, seated workspace + valid AIDA_SESSION_GRANT, failing fast otherwise.'
+  created_at: 2026-10-09T07:10:29.268023796Z
+  modified_at: 2026-10-09T07:10:29.268023796Z
   session_id: fcee9bd0-2320-40ca-915c-57193749c95d
 filed_at:
   code_sha: 38a0aa8a55b140f0e007495827077d240c999c75
