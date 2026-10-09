@@ -1829,5 +1829,25 @@ operations:
   timestamp: 2026-09-28T05:18:49.389171197Z
   kind: !SetStatus
     status: Completed
-clock: 198
+- id: 01a11f62-9445-70b2-9018-c9dbc6ddc51e
+  target_id: 01a11f62-9198-78c3-84be-68aa9890e06a
+  author: aida
+  node_id: ''
+  lamport: 199
+  timestamp: 2026-10-09T06:38:36.613731720Z
+  kind: !Create
+    title: Demo authority under AIDA 0.15 role grants
+    description: |
+      `aida-tutor demo` sets `AIDA_SESSION_ROLE=advisor` (src/main.rs) to give the non-interactive walk advisor authority. The installed AIDA 0.15.0 dev build (cbe2c5d, 2026-10-08) no longer honors that env var as authority: `aida done`, Draft→InProgress promotion, `queue add --for implementer`, and `role enter` (which now needs a TTY grant) are refused with "No active role". A fresh `reset --yes && demo` fails 13/41: 2, 6, 8, 9, 11, 22-25, 28-32, 40 (failures cascade because specs stay Draft).
+
+      First step: confirm on the AIDA side whether dropping env-var authority is intentional. If it isn't, file a bug in ~/ai/aida. If it is, find the sanctioned non-interactive path to advisor authority, and re-check exercise 22 (role-enter), whose content and verifier assume the env-var model.
+
+      ## Acceptance
+      - `./target/release/aida-tutor reset --yes && ./target/release/aida-tutor demo` passes all 41 exercises against the current AIDA release, run in a clean env (no inherited AIDA_SESSION_ROLE)
+      - Exercise 22 content matches how 0.15 grants roles
+      - CLAUDE.md status note names the AIDA version the demo was verified against
+    req_type: Story
+    status: Draft
+    priority: Medium
+clock: 199
 node_id: ''
