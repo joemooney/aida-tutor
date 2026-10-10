@@ -1873,5 +1873,32 @@ operations:
     req_type: Functional
     status: Draft
     priority: Medium
-clock: 200
+- id: 01a12438-5612-78c0-8f99-045bb7a92dc0
+  target_id: 01a12438-3eee-7e73-ad97-85f2124d4e3c
+  author: aida
+  node_id: ''
+  lamport: 201
+  timestamp: 2026-10-10T05:10:34.258901265Z
+  kind: !Create
+    title: 'Launchpad relay: take the advisor seat inline instead of telling the user to eval role enter'
+    description: |
+      FR-23's relay confirm screen only warns when the shell has no AIDA_SESSION_GRANT, sending the user off to quit and `eval "$(aida role enter advisor)"`. Since the launchpad is already running at the human's terminal (the ADR-66 moment), the relay flow should take the seat itself.
+
+      When the env has no grant, ask "Take the advisor seat for this run? [Y/n]". On yes, run `aida role enter advisor --delegate-seat implementer --no-resume --no-title` with stdin/stderr inherited (so AIDA's direct-TTY check passes for real) and stdout captured; parse `export AIDA_SESSION_GRANT='…'` from it and set it (plus AIDA_SESSION_ROLE) in the tutor's own process env, so the relay and later relays from the same menu inherit it. The user's shell is untouched; the grant expires on AIDA's 24h clock. Never fake a TTY or write grant records.
+
+      If AIDA refuses because the project roster doesn't allow the seat (no roster yet — see aida STORY-1540), offer to run `aida team allow-seat <user> advisor` and `implementer` (user = AIDA_USER/USER/USERNAME, as AIDA resolves it) with inherited stdio, then retry once. Declining any step launches nothing extra and falls back to the seatless warning.
+
+      The confirm screen states plainly that the unattended agent acts with the user's advisor authority for the run.
+
+      ## Acceptance
+      - No grant in env: the relay screen asks to take the advisor seat; Y runs role enter as above and, on success, the relay child sees AIDA_SESSION_GRANT
+      - Roster refusal: the user is offered allow-seat for advisor + implementer, then one retry
+      - n at the seat prompt still allows launching seatless, with the ⚠ warning shown
+      - Grant already in env: no seat prompt; the screen shows the seat as coming from the shell
+      - When seated, the screen says the agent acts with the user's advisor authority
+      - Unit tests cover grant-line parsing and role-enter outcome classification
+    req_type: Functional
+    status: Draft
+    priority: Medium
+clock: 201
 node_id: ''
