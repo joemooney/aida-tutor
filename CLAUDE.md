@@ -97,9 +97,13 @@ Verifier rigor below).
 option (AIDA projects only) launches aida-relay's `claude_relay.sh` with
 a drain-the-approved-backlog prompt, after a y/N confirm. Script lookup:
 `$AIDA_RELAY_SCRIPT` → `PATH` → `~/ai/aida-relay/bin/`. Handoff + session
-logs are pinned under the target project's `.aida/`. Sessions inherit the
-shell's `AIDA_SESSION_GRANT`; without one the agent can't approve or
-mark done (ADR-66).
+logs are pinned under the target project's `.aida/`. Sessions inherit
+`AIDA_SESSION_GRANT` (ADR-66). With none in the env, the flow offers to
+take the advisor seat (FR-24): it runs the real `aida role enter advisor
+--delegate-seat implementer` with the human's TTY on stdin/stderr,
+captures the grant from stdout into the tutor's own env, and on a roster
+refusal offers `aida team allow-seat` for advisor + implementer, then
+retries. Never fake a TTY or write grant records.
 
 **Next-up backlog ideas** — file as new stories when picking them up:
 

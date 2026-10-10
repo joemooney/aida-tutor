@@ -1049,25 +1049,30 @@ fn run_relay_flow(current_dir: &Path) -> Result<()> {
     println!("  script   {}", script.display());
     println!("  prompt   {RELAY_PROMPT}");
     // ADR-66: authority comes only from a validated seat grant, which the
-    // relay's sessions inherit from this shell.
-    match std::env::var("AIDA_SESSION_GRANT") {
-        Ok(grant) if !grant.trim().is_empty() => {
-            let role = std::env::var("AIDA_SESSION_ROLE").unwrap_or_else(|_| "?".into());
-            println!("  seat     inherits this shell's seat grant (role: {role})");
-        }
-        _ => println!(
-            "  seat     {} no AIDA_SESSION_GRANT — the agent can't approve, mark done, or \
-             route work. Run `eval \"$(aida role enter advisor)\"` first to give it a seat.",
-            "⚠".yellow().bold()
-        ),
+    // relay's sessions inherit from this process's env.
+    let mut seated = has_env_grant();
+    if seated {
+        let role = std::env::var("AIDA_SESSION_ROLE").unwrap_or_else(|_| "?".into());
+        println!("  seat     {role} (from your shell)");
+    } else {
+        println!("  seat     none yet — the relay needs the advisor seat to approve and close specs");
     }
     println!();
+    if !seated && ask_yes_no("Take the advisor seat for this run? [Y/n] ", true)? {
+        seated = take_advisor_seat(&root)?;
+        println!();
+    }
+    if !seated {
+        println!(
+            "{} no seat — the agent can implement but can't approve, mark done, or route work.",
+            "⚠".yellow().bold()
+        );
+    }
     println!("This starts unattended Claude sessions that edit code and commit in this project.");
-    print!("Launch? [y/N] ");
-    io::stdout().flush()?;
-    let mut answer = String::new();
-    io::stdin().read_line(&mut answer)?;
-    if !matches!(answer.trim().to_lowercase().as_str(), "y" | "yes") {
+    if seated {
+        println!("They act with your advisor authority for this run.");
+    }
+    if !ask_yes_no("Launch? [y/N] ", false)? {
         println!("Not launched.");
         pause_for_enter_prompt("Press Enter to return to menu...");
         return Ok(());
@@ -1091,6 +1096,137 @@ fn run_relay_flow(current_dir: &Path) -> Result<()> {
     }
     pause_for_enter_prompt("Press Enter to return to menu...");
     Ok(())
+}
+
+// trace:FR-24 | ai:claude
+fn has_env_grant() -> bool {
+    std::env::var("AIDA_SESSION_GRANT").is_ok_and(|g| !g.trim().is_empty())
+}
+
+/// Read a y/n answer; an empty answer takes `default_yes`.
+// trace:FR-24 | ai:claude
+fn ask_yes_no(prompt: &str, default_yes: bool) -> Result<bool> {
+    print!("{prompt}");
+    io::stdout().flush()?;
+    let mut answer = String::new();
+    io::stdin().read_line(&mut answer)?;
+    Ok(match answer.trim().to_lowercase().as_str() {
+        "" => default_yes,
+        "y" | "yes" => true,
+        _ => false,
+    })
+}
+
+/// How an `aida role enter` attempt ended, judged from its captured stdout
+/// (with stdout piped, AIDA writes its errors there too).
+// trace:FR-24 | ai:claude
+#[derive(Debug, PartialEq, Eq)]
+pub(crate) enum SeatAttempt {
+    Granted(String),
+    RosterRefused(String),
+    Failed(String),
+}
+
+// trace:FR-24 | ai:claude
+pub(crate) fn classify_role_enter(success: bool, stdout: &str) -> SeatAttempt {
+    if success {
+        if let Some(grant) = parse_grant_export(stdout) {
+            return SeatAttempt::Granted(grant);
+        }
+    }
+    if stdout.contains("team roster") || stdout.contains("allow-seat") {
+        SeatAttempt::RosterRefused(stdout.trim().to_string())
+    } else {
+        SeatAttempt::Failed(stdout.trim().to_string())
+    }
+}
+
+/// Pull the handle out of the `export AIDA_SESSION_GRANT='…'` line that
+/// `aida role enter` emits for `eval`.
+// trace:FR-24 | ai:claude
+pub(crate) fn parse_grant_export(eval_output: &str) -> Option<String> {
+    eval_output.lines().find_map(|line| {
+        let value = line
+            .trim()
+            .strip_prefix("export AIDA_SESSION_GRANT=")?
+            .trim_matches('\'');
+        (!value.is_empty() && !value.contains('\'')).then(|| value.to_string())
+    })
+}
+
+/// The identity AIDA's roster and grants are keyed on (its
+/// `current_user_id`).
+// trace:FR-24 | ai:claude
+fn aida_user_id() -> String {
+    ["AIDA_USER", "USER", "USERNAME"]
+        .iter()
+        .find_map(|key| std::env::var(key).ok().filter(|v| !v.is_empty()))
+        .unwrap_or_else(|| "default".to_string())
+}
+
+/// Run the real `aida role enter` with the learner's terminal on stdin and
+/// stderr — AIDA's human-at-a-TTY check passes because a human is there —
+/// capturing only stdout, the shell code a shell would `eval`.
+// trace:FR-24 | ai:claude
+fn enter_advisor_seat(root: &Path) -> Result<SeatAttempt> {
+    let output = Command::new("aida")
+        .args([
+            "role",
+            "enter",
+            "advisor",
+            "--delegate-seat",
+            "implementer",
+            "--no-resume",
+            "--no-title",
+        ])
+        .current_dir(root)
+        .stdin(std::process::Stdio::inherit())
+        .stderr(std::process::Stdio::inherit())
+        .output()
+        .context("running `aida role enter advisor`")?;
+    Ok(classify_role_enter(
+        output.status.success(),
+        &String::from_utf8_lossy(&output.stdout),
+    ))
+}
+
+/// Take the advisor seat for relays launched from this menu. The grant is
+/// set in this process's env only — the learner's shell is untouched and
+/// AIDA expires the grant on its own clock.
+// trace:FR-24 | ai:claude
+fn take_advisor_seat(root: &Path) -> Result<bool> {
+    let mut attempt = enter_advisor_seat(root)?;
+    if let SeatAttempt::RosterRefused(_) = &attempt {
+        let user = aida_user_id();
+        println!("This project's team roster doesn't allow {user} the advisor seat yet.");
+        if !ask_yes_no(
+            &format!("Allow {user} the advisor and implementer seats here? [Y/n] "),
+            true,
+        )? {
+            return Ok(false);
+        }
+        for seat in ["advisor", "implementer"] {
+            if !run_aida_command(root, &["team", "allow-seat", &user, seat])?.success() {
+                return Ok(false);
+            }
+        }
+        attempt = enter_advisor_seat(root)?;
+    }
+    match attempt {
+        SeatAttempt::Granted(grant) => {
+            std::env::set_var("AIDA_SESSION_GRANT", grant);
+            std::env::set_var("AIDA_SESSION_ROLE", "advisor");
+            println!("{} advisor seat taken for this run.", "✓".green().bold());
+            Ok(true)
+        }
+        SeatAttempt::RosterRefused(msg) | SeatAttempt::Failed(msg) => {
+            println!("{} couldn't take the advisor seat.", "✗".red().bold());
+            if !msg.is_empty() {
+                println!("{msg}");
+            }
+            Ok(false)
+        }
+    }
 }
 
 // trace:FR-15,FR-21 | ai:codex,antigravity
@@ -4073,6 +4209,49 @@ mod tests {
         // Nothing anywhere.
         assert_eq!(resolve_relay_script(None, None, Some(base.join("nohome"))), None);
         let _ = std::fs::remove_dir_all(&base);
+    }
+
+    // trace:FR-24 | ai:claude
+    #[test]
+    fn grant_export_parsing() {
+        let eval = "# aida role enter — advisor\n\
+                    export AIDA_SESSION_ROLE='advisor'\n\
+                    export AIDA_SESSION_GRANT='3f2c9a1e-0b7d-4e55-9a51-1d2e3f4a5b6c'\n\
+                    unset AIDA_SESSION_PURPOSE\n";
+        assert_eq!(
+            parse_grant_export(eval).as_deref(),
+            Some("3f2c9a1e-0b7d-4e55-9a51-1d2e3f4a5b6c")
+        );
+        // A label-only enter sheds the grant instead of exporting one.
+        assert_eq!(parse_grant_export("unset AIDA_SESSION_GRANT\n"), None);
+        assert_eq!(parse_grant_export("export AIDA_SESSION_GRANT=''\n"), None);
+    }
+
+    // trace:FR-24 | ai:claude
+    #[test]
+    fn role_enter_outcome_classification() {
+        assert_eq!(
+            classify_role_enter(true, "export AIDA_SESSION_GRANT='abc'\n"),
+            SeatAttempt::Granted("abc".into())
+        );
+        let roster = "error: \"seat `advisor` is not allowed by the team roster for `joe`; an \
+                      interactive human must update the roster with `aida team allow-seat`\"";
+        assert!(matches!(
+            classify_role_enter(false, roster),
+            SeatAttempt::RosterRefused(_)
+        ));
+        assert!(matches!(
+            classify_role_enter(
+                false,
+                "error: \"role grants require a human at an interactive TTY\""
+            ),
+            SeatAttempt::Failed(_)
+        ));
+        // Success without a grant line (label-only enter) is not a seat.
+        assert!(matches!(
+            classify_role_enter(true, "unset AIDA_SESSION_GRANT\n"),
+            SeatAttempt::Failed(_)
+        ));
     }
 
     // trace:FR-19 | ai:antigravity
