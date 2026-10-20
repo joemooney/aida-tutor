@@ -1900,5 +1900,23 @@ operations:
     req_type: Functional
     status: Draft
     priority: Medium
-clock: 201
+- id: 01a15797-6422-7f53-a9e6-b247bd66078a
+  target_id: 01a15797-5917-7260-9042-77e07184d8cb
+  author: aida
+  node_id: ''
+  lamport: 202
+  timestamp: 2026-10-20T04:35:01.794690246Z
+  kind: !Create
+    title: Browse colorized AIDA command help with filtered previous and next navigation
+    description: |-
+      Provide a command browser in Help / Tutorials and a direct commands entry point. Load the installed AIDA command catalog, filter by command and description, open live help, and navigate left/right within the filtered results while up/down scrolls help. Color headings, flags, and values; preserve filter and selection when returning to the list. Document the source and snapshot maintenance. ## Acceptance
+      - All installed public and hidden commands can be listed and filtered.
+      - Opening a result shows its live help with readable color styling.
+      - Left/right moves only through the current filtered results and resets scroll.
+      - Help can be scrolled and returning preserves the filter and selection.
+      - Terminal state is restored on exit and errors; noninteractive use remains useful.
+    req_type: Story
+    status: Draft
+    priority: Medium
+clock: 202
 node_id: ''
