@@ -2,6 +2,7 @@
 //! trace:VIS-1, EPIC-1 | ai:claude
 
 mod banner;
+mod commands;
 mod exercise;
 mod exercises;
 mod onboarding;
@@ -28,6 +29,12 @@ struct Cli {
 
 #[derive(Subcommand, Debug)]
 enum Cmd {
+    /// Browse and filter the installed AIDA command catalog and colorized help.
+    // trace:STORY-63 | ai:codex
+    Commands {
+        /// Initial filter (command names, descriptions, and flags).
+        filter: Option<String>,
+    },
     /// List all exercises with their done/current/upcoming state.
     List,
     /// Show the current exercise (or one specified by id/slug).
@@ -126,6 +133,7 @@ fn main() -> Result<()> {
     let mut prog = Progress::load(&repo_root)?;
 
     match cli.command.unwrap_or(Cmd::Menu) {
+        Cmd::Commands { filter } => commands::run(filter.as_deref().unwrap_or("")),
         Cmd::List => cmd_list(&exercises, &workspace, &prog),
         Cmd::Show { target } => {
             cmd_show(&exercises, &workspace, &repo_root, &prog, target.as_deref())

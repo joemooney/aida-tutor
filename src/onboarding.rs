@@ -2257,6 +2257,7 @@ pub(crate) enum TutorialOption {
     Onboarding,
     Exercises,
     Terminology,
+    Commands,
     Faq,
     Exit,
 }
@@ -2275,6 +2276,8 @@ impl TutorialOption {
             TutorialOption::Onboarding => "onboarding  — the 15-minute capture → trace → commit round trip".to_string(),
             TutorialOption::Exercises => "exercises   — the full 41-exercise AIDA workflow track".to_string(),
             TutorialOption::Terminology => "terminology — a glossary of AIDA concepts".to_string(),
+            // trace:STORY-63 | ai:codex
+            TutorialOption::Commands => "commands    — browse and filter colorized AIDA command help".to_string(),
             TutorialOption::Faq => "FAQ         — common questions and practical answers".to_string(),
             TutorialOption::Exit => format!("exit        — {exit_desc}"),
         }
@@ -2288,6 +2291,7 @@ pub(crate) fn tutorial_options(status: OnboardingStatus) -> Vec<TutorialOption> 
             TutorialOption::Onboarding,
             TutorialOption::Exercises,
             TutorialOption::Terminology,
+            TutorialOption::Commands,
             TutorialOption::Faq,
             TutorialOption::Exit,
         ],
@@ -2296,6 +2300,7 @@ pub(crate) fn tutorial_options(status: OnboardingStatus) -> Vec<TutorialOption> 
             TutorialOption::Onboarding,
             TutorialOption::Exercises,
             TutorialOption::Terminology,
+            TutorialOption::Commands,
             TutorialOption::Faq,
             TutorialOption::Exit,
         ],
@@ -2304,6 +2309,7 @@ pub(crate) fn tutorial_options(status: OnboardingStatus) -> Vec<TutorialOption> 
             TutorialOption::Onboarding,
             TutorialOption::Exercises,
             TutorialOption::Terminology,
+            TutorialOption::Commands,
             TutorialOption::Faq,
             TutorialOption::Exit,
         ],
@@ -2434,6 +2440,11 @@ fn run_tutorial_menu(
         }
         TutorialOption::Faq => {
             run_faq_menu(repo_root)?;
+            run_tutorial_menu(workspace, repo_root, mode, clear_screen)
+        }
+        // trace:STORY-63 | ai:codex
+        TutorialOption::Commands => {
+            crate::commands::run("")?;
             run_tutorial_menu(workspace, repo_root, mode, clear_screen)
         }
         TutorialOption::Exit => Ok(()),

@@ -11,6 +11,17 @@ outside the marked block is yours to tailor.
 
 aida-tutor
 
+Rust terminal launchpad and hands-on AIDA tutorial. `src/main.rs` dispatches
+the CLI, `src/onboarding.rs` owns launchpad/tutorial menus and shells, and
+`src/commands.rs` provides a colorized command reference using the installed
+AIDA's JSON catalog and live `--help`. Help navigation stays within the
+current filter. See [OVERVIEW.md](OVERVIEW.md) for architecture.
+
+Use `./run.sh commands [filter]` for the command browser and `cargo test` for
+verification. The browser uses crossterm for raw input and screen restoration;
+it requires `aida help commands --hidden --json` and does not read upstream
+golden snapshots. See README.md for snapshot regeneration instructions.
+
 <!-- AIDA-AUTOGEN-BEGIN -->
 # AIDA Conventions
 

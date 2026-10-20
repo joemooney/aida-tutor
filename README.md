@@ -25,6 +25,8 @@ git clone <this repo>
 cd aida-tutor
 ./run.sh                  # AIDA launchpad: agent, status, shell, help
 ./run.sh shell             # direct `aida>` command shell
+./run.sh commands          # browse colorized help for all AIDA commands
+./run.sh commands queue    # start with a filtered command list
 # choose Help from the launchpad for the tutorial menu
 ./run.sh onboard           # full onboarding lesson
 ./run.sh next              # terse next action
@@ -50,6 +52,28 @@ metallic arch for that invocation.
 The launchpad's `shell` option accepts normal AIDA commands, for example
 `list`, `history`, or `show FR-1`; type `exit` to return to the launchpad.
 The `help` option opens the interactive Help / Tutorials menu.
+
+Choose **Commands** under Help / Tutorials to browse the installed AIDA's
+command reference. Type to filter command names, descriptions, and flags;
+use up/down to select and Enter to open help. In a help page, left/right
+moves through the filtered results, up/down scrolls, and Page Up/Page Down
+scrolls a page. Esc returns to the list with your filter and selection intact;
+Esc from the list exits. Ctrl-U clears the filter and Ctrl-C exits anywhere.
+Hidden commands are included and marked `[hidden]`. Headings, flags, values,
+and examples use distinct colors, respecting `NO_COLOR`.
+
+The browser reads `aida help commands --hidden --json` and loads each
+command's `--help` on demand, caching pages for the current visit. It needs
+an AIDA version supporting that catalog command. It does not depend on a
+checkout of AIDA or its golden snapshot. When piped, `commands` prints the
+filtered catalog without entering the interactive screen.
+
+AIDA's upstream `aida-cli-lib/src/tests/golden/cli_help_snapshot.txt` is a
+generated test fixture covering help and the command catalog. Maintainers
+regenerate it from the AIDA repository with
+`AIDA_UPDATE_SNAPSHOTS=1 cargo test -p aida-cli-lib story_1728_command_registry`
+and review the diff. The fixture deliberately disables color for stable
+comparisons; the tutor styles live help for reading.
 
 You'll need `aida` on `PATH` for the exercises themselves. `aida-tutor`
 spawns it as a subprocess to give you the real CLI surface.
