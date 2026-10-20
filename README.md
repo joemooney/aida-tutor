@@ -54,7 +54,8 @@ The launchpad's `shell` option accepts normal AIDA commands, for example
 The `help` option opens the interactive Help / Tutorials menu.
 
 Choose **Commands** under Help / Tutorials to browse the installed AIDA's
-command reference. Type to filter command names, descriptions, and flags;
+command reference, sorted alphabetically by full command path. Type to filter
+command names, descriptions, and flags;
 use up/down to select and Enter to open help. In a help page, left/right
 moves through the filtered results, up/down scrolls, and Page Up/Page Down
 scrolls a page. Esc returns to the list with your filter and selection intact;

@@ -69,6 +69,8 @@ fn load_catalog() -> Result<Vec<Entry>> {
     )?;
     // Never accept arbitrary executables from the catalog; only pass command paths to AIDA.
     entries.retain(|e| e.path.first().map(String::as_str) == Some("aida") && e.path.len() > 1);
+    // trace:STORY-63 | ai:codex — filtering and help navigation retain this order.
+    entries.sort_by(|a, b| a.path.cmp(&b.path));
     entries.insert(
         0,
         Entry {
