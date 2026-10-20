@@ -56,7 +56,8 @@ The `help` option opens the interactive Help / Tutorials menu.
 Choose **Commands** under Help / Tutorials to browse the installed AIDA's
 command reference, sorted alphabetically by full command path. Type to filter
 command names, descriptions, and flags;
-use up/down to select and Enter to open help. In a help page, left/right
+use up/down to select, Page Up/Page Down to move a page through the list,
+and Enter to open help. In a help page, left/right
 moves through the filtered results, up/down scrolls, and Page Up/Page Down
 scrolls a page. Esc returns to the list with your filter and selection intact;
 Esc from the list exits. Ctrl-U clears the filter and Ctrl-C exits anywhere.

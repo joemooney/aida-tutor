@@ -276,7 +276,7 @@ fn draw(
     let footer = if state.detail {
         "←/→ prev/next match · ↑/↓ scroll · PgUp/PgDn · Esc list · Ctrl-C quit"
     } else {
-        "↑/↓ select · Enter help · type filter · Ctrl-U clear · Esc quit"
+        "↑/↓ select · PgUp/PgDn page · Enter help · type filter · Ctrl-U clear · Esc quit"
     };
     write!(out, "{}", wrap(footer, width)[0].dimmed())?;
     out.flush()?;
@@ -318,8 +318,8 @@ pub fn run(filter: &str) -> Result<()> {
             }
             continue;
         }
+        let page = usize::from(terminal::size()?.1).saturating_sub(5).max(1);
         if state.detail {
-            let page = usize::from(terminal::size()?.1).saturating_sub(5).max(1);
             match key.code {
                 KeyCode::Esc | KeyCode::Backspace => state.detail = false,
                 KeyCode::Left => state.move_selection(false, filtered.len()),
@@ -341,6 +341,11 @@ pub fn run(filter: &str) -> Result<()> {
                 KeyCode::Esc => break,
                 KeyCode::Up => state.move_selection(false, filtered.len()),
                 KeyCode::Down => state.move_selection(true, filtered.len()),
+                // trace:STORY-63 | ai:codex — page within the filtered command list.
+                KeyCode::PageUp => state.selected = state.selected.saturating_sub(page),
+                KeyCode::PageDown => {
+                    state.selected = (state.selected + page).min(filtered.len().saturating_sub(1));
+                }
                 KeyCode::Enter if !filtered.is_empty() => {
                     state.detail = true;
                     state.scroll = 0;
